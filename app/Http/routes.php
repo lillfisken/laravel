@@ -2,6 +2,17 @@
 
 /*
 |--------------------------------------------------------------------------
+| Bind model
+|--------------------------------------------------------------------------
+|
+| Bind a wild-card to a model to use in routes
+|
+*/
+
+Route::model('market', 'market\Market');
+
+/*
+|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -11,9 +22,17 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+/*Route::get('/', 'WelcomeController@index');*/
 
 Route::get('home', 'HomeController@index');
+
+$router->get('roadmap', 'HomeController@index');
+$router->get('dev', 'HomeController@dev');
+$router->post('postDev', 'HomeController@postdev');
+
+$router->get('/', 'MarketsController@index');
+
+Route::resource('markets', 'MarketsController');
 
 /*
 |--------------------------------------------------------------------------

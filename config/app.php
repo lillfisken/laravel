@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-	'debug' => (bool) getenv('APP_DEBUG') ?: false,
+	'debug' => (bool) getenv('APP_DEBUG') ?: true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,9 +113,9 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'App\Providers\AppServiceProvider',
-		'App\Providers\EventServiceProvider',
-		'App\Providers\RouteServiceProvider',
+		'market\Providers\AppServiceProvider',
+		'market\Providers\EventServiceProvider',
+		'market\Providers\RouteServiceProvider',
 
 		/*
 		 * Laravel Framework Service Providers...
