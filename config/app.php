@@ -141,6 +141,14 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+        /*
+        * My added providers
+        */
+
+        'Illuminate\Html\HtmlServiceProvider',
+/*        'Way\Generators\GeneratorsServiceProvider',*/
+//        'Intervention\Image\ImageServiceProvider'
+
 	],
 
 	/*
@@ -198,6 +206,14 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
+        /*
+        * My added facades
+        */
+
+        'Form'=> 'Illuminate\Html\FormFacade',
+        'HTML'=> 'Illuminate\Html\HtmlFacade',
+//        'Image' => 'Intervention\Image\Facades\Image',
 
 	],
 

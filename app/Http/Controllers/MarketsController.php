@@ -4,9 +4,11 @@ use Illuminate\Routing\Controller as ControllerMarket;
 use market\Market;
 use Illuminate\Http\Request;
 use Input;
-use Image;
+//use Image;
 use market\Http\Requests\CreateMarketRequest;
 use File;
+
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MarketsController extends ControllerMarket {
 	
@@ -34,6 +36,7 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
+//        return 'data';
 		$temp = Market::all();
 		/*$temp = dd($temp);*/
 		

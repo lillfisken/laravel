@@ -53,14 +53,14 @@ return [
 		],
 
 		'mysql' => [
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'forge',
-			'username'  => 'forge',
-			'password'  => '',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'elektro',
+            'username'  => 'elektro',
+            'password'  => 'elektro',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => 'm_',
 		],
 
 		'pgsql' => [

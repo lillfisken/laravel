@@ -45,8 +45,8 @@ class Market extends Model {
 		'title', 
 		'description', 
 		'price', 
-		'extraPriceInfo',
-		'numberOfItems',
+		/*'extraPriceInfo',*/
+		/*'numberOfItems',*/
 		/*'contactOptions',*/
 		'image1_small',
 		'image1_thumb',

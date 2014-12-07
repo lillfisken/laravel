@@ -22,13 +22,13 @@ Route::model('market', 'market\Market');
 |
 */
 
-/*Route::get('/', 'WelcomeController@index');*/
+//Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-$router->get('roadmap', 'HomeController@index');
-$router->get('dev', 'HomeController@dev');
-$router->post('postDev', 'HomeController@postdev');
+$router->get('roadmap', 'HomeController@road');
+//$router->get('dev', 'HomeController@dev');
+//$router->post('postDev', 'HomeController@postdev');
 
 $router->get('/', 'MarketsController@index');
 
