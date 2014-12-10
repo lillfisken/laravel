@@ -83,7 +83,9 @@
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
 		-> Valideringar av annonsmodel<br />
-		-> 
+		-> Error messages in forms<br />
+		-> CSS, change to SCSS using parameters for colors etc??? <br />
+		->
 	</p>
 	<p>
 		Review-system<br />

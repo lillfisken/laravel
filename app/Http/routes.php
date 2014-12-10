@@ -30,6 +30,8 @@ $router->get('roadmap', 'HomeController@road');
 //$router->get('dev', 'HomeController@dev');
 //$router->post('postDev', 'HomeController@postdev');
 
+$router->get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
+
 $router->get('/', 'MarketsController@index');
 
 Route::resource('markets', 'MarketsController');
@@ -45,7 +47,16 @@ Route::resource('markets', 'MarketsController');
 |
 */
 
-Route::controllers([
+/*Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);
+]);*/
+
+Route::get('login', ['as' => 'accounts.login', 'uses' => 'AccountController@login' ]);
+Route::post('login', ['as' => 'accounts.login.post', 'uses' => 'AccountController@loginPost' ]);
+
+//TODO: Make this a post request
+Route::get('logout', ['as' => 'accounts.logout', 'uses' => 'AccountController@logout' ]);
+
+Route::get('register', ['as' => 'accounts.register', 'uses' => 'AccountController@register' ]);
+Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountController@registerPost' ]);

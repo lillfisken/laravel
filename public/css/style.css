@@ -138,6 +138,10 @@
 		border: 1px solid #516177;
 		height: 100%;
 	}
+
+    .inline{
+        display: inline-block;
+    }
 	
 	/*---------------------------------------
 	General

@@ -5,10 +5,10 @@
 
 	@include('partials.errors.basic')
 
-	{!! Form::open(array('url' => '/auth/login')); !!}
+	{!! Form::open(array('route' => 'accounts.login.post')); !!}
         <div>
             {!! Form::label('email', 'E-mail'); !!}<br/> <!-- old value -->
-            {!! Form::email('email', null , ['class' => "form-input" ] ); !!}
+            {!! Form::email('email', Input::old('email') , ['class' => "form-input", 'placeholder' => 'e-mail' ] ); !!}
         </div>
         <div>
             {!! Form::label('password', 'Lösenord'); !!}<br/>
@@ -23,6 +23,9 @@
         </div>
         <div>
     		<a href="/market/public/password/email">Glömt lösenordet</a>
+        </div>
+        <div>
+       		<a href="{{ route('accounts.register') }}">Ny användare</a>
         </div>
 
     {!! Form::close(); !!}

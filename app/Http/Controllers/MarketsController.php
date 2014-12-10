@@ -257,4 +257,14 @@ class MarketsController extends ControllerMarket {
 		//
 	}
 
+    public function search()
+    {
+        $search = Input::get('s');
+        if(isset($search)){
+            return $search;
+        }
+
+        return 'Searchterm is missing';
+    }
+
 }

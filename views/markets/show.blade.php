@@ -61,9 +61,9 @@
 	<div id="market-price-info" class="layout">
 		<h2>{!! $market->price !!} Sek</h2>
 		<br />
-		{!! $market->numberOfItems !!} tillgänglig<br />
+		{{ $market->number_of_items }} st till försäljning<br />
 		<br />
-		Inlagd {!! $market->created_at !!}
+		Inlagd {{ $market->created_at }}
 	</div>
 	
 	<div id="market-seller-info" class="layout">
