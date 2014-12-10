@@ -7,6 +7,7 @@ use Input;
 //use Image;
 use market\Http\Requests\CreateMarketRequest;
 use File;
+use DB;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -261,7 +262,23 @@ class MarketsController extends ControllerMarket {
     {
         $search = Input::get('s');
         if(isset($search)){
-            return $search;
+
+            //inspired by:
+            //http://stackoverflow.com/questions/19612180/creating-search-functionality-with-laravel-4
+
+            $query = DB::table('markets');
+
+            $query = $query->where('title', 'LIKE', '%' . $search . '%');
+
+            $query = $query->orWhere('description', 'LIKE', '%' . $search . '%');
+
+            //dd($query);
+
+            $result = $query->get();
+
+            //dd($result);
+
+            return view('markets.index', ['markets' => $result]);
         }
 
         return 'Searchterm is missing';

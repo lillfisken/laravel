@@ -41,33 +41,24 @@
 	</p>
 	<hr />
 	<p>
-		Fler annonstyper<br />
-		-> Auktion <br />
-		-> -> Auktionsscript <br />
-		-> Samköp <br />
-		-> -> ??? <br />
-		-> Tjänst/jobb <br />
-		-> -> Säkes/erbjudes/tipsas/etc <br />
-	</p>
-	<hr />
-	<p>
-		Filter/sökfunktion<br />
-		-> -> Hela texten klickbar för att välja filter<br />
-		-> Enkel parametersök <br />
-		-> Avancerad sökning ??? <br />
-		-> Visa dolda annonser/säljare <br />
-		-> Sidvisning sökresultat, antal per sida etc<br />
-		-> Olika visningsalternativ<br />
-		
-	</p>
-	<hr />
-	<p>
 		Koppling phpBB inloggning<br />
 	</p>
 	<hr />
 	<p>
 		Öppna frågor/forum samt PM-funktion<br />
 	</p>
+	<hr />
+	<p>
+    	Filter/sökfunktion<br />
+    	-> -> Hela texten klickbar för att välja filter<br />
+    	-> Enkel parametersök <br />
+    	-> Avancerad sökning ??? <br />
+    	-> Visa dolda annonser/säljare <br />
+    	-> Sidvisning sökresultat, antal per sida etc<br />
+    	-> Olika visningsalternativ<br />
+    	-> Möjlighet att söka med flera ord som inte behöver finnas i föld<br />
+    	-> Se över var standarsökning görs<br />
+    </p>
 	<hr />
 	<p>
 		STOR designöversyn<br />
@@ -85,8 +76,18 @@
 		-> Valideringar av annonsmodel<br />
 		-> Error messages in forms<br />
 		-> CSS, change to SCSS using parameters for colors etc??? <br />
-		->
+		-> Redirekt efter login tll önskad sida
 	</p>
+	<p>
+    		Fler annonstyper<br />
+    		-> Auktion <br />
+    		-> -> Auktionsscript <br />
+    		-> Samköp <br />
+    		-> -> ??? <br />
+    		-> Tjänst/jobb <br />
+    		-> -> Sökes/erbjudes/tipsas/etc <br />
+    	</p>
+    <hr />
 	<p>
 		Review-system<br />
 		-> Visa samlat betyg för säljare<br />

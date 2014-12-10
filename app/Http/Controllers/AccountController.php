@@ -93,6 +93,11 @@ class AccountController extends Controller {
         //TODO:Add validation for input
         //TODO:Add registration logic
 
+        //get user input
+        //validate input
+        //save input in db
+        //log user in
+
         return 'registerPost';
     }
 
