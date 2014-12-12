@@ -3,7 +3,7 @@
 @section('content')
 	@include('partials.errors.basic')
 
-	{!! Form::open(array('url' => '/auth/register')); !!}
+	{!! Form::open(['route' => 'accounts.register.post']); !!}
 	    <div>
             {!! Form::label('name', 'Namn'); !!}<br/>
             {!! Form::text('name', null , ['class' => 'form-input', 'placeholder'=>'Namn', 'value'=>'{{ old("name") }}' ] ); !!}

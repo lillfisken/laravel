@@ -7,9 +7,44 @@ use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
 use Redirect;
+use market\User;
+use Illuminate\Http\Request;
+use DB;
+use Hash;
+
+//use Illuminate\Contracts\Auth\Guard;
+//use Illuminate\Contracts\Auth\Registrar;
 
 
 class AccountController extends Controller {
+
+//    /*/**
+//     * The Guard implementation.
+//     *
+//     * @var Guard
+//     */
+//    protected $auth;
+//
+//    /**
+//     * The registrar implementation.
+//     *
+//     * @var Registrar
+//     */
+//    protected $registrar;
+//
+//    /**
+//     * Create a new authentication controller instance.
+//     *
+//     * @param  Guard  $auth
+//     * @return void
+//     */
+//    public function __construct(Guard $auth, Registrar $registrar)
+//    {
+//        $this->auth = $auth;
+//        $this->registrar = $registrar;
+//
+//        $this->middleware('guest', ['except' => 'getLogout']);
+//    }*/
 
     public function login()
     {
@@ -88,17 +123,45 @@ class AccountController extends Controller {
         return view('account.register');
     }
 
-    public function registerPost()
+    public function registerPost(Request $request, User $user)
     {
         //TODO:Add validation for input
-        //TODO:Add registration logic
+        //TODO:Add registration logic, change Request to new UserNewRequest
+        //TODO:Sen email to new user
 
-        //get user input
-        //validate input
-        //save input in db
-        //log user in
+        $temp = new User;
+        echo 'new user<br/>';
+        $temp->name = Input::get('name');
+        $temp->email = Input::get('email');
+        $temp->password = Hash::make(Input::get('password'));
+        echo 'uset set<br/>';
+        $temp->save();
 
-        return 'registerPost';
+        //TODO: login new user and redirect to start with message "User created"
+
+        return redirect()->route('markets.index');
     }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  RegisterRequest  $request
+     * @return Response
+     */
+//    public function postRegister(Request $request)
+//    {
+//        $validator = $this->registrar->validator($request->all());
+//
+//        if ($validator->fails())
+//        {
+//            $this->throwValidationException(
+//                $request, $validator
+//            );
+//        }
+//
+//        $this->auth->login($this->registrar->create($request->all()));
+//
+//        return redirect($this->redirectPath());
+//    }
 
 }

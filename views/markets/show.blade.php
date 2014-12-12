@@ -76,12 +76,14 @@
 		Skicka pm
 	</div>
 	<hr />
-	<div>
-		{!! Form::open(['url' => '/markets/' . $market->id . '/edit', 'method'=>'GET']) !!}
-			{!! Form::submit('Redigera', array('class' => 'btn-right')); !!}
-		{!! Form::close() !!}
-		<!-- <a href="{{ route('markets.edit', $market->id) }}">Ändra</a> -->
-	</div>
+	@if(Auth::check())
+        <div>
+            {!! Form::open(['url' => '/markets/' . $market->id . '/edit', 'method'=>'GET']) !!}
+                {!! Form::submit('Redigera', array('class' => 'btn-right')); !!}
+            {!! Form::close() !!}
+            <!-- <a href="{{ route('markets.edit', $market->id) }}">Ändra</a> -->
+        </div>
+	@endif
 </div>
 
 @stop

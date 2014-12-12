@@ -10,6 +10,7 @@
 */
 
 Route::model('market', 'market\Market');
+Route::model('user', 'market\User');
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,4 @@ Route::post('login', ['as' => 'accounts.login.post', 'uses' => 'AccountControlle
 Route::get('logout', ['as' => 'accounts.logout', 'uses' => 'AccountController@logout', 'middleware' => 'auth']);
 
 Route::get('register', ['as' => 'accounts.register', 'uses' => 'AccountController@register' ]);
-Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountController@registerPost' ]);
+Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountController@registerPost', 'before' => 'csrf']);

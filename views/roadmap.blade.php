@@ -13,7 +13,6 @@
 		-> Koppla egen inloggning till sidan <br />
 		-> Skapa konto <br />
 		-> Glömt lösenord <br />
-		-> Logga ut <br />
 	</p>
 	<hr />
 	<p>
@@ -77,6 +76,13 @@
 		-> Error messages in forms<br />
 		-> CSS, change to SCSS using parameters for colors etc??? <br />
 		-> Redirekt efter login tll önskad sida
+	</p>
+	<p>
+	    STOR Säkerhetsgenomgång
+	    -> Inloggad/ej inloggad<br/>
+	    -> Ej tillgång till andra användares data<br/>
+	    -> Cross site request forgery<br/>
+	    -> SQL Injection
 	</p>
 	<p>
     		Fler annonstyper<br />
