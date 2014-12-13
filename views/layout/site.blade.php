@@ -42,6 +42,10 @@
 			</div>
 			-->
 			<div class="row-divider"></div>
+
+			@if(Session::has('message'))
+                <p class="alert">{{ Session::get('message') }}</p>
+            @endif
 			
 			<div id="content" class="margin0">
 				<div class="borderbox">

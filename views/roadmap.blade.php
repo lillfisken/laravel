@@ -10,9 +10,8 @@
 	<hr />
 	<p>
 		Login<br />
-		-> Koppla egen inloggning till sidan <br />
-		-> Skapa konto <br />
 		-> Glömt lösenord <br />
+		-> Logga in användare direkt efter registrering
 	</p>
 	<hr />
 	<p>
@@ -77,13 +76,15 @@
 		-> CSS, change to SCSS using parameters for colors etc??? <br />
 		-> Redirekt efter login tll önskad sida
 	</p>
+	<hr/>
 	<p>
-	    STOR Säkerhetsgenomgång
+	    STOR Säkerhetsgenomgång<br/>
 	    -> Inloggad/ej inloggad<br/>
 	    -> Ej tillgång till andra användares data<br/>
 	    -> Cross site request forgery<br/>
 	    -> SQL Injection
 	</p>
+	<hr/>
 	<p>
     		Fler annonstyper<br />
     		-> Auktion <br />
@@ -99,6 +100,7 @@
 		-> Visa samlat betyg för säljare<br />
 		-> Lägg till omdöme för köpt vara/allmänt?
 	</p>
+	<hr/>
 	<p>
 		Admin sida<br />
 		-> Återställa radera annonser<br />
