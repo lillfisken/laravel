@@ -44,7 +44,8 @@ class Market extends Model {
 	protected $fillable = [
 		'title', 
 		'description', 
-		'price', 
+		'price',
+		//TODO:Fix all fields fillable
 		/*'extraPriceInfo',*/
 		/*'numberOfItems',*/
 		/*'contactOptions',*/
@@ -68,6 +69,15 @@ class Market extends Model {
 		'image6_std',
 		'image6_full',
 	];
+
+	public function user()
+	{
+//		return $this->hasMany('Market');
+
+		dd($this->belongsTo('market\User','id','createdByUser'));
+
+		return $this->belongsTo('market\User', 'createdByUser', 'id');
+	}
 	
 	
 

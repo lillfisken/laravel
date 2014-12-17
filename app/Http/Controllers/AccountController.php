@@ -128,13 +128,21 @@ class AccountController extends Controller {
         //TODO:Add validation for input
         //TODO:Add registration logic, change Request to new UserNewRequest
         //TODO:Sen email to new user
+        //TODO:Critical Prevent SQL-injection
 
         $temp = new User;
-        echo 'new user<br/>';
         $temp->name = Input::get('name');
         $temp->email = Input::get('email');
+
+        $temp->username = Input::get('username');
+        $temp->address = Input::get('address');
+        $temp->city = Input::get('city');
+        $temp->zipcode = Input::get('zipcode');
+        $temp->phone1 = Input::get('phone1');
+        $temp->phone2 = Input::get('phone2');
+
         $temp->password = Hash::make(Input::get('password'));
-        echo 'uset set<br/>';
+
         $temp->save();
 
         //TODO: login new user and redirect to start with message "User created"

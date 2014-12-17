@@ -68,7 +68,7 @@
 	
 	<div id="market-seller-info" class="layout">
 		<h2>Säljare</h2>
-		LittleFish<br />
+		{{ $market->user }}<br />
 		3 aktiva annonser<br />
 		2584 tidigare annonser <br />
 		Omdöme 4,9 (2364)<br />

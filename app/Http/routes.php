@@ -23,6 +23,10 @@ Route::model('user', 'market\User');
 |
 */
 
+Route::get('/dev', function(){
+	dd(market\User::find('16'));
+});
+
 Route::get('/', 'MarketsController@index');
 
 Route::get('markets', ['as' => 'markets.index', 'uses' => 'MarketsController@index']);

@@ -9,12 +9,6 @@
 	<p>Tänkt utveckling för sidan, preliminär</p>
 	<hr />
 	<p>
-		Login<br />
-		-> Glömt lösenord <br />
-		-> Logga in användare direkt efter registrering
-	</p>
-	<hr />
-	<p>
 		Koppla samman annonser och användare<br />
 		->  <br />
 	</p>
@@ -39,9 +33,18 @@
 	</p>
 	<hr />
 	<p>
-		Koppling phpBB inloggning<br />
+	    Extern inloggning och verifiering
+		-> Koppling phpBB inloggning<br />
+		-> google/facebook
 	</p>
 	<hr />
+	<p>
+    	Login<br />
+    	-> Glömt lösenord <br />
+    	-> Logga in användare direkt efter registrering<br/>
+    	-> Allmänna varningsmeddelanden, meddelanden etc<br/>
+    </p>
+    <hr />
 	<p>
 		Öppna frågor/forum samt PM-funktion<br />
 	</p>
