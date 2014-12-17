@@ -46,8 +46,8 @@ class Market extends Model {
 		'description', 
 		'price',
 		//TODO:Fix all fields fillable
-		/*'extraPriceInfo',*/
-		/*'numberOfItems',*/
+		'extra_price_info',
+		'number_of_items',
 		/*'contactOptions',*/
 		'image1_small',
 		'image1_thumb',
@@ -70,13 +70,20 @@ class Market extends Model {
 		'image6_full',
 	];
 
+	/*
+	 * Add navigation for user connected with market
+	*/
 	public function user()
 	{
 //		return $this->hasMany('Market');
 
-		dd($this->belongsTo('market\User','id','createdByUser'));
+//		dd(User::find('16'));
 
-		return $this->belongsTo('market\User', 'createdByUser', 'id');
+		//return User::find('16');
+
+		//dd($this->belongsTo('market\User','createdByUser'));
+
+		return $this->belongsTo('market\User', 'createdByUser');
 	}
 	
 	

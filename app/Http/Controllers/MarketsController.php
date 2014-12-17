@@ -1,6 +1,7 @@
 <?php namespace market\Http\Controllers;
 
 use Illuminate\Routing\Controller as ControllerMarket;
+use Illuminate\Support\Facades\Auth;
 use market\Market;
 use Illuminate\Http\Request;
 use Input;
@@ -79,9 +80,13 @@ class MarketsController extends ControllerMarket {
 		
 		redirekt to list
 		*/
+
+		//dd(Auth::id());
 		
 		$input = Input::all();
 		//dd($input);
+
+		$input['createdByUser'] = Auth::id();
 		
 		$input = $this->saveImage($input, 'image1');
 		$input = $this->saveImage($input, 'image2');

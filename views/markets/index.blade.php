@@ -55,8 +55,8 @@
 				</div>
 						
 				<div class="market-list-rows-seller">
-					Seller<br/>
-					Location
+					{{ $market->user->username or ''}}<br/>
+					{{ $market->user->city or ''}}
 				</div>
 							
 				<div class="market-list-rows-price">

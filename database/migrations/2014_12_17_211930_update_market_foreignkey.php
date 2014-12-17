@@ -12,7 +12,11 @@ class UpdateMarketForeignkey extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('markets', function($table) {
+			$table->renameColumn('created_by_user', 'createdByUser');
+			$table->foreign('createdByUser')->references('id')->on('users');
+		});
+
 	}
 
 	/**

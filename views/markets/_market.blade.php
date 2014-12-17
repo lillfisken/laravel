@@ -15,8 +15,8 @@
 	{!! Form::label('price', 'Pris') !!}
 	{!! Form::text('price', null , ['class' => 'form-input'] ) !!}
 	
-	{!! Form::label('extraPriceInfo', 'Extra info om betalning, frakt etc.') !!}
-	{!! Form::textarea('extraPriceInfo', null , ['class' => 'form-input'] ) !!}
+	{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}
+	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input'] ) !!}
 	{!! Form::label('numberOfItems', 'Antal till försälning, önskas köpa etc.') !!}
 	{!! Form::text('numberOfItems', '1', ['class' => 'form-input'] ) !!}
 	<hr />

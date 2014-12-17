@@ -68,7 +68,7 @@
 	
 	<div id="market-seller-info" class="layout">
 		<h2>Säljare</h2>
-		{{ $market->user }}<br />
+		{{ $market->user->username or ''}}<br />
 		3 aktiva annonser<br />
 		2584 tidigare annonser <br />
 		Omdöme 4,9 (2364)<br />
