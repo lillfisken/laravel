@@ -81,9 +81,16 @@ class AccountController extends Controller {
                 'password' 	=> Input::get('password')
             );
 
+            $remember = false;
+
+            if(Input::has('remember'))
+            {
+                $remember = true;
+            }
+
             //TODO:Add remember me
             // attempt to do the login
-            if (Auth::attempt($userdata)) {
+            if (Auth::attempt($userdata, $remember)) {
 
                 // validation successful!
                 // redirect them to the secure section or whatever
@@ -172,4 +179,13 @@ class AccountController extends Controller {
 //        return redirect($this->redirectPath());
 //    }
 
+    /*
+     * Show user profile
+    */
+    public function show($user)
+    {
+        $tempuser = User::where('username' , $user)->firstOrFail();
+        //dd($tempuser);
+        return view('account.profile', ['user' => $tempuser]);
+    }
 }

@@ -8,9 +8,10 @@
 | Bind a wild-card to a model to use in routes
 |
 */
-
-Route::model('market', 'market\Market');
-Route::model('user', 'market\User');
+//TODO:Create model bindning and alter controllers
+//http://laravel.com/docs/master/routing#route-model-binding
+//Route::model('market', 'market\Market');
+//Route::model('user', 'market\User');
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,6 @@ Route::get('logout', ['as' => 'accounts.logout', 'uses' => 'AccountController@lo
 
 Route::get('register', ['as' => 'accounts.register', 'uses' => 'AccountController@register' ]);
 Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountController@registerPost', 'before' => 'csrf']);
+
+//TODO: Add filter for access only if logged in user is the same as requested user
+Route::get('profile/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);

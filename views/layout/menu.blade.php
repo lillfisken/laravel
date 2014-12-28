@@ -2,8 +2,7 @@
 		<a href="{{ route('markets.index') }}"><li class="menu-item">Alla annonser</li></a>
 
 		@if(Auth::check())
-		    <li class="menu-item"> Inloggad som {{ Auth::user()->name ?: '' }} </li>
-		    <li class="menu-item"> Profil </li>
+			<a href="{{ route('accounts.profile', @Auth::user()->username ) }}"><li class="menu-item">{{ Auth::user()->username ?: '' }} </li></a>
 		    <a href="{{ route('markets.create') }}"><li class="menu-item">Skapa annons</li></a>
    		    <a href="{{ route('accounts.logout') }}"><li class="menu-item"> Logga ut</li></a>
    		    <a href="/market/public/index.php/roadmap"><li class="menu-item">Roadmap</li></a>

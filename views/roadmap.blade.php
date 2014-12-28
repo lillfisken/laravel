@@ -109,5 +109,11 @@
 		-> Återställa radera annonser<br />
 		-> Svartlista användare
 	</p>
+	<hr/>
+	<p>
+		Performance<br />
+		-> Eager loading where applicable<br />
+		-> 
+	</p>
 	
 @stop

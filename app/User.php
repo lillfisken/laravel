@@ -33,6 +33,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function markets()
 	{
+		$temp = $this->hasMany('Market');
+		dd($temp);
 		return $this->hasMany('Market');
 	}
 
