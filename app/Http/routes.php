@@ -43,7 +43,6 @@ Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@sea
 Route::get('home', 'HomeController@index');
 Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'HomeController@road', 'middleware' => 'auth']);
 
-
 /*
 |--------------------------------------------------------------------------
 | Authentication & Password Reset Controllers
