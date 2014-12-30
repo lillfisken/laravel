@@ -1,0 +1,94 @@
+<!-- /var/www/lara/resources/views/markets/index.blade.php -->
+
+
+
+<?php $__env->startSection('title'); ?>
+	Visa annonser
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+	<!-- ---------------------------------------------------------------------------- -->
+	<!-- Menu-->
+
+	<div class="market-list-menu">
+		<?php echo Form::open(array('url' => 'foo/bar')); ?>
+
+		
+		     Säljes <?php echo Form::checkbox('name', 'saljes', true);; ?>
+
+		     Köpes <?php echo Form::checkbox('name', 'kopes', true);; ?>
+
+		     Bytes <?php echo Form::checkbox('name', 'bytes', true);; ?>
+
+		     Skänkes <?php echo Form::checkbox('name', 'skankes', true);; ?>
+
+		     Samköp <?php echo Form::checkbox('name', 'samkop', true);; ?>
+
+		     Tjänst erbjudes <?php echo Form::checkbox('name', 'tjanst_erbjudes', true);; ?>
+
+		     Tjänst sökes <?php echo Form::checkbox('name', 'tjanst_sökes', true);; ?>
+
+		     Anställning <?php echo Form::checkbox('name', 'anstallning', true);; ?>
+
+		     Tips <?php echo Form::checkbox('name', 'tips', true);; ?>
+
+			<hr />
+			Visa avslutade annonser <?php echo Form::checkbox('name', 'ended', false);; ?>
+
+			Visa dolda annonser <?php echo Form::checkbox('name', 'hiddenAds', false);; ?>
+
+			Visa annonser från dolda säljare <?php echo Form::checkbox('name', 'hiddenSellers', false);; ?>
+
+		     <?php echo Form::submit('Uppdatera', array('class' => 'btn-right'));; ?>
+
+			
+		<?php echo Form::close(); ?>
+
+	</div>
+	
+	<!-- ---------------------------------------------------------------------------- -->
+	<!-- Market listings, list -->
+	<?php $count = 1; ?>
+	
+	<?php foreach($markets as $market): ?>
+		
+		<div class="market-list-row2 <?php if($count == 1): ?>row-dark <?php $count = 0; ?> <?php else: ?>	<?php $count = 1; ?> <?php endif; ?>">
+			<div class="market-list-rows-option">
+				<a href="<?php echo e(route('markets.edit', [$market->id])); ?>">
+					<div class="btn-menu">
+					    <div class="menu-bar"></div>
+					    <div class="menu-bar"></div>
+					    <div class="menu-bar"></div>
+					</div>
+				</a>
+			</div>
+					
+			<a href="<?php echo e(route('markets.show', $market->id)); ?>" class="market-list-container">
+				<div class="market-list-rows-image">
+					<img src="<?php echo e($market->image1_thumb); ?>" />
+				</div>
+						
+				<div class="market-list-rows-seller">
+					Seller<br/>
+					Location
+				</div>
+							
+				<div class="market-list-rows-price">
+					<h3><?php echo e($market->price); ?> sek</h3><br/>
+					<!--Buy now 2345:--->
+				</div>
+							
+				<div class="market-list-rows-desc">
+					<h3><?php echo e(str_limit($market->title, 30)); ?></h3><br/>
+					<?php echo str_limit($market->description, 500); ?>
+
+				</div>
+			</a>
+		</div>
+		
+	<?php endforeach; ?>
+	
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('/layout/site', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

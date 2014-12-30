@@ -1,0 +1,90 @@
+	<?php echo Form::label('title', 'Rubrik'); ?>
+
+	<?php echo Form::text('title', null , ['class' => "form-input" ] ); ?>
+
+	<?php echo $errors->first('title', '<span class="help-block">:message</span>'); ?>
+
+	<hr />
+	
+	<?php echo Form::label('type_buy', 'Köpes'); ?>
+
+	<?php echo Form::radio('type', 'Köpes', array('id'=>'type_buy') ); ?>
+
+	<?php echo Form::label('type_sell', 'Säljes'); ?>
+
+	<?php echo Form::radio('type', 'Säljes', ['id' => 'type_sell']); ?>
+
+	<?php echo Form::label('type_giveaway', 'Skänkes'); ?>
+
+	<?php echo Form::radio('type', 'Skänkes', ['id' => 'type_giveaway']); ?>
+
+	<?php echo Form::label('type_change', 'Bytes'); ?>
+
+	<?php echo Form::radio('type', 'Bytes', ['id' => 'type_change']); ?>
+
+	<br />
+	<?php echo Form::label('price', 'Pris'); ?>
+
+	<?php echo Form::text('price', null , ['class' => 'form-input'] ); ?>
+
+	
+	<?php echo Form::label('extraPriceInfo', 'Extra info om betalning, frakt etc.'); ?>
+
+	<?php echo Form::textarea('extraPriceInfo', null , ['class' => 'form-input'] ); ?>
+
+	<?php echo Form::label('numberOfItems', 'Antal till försälning, önskas köpa etc.'); ?>
+
+	<?php echo Form::text('numberOfItems', '1', ['class' => 'form-input'] ); ?>
+
+	<hr />
+	<?php echo Form::label('description', 'Beskrivning'); ?>
+
+	<?php echo Form::textarea('description', null, ['class' => 'form-input'] ); ?>
+
+	<hr />
+	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image1_thumb); ?>"/>
+	<?php endif; ?>
+	<?php echo Form::label('image1','Bild 1',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image1','',array('id'=>'','class'=>'')); ?> Huvudbild <br />
+  	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image2_thumb); ?>"/>
+	<?php endif; ?>
+  	<?php echo Form::label('image2','Bild 2',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image2','',array('id'=>'','class'=>'')); ?><br />
+  	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image3_thumb); ?>"/>
+	<?php endif; ?>
+  	<?php echo Form::label('image3','Bild 3',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image3','',array('id'=>'','class'=>'')); ?><br />
+  	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image4_thumb); ?>"/>
+	<?php endif; ?>
+  	<?php echo Form::label('image4','Bild 4',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image4','',array('id'=>'','class'=>'')); ?><br />
+  	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image5_thumb); ?>"/>
+	<?php endif; ?>
+  	<?php echo Form::label('image5','Bild 5',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image5','',array('id'=>'','class'=>'')); ?><br />
+  	<?php if(isset($market->image1_thumb)): ?>
+		<img class="market-detail-small-image"  src="<?php echo e($market->image6_thumb); ?>"/>
+	<?php endif; ?>
+  	<?php echo Form::label('image6','Bild 6',array('id'=>'','class'=>'')); ?>
+
+  	<?php echo Form::file('image6','',array('id'=>'','class'=>'')); ?><br />
+	<hr />
+	Välj hur köparna ska kunna kontakta dig<br />
+	<?php echo Form::label('choice_mail', 'Via mail'); ?>
+
+	<?php echo Form::checkbox('choice_mail', 'mail', true); ?>
+
+	<?php echo Form::label('choice_forum', 'Via öppna frågor'); ?>
+
+	<?php echo Form::checkbox('choice_forum', 'forum', true); ?><br />
+	<hr />

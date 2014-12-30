@@ -1,0 +1,27 @@
+<!-- /var/www/lara/resources/views/markets/create.blade.php -->
+
+
+
+<?php $__env->startSection('title'); ?>
+	Skapa annons
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	<h1>Skapa ny annons</h1>
+	<hr />
+
+	<?php echo Form::open(array('route' => 'markets.store' , 'files' => true )); ?>
+
+		
+	<?php echo $__env->make('markets._market', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			
+	<?php echo Form::submit('Publicera', array('class' => 'btn-right'));; ?>
+
+	<?php echo Form::submit('Förhandsgranska', array('class' => 'btn-right'));; ?>
+
+		
+	<?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout/site', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

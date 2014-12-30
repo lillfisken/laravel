@@ -1,0 +1,25 @@
+	<ul class="menu-row">
+		<a href="<?php echo e(route('markets.index')); ?>"><li class="menu-item">Alla annonser</li></a>
+
+		<?php if(Auth::check()): ?>
+		    <li class="menu-item"> Inloggad som <?php echo e(Auth::user()->name ?: ''); ?> </li>
+		    <li class="menu-item"> Profil </li>
+		    <a href="<?php echo e(route('markets.create')); ?>"><li class="menu-item">Skapa annons</li></a>
+   		    <a href="<?php echo e(route('accounts.logout')); ?>"><li class="menu-item"> Logga ut</li></a>
+   		    <a href="/market/public/index.php/roadmap"><li class="menu-item">Roadmap</li></a>
+   		<?php else: ?>
+   		    <a href="<?php echo e(route('accounts.login')); ?>"><li class="menu-item">Logga in</li></a>
+   		<?php endif; ?>
+
+        <li class="menu-item">
+            <?php echo Form::open(array('route' => 'markets.search', 'method' => 'GET' )); ?>
+
+                <?php echo Form::text('s', null , ['class' => '<?php /*form-input*/ ?> inline'] ); ?>
+
+                <?php echo Form::submit('Sök', ['class' => '<?php /*btn-right*/ ?> inline']);; ?>
+
+            <?php echo Form::close(); ?>
+
+        </li>
+
+	</ul>

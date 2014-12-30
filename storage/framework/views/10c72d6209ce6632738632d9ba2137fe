@@ -1,0 +1,37 @@
+
+
+<?php $__env->startSection('content'); ?>
+	<?php echo $__env->make('partials.errors.basic', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php echo Form::open(['route' => 'accounts.register.post']);; ?>
+
+	    <div>
+            <?php echo Form::label('name', 'Namn');; ?><br/>
+            <?php echo Form::text('name', null , ['class' => 'form-input', 'placeholder'=>'Namn', 'value'=>'<?php echo e(old("name")); ?>' ] );; ?>
+
+        </div>
+        <div>
+            <?php echo Form::label('email', 'E-mail');; ?><br/> <!-- old value -->
+            <?php echo Form::email('email', null , ['class' => "form-input", 'placeholder'=>'Email' ] );; ?>
+
+        </div>
+        <div>
+            <?php echo Form::label('password', 'Lösenord');; ?><br/>
+            <?php echo Form::password('password', null , ['class' => "form-input" ] );; ?>
+
+        </div>
+        <div>
+            <?php echo Form::label('password_confirmation', 'Upprepa lösenord');; ?><br/>
+            <?php echo Form::password('password_confirmation', null , ['class' => 'form-input', 'placeholder'=>'Confirm Password' ] );; ?>
+
+        </div>
+        <div>
+    		<?php echo Form::submit('Skapa konto', array('class' => 'btn-right'));; ?>
+
+        </div>
+
+    <?php echo Form::close();; ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout/site', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

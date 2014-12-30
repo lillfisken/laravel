@@ -1,0 +1,42 @@
+
+
+<?php $__env->startSection('content'); ?>
+	Login<br />
+
+	<?php echo $__env->make('partials.errors.basic', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php echo Form::open(array('route' => 'accounts.login.post'));; ?>
+
+        <div>
+            <?php echo Form::label('email', 'E-mail');; ?><br/> <!-- old value -->
+            <?php echo Form::email('email', Input::old('email') , ['class' => "form-input", 'placeholder' => 'e-mail' ] );; ?>
+
+        </div>
+        <div>
+            <?php echo Form::label('password', 'Lösenord');; ?><br/>
+            <?php echo Form::password('password', null , ['class' => "form-input" ] );; ?>
+
+        </div>
+        <div>
+            <?php echo Form::label('remember', 'Kom ihåg mig');; ?>
+
+            <?php echo Form::checkbox('remember', 'remember', false);; ?>
+
+        </div>
+        <div>
+    		<?php echo Form::submit('Logga in', array('class' => 'btn-right'));; ?>
+
+        </div>
+        <div>
+    		<a href="/market/public/password/email">Glömt lösenordet</a>
+        </div>
+        <div>
+       		<a href="<?php echo e(route('accounts.register')); ?>">Ny användare</a>
+        </div>
+
+    <?php echo Form::close();; ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout/site', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>
+			<?php $__env->startSection('title'); ?>
+			
+			<?php echo $__env->yieldSection(); ?>
+			- PhpBBMarket
+		</title>
+		<meta name="" content="" charset="utf-8"/>
+		<link rel="stylesheet" href="/market/public/css/style.css" />
+		<!--<link rel="stylesheet" type="text/css" href="/css/btn.css">-->
+		<script src="/market/public/script/myJS.js"></script>
+	</head>
+
+	<body class="layout">
+		<div id="site" class="table">
+			<div id="header">
+					<?php echo $__env->make('layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+				
+			<div class="row-divider"></div>
+			
+			<div id="menu">
+				<div class="borderbox">
+					<?php echo $__env->make('layout.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				</div>
+			</div>
+			
+			<!--
+			<div class="row-divider"></div>	
+			<div id="banner1" class="layout">
+				<?php echo $__env->make('layout.banner1', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+				
+			<div id="banner2" class="layout">
+				<?php echo $__env->make('layout.banner2', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>	
+			</div>
+				
+			<div id="banner3" class="layout">
+				<?php echo $__env->make('layout.banner3', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>	
+			</div>
+			-->
+			<div class="row-divider"></div>
+
+			<?php if(Session::has('message')): ?>
+                <p class="alert"><?php echo e(Session::get('message')); ?></p>
+            <?php endif; ?>
+			
+			<div id="content" class="margin0">
+				<div class="borderbox">
+					<?php echo $__env->yieldContent('content'); ?>
+				</div>
+			</div>
+					
+			<!--
+			<div class="row-divider"></div>
+			<div id="banner4" class="layout">
+				<?php echo $__env->make('layout.banner4', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>	
+			</div>
+			-->
+			<div class="row-divider"></div>	
+		
+			<div id="footer" class="layout row">
+					<?php echo $__env->make('layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+		</div>	
+	</body>
+</html>

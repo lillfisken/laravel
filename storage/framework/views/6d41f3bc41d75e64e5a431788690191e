@@ -1,0 +1,25 @@
+<!-- /var/www/lara/resources/views/markets/edit.blade.php -->
+
+
+
+<?php $__env->startSection('title'); ?>
+	Ändra annons
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	<h1>Ändra annons : 
+	<?php echo $market->title; ?></h1>
+	<?php echo Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]); ?>
+
+
+		<?php echo $__env->make('markets._market', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		
+		<?php echo Form::submit('Uppdatera', array('class' => 'btn-right'));; ?>
+
+		<?php echo Form::submit('Förhandsgranska', array('class' => 'btn-right'));; ?>
+
+
+	<?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout/site', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

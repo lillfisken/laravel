@@ -1,0 +1,98 @@
+[2014-12-17 00:01:25] production.ERROR: exception 'InvalidArgumentException' with message 'Command "dump-autoload" is not defined.' in /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(124): Symfony\Component\Console\Application->find('dump-autoload')
+#1 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateMakeCommand.php(75): Illuminate\Console\Command->call('dump-autoload')
+#2 [internal function]: Illuminate\Database\Console\Migrations\MigrateMakeCommand->fire()
+#3 /var/www/market/storage/framework/compiled.php(414): call_user_func_array(Array, Array)
+#4 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(112): Illuminate\Container\Container->call(Array)
+#5 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(252): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateMakeCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#10 /var/www/market/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(90): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /var/www/market/artisan(34): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 {main} [] []
+[2014-12-17 00:01:58] production.ERROR: exception 'InvalidArgumentException' with message 'Command "migrate:make" is not defined.
+
+Did you mean one of these?
+    migrate:reset
+    migrate:refresh
+    migrate:status
+    migrate:rollback
+    migrate:install
+    migrate' in /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(192): Symfony\Component\Console\Application->find('migrate:make')
+#1 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /var/www/market/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(90): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /var/www/market/artisan(34): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main} [] []
+[2014-12-17 00:02:31] production.ERROR: exception 'InvalidArgumentException' with message 'Command "dump-autoload" is not defined.' in /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php:549
+Stack trace:
+#0 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(124): Symfony\Component\Console\Application->find('dump-autoload')
+#1 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateMakeCommand.php(75): Illuminate\Console\Command->call('dump-autoload')
+#2 [internal function]: Illuminate\Database\Console\Migrations\MigrateMakeCommand->fire()
+#3 /var/www/market/storage/framework/compiled.php(414): call_user_func_array(Array, Array)
+#4 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(112): Illuminate\Container\Container->call(Array)
+#5 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(252): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateMakeCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#10 /var/www/market/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(90): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /var/www/market/artisan(34): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 {main} [] []
+[2014-12-17 18:47:17] production.ERROR: exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'users_username_unique'' in /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php:355
+Stack trace:
+#0 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(355): PDOStatement->execute(Array)
+#1 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(603): Illuminate\Database\Connection->Illuminate\Database\{closure}(Object(Illuminate\Database\MySqlConnection), 'alter table `m_...', Array)
+#2 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(567): Illuminate\Database\Connection->runQueryCallback('alter table `m_...', Array, Object(Closure))
+#3 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(356): Illuminate\Database\Connection->run('alter table `m_...', Array, Object(Closure))
+#4 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('alter table `m_...')
+#5 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#6 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(94): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#7 /var/www/market/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Database\Schema\Builder->table('users', Object(Closure))
+#8 /var/www/market/database/migrations/2014_12_17_000125_update_user.php(23): Illuminate\Support\Facades\Facade::__callStatic('table', Array)
+#9 /var/www/market/database/migrations/2014_12_17_000125_update_user.php(23): Illuminate\Support\Facades\Schema::table('users', Object(Closure))
+#10 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(135): UpdateUser->up()
+#11 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(111): Illuminate\Database\Migrations\Migrator->runUp('2014_12_17_0001...', 2, false)
+#12 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(82): Illuminate\Database\Migrations\Migrator->runMigrationList(Array, false)
+#13 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php(70): Illuminate\Database\Migrations\Migrator->run('/var/www/market...', false)
+#14 [internal function]: Illuminate\Database\Console\Migrations\MigrateCommand->fire()
+#15 /var/www/market/vendor/laravel/framework/src/Illuminate/Container/Container.php(515): call_user_func_array(Array, Array)
+#16 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(112): Illuminate\Container\Container->call(Array)
+#17 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(252): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#19 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#21 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#22 /var/www/market/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(90): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#23 /var/www/market/artisan(34): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#24 {main}
+
+Next exception 'Illuminate\Database\QueryException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'users_username_unique' (SQL: alter table `m_users` add unique users_username_unique(`username`))' in /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php:611
+Stack trace:
+#0 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(567): Illuminate\Database\Connection->runQueryCallback('alter table `m_...', Array, Object(Closure))
+#1 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Connection.php(356): Illuminate\Database\Connection->run('alter table `m_...', Array, Object(Closure))
+#2 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php(63): Illuminate\Database\Connection->statement('alter table `m_...')
+#3 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(169): Illuminate\Database\Schema\Blueprint->build(Object(Illuminate\Database\MySqlConnection), Object(Illuminate\Database\Schema\Grammars\MySqlGrammar))
+#4 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php(94): Illuminate\Database\Schema\Builder->build(Object(Illuminate\Database\Schema\Blueprint))
+#5 /var/www/market/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Database\Schema\Builder->table('users', Object(Closure))
+#6 /var/www/market/database/migrations/2014_12_17_000125_update_user.php(23): Illuminate\Support\Facades\Facade::__callStatic('table', Array)
+#7 /var/www/market/database/migrations/2014_12_17_000125_update_user.php(23): Illuminate\Support\Facades\Schema::table('users', Object(Closure))
+#8 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(135): UpdateUser->up()
+#9 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(111): Illuminate\Database\Migrations\Migrator->runUp('2014_12_17_0001...', 2, false)
+#10 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php(82): Illuminate\Database\Migrations\Migrator->runMigrationList(Array, false)
+#11 /var/www/market/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php(70): Illuminate\Database\Migrations\Migrator->run('/var/www/market...', false)
+#12 [internal function]: Illuminate\Database\Console\Migrations\MigrateCommand->fire()
+#13 /var/www/market/vendor/laravel/framework/src/Illuminate/Container/Container.php(515): call_user_func_array(Array, Array)
+#14 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(112): Illuminate\Container\Container->call(Array)
+#15 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Command/Command.php(252): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /var/www/market/vendor/laravel/framework/src/Illuminate/Console/Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(874): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#18 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(195): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#19 /var/www/market/vendor/symfony/console/Symfony/Component/Console/Application.php(126): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 /var/www/market/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(90): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#21 /var/www/market/artisan(34): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#22 {main}  
