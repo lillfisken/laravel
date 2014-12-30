@@ -113,7 +113,7 @@
 	<p>
 		Performance<br />
 		-> Eager loading where applicable<br />
-		-> 
+		->
 	</p>
 	
 @stop

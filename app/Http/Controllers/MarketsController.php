@@ -196,10 +196,13 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function show($market)
 	{
-		$temp = Market::find($market);
-		/*dd($temp);*/
-		
-		
+		echo("<script>console.log('Markets controller -> show');</script>");
+		$temp = Market::with('user', 'user.markets')->find($market);
+		//dd($temp->user->markets);
+		$tempCount = $temp->getUserMarketsCount;
+		echo("<script>console.log('Count: ".$tempCount."');</script>");
+
+
 		return view('markets.show', ['market' => $temp]);
 	}
 

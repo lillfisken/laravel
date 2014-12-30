@@ -68,12 +68,12 @@
 	
 	<div id="market-seller-info" class="layout">
 		<h2>Säljare</h2>
-		{{ $market->user->username or ''}}<br />
-		{{ $market->user->markets or 'saknas'}} aktiva annonser<br />
-		2584 tidigare annonser <br />
-		Omdöme 4,9 (2364)<br />
+		{{ $market->user->username or 'null'}}<br />
+		{{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
+		{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser <- Not implemented yet<br />
+		Omdöme 4,9 (2364) <- Not implemented yet <br />
 		<br />
-		Skicka pm
+		Skicka pm <- Not implemented yet
 	</div>
 	<hr />
 	@if(Auth::check())

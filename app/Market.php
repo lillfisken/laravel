@@ -81,10 +81,12 @@ class Market extends Model {
 
 		//return User::find('16');
 
-		//dd($this->belongsTo('market\User','createdByUser'));
+		//dd($this->belongsTo('market\User'));
 
 		return $this->belongsTo('market\User', 'createdByUser');
 	}
+
+
 	
 	
 

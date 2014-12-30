@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Auth;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -33,9 +34,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function markets()
 	{
-		$temp = $this->hasMany('Market');
-		dd($temp);
-		return $this->hasMany('Market');
+		return $this->hasMany('market\Market', 'createdByUser', 'id');
+	}
+
+	public function getUserActiveMarketsCount()
+	{
+		return Market::where('createdByUser', '=' , $this->id)->count();
+	}
+
+	public function getUserTotalMarketsCount()
+	{
+		echo("<script>console.log('getUserTotalMarketsCount');</script>");
+		return '1563';
 	}
 
 }
