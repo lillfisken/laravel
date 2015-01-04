@@ -13,7 +13,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$lindningsmaskin = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'Lindningsmaskin',
 			/*type*/
 			'type' => 'sellRow',
@@ -47,7 +47,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$usbladdare = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'USB-laddare',
 			'description' => 'Multi-USB-Laddare<br />
 							8 USB uttag.<br />
@@ -59,7 +59,6 @@ class MarketsTableSeeder extends Seeder {
 			'price'	=>	'200.-',
             'extra_price_info' => 'Lorem ipsum',
             'number_of_items' => '49',
-			'created_by_user' => '12',
 			'image1_std' => '/market/public/images/2014/11/usbladdare.jpg',
 			'image1_thumb' => '/market/public/images/2014/11/usbladdare_small.jpg',
 			/*
@@ -86,7 +85,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$nixieklocka = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'Nixie-Klocka-med-jättelång-rubrik-så-man-ser-hur-det-kan-se-ut',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'123.00',
@@ -118,7 +117,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$frekvensomformare = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'Frekvensomformare',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'2500.00',
@@ -150,7 +149,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$cncfras = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'CNC-fräs',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'7500.00',
@@ -182,7 +181,7 @@ class MarketsTableSeeder extends Seeder {
 		
 		$uvbox = Market::create(array(
 			/*id*/
-			'created_by_user'	=>	'2',
+			'createdByUser'	=>	'2',
 			'title'	=>	'UV-Box för kretskortstillverkning',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'550.00',

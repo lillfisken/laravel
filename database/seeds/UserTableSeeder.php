@@ -4,7 +4,8 @@
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use market\User;
-use Hash;
+use Illuminate\Support\Facades\Hash;
+//use Hash;
 
 class UserTableSeeder extends Seeder {
 	
@@ -13,9 +14,11 @@ class UserTableSeeder extends Seeder {
 		DB::table('users')->delete();
 
         $oskar = User::create([
+            'id' => '2',
             'name' => 'Oskar',
             'email'=> 'oskar@example.com',
             'password' => Hash::make('market'),
+            'username' => 'LillaFisken',
         ]);
 		
 
