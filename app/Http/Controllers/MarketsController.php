@@ -40,7 +40,7 @@ class MarketsController extends ControllerMarket {
 	{
 //        return 'data';
 		$temp = Market::all();
-		/*$temp = dd($temp);*/
+		//$temp = dd($temp);
 		
 		
 		return view('markets.index', ['markets' => $temp]);
