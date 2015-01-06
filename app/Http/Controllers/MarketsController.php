@@ -24,7 +24,7 @@ class MarketsController extends ControllerMarket {
 	| via simple annotations.
 	|
 	*/
-	
+
 	public function __construct(Market $market)
 	{
 		//$this->market = $market;
@@ -38,10 +38,28 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
-//        return 'data';
-		$temp = Market::all();
-		//$temp = dd($temp);
-		
+		if(Auth::check())
+		{
+			//TODO::Sort non blocked markets for user
+			//Get all markets from db
+			$temp = Market::all();
+			//dd($temp);
+
+			echo("<script>console.log('MarketsController->index');</script>");
+
+			//Set menu for each market
+			foreach ($temp as $market)
+			{
+				$this->addMarketMenu($market);
+			}
+
+			//dd($temp);
+		}
+		else {
+			//Get all markets from db
+			$temp = Market::all();
+			//$temp = dd($temp);
+		}
 		
 		return view('markets.index', ['markets' => $temp]);
 	}
@@ -87,7 +105,8 @@ class MarketsController extends ControllerMarket {
 		//dd($input);
 
 		$input['createdByUser'] = Auth::id();
-		
+		//dd($input);
+
 		$input = $this->saveImage($input, 'image1');
 		$input = $this->saveImage($input, 'image2');
 		$input = $this->saveImage($input, 'image3');
@@ -101,92 +120,7 @@ class MarketsController extends ControllerMarket {
 		
 		return redirect()->route('markets.index');
 	}
-	
-	protected function saveImage($input, $image_name)
-	{		
-		if (Input::hasFile($image_name))
-	    {	    	
-	    	//-------------------------------------------------------------------------------------
-	       	// Settings for saving image
-	       	// Create a two base paths for images, one real and one virtual
-	       	// Create directore if non existing based by month and year
-	       	//-------------------------------------------------------------------------------------
-	       	
-	    	//TODO: add check 'is image'
-	    	$year = date('y');
-	    	$month = date('m');
-	    	$rdm = str_random(5);
-	    		    	
-	    	$real_path = public_path() . '/images/' . $year . '/';
-	    	if (!File::exists($real_path))
-			{
-				File::makeDirectory($real_path, 0774 , true);
-			}
-			
-			$real_path = $real_path . $month . '/';					
-	    	if (!File::exists($real_path))
-			{
-				File::makeDirectory($real_path, 0774 , true);
-			}
-			
-			//1: Path to public directory from root, 2: Path to store image
-			$public_path_base = '/market/public/' . 'images/' . $year . '/' . $month . '/';
-			$real_path_base = $real_path;
-			
-			//-------------------------------------------------------------------------------------
-	       	// Image std size
-	       	//-------------------------------------------------------------------------------------
-				    	
-	    	$file_name = $rdm . '_std_' .  $input[$image_name]->getClientOriginalName();
-			
-			$public_path = $public_path_base . $file_name;
-	       	$real_path = $real_path_base . $file_name;
-			
-			//Resize image to max 700 width keeping aspect ratio
-	       	$image = Image::make(Input::file($image_name)->getRealPath())->resize(700, null, function ($constraint) {
-			    $constraint->aspectRatio();
-			    $constraint->upsize();
-			})->save($real_path);
-			
-	       	$input[$image_name . '_std'] = $public_path;
-	       	
-	       	//-------------------------------------------------------------------------------------
-	       	// Image thumb size
-	       	//-------------------------------------------------------------------------------------
-	       	
-	       	$file_name = $rdm . '_thumb_' .  $input[$image_name]->getClientOriginalName();
-			
-			$public_path = $public_path_base . $file_name;
-	       	$real_path = $real_path_base . $file_name;
-			
-			//Resize image to max 700 width keeping aspect ratio
-	       	$image = Image::make(Input::file($image_name)->getRealPath())->resize(140, null, function ($constraint) {
-			    $constraint->aspectRatio();
-			    $constraint->upsize();
-			})->save($real_path);
-			
-	       	$input[$image_name . '_thumb'] = $public_path;
-	       	
-	       	//-------------------------------------------------------------------------------------
-	       	// Image full size
-	       	//-------------------------------------------------------------------------------------
-	       	
-	       	$file_name = $rdm . '_full_' .  $input[$image_name]->getClientOriginalName();
-			
-			$public_path = $public_path_base . $file_name;
-	       	$real_path = $real_path_base . $file_name;
-			
-			//Resize image to max 700 width keeping aspect ratio
-	       	$image = Image::make(Input::file($image_name))->save($real_path);
-			
-	       	$input[$image_name . '_full'] = $public_path;
-	       	
-	       	//-------------------------------------------------------------------------------------
-		}
-		
-		return $input;
-	}
-	
+
 	/**
 	 * Display the specified resource.
 	 * GET /markets/{id}
@@ -198,9 +132,10 @@ class MarketsController extends ControllerMarket {
 	{
 		echo("<script>console.log('Markets controller -> show');</script>");
 		$temp = Market::with('user', 'user.markets')->find($market);
+		$this->addMarketMenu($temp);
 		//dd($temp->user->markets);
 		$tempCount = $temp->getUserMarketsCount;
-		echo("<script>console.log('Count: ".$tempCount."');</script>");
+		echo("<script>console.log('Count: " .$tempCount."');</script>");
 
 
 		return view('markets.show', ['market' => $temp]);
@@ -291,5 +226,118 @@ class MarketsController extends ControllerMarket {
 
         return 'Searchterm is missing';
     }
+
+	/*
+	 * Process input/image-stream to save imagename to db and imagefile to disc
+	 *
+	 * @param Input $input Inputstream
+	 * @param string $image_name Name of the desired image in the inputstream
+	 *
+	 * @return Processed inputstream
+	 *
+	 */
+	protected function saveImage($input, $image_name)
+	{
+		if (Input::hasFile($image_name))
+		{
+			//-------------------------------------------------------------------------------------
+			// Settings for saving image
+			// Create a two base paths for images, one real and one virtual
+			// Create directore if non existing based by month and year
+			//-------------------------------------------------------------------------------------
+
+			//TODO: add check 'is image'
+			$year = date('y');
+			$month = date('m');
+			$rdm = str_random(5);
+
+			$real_path = public_path() . '/images/' . $year . '/';
+			if (!File::exists($real_path))
+			{
+				File::makeDirectory($real_path, 0774 , true);
+			}
+
+			$real_path = $real_path . $month . '/';
+			if (!File::exists($real_path))
+			{
+				File::makeDirectory($real_path, 0774 , true);
+			}
+
+			//1: Path to public directory from root, 2: Path to store image
+			$public_path_base = '/market/public/' . 'images/' . $year . '/' . $month . '/';
+			$real_path_base = $real_path;
+
+			//-------------------------------------------------------------------------------------
+			// Image std size
+			//-------------------------------------------------------------------------------------
+
+			$file_name = $rdm . '_std_' .  $input[$image_name]->getClientOriginalName();
+
+			$public_path = $public_path_base . $file_name;
+			$real_path = $real_path_base . $file_name;
+
+			//Resize image to max 700 width keeping aspect ratio
+			$image = Image::make(Input::file($image_name)->getRealPath())->resize(700, null, function ($constraint) {
+				$constraint->aspectRatio();
+				$constraint->upsize();
+			})->save($real_path);
+
+			$input[$image_name . '_std'] = $public_path;
+
+			//-------------------------------------------------------------------------------------
+			// Image thumb size
+			//-------------------------------------------------------------------------------------
+
+			$file_name = $rdm . '_thumb_' .  $input[$image_name]->getClientOriginalName();
+
+			$public_path = $public_path_base . $file_name;
+			$real_path = $real_path_base . $file_name;
+
+			//Resize image to max 700 width keeping aspect ratio
+			$image = Image::make(Input::file($image_name)->getRealPath())->resize(140, null, function ($constraint) {
+				$constraint->aspectRatio();
+				$constraint->upsize();
+			})->save($real_path);
+
+			$input[$image_name . '_thumb'] = $public_path;
+
+			//-------------------------------------------------------------------------------------
+			// Image full size
+			//-------------------------------------------------------------------------------------
+
+			$file_name = $rdm . '_full_' .  $input[$image_name]->getClientOriginalName();
+
+			$public_path = $public_path_base . $file_name;
+			$real_path = $real_path_base . $file_name;
+
+			//Resize image to max 700 width keeping aspect ratio
+			$image = Image::make(Input::file($image_name))->save($real_path);
+
+			$input[$image_name . '_full'] = $public_path;
+
+			//-------------------------------------------------------------------------------------
+		}
+
+		return $input;
+	}
+
+	protected function addMarketMenu($market)
+	{
+		$id = Auth::id();
+		$temp = array();
+
+		//Adds link to edit market if it's created by logged in user
+		if($id == $market->createdByUser)
+		{
+			$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', [$market->id]));
+			$temp[] = array('text' => 'Avslutad', 'href' => '#');
+		}
+
+		//TODO: Add links to block seller and/or add
+		$temp[] = array('text' => 'Dölj annons', 'href' => '#');
+		$temp[] = array('text' => 'Dölj säljare', 'href' => '#');
+
+		$market['marketmenu'] = $temp;
+	}
 
 }

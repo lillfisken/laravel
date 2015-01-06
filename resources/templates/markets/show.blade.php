@@ -10,8 +10,9 @@
 		
 <div id="market-left" class="layout">
 	<div id="market-detail" class="layout">
-		<h1>{{ $market->title }}</h1>
-		
+		<h1>{{ $market->title }} </h1>
+		@include('markets._marketmenu')
+
 		<div class="market-detail-images">
 			@if(isset($market->image1_std))
 				<img class="market-detail-big-image"  src="{{ $market->image1_std }}" id="bigImage" />

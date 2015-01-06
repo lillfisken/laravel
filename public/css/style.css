@@ -313,18 +313,16 @@
 		background-color: #d9d9d9;
 	}
 	
-	.market-list-row2,
 	.market-list-rows-image,
 	.market-list-rows-desc,
 	.market-list-rows-price,
-	.market-list-rows-seller,
-	.market-list-rows-option{
+	.market-list-rows-seller {
 		/*border: 1px solid black;*/
 		padding: 2px;
 		margin: 2px;
 		overflow: hidden;
 	}
-	
+
 	.market-list-container{
 		display: block;
 		width: auto;
@@ -334,6 +332,9 @@
 	.market-list-row2{
 		padding: 5px 2px;
 		margin: 0;
+		overflow: visible;
+		padding: 2px;
+		margin: 2px;
 		/*border-radius: 2px;*/
 	}
 	
@@ -361,6 +362,9 @@
 	.market-list-rows-option{
 		width: auto;
 		float: right;
+		padding: 2px;
+		margin: 2px;
+		overflow: visible;
 	}
 	
 /*-----------------------------------------------*/
@@ -405,6 +409,87 @@
     background-color: #516177;
     /*border-radius: 2px;*/
 }
+
+	/*----- Menu For Market -----*/
+	.menu {
+		width:1000px;
+		margin:0;
+	}
+
+	.market-menu li {
+		margin:0;
+		list-style:none;
+	}
+
+	.market-menu > ul {
+		margin-top: 0;
+		margin-right: 0;
+		margin-left: auto;
+		margin-bottom: auto;
+		-webkit-padding-start: 10px;
+	}
+
+	.market-menu a {
+		/*Text color of menu item*/
+		color: black;
+	}
+
+	.market-menu li:hover > a, .menu .current-item > a {
+		text-decoration:none;
+	}
+
+	/*----- Top Level -----*/
+	.market-menu > ul > li {
+		/*float:left;*/
+		display:inline-block;
+		position:relative;
+	}
+
+	.market-menu > ul > li > a {
+		padding:5px;
+		display:inline-block;
+	}
+
+	.market-menu > ul > li:hover > a,
+	.market-menu > ul > .current-item > a {
+		/*background: blue;*/
+	}
+
+	/*----- Bottom Level -----*/
+	.market-menu li:hover .market-sub-menu {
+		z-index:1;
+		opacity:1;
+	}
+
+	.market-sub-menu {
+		width: auto;
+		padding: 0;
+		position:absolute;
+		top:100%;
+		right:0;
+		z-index:-1;
+		/* Hides the sub-menu */
+		opacity:0;
+		background: white ;
+		border: 2px solid #516177;
+	}
+
+	.market-sub-menu li {
+		display:block;
+		white-space:nowrap;
+	}
+
+	.market-sub-menu li a {
+		padding: 10px;
+		display: block;
+		text-decoration: none;
+		color: #516177;
+	}
+
+	.market-sub-menu li a:hover, .sub-menu .current-item a {
+		background: #516177;
+		color: white;
+	}
 
 /*-----------------------------------------------*/
 /* Btn search

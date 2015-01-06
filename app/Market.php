@@ -42,6 +42,7 @@ class Market extends Model {
 	protected $table = 'markets';
 
 	protected $fillable = [
+		'createdByUser',
 		'title', 
 		'description', 
 		'price',

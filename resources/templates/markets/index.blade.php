@@ -40,13 +40,7 @@
 		
 		<div class="market-list-row2 @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
 			<div class="market-list-rows-option">
-				<a href="{{ route('markets.edit', [$market->id]) }}">
-					<div class="btn-menu">
-					    <div class="menu-bar"></div>
-					    <div class="menu-bar"></div>
-					    <div class="menu-bar"></div>
-					</div>
-				</a>
+				@include('markets._marketmenu')
 			</div>
 					
 			<a href="{{ route('markets.show', $market->id) }}" class="market-list-container">
@@ -55,8 +49,12 @@
 				</div>
 						
 				<div class="market-list-rows-seller">
-					{{ $market->user->username or ''}}<br/>
-					{{ $market->user->city or ''}}
+					<p>
+						{{ $market->user->username or ''}}<br/>
+					</p>
+					<p>
+						{{ $market->user->city or ''}}
+					</p>
 				</div>
 							
 				<div class="market-list-rows-price">

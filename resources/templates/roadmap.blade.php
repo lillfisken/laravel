@@ -9,20 +9,14 @@
 	<p>Tänkt utveckling för sidan, preliminär</p>
 	<hr />
 	<p>
-		Koppla samman annonser och användare<br />
-		->  <br />
-	</p>
-	<hr />
-	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
-		-> Växling, visning av alla bilder<br />
 	</p>
 	<hr />
 	<p>
 		"Menyer" kopplade till respektive annons<br />
 		-> Ändra <br />
-		-> Radera <br />
+		-> Radera? <br />
 		-> Blockera säljare/annons <br />
 		
 	</p>
