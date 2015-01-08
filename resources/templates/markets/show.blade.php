@@ -10,8 +10,10 @@
 		
 <div id="market-left" class="layout">
 	<div id="market-detail" class="layout">
-		<h1>{{ $market->title }} </h1>
-		@include('markets._marketmenu')
+		<div class="market-title">
+			<h1 class="marketmenu-title"> {{ $market->title }} </h1>
+			<div class="marketmenu-right"> @include('markets._marketmenu') </div>
+		</div>
 
 		<div class="market-detail-images">
 			@if(isset($market->image1_std))
@@ -53,13 +55,17 @@
 	</div>
 				
 	<div id="market-forum" class="layout">
-		<h1>Frågor</h1>	
+		<h1 class="market-title" >Frågor</h1>
+		<p>
+			Diskussion om annonsen, öpnnafrågor om säljaren valt att ha det, förvalt.
+		</p>
 	</div>
 	
 </div>
 			
 <div id="market-right" class="layout">
 	<div id="market-price-info" class="layout">
+		<h2  class="market-title">Pris</h2>
 		<h2>{!! $market->price !!} Sek</h2>
 		<br />
 		{{ $market->number_of_items }} st till försäljning<br />
@@ -68,7 +74,7 @@
 	</div>
 	
 	<div id="market-seller-info" class="layout">
-		<h2>Säljare</h2>
+		<h2  class="market-title" >Säljare</h2>
 		{{ $market->user->username or 'null'}}<br />
 		{{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
 		{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser <- Not implemented yet<br />
@@ -77,14 +83,6 @@
 		Skicka pm <- Not implemented yet
 	</div>
 	<hr />
-	@if(Auth::check())
-        <div>
-            {!! Form::open(['url' => '/markets/' . $market->id . '/edit', 'method'=>'GET']) !!}
-                {!! Form::submit('Redigera', array('class' => 'btn-right')); !!}
-            {!! Form::close() !!}
-            <!-- <a href="{{ route('markets.edit', $market->id) }}">Ändra</a> -->
-        </div>
-	@endif
 </div>
 
 @stop

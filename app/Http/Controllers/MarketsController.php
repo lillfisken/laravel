@@ -323,21 +323,22 @@ class MarketsController extends ControllerMarket {
 
 	protected function addMarketMenu($market)
 	{
-		$id = Auth::id();
-		$temp = array();
+		if(Auth::check()) {
+			$id = Auth::id();
+			$temp = array();
 
-		//Adds link to edit market if it's created by logged in user
-		if($id == $market->createdByUser)
-		{
-			$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', [$market->id]));
-			$temp[] = array('text' => 'Avslutad', 'href' => '#');
+			//Adds link to edit market if it's created by logged in user
+			if ($id == $market->createdByUser) {
+				$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', [$market->id]));
+				$temp[] = array('text' => 'Avslutad', 'href' => '#');
+			}
+
+			//TODO: Add links to block seller and/or add
+			$temp[] = array('text' => 'Dölj annons', 'href' => '#');
+			$temp[] = array('text' => 'Dölj säljare', 'href' => '#');
+
+			$market['marketmenu'] = $temp;
 		}
-
-		//TODO: Add links to block seller and/or add
-		$temp[] = array('text' => 'Dölj annons', 'href' => '#');
-		$temp[] = array('text' => 'Dölj säljare', 'href' => '#');
-
-		$market['marketmenu'] = $temp;
 	}
 
 }

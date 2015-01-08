@@ -75,12 +75,6 @@ class AccountController extends Controller {
 //                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
 //        } else {
 
-            // create our user data for the authentication
-            $userdata = array(
-                'email' 	=> Input::get('email'),
-                'password' 	=> Input::get('password')
-            );
-
             $remember = false;
 
             if(Input::has('remember'))
@@ -88,9 +82,9 @@ class AccountController extends Controller {
                 $remember = true;
             }
 
-            //TODO:Add remember me
             // attempt to do the login
-            if (Auth::attempt($userdata, $remember)) {
+            if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), $remember))
+            {
 
                 // validation successful!
                 // redirect them to the secure section or whatever
