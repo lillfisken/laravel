@@ -26,21 +26,25 @@
 					@include('layout.menu')
 				</div>
 			</div>
-			
-			<!--
+
+			{{--
 			<div class="row-divider"></div>	
 			<div id="banner1" class="layout">
 				@include ('layout.banner1')
-			</div>
-				
+			--}}
+
+			{{--
 			<div id="banner2" class="layout">
-				@include('layout.banner2')	
+				@include('layout.banner2')
 			</div>
-				
-			<div id="banner3" class="layout">
-				@include('layout.banner3')	
+			--}}
+
+			{{--
+        	<div id="banner3" class="layout">
+            	@include('layout.banner3')
 			</div>
-			-->
+			--}}
+
 			<div class="row-divider"></div>
 
 			@if(Session::has('message'))
@@ -53,16 +57,17 @@
 				</div>
 			</div>
 					
-			<!--
+			{{--
 			<div class="row-divider"></div>
 			<div id="banner4" class="layout">
-				@include('layout.banner4')	
+				@include('layout.banner4')
 			</div>
-			-->
+			--}}
+
 			<div class="row-divider"></div>	
 		
 			<div id="footer" class="layout row">
-					@include('layout.footer')
+				@include('layout.footer')
 			</div>
 		</div>	
 	</body>

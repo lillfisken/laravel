@@ -12,23 +12,51 @@
 	<!-- Menu-->
 
 	<div class="market-list-menu">
-		{!! Form::open(array('url' => 'foo/bar')) !!}
-		
-		     Säljes {!! Form::checkbox('name', 'saljes', true); !!}
-		     Köpes {!! Form::checkbox('name', 'kopes', true); !!}
-		     Bytes {!! Form::checkbox('name', 'bytes', true); !!}
-		     Skänkes {!! Form::checkbox('name', 'skankes', true); !!}
-		     Samköp {!! Form::checkbox('name', 'samkop', true); !!}
-		     Tjänst erbjudes {!! Form::checkbox('name', 'tjanst_erbjudes', true); !!}
-		     Tjänst sökes {!! Form::checkbox('name', 'tjanst_sökes', true); !!}
-		     Anställning {!! Form::checkbox('name', 'anstallning', true); !!}
-		     Tips {!! Form::checkbox('name', 'tips', true); !!}
-			<hr />
-			Visa avslutade annonser {!! Form::checkbox('name', 'ended', false); !!}
-			Visa dolda annonser {!! Form::checkbox('name', 'hiddenAds', false); !!}
-			Visa annonser från dolda säljare {!! Form::checkbox('name', 'hiddenSellers', false); !!}
-		     {!! Form::submit('Uppdatera', array('class' => 'btn-right')); !!}
-			
+		{!! Form::open(array('route' => 'markets.filter', 'method' => 'get')) !!}
+			<ul class="menu-row">
+				<li class="menu-item">
+					{!! Form::label('saljes', 'Säljes') !!} {!! Form::checkbox('saljes', 1,  true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('kopes', 'Köpes') !!} {!! Form::checkbox('kopes', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('bytes', 'Bytes') !!} {!! Form::checkbox('bytes', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('skankes', 'Skänkes') !!} {!! Form::checkbox('skankes', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('samkop', 'Samköp') !!} {!! Form::checkbox('samkop', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('tjanst_erbjudes', 'Tjänst erbjudes') !!} {!! Form::checkbox('tjanst_erbjudes', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('tjanst_sökes', 'Tjänst sökes') !!} {!! Form::checkbox('tjanst_sökes', 1, true); !!}
+				</li>
+				<li class="menu-item">
+					{!! Form::label('anstallning', 'Anställning') !!} {!! Form::checkbox('anstallning', 1, true); !!}
+				</li>
+				<li class="menu-item menu-last">
+					{!! Form::label('tips', 'Tips') !!} {!! Form::checkbox('tips', 1, true); !!}
+				</li>
+				<div class="hr"></div>
+				<li class="menu-item">
+					{!! Form::label('ended', 'Visa avslutade annonser') !!} {!! Form::checkbox('ended', 1, false); !!}
+				</li>
+				@if(Auth::check())
+					<li class="menu-item">
+						{!! Form::label('hiddenAds', 'Visa dolda annonser') !!} {!! Form::checkbox('hiddenAds', 1, false); !!}
+					</li>
+					<li class="menu-item">
+						{!! Form::label('hiddenSellers', 'Visa annonser från dolda säljare') !!} {!! Form::checkbox('hiddenSellers', 1, false); !!}
+					</li>
+				@endif
+				<li class="menu-item">
+				{!! Form::submit('Uppdatera', array('class' => 'btn-right')); !!}
+				</li>
+			</ul>
 		{!! Form::close() !!}
 	</div>
 	
@@ -50,7 +78,7 @@
 						
 				<div class="market-list-rows-seller">
 					<p>
-						{{ $market->user->username or ''}}<br/>
+						{{ $market->user->username or 'Unable to get username'}}<br/>
 					</p>
 					<p>
 						{{ $market->user->city or ''}}
@@ -63,7 +91,7 @@
 				</div>
 							
 				<div class="market-list-rows-desc">
-					<h3>{{ str_limit($market->title, 30) }}</h3><br/>
+					<h3>{{ str_limit($market->title , 30) }}</h3><br/>
 					{!! str_limit($market->description, 500) !!}
 				</div>
 			</a>

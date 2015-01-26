@@ -394,9 +394,9 @@ class MarketsTableSeeder extends Seeder {
 			'image6_small'
 			'endAt'
 			*/
-			'created_at' => '2015-01-23 19:50:40',
-			'updated_at' => '2015-01-23 19:50:40',
-			'deleted_at' => '2015-01-24 19:50:40',
+			'created_at' => '2015-01-02 18:42:55',
+			'update_at' => '2015-01-05 18:42:55',
+			'deleted_at'=> '2015-01-20 18:42:55',
 
 			'type' => 'skankes',
 			'contact_options' => 'mail',
@@ -405,7 +405,7 @@ class MarketsTableSeeder extends Seeder {
 
 		$raderad2 = Market::create(array(
 			/*id*/
-			'createdByUser'	=>	'4',
+			'createdByUser'	=>	'2',
 			'title'	=>	'Raderad annons 2',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'550.00',
@@ -426,16 +426,15 @@ class MarketsTableSeeder extends Seeder {
 			'image6_small'
 			'endAt'
 			*/
-			'created_at' => '2015-01-23 19:50:40',
-			'updated_at' => '2015-01-23 19:50:40',
-			'deleted_at' => '2015-01-24 19:50:40',
+			'created_at' => '2015-01-02 18:42:55',
+			'update_at' => '2015-01-05 18:42:55',
+			'deleted_at'=> '2015-01-20 18:42:55',
 
-			'type' => 'skankes',
+			'type' => 'saljes',
 			'contact_options' => 'mail',
 
 		));
-		
-	
+
 	}
 }
 

@@ -1,9 +1,15 @@
 <?php namespace market;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Market extends Model {
-	
+
+	use SoftDeletes;
+
+	protected $dates = ['deleted_at'];
+	protected $softDelete = true;
+
 	/*
 	id
 	createdByUser
@@ -69,6 +75,10 @@ class Market extends Model {
 		'image6_thumb',
 		'image6_std',
 		'image6_full',
+
+		'created_at',
+		'update_at',
+		'deleted_at',
 	];
 
 	/*

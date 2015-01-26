@@ -24,13 +24,12 @@
 |
 */
 
-Route::get('/dev', function(){
-	dd(market\User::find('16'));
-});
+
 
 Route::get('/', 'MarketsController@index');
 
 Route::get('markets', ['as' => 'markets.index', 'uses' => 'MarketsController@index']);
+Route::get('markets/filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter'] );
 Route::get('markets/create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
 Route::post('markets', ['as' => 'markets.store', 'uses' => 'MarketsController@store', 'middleware' => 'auth']);
 Route::get('markets/{markets}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
@@ -42,6 +41,9 @@ Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@sea
 // Development routes
 Route::get('home', 'HomeController@index');
 Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'HomeController@road', 'middleware' => 'auth']);
+Route::get('/dev', function(){
+	dd(market\User::find('16'));
+});
 
 /*
 |--------------------------------------------------------------------------

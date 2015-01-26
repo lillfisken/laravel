@@ -1,11 +1,6 @@
 	/*---------------------------------------
 	Basic layout
 	---------------------------------------*/
-	margin0 {
-		margin: 0;
-		padding: 0px;
-	}
-	
 	html, body {
 		height: 100%;
 		margin: 0;
@@ -13,8 +8,12 @@
 	}
 	
 	body {
-  		font-family:;
+  		font-family: "Times new roman";
   		color: #516177;
+	}
+
+	form {
+		margin: 0;
 	}
 	/*
 	.table{
@@ -26,6 +25,14 @@
 	    display: table-row;
 	    height: 5px;
 	    content: ' '; /*???*/
+	}
+
+	.hr {
+		height: 1px;
+		width: 100%;
+		background-color: #516177;
+		padding: 0;
+		margin: 2px;
 	}
 	
 	#menu,
@@ -326,8 +333,12 @@
 	
 	.market-list-menu{
 		border-bottom: 1px solid #516177;
-		padding: 6px;
-		margin-bottom: 6px;
+		/*padding: 2px;*/
+		/*margin-bottom: 6px;*/
+	}
+
+	.market-list-menu input[type='checkbox'] {
+		/*display: none;*/
 	}
 		
 	.row-dark{

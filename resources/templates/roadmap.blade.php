@@ -11,6 +11,11 @@
 	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
+		-> Uppdetering av annonser, ladda upp extra bild fungerar inte <br />
+		-> "Dropdown" för annonstyp, eventuellt flera olika sidor för olika typer av annons... <br />
+		-> Byt plats på pris och beskrivning, mindre förvillande. <br />
+		-> Kontaktinformation, förifylld från användarens profil <br/>
+		-> Aktiva annonser/totalt antalannonser
 	</p>
 	<hr />
 	<p>
@@ -106,8 +111,11 @@
 	<hr/>
 	<p>
 		Performance<br />
-		-> Eager loading where applicable<br />
-		->
+		-> Eager loading where applicable??<br />
+		-> Kolla antal sql frågor vid respektive fråga
+	</p>
+	<p>
+		API för externa verktyg att ladda upp och hantera annonser.<br/>
 	</p>
 	
 @stop

@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use market\Market;
 use Illuminate\Http\Request;
 use Input;
-//use Image;
 use market\Http\Requests\CreateMarketRequest;
 use File;
 use DB;
+use PDO;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -42,14 +42,58 @@ class MarketsController extends ControllerMarket {
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
-			$temp = Market::all();
+			//$temp = Market::all();
+
+//			//DEV----------------------------------------------------------------------------------------------------
+//
+//			DB::setFetchMode(PDO::FETCH_ASSOC);
+//
+////			$test2 = Market::with('user')->get();
+////
+////			dd($test2);
+//
+//			$query= DB::table('markets');
+//
+//			$query->select('*');
+////			$query->leftJoin('users', 'markets.createdByUser', '=', 'users.id');
+//
+//			$query->where(function($queryInner){
+//				$queryInner->select('*')->from('users')->where('markets.createdByUser', '=', 'users.id');
+//			});
+//
+////			$query->join('users', function($join) {
+////				$join->on('markets.createdByUser', '=', 'users.id');
+////			});
+//
+////			$query->orderBy('title');
+//
+//			//dd($query);
+//
+//			$temp = $query->get();
+//
+//			DB::setFetchMode(PDO::FETCH_CLASS);
+//
+//			dd($temp);
+//			//DEV----------------------------------------------------------------------------------------------------
+
+
+			//http://stackoverflow.com/questions/26174267/convert-laravel-object-to-array
+//			DB::setFetchMode(PDO::FETCH_ASSOC);
+
+			//$temp = DB::table('markets')->select('*')->get();
+
+//			DB::setFetchMode(PDO::FETCH_CLASS);
+
 			//dd($temp);
 
-			echo("<script>console.log('MarketsController->index');</script>");
+			//echo("<script>console.log('MarketsController->index');</script>");
+
+			$temp = Market::select()->with('User')->get();
 
 			//Set menu for each market
 			foreach ($temp as $market)
 			{
+				//dd(gettype($market));
 				$this->addMarketMenu($market);
 			}
 
@@ -60,7 +104,85 @@ class MarketsController extends ControllerMarket {
 			$temp = Market::all();
 			//$temp = dd($temp);
 		}
-		
+
+		//dd($market);
+
+		return view('markets.index', ['markets' => $temp]);
+	}
+
+	public function filter()
+	{
+		//TODO:: Move all all market type to separate file/enum and update db
+		// Begining of building db query
+		$query = Market::select('*');
+
+		// Remove deleted markets from query if box checked
+		if(Input::has('ended'))
+		{
+			$query->withTrashed();
+		}
+
+//		// Add type af markets to query depending on which boxes are ticked
+		$query->where(function($query) {
+
+
+			if (Input::has('saljes')) {
+				$query->orWhere('type', '=', 'saljes');
+			}
+
+			if (Input::has('kopes')) {
+				$query->orWhere('type', '=', 'kopes');
+			}
+
+			if (Input::has('bytes')) {
+				$query->orWhere('type', '=', 'bytes');
+			}
+
+			if (Input::has('skankes')) {
+				$query->orWhere('type', '=', 'skankes');
+			}
+
+			if (Input::has('samkop')) {
+				$query->orWhere('type', '=', 'samkop');
+			}
+
+			if (Input::has('tjanst_erbjudes')) {
+				$query->orWhere('type', '=', 'tjanst_erbjudes');
+			}
+
+			if (Input::has('tjanst_sökes')) {
+				$query->orWhere('type', '=', 'tjanst_sökes');
+			}
+
+			if (Input::has('anstallning')) {
+				$query->orWhere('type', '=', 'anstallning');
+			}
+
+			if (Input::has('tips')) {
+				$query->orWhere('type', '=', 'tips');
+			}
+		});
+
+		if (Input::has('hiddenAds')) {
+			//TODO: Check for hidden markets
+		}
+
+		if (Input::has('hiddenSellers')) {
+			//TODO: Check for hidden sellers
+		}
+
+		$temp = $query->get();
+
+		// add a menu to each market if user is logged in
+		if(Auth::check())
+		{
+			foreach ($temp as $market)
+			{
+				$this->addMarketMenu($market);
+			}
+		}
+
+		Input::flash();
 		return view('markets.index', ['markets' => $temp]);
 	}
 
@@ -323,22 +445,41 @@ class MarketsController extends ControllerMarket {
 
 	protected function addMarketMenu($market)
 	{
+		//dd($market);
+
 		if(Auth::check()) {
 			$id = Auth::id();
 			$temp = array();
-
+			//dd($id);
 			//Adds link to edit market if it's created by logged in user
-			if ($id == $market->createdByUser) {
-				$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', [$market->id]));
+			if ($id == $market->createdByUser ) {
+				$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id ));
 				$temp[] = array('text' => 'Avslutad', 'href' => '#');
 			}
+
 
 			//TODO: Add links to block seller and/or add
 			$temp[] = array('text' => 'Dölj annons', 'href' => '#');
 			$temp[] = array('text' => 'Dölj säljare', 'href' => '#');
 
+//			dd($temp);
+//			dd(gettype($market));
+//			dd($market);
+
+//			$market->offsetSet('marketmenu', $temp);
+
+
+
+
 			$market['marketmenu'] = $temp;
+
+//			dd($market);
 		}
+	}
+
+	protected function filterMarket()
+	{
+
 	}
 
 }
