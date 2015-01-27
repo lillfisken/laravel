@@ -6,6 +6,7 @@ use market\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
+use market\Market;
 use Redirect;
 use market\User;
 use Illuminate\Http\Request;
@@ -180,6 +181,9 @@ class AccountController extends Controller {
     {
         $tempuser = User::where('username' , $user)->firstOrFail();
         //dd($tempuser);
-        return view('account.profile', ['user' => $tempuser]);
+        $markets = Market::where('createdByUser', '=', $tempuser->id)->get();
+        //dd($markets);
+
+        return view('account.profile', ['user' => $tempuser, 'markets' => $markets]);
     }
 }

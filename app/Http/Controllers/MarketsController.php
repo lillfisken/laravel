@@ -457,10 +457,10 @@ class MarketsController extends ControllerMarket {
 				$temp[] = array('text' => 'Avslutad', 'href' => '#');
 			}
 
-
-			//TODO: Add links to block seller and/or add
-			$temp[] = array('text' => 'Dölj annons', 'href' => '#');
-			$temp[] = array('text' => 'Dölj säljare', 'href' => '#');
+			//TODO: Check if market is blocked, then ad link to unblock instead
+			$temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id ));
+			//TODO: Check if market is seller, then ad link to unblock instead
+			$temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser ));
 
 //			dd($temp);
 //			dd(gettype($market));
