@@ -17,6 +17,8 @@
 		-> Kontaktinformation, förifylld från användarens profil <br/>
 		-> Aktiva annonser/totalt antalannonser
 		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc
+		-> Lägg till "avslutad" i annonslistning om varan är avslutad
+		-> Lägg till orsak till avslutad annons i datljvy
 	</p>
 	<hr />
 	<p>
