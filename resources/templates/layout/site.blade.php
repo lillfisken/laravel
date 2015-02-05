@@ -27,6 +27,8 @@
 				</div>
 			</div>
 
+			<div class="row-divider"></div>
+
 			{{--
 			<div class="row-divider"></div>	
 			<div id="banner1" class="layout">
@@ -45,12 +47,23 @@
 			</div>
 			--}}
 
-			<div class="row-divider"></div>
+
 
 			@if(Session::has('message'))
                 <p class="alert">{{ Session::get('message') }}</p>
+				<div class="row-divider"></div>
             @endif
-			
+
+			@if (array_key_exists('menu2', View::getSections()))
+				<div id="menu2" class="margin0">
+					<div class="borderbox">
+						@yield('menu2')
+					</div>
+				</div>
+
+				<div class="row-divider"></div>
+			@endif
+
 			<div id="content" class="margin0">
 				<div class="borderbox">
 					@yield('content')
