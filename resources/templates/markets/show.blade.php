@@ -67,6 +67,10 @@
 	<div id="market-price-info" class="layout">
 		<h2  class="market-title">Pris</h2>
 		<h2>{!! $market->price !!} Sek</h2>
+		<h3>@if($market->deleted_at != null)
+			Avslutad
+			@endif
+		</h3>
 		<br />
 		{{ $market->number_of_items }} st till försäljning<br />
 		<br />
@@ -75,10 +79,10 @@
 	
 	<div id="market-seller-info" class="layout">
 		<h2  class="market-title" >Säljare</h2>
-		{{ $market->user->username or 'null'}}<br />
+		<h3>{{ $market->user->username or 'null'}}</h3>
 		{{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
-		{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser <- Not implemented yet<br />
-		Omdöme 4,9 (2364) <- Not implemented yet <br />
+		{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser<br />
+		Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />
 		<br />
 		Skicka pm <- Not implemented yet
 	</div>

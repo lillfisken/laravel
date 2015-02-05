@@ -2,13 +2,15 @@
 
 use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use market\Market;
 use Illuminate\Http\Request;
 use Input;
 use market\Http\Requests\CreateMarketRequest;
 use File;
 use DB;
-use PDO;
+use Session;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -42,62 +44,16 @@ class MarketsController extends ControllerMarket {
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
-			//$temp = Market::all();
-
-//			//DEV----------------------------------------------------------------------------------------------------
-//
-//			DB::setFetchMode(PDO::FETCH_ASSOC);
-//
-////			$test2 = Market::with('user')->get();
-////
-////			dd($test2);
-//
-//			$query= DB::table('markets');
-//
-//			$query->select('*');
-////			$query->leftJoin('users', 'markets.createdByUser', '=', 'users.id');
-//
-//			$query->where(function($queryInner){
-//				$queryInner->select('*')->from('users')->where('markets.createdByUser', '=', 'users.id');
-//			});
-//
-////			$query->join('users', function($join) {
-////				$join->on('markets.createdByUser', '=', 'users.id');
-////			});
-//
-////			$query->orderBy('title');
-//
-//			//dd($query);
-//
-//			$temp = $query->get();
-//
-//			DB::setFetchMode(PDO::FETCH_CLASS);
-//
-//			dd($temp);
-//			//DEV----------------------------------------------------------------------------------------------------
-
-
-			//http://stackoverflow.com/questions/26174267/convert-laravel-object-to-array
-//			DB::setFetchMode(PDO::FETCH_ASSOC);
-
-			//$temp = DB::table('markets')->select('*')->get();
-
-//			DB::setFetchMode(PDO::FETCH_CLASS);
-
-			//dd($temp);
-
-			//echo("<script>console.log('MarketsController->index');</script>");
 
 			$temp = Market::select()->with('User')->get();
 
 			//Set menu for each market
 			foreach ($temp as $market)
 			{
-				//dd(gettype($market));
 				$this->addMarketMenu($market);
 			}
 
-			//dd($temp);
+			//echo("<script>console.log('MarketsController->index');</script>");
 		}
 		else {
 			//Get all markets from db
@@ -205,29 +161,10 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function store(CreateMarketRequest $request, Market $market)
 	{
-		/*
-		Input :all
-		
-		If input has file x
-			Create directory if not exist based on year and month
-			Save full image path as variable
-			Save public image path as variable
-			Resize image and save it to the path
-				thumb, std and full
-			add public path to input
-			
-		create model from input
-		
-		redirekt to list
-		*/
-
-		//dd(Auth::id());
-		
+		//TODO: Validation
 		$input = Input::all();
-		//dd($input);
 
 		$input['createdByUser'] = Auth::id();
-		//dd($input);
 
 		$input = $this->saveImage($input, 'image1');
 		$input = $this->saveImage($input, 'image2');
@@ -236,8 +173,6 @@ class MarketsController extends ControllerMarket {
 		$input = $this->saveImage($input, 'image5');
 		$input = $this->saveImage($input, 'image6');
 
-		//dd($input);
-		
 		$market->create($input);
 		
 		return redirect()->route('markets.index');
@@ -252,13 +187,12 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function show($market)
 	{
-		echo("<script>console.log('Markets controller -> show');</script>");
-		$temp = Market::with('user', 'user.markets')->find($market);
+		//dd($market);
+		//echo("<script>console.log('Markets controller -> show');</script>");
+		$temp = Market::withTrashed()->with('user', 'user.markets')->find($market);
 		$this->addMarketMenu($temp);
-		//dd($temp->user->markets);
-		$tempCount = $temp->getUserMarketsCount;
-		echo("<script>console.log('Count: " .$tempCount."');</script>");
-
+		//$tempCount = $temp->getUserMarketsCount;
+		//echo("<script>console.log('Count: " .$tempCount."');</script>");
 
 		return view('markets.show', ['market' => $temp]);
 	}
@@ -272,12 +206,8 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function edit($market)
 	{
-		//dd($market);
-		
 		$temp = Market::find($market);
-		//$temp['image1'] = 'testpath';
-		
-		//dd($temp);
+
 		return view('markets.edit', ['market' => $temp]);
 	}
 
@@ -290,24 +220,20 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function update( $id , Request $request)
 	{
+		//TODO: Validation
 		$input = Input::all();
 		$temp = Market::find($id);
-		/*
-		dd($temp);*/
-		
+
+		//TODO: Not updating images
 		$input = $this->saveImage($input, 'image1');
 		$input = $this->saveImage($input, 'image2');
 		$input = $this->saveImage($input, 'image3');
 		$input = $this->saveImage($input, 'image4');
 		$input = $this->saveImage($input, 'image5');
 		$input = $this->saveImage($input, 'image6');
-		
-		//dd($temp);
-		
+
 		$temp->fill($input)->save();
-		
-		//dd($temp);
-		
+
 		return redirect()->route('markets.index');
 	}
 
@@ -318,9 +244,65 @@ class MarketsController extends ControllerMarket {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function delete($market, Request $request)
 	{
-		//
+//		$uri = $request->getBasePath();
+//		dd($uri);
+		//dd($market);
+
+		Session::put('uri', Session::get('_previous'));
+
+		$reasons = ['Varan såld' => 'Varan såld', 'Övrigt' => 'Övrigt'];
+
+		return view('markets.delete', ['markets' => $market, 'reasons' => $reasons]);
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 * DELETE /markets/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy()
+	{
+//		return Redirect::to('foobar');
+//		echo 'hfeujzhdaoszk';
+		$id = Input::get('market');
+		//$market = Market::where( 'id', '=', $id )->firstOrFail();
+		$market = Market::where('id', '=', $id)->firstorfail();
+		//dd($id);
+
+		//$reason = Input::get('reason);
+		//TODO: Add deletion reason to db
+		//dd($market);
+
+		$market->delete();
+
+		//$uri = Input::get('uri');
+		//return URL::to('', array(), false);
+
+		$uri = Session::get('uri');
+		//dd($uri);
+
+		if(isset($uri))
+		{
+			//dd($uri);
+			if(isset($uri['url']))
+			{
+				return redirect($uri['url']);
+			}
+			return redirect()->route('markets.index');
+			//return URL::to($uri);
+
+			//return redirect('markets/public');
+		}
+		else
+		{
+			//dd('redirect route');
+			return redirect()->route('markets.index');
+		}
+
 	}
 
     public function search()
@@ -331,20 +313,20 @@ class MarketsController extends ControllerMarket {
             //inspired by:
             //http://stackoverflow.com/questions/19612180/creating-search-functionality-with-laravel-4
 
-            $query = DB::table('markets');
-
-            $query = $query->where('title', 'LIKE', '%' . $search . '%');
-
-            $query = $query->orWhere('description', 'LIKE', '%' . $search . '%');
-
-            //dd($query);
+			$query = Market::where('title', 'LIKE', '%' . $search . '%')
+				->orWhere('description', 'LIKE', '%' . $search . '%');
 
             $result = $query->get();
 
-            //dd($result);
+			//Set menu for each market
+			foreach ($result as $market)
+			{
+				$this->addMarketMenu($market);
+			}
 
             return view('markets.index', ['markets' => $result]);
         }
+
 
         return 'Searchterm is missing';
     }
@@ -454,7 +436,7 @@ class MarketsController extends ControllerMarket {
 			//Adds link to edit market if it's created by logged in user
 			if ($id == $market->createdByUser ) {
 				$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id ));
-				$temp[] = array('text' => 'Avslutad', 'href' => '#');
+				$temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id ));
 			}
 
 			//TODO: Check if market is blocked, then ad link to unblock instead
@@ -467,9 +449,6 @@ class MarketsController extends ControllerMarket {
 //			dd($market);
 
 //			$market->offsetSet('marketmenu', $temp);
-
-
-
 
 			$market['marketmenu'] = $temp;
 

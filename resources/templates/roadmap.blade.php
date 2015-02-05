@@ -16,6 +16,7 @@
 		-> Byt plats på pris och beskrivning, mindre förvillande. <br />
 		-> Kontaktinformation, förifylld från användarens profil <br/>
 		-> Aktiva annonser/totalt antalannonser
+		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc
 	</p>
 	<hr />
 	<p>
@@ -81,9 +82,6 @@
 	<hr/>
 	<p>
 	    STOR Säkerhetsgenomgång<br/>
-	    -> Inloggad/ej inloggad<br/>
-	    -> Ej tillgång till andra användares data<br/>
-	    -> Cross site request forgery<br/>
 	    -> SQL Injection
 	</p>
 	<hr/>

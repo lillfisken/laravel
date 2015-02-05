@@ -10,8 +10,13 @@
 */
 //TODO:Create model bindning and alter controllers
 //http://laravel.com/docs/master/routing#route-model-binding
-//Route::model('market', 'market\Market');
+Route::model('market', 'market\Market');
 //Route::model('user', 'market\User');
+//Route::bind('market', function($id, $route)
+//{
+////	dd(market\Market::withTrashed()->find($id));
+//	return market\Market::withTrashed()->find($id);
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +40,25 @@ Route::post('markets', ['as' => 'markets.store', 'uses' => 'MarketsController@st
 Route::get('markets/{markets}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
 Route::get('markets/{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
 Route::patch('markets/{markets}', ['as' => 'markets.update', 'uses' => 'MarketsController@update', 'middleware' => 'auth']);
+Route::get('markets/delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
 Route::delete('markets', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
 Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
 
 // Development routes
-Route::get('home', 'HomeController@index');
-Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'HomeController@road', 'middleware' => 'auth']);
 Route::get('/dev', function(){
-	dd(market\User::find('16'));
+	return Redirect::to('foobar');
+
+	$m = \market\Market::find('106');
+	$countActive = $m->user->getUserActiveMarketsCount();
+	$countAll = $m->user->getUserTotalMarketsCount();
+	dd('Count active: ' . $countActive . '
+	Count all: ' . $countAll);
 });
+Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'DevController@road', 'middleware' => 'auth']);
+Route::get('geturl', ['as' => 'geturl', 'uses' => 'DevController@getUrl', 'middleware' => 'auth']);
+Route::get('session', ['as' => 'session', 'uses' => 'DevController@session', 'middleware' => 'auth']);
+
+
 
 /*
 |--------------------------------------------------------------------------

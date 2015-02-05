@@ -44,8 +44,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function getUserTotalMarketsCount()
 	{
-		echo("<script>console.log('getUserTotalMarketsCount');</script>");
-		return '1563';
+		return Market::withTrashed()->where('createdByUser', '=' , $this->id)->count();
 	}
 
 }

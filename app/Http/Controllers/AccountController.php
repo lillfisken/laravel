@@ -182,6 +182,8 @@ class AccountController extends Controller {
         $tempuser = User::where('username' , $user)->firstOrFail();
         //dd($tempuser);
         $markets = Market::where('createdByUser', '=', $tempuser->id)->get();
+        //TODO: get trashed markets, return and add to view
+        //$trashed = Market::
         //dd($markets);
 
         return view('account.profile', ['user' => $tempuser, 'markets' => $markets]);
