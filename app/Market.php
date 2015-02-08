@@ -97,6 +97,11 @@ class Market extends Model {
 		return $this->belongsTo('market\User', 'createdByUser');
 	}
 
+	public function marketQuestions()
+	{
+		return $this->hasMany('market\MarketQuestion', 'market', 'id');
+	}
+
 
 	
 	

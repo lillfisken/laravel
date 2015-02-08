@@ -47,4 +47,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return Market::withTrashed()->where('createdByUser', '=' , $this->id)->count();
 	}
 
+	public function marketQuestions()
+	{
+		return $this->hasMany('market\MarketQuestion', 'user', 'id');
+	}
+
 }
