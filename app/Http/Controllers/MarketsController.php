@@ -266,8 +266,6 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function destroy()
 	{
-//		return Redirect::to('foobar');
-//		echo 'hfeujzhdaoszk';
 		$id = Input::get('market');
 		//$market = Market::where( 'id', '=', $id )->firstOrFail();
 		$market = Market::where('id', '=', $id)->firstorfail();
@@ -290,6 +288,7 @@ class MarketsController extends ControllerMarket {
 			//dd($uri);
 			if(isset($uri['url']))
 			{
+				//dd($uri['url']);
 				return redirect($uri['url']);
 			}
 			return redirect()->route('markets.index');
@@ -299,7 +298,7 @@ class MarketsController extends ControllerMarket {
 		}
 		else
 		{
-			//dd('redirect route');
+			dd('redirect route');
 			return redirect()->route('markets.index');
 		}
 
