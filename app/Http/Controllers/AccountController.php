@@ -17,7 +17,12 @@ use Hash;
 //use Illuminate\Contracts\Auth\Registrar;
 
 
-class AccountController extends Controller {
+class AccountController extends Controller
+{
+
+    //---------------------------------------------------------------
+
+    //region Login/logout/register
 
 //    /*/**
 //     * The Guard implementation.
@@ -76,31 +81,29 @@ class AccountController extends Controller {
 //                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
 //        } else {
 
-            $remember = false;
+        $remember = false;
 
-            if(Input::has('remember'))
-            {
-                $remember = true;
-            }
+        if (Input::has('remember')) {
+            $remember = true;
+        }
 
-            // attempt to do the login
-            if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), $remember))
-            {
+        // attempt to do the login
+        if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), $remember)) {
 
-                // validation successful!
-                // redirect them to the secure section or whatever
-                // return Redirect::to('secure');
-                // for now we'll just echo success (even though echoing in a controller is bad)
-                //return 'SUCCESS!';
+            // validation successful!
+            // redirect them to the secure section or whatever
+            // return Redirect::to('secure');
+            // for now we'll just echo success (even though echoing in a controller is bad)
+            //return 'SUCCESS!';
 
-                return Redirect::to('/');
+            return Redirect::to('/');
 
-            } else {
+        } else {
 
-                // validation not successful, send back to form
-                return Redirect::route('accounts.login');
-              //TODO:Add error message to redirect
-            }
+            // validation not successful, send back to form
+            return Redirect::route('accounts.login');
+            //TODO:Add error message to redirect
+        }
 
 //        }
 
@@ -129,9 +132,9 @@ class AccountController extends Controller {
     {
         //TODO:Add validation for input
         //TODO:Add registration logic, change Request to new UserNewRequest
-        //TODO:Sen email to new user
         //TODO:Critical Prevent SQL-injection
 
+        //Save new user
         $temp = new User;
         $temp->name = Input::get('name');
         $temp->email = Input::get('email');
@@ -147,15 +150,18 @@ class AccountController extends Controller {
 
         $temp->save();
 
-        //TODO: login new user and redirect to start with message "User created"
+        //Login user
+        Auth::login($temp);
+        //TODO:Sen email to new user
 
-        return redirect()->route('markets.index');
+
+        return redirect()->route('markets.index')->with('message', 'Användare skapad');
     }
 
     /**
      * Handle a registration request for the application.
      *
-     * @param  RegisterRequest  $request
+     * @param  RegisterRequest $request
      * @return Response
      */
 //    public function postRegister(Request $request)
@@ -174,19 +180,272 @@ class AccountController extends Controller {
 //        return redirect($this->redirectPath());
 //    }
 
-    /*
-     * Show user profile
+//endregion
+
+    //---------------------------------------------------------------
+
+    //region Profile
+
+    /* Show user profile
+     *
+     * get 'profile/{user}'
+     * route 'accounts.profile'
+     * middleware 'auth'
+     *
+     * @var user
+     * @return
     */
     public function show($user)
     {
-        $tempuser = User::where('username' , $user)->firstOrFail();
-        //dd($tempuser);
-        $markets = Market::where('createdByUser', '=', $tempuser->id)->get();
-        //TODO: get trashed markets, return and add to view
+        //TODO::Change to show public userprofile
+        $markets = Market::where('createdByUser', '=', $user->id)->get();
 
         $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
-//        dd($trashed);
 
-        return view('account.profile', ['user' => $tempuser, 'markets' => $markets, 'trashed' => $trashed]);
+        return view('account.profile', ['user' => $user, 'markets' => $markets]);
+    }
+
+    //region Market Blocking
+
+    /* Block market in logged in users lists
+     *
+     * get 'profile/blockmarket/{market}'
+     * route 'accounts.blockMarket'
+     * middleware 'auth'
+     *
+     * @var market to block
+     * @return
+    */
+    public function blockMarket($market)
+    {
+        dd('accounts.blockMarket');
+    }
+
+    /* Show user profile
+         *
+         * get 'profile/unblockmarket/{market}'
+         * route 'accounts.unblockMarket'
+         * middleware 'auth'
+         *
+         * @var user
+         * @return
+        */
+    public function unblockMarket($market)
+    {
+        dd('accounts.unblockMarket');
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/blockseller/{user}'
+             * route 'accounts.blockSeller'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function blockSeller($user)
+    {
+        dd('profile/blockseller/{user}');
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/unblockseller/{user}'
+             * route 'accounts.unblockSeller'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function unblockSeller($user)
+    {
+        dd('accounts.unblockSeller');
+    }
+
+    //endregion
+
+    //region Market listings
+
+    /* Show user profile
+             *
+             * get 'profile/watched/{user}'
+             * route accounts.watched'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function watched($user)
+    {
+        return view('account.markets.watched');
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/active/{user}'
+             * route 'accounts.active'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function active($user)
+    {
+        //dd('AccountController@active');
+
+        $markets = Market::where('createdByUser', '=', $user->id)->get();
+
+        foreach ($markets as $market) {
+            $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id));
+            $temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id));
+
+            $market['marketmenu'] = $temp;
+        }
+
+        return view('account.markets.active', ['user' => $user, 'markets' => $markets]);
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/trashed/{user}'
+             * route 'accounts.trashed'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function trashed($user)
+    {
+        //dd('AccountController@trashed');
+        $markets = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
+
+        foreach ($markets as $market) {
+            $temp[] = array('text' => 'Aktivera', 'href' => route('markets.reactivate', $market->id));
+
+            $market['marketmenu'] = $temp;
+
+        }   return view('account.markets.trashed', ['user' => $user, 'markets' => $markets]);
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/blockedmarked/{user}'
+             * route 'accounts.blockedmarked'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function blockedmarket($user)
+    {
+        //dd('AccountController@blockedmarked');
+
+        return view('account.markets.blockedMarkets');
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/blockedseller/{user}'
+             * route 'accounts.blockedseller''
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function blockedseller($user)
+    {
+//        dd('AccountController@blockedseller');
+
+        return view('account.markets.blockedSellers');
+    }
+
+    //endregion
+
+    //region Mail/PM
+    /* Show user profile
+             *
+             * get 'profile/inbox/{user}'
+             * route 'accounts.inbox'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function inbox($user)
+    {
+        //dd('AccountController@inbox');
+        return view('account.message.inbox');
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/draft/{user}'
+             * route 'accounts.draft'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function draft($user)
+    {
+//        dd('AccountController@draft');
+        return view('account.message.draft');
+
+    }
+
+    /* Show user profile
+             *
+             * get 'profile/sent/{user}'
+             * route 'accounts.sent'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function sent($user)
+    {
+//        dd('AccountController@sent')
+        return view('account.message.sent');
+
+    }
+
+//Route::get('profile/trash/{user}', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
+    /* Show user profile
+             *
+             * get 'profile/trash/{user}'
+             * route 'accounts.trash'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function trash($user)
+    {
+//        dd('AccountController@trash');
+        return view('account.message.trash');
+
+    }
+
+    //endregion
+
+    /* Show user settings
+             *
+             * get 'profile/settings/{user}'
+             * route 'accounts.settings'
+             * middleware 'auth'
+             *
+             * @var user
+             * @return
+            */
+    public function settings($user)
+    {
+//        dd('AccountController@settings');
+        return view('account.settings');
+
     }
 }
+    //endregion
+
+    //---------------------------------------------------------------
+

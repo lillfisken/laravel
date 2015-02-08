@@ -68,7 +68,7 @@
 		
 		<div class="market-list-row2 @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
 			<div class="market-list-rows-option">
-				@include('markets._marketmenu')
+				@include('partials._marketmenu')
 			</div>
 					
 			<a href="{{ route('markets.show', $market->id) }}" class="market-list-container">
@@ -86,8 +86,12 @@
 				</div>
 							
 				<div class="market-list-rows-price">
-					<h3>{{ $market->price }} sek</h3><br/>
-					<!--Buy now 2345:--->
+					<h3>{{ $market->price }} sek</h3>
+					Typ(annons, auktion etc)<br/>
+					Typ (köpes, säljes etc)<br/>
+					@if(isset($market->deleted_at))
+						<h3>Avslutad</h3>
+					@endif
 				</div>
 							
 				<div class="market-list-rows-desc">

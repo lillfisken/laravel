@@ -22,11 +22,9 @@
 	</p>
 	<hr />
 	<p>
-		"Menyer" kopplade till respektive annons<br />
-		-> Ändra <br />
-		-> Radera? <br />
-		-> Blockera säljare/annons <br />
-		
+		Köp knapp<br/>
+		-> Ingen editering efter första köp/bud, bara tillägg
+		-> +5 min vid auktion
 	</p>
 	<hr />
 	<p>
@@ -53,33 +51,31 @@
 	<hr />
 	<p>
     	Filter/sökfunktion<br />
-    	-> -> Hela texten klickbar för att välja filter<br />
-    	-> Enkel parametersök <br />
     	-> Avancerad sökning ??? <br />
     	-> Visa dolda annonser/säljare <br />
     	-> Sidvisning sökresultat, antal per sida etc<br />
     	-> Olika visningsalternativ<br />
     	-> Möjlighet att söka med flera ord som inte behöver finnas i föld<br />
-    	-> Se över var standarsökning görs<br />
     </p>
 	<hr />
 	<p>
 		STOR designöversyn<br />
-		-> Radioknappar i skapa annons, koppla samman radioknapp och label<br />
 		-> SEO friendly paths<br />
-		-> Regex? priser 1:- istället för 1.00<br />
+		-> Regex? priser 1:- istället för 1.00, ta bort decimalerna<br />
 		-> Radbrytningar i text från db, spara radbrytningar etc i db<br />
 		-> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")<br />
 		-> Fixa HTAccess för att bli av med "index.php", även market/public<br />
 		-> HTML input encoding to prevent attacks<br />
 		-> Sidvisning sökresultat<br />
-		-> Radera bilder från annons???<br />
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
 		-> Valideringar av annonsmodel<br />
 		-> Error messages in forms<br />
 		-> CSS, change to SCSS using parameters for colors etc??? <br />
-		-> Redirekt efter login tll önskad sida
+		-> Redirekt efter login tll önskad sida<br/>
+		-> Enhetliga menyer överallt<br/>
+		-> Se över obligatoriska fält i formulär (annons, registrering etc)<br/>
+
 	</p>
 	<hr/>
 	<p>
@@ -91,10 +87,13 @@
     		Fler annonstyper<br />
     		-> Auktion <br />
     		-> -> Auktionsscript <br />
+			-> -> Ingen editering efter första köp/bud, bara tillägg<br/>
+			-> -> +5 min vid auktion, obligatoriskt<br/>
     		-> Samköp <br />
     		-> -> ??? <br />
     		-> Tjänst/jobb <br />
     		-> -> Sökes/erbjudes/tipsas/etc <br />
+			-> Auktion Eller Annons, inte båda
     	</p>
     <hr />
 	<p>
@@ -106,7 +105,8 @@
 	<p>
 		Admin sida<br />
 		-> Återställa radera annonser<br />
-		-> Svartlista användare
+		-> Svartlista användare<br/>
+		-> Radera annonser helt (Flytta till dold db tabell)
 	</p>
 	<hr/>
 	<p>

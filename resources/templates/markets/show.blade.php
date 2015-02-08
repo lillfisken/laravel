@@ -12,7 +12,7 @@
 	<div id="market-detail" class="layout">
 		<div class="market-title">
 			<h1 class="marketmenu-title"> {{ $market->title }} </h1>
-			<div class="marketmenu-right"> @include('markets._marketmenu') </div>
+			<div class="marketmenu-right"> @include('partials._marketmenu') </div>
 		</div>
 
 		<div class="market-detail-images">

@@ -13,7 +13,7 @@
 
 		{!! Form::open(array('route' => 'markets.store' , 'files' => true )) !!}
 
-		@include('markets._market')
+		@include('partials._market')
 
 		{!! Form::submit('Publicera', array('class' => 'btn-right')); !!}
 		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}

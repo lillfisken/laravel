@@ -11,7 +11,7 @@
 	{!! $market->title !!}</h1>
 	{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}
 
-		@include('markets._market')
+		@include('partials._market')
 		
 		{!! Form::submit('Uppdatera', array('class' => 'btn-right')); !!}
 		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}
