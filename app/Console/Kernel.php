@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'market\Console\Commands\InspireCommand',
+		'market\Console\Commands\Inspire',
 	];
 
 	/**
