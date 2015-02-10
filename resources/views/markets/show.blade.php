@@ -53,13 +53,10 @@
 			{!! $market->description or 'Beskrivning saknas' !!}
 		</p>
 	</div>
-				
-	<div id="market-forum" class="layout">
-		<h1 class="market-title" >Frågor</h1>
-		<p>
-			Diskussion om annonsen, öpnnafrågor om säljaren valt att ha det, förvalt.
-		</p>
-	</div>
+
+	{{--TODO:If säljaren valt öppna frågor--}}
+		@include('partials._questionlist')
+	{{--endif--}}
 	
 </div>
 			
@@ -71,20 +68,30 @@
 			Avslutad
 			@endif
 		</h3>
-		<br />
-		{{ $market->number_of_items }} st till försäljning<br />
-		<br />
-		Inlagd {{ $market->created_at }}
+		<p>
+			{{ $market->number_of_items }} st till försäljning<br />
+		</p>
+		<p>
+			Inlagd {{ $market->created_at }}
+		</p>
+		<p>
+			{{ $market->extra_price_info }}
+		</p>
 	</div>
 	
 	<div id="market-seller-info" class="layout">
 		<h2  class="market-title" >Säljare</h2>
 		<h3>{{ $market->user->username or 'null'}}</h3>
-		{{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
-		{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser<br />
-		Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />
-		<br />
-		Skicka pm <- Not implemented yet
+		<p>
+			{{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
+			{{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>
+			{{--Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />--}}
+		</p>
+		<p>
+			Skicka pm <- Not implemented yet
+			Skicka mail <- Not implemented yet
+			Ring <- Not implemented yet
+		</p>
 	</div>
 	<hr />
 </div>

@@ -38,6 +38,8 @@ Route::patch('markets/{markets}', ['as' => 'markets.update', 'uses' => 'MarketsC
 Route::get('markets/delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
 Route::delete('markets', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
 Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
+Route::post('question', ['as' => 'markets.question', 'uses' => 'MarketsController@question', 'middleware' => 'auth']);
+
 
 //endregion
 

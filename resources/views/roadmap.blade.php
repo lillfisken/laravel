@@ -15,15 +15,17 @@
 		-> "Dropdown" för annonstyp, eventuellt flera olika sidor för olika typer av annons... <br />
 		-> Byt plats på pris och beskrivning, mindre förvillande. <br />
 		-> Kontaktinformation, förifylld från användarens profil <br/>
-		-> Aktiva annonser/totalt antalannonser
-		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc
-		-> Lägg till "avslutad" i annonslistning om varan är avslutad
-		-> Lägg till orsak till avslutad annons i datljvy
+		-> Aktiva annonser/totalt antalannonser<br/>
+		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
+		-> Lägg till "avslutad" i annonslistning om varan är avslutad<br/>
+		-> Lägg till orsak till avslutad annons i datljvy<br/>
+		-> PM-funktion <a href="https://packagist.org/search/?tags=messaging">paket</a> <br />
+		-> Möjlighet att välja kontaktsätt<br/>
 	</p>
 	<hr />
 	<p>
 		Köp knapp<br/>
-		-> Ingen editering efter första köp/bud, bara tillägg
+		-> Ingen editering efter första köp/bud, bara tillägg<br/>
 		-> +5 min vid auktion
 	</p>
 	<hr />
@@ -33,9 +35,9 @@
 	</p>
 	<hr />
 	<p>
-	    Extern inloggning och verifiering
+	    Extern inloggning och verifiering<br/>
 		-> Koppling phpBB inloggning<br />
-		-> google/facebook
+		-> google/facebook<br/>
 	</p>
 	<hr />
 	<p>
@@ -45,10 +47,6 @@
     	-> Allmänna varningsmeddelanden, meddelanden etc<br/>
     </p>
     <hr />
-	<p>
-		Öppna frågor/forum samt PM-funktion<br />
-	</p>
-	<hr />
 	<p>
     	Filter/sökfunktion<br />
     	-> Avancerad sökning ??? <br />
@@ -75,6 +73,7 @@
 		-> Redirekt efter login tll önskad sida<br/>
 		-> Enhetliga menyer överallt<br/>
 		-> Se över obligatoriska fält i formulär (annons, registrering etc)<br/>
+		-> Datumvisning, använd plugin typ Carbon???<br/>
 
 	</p>
 	<hr/>

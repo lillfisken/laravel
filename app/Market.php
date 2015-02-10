@@ -99,7 +99,7 @@ class Market extends Model {
 
 	public function marketQuestions()
 	{
-		return $this->hasMany('market\MarketQuestion', 'market', 'id');
+		return $this->hasMany('market\MarketQuestions', 'market', 'id');
 	}
 
 

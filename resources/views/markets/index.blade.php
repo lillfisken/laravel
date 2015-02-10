@@ -66,7 +66,7 @@
 	
 	@foreach($markets as $market)
 		
-		<div class="market-list-row2 @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
+		<div class="list-row @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
 			<div class="market-list-rows-option">
 				@include('partials._marketmenu')
 			</div>
@@ -89,6 +89,7 @@
 					<h3>{{ $market->price }} sek</h3>
 					Typ(annons, auktion etc)<br/>
 					Typ (köpes, säljes etc)<br/>
+					{{--Antal kommentarer--}}
 					@if(isset($market->deleted_at))
 						<h3>Avslutad</h3>
 					@endif

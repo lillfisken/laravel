@@ -2,7 +2,7 @@
     <?php $count = 1; ?>
     @foreach($markets as $market)
 
-        <div class="market-list-row2 @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
+        <div class="list-row @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif">
             <div class="market-list-rows-option">
                 @include('partials._marketmenu')
             </div>

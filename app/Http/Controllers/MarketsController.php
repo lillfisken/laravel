@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use market\Market;
+use market\MarketQuestions;
 use Illuminate\Http\Request;
 use Input;
 use market\Http\Requests\CreateMarketRequest;
@@ -189,10 +190,11 @@ class MarketsController extends ControllerMarket {
 	{
 		//dd($market);
 		//echo("<script>console.log('Markets controller -> show');</script>");
-		$temp = Market::withTrashed()->with('user', 'user.markets')->find($market);
+		$temp = Market::withTrashed()->with(['user.markets', 'marketQuestions.user'])->find($market);
 		$this->addMarketMenu($temp);
 		//$tempCount = $temp->getUserMarketsCount;
 		//echo("<script>console.log('Count: " .$tempCount."');</script>");
+		//dd($temp);
 
 		return view('markets.show', ['market' => $temp]);
 	}
@@ -329,6 +331,25 @@ class MarketsController extends ControllerMarket {
 
         return 'Searchterm is missing';
     }
+
+	public function question()
+	{
+		//TODO::Add validation, questionRequest
+//		dd(Input::all());
+		//dd(Redirect::back());
+
+ 		$question = new MarketQuestions;
+
+		$question->createdByUser = Auth::id();
+		$question->market = Input::get('market');
+		$question->message = Input::get('message');
+
+//		dd($question);
+
+		$question->save();
+
+		return Redirect::back();
+ 	}
 
 	/*
 	 * Process input/image-stream to save imagename to db and imagefile to disc

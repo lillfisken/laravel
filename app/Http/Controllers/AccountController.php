@@ -96,12 +96,12 @@ class AccountController extends Controller
             // for now we'll just echo success (even though echoing in a controller is bad)
             //return 'SUCCESS!';
 
-            return Redirect::to('/');
+            return Redirect::back();
 
         } else {
 
             // validation not successful, send back to form
-            return Redirect::route('accounts.login');
+            return Redirect::route('accounts.login')->with(Input);
             //TODO:Add error message to redirect
         }
 

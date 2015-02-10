@@ -15,7 +15,7 @@ class CreateMarketsTable extends Migration {
 		Schema::create('markets', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->bigInteger('created_by_user')->default(1);
+			$table->bigInteger('createdByUser');
 			$table->string('title');
 			$table->string('type');
 			$table->text('description');

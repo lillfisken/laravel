@@ -150,6 +150,12 @@
     .inline{
         display: inline-block;
     }
+
+	.align-right{
+		float: right;
+		margin-right: 7px;
+		/*background-color: red;*/
+	}
 	
 	/*---------------------------------------
 	General
@@ -346,13 +352,19 @@
 		overflow: hidden;
 	}
 		
-	.market-list-row2{
+	.list-row{
 		padding: 5px 2px;
 		margin: 0;
 		overflow: visible;
 		padding: 2px;
 		margin: 2px;
 		/*border-radius: 2px;*/
+	}
+
+	.list-underline{
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-bottom-color: #516177;
 	}
 	
 	.market-list-rows-image,
