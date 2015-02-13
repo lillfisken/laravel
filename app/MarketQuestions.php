@@ -21,12 +21,15 @@ class marketQuestions extends Model
 
     public function user()
     {
+//        dd($this->belongsTo('market\User', 'user', 'id')->get());
         //dd($this->belongsTo('market\User'));
 //        return $this->belongsTo('market\User', 'user');
         return $this->belongsTo('market\User', 'createdByUser');
+
+//        return $this->belongsTo('market\User', 'createdByUser', 'id');
     }
 
-    public function market()
+    public function getMarket()
     {
         return $this->belongsTo('market\Market', 'market');
     }

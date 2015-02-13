@@ -14,10 +14,10 @@ class CreateMarketsTable extends Migration {
 	{
 		Schema::create('markets', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->bigInteger('createdByUser');
+			$table->bigIncrements('id');
+			$table->bigInteger('createdByUser')->default(1);
 			$table->string('title');
-			$table->string('type');
+            $table->integer('marketType');
 			$table->text('description');
 			$table->float('price');
 			$table->text('extra_price_info')->nullable();
@@ -47,7 +47,13 @@ class CreateMarketsTable extends Migration {
 			$table->string('image6_thumb')->nullable();
 			$table->string('image6_std')->nullable();
 			$table->string('image6_full')->nullable();
-			
+
+
+            $table->boolean('contactMail');
+            $table->boolean('contactPhone');
+            $table->boolean('contactPm');
+            $table->boolean('contactQuestions');
+
 			$table->dateTime('end_at')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
@@ -61,7 +67,8 @@ class CreateMarketsTable extends Migration {
 	 */
 	public function down()
 	{
-		//
-	}
+        Schema::drop('markets');
+
+    }
 
 }

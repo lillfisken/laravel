@@ -63,20 +63,24 @@
 <div id="market-right" class="layout">
 	<div id="market-price-info" class="layout">
 		<h2  class="market-title">Pris</h2>
-		<h2>{!! $market->price !!} Sek</h2>
+        <h4>{{ market\helper\marketType::getTypeName($market->marketType) }}</h4>
+        <h2>{!! $market->price !!} Sek</h2>
 		<h3>@if($market->deleted_at != null)
 			Avslutad
 			@endif
 		</h3>
-		<p>
-			{{ $market->number_of_items }} st till försäljning<br />
-		</p>
+
+        <p>
+            {{ $market->number_of_items }} st till försäljning<br />
+        </p>
 		<p>
 			Inlagd {{ $market->created_at }}
 		</p>
-		<p>
-			{{ $market->extra_price_info }}
-		</p>
+        {{--TODO: Check if there is any extra info, else hide this part--}}
+        <h3>Extra info</h3>
+        <p>
+            {{ $market->extra_price_info }}
+        </p>
 	</div>
 	
 	<div id="market-seller-info" class="layout">
@@ -88,9 +92,9 @@
 			{{--Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />--}}
 		</p>
 		<p>
-			Skicka pm <- Not implemented yet
-			Skicka mail <- Not implemented yet
-			Ring <- Not implemented yet
+			Skicka pm <- Not implemented yet <br/>
+			Skicka mail <- Not implemented yet <br/>
+			Ring <- Not implemented yet <br/>
 		</p>
 	</div>
 	<hr />

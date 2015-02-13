@@ -55,6 +55,7 @@ class Market extends Model {
 		//TODO:Fix all fields fillable
 		'extra_price_info',
 		'number_of_items',
+        'marketType',
 		/*'contactOptions',*/
 		'image1_small',
 		'image1_thumb',
@@ -75,6 +76,8 @@ class Market extends Model {
 		'image6_thumb',
 		'image6_std',
 		'image6_full',
+
+
 
 		'created_at',
 		'update_at',

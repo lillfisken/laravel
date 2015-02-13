@@ -11,22 +11,17 @@
 	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
-		-> Uppdetering av annonser, ladda upp extra bild fungerar inte <br />
 		-> "Dropdown" för annonstyp, eventuellt flera olika sidor för olika typer av annons... <br />
-		-> Byt plats på pris och beskrivning, mindre förvillande. <br />
 		-> Kontaktinformation, förifylld från användarens profil <br/>
-		-> Aktiva annonser/totalt antalannonser<br/>
 		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
-		-> Lägg till "avslutad" i annonslistning om varan är avslutad<br/>
 		-> Lägg till orsak till avslutad annons i datljvy<br/>
 		-> PM-funktion <a href="https://packagist.org/search/?tags=messaging">paket</a> <br />
-		-> Möjlighet att välja kontaktsätt<br/>
-	</p>
-	<hr />
-	<p>
-		Köp knapp<br/>
-		-> Ingen editering efter första köp/bud, bara tillägg<br/>
-		-> +5 min vid auktion
+		-> BB-Code <br/>
+		-> Mail <br/>
+		-> Möjlighet att välja kontaktsätt <br/>
+		-> Förhandsvisning frågor <br/>
+		-> Fixa annonsvisningmeny vid lång annons
+		-> Helper för annonstyp, ändra till int i db
 	</p>
 	<hr />
 	<p>
@@ -43,8 +38,8 @@
 	<p>
     	Login<br />
     	-> Glömt lösenord <br />
-    	-> Logga in användare direkt efter registrering<br/>
     	-> Allmänna varningsmeddelanden, meddelanden etc<br/>
+		-> Redirect back
     </p>
     <hr />
 	<p>
@@ -74,7 +69,8 @@
 		-> Enhetliga menyer överallt<br/>
 		-> Se över obligatoriska fält i formulär (annons, registrering etc)<br/>
 		-> Datumvisning, använd plugin typ Carbon???<br/>
-
+        -> Kompatipel med IE6/7/8 etc<br/>
+        -> Responsiv<br/>
 	</p>
 	<hr/>
 	<p>
@@ -103,9 +99,9 @@
 	<hr/>
 	<p>
 		Admin sida<br />
-		-> Återställa radera annonser<br />
 		-> Svartlista användare<br/>
-		-> Radera annonser helt (Flytta till dold db tabell)
+		-> Radera annonser helt (Flytta till dold db tabell)<br/>
+		-> Återställa radera annonser (från dold db)<br />
 	</p>
 	<hr/>
 	<p>

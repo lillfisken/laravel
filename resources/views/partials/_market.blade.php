@@ -1,27 +1,31 @@
-	{!! Form::label('title', 'Rubrik') !!}
+	<h3>{!! Form::label('title', 'Rubrik') !!}</h3>
 	{!! Form::text('title', null , ['class' => "form-input" ] ) !!}
 	{!! $errors->first('title', '<span class="help-block">:message</span>') !!}
 	<hr />
-	
-	{!! Form::label('type_buy', 'Köpes') !!}
-	{!! Form::radio('type', 'Köpes', array('id'=>'type_buy') ) !!}
-	{!! Form::label('type_sell', 'Säljes') !!}
-	{!! Form::radio('type', 'Säljes', ['id' => 'type_sell']) !!}
-	{!! Form::label('type_giveaway', 'Skänkes') !!}
-	{!! Form::radio('type', 'Skänkes', ['id' => 'type_giveaway']) !!}
-	{!! Form::label('type_change', 'Bytes') !!}
-	{!! Form::radio('type', 'Bytes', ['id' => 'type_change']) !!}
-	<br />
-	{!! Form::label('price', 'Pris') !!}
-	{!! Form::text('price', null , ['class' => 'form-input'] ) !!}
-	
-	{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}
-	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input'] ) !!}
-	{!! Form::label('numberOfItems', 'Antal till försälning, önskas köpa etc.') !!}
-	{!! Form::text('numberOfItems', '1', ['class' => 'form-input'] ) !!}
+    <h3>{!! Form::label('type', 'Annonstyp') !!}</h3>
+    {!! Form::select('marketType', market\helper\marketType::getTypesMarket(), null,  ['class' => 'form-input'] ) !!}
+    {{-- DELETE THIS AFTER CHANGING DB AND ALL OTHER METHODS --}}
+	{{--{!! Form::select('type', market\helper\marketType->getTypesMarket() ) !!}--}}
+	{{--{!! Form::label('type_buy', 'Köpes') !!}--}}
+	{{--{!! Form::radio('type', 'Köpes', array('id'=>'type_1buy') ) !!}--}}
+	{{--{!! Form::label('type_sell', 'Säljes') !!}--}}
+	{{--{!! Form::radio('type', 'Säljes', ['id' => 'type_sell']) !!}--}}
+	{{--{!! Form::label('type_giveaway', 'Skänkes') !!}--}}
+	{{--{!! Form::radio('type', 'Skänkes', ['id' => 'type_giveaway']) !!}--}}
+	{{--{!! Form::label('type_change', 'Bytes') !!}--}}
+	{{--{!! Form::radio('type', 'Bytes', ['id' => 'type_change']) !!}--}}
+
 	<hr />
-	{!! Form::label('description', 'Beskrivning') !!}
+	<h3>{!! Form::label('description', 'Beskrivning') !!}</h3>
 	{!! Form::textarea('description', null, ['class' => 'form-input'] ) !!}
+	<hr />
+	<h3>{!! Form::label('price', 'Pris') !!}</h3>
+	{!! Form::text('price', null , ['class' => 'form-input'] ) !!}
+
+	<h3>{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}</h3>
+	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input'] ) !!}
+	<h3>{!! Form::label('numberOfItems', 'Antal') !!}</h3>
+	{!! Form::text('numberOfItems', '1', ['class' => 'form-input'] ) !!}
 	<hr />
 	@if(isset($market->image1_thumb))
 		<img class="market-detail-small-image"  src="{{ $market->image1_thumb }}"/>
@@ -54,9 +58,13 @@
   	{!! Form::label('image6','Bild 6',array('id'=>'','class'=>'')) !!}
   	{!! Form::file('image6','',array('id'=>'','class'=>'')) !!}<br />
 	<hr />
-	Välj hur köparna ska kunna kontakta dig<br />
-	{!! Form::label('choice_mail', 'Via mail') !!}
-	{!! Form::checkbox('choice_mail', 'mail', true) !!}
-	{!! Form::label('choice_forum', 'Via öppna frågor') !!}
-	{!! Form::checkbox('choice_forum', 'forum', true) !!}<br />
+	<h3>Välj hur köparna ska kunna kontakta dig</h3>
+    {!! Form::label('contactPm', 'PM') !!}
+    {!! Form::checkbox('contactPm', 'pm', true) !!}
+	{!! Form::label('contactMail', 'Mail') !!}
+	{!! Form::checkbox('contactMail', 'mail', true) !!}
+    {!! Form::label('contactPhone', 'Telefon') !!}
+    {!! Form::checkbox('contactPhone', 'phone', true) !!}
+	{!! Form::label('contactQuestion', 'Via öppna frågor') !!}
+	{!! Form::checkbox('contactQuestion', 'forum', true) !!}<br />
 	<hr />

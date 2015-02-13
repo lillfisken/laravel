@@ -12,17 +12,21 @@ class MarketQuestions extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('marketQuestions', function($table)
+		Schema::create('marketQuestions', function(Blueprint $table)
 		{
 			$table->bigIncrements('id');
+
 			$table->bigInteger('createdByUser')->unsigned();
-			$table->bigInteger('market')->unsigned();
-			$table->text('message');
+            $table->foreign('createdByUser')->references('id')->on('users')->onDelete('cascade');
 
+            $table->bigInteger('market')->unsigned();
+            $table->foreign('market')->references('id')->on('markets')->onDelete('cascade');
+
+            $table->text('message');
 			$table->timestamps();
-			$table->softDeletes();
+            $table->softDeletes();
 
-		});
+        });
 	}
 
 	/**

@@ -4,6 +4,7 @@ use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use market\helper\marketType;
 use market\Market;
 use market\MarketQuestions;
 use Illuminate\Http\Request;
@@ -87,37 +88,47 @@ class MarketsController extends ControllerMarket {
 				$query->orWhere('type', '=', 'saljes');
 			}
 
-			if (Input::has('kopes')) {
-				$query->orWhere('type', '=', 'kopes');
-			}
-
-			if (Input::has('bytes')) {
-				$query->orWhere('type', '=', 'bytes');
-			}
-
-			if (Input::has('skankes')) {
-				$query->orWhere('type', '=', 'skankes');
-			}
-
-			if (Input::has('samkop')) {
-				$query->orWhere('type', '=', 'samkop');
-			}
-
-			if (Input::has('tjanst_erbjudes')) {
-				$query->orWhere('type', '=', 'tjanst_erbjudes');
-			}
-
-			if (Input::has('tjanst_sökes')) {
-				$query->orWhere('type', '=', 'tjanst_sökes');
-			}
-
-			if (Input::has('anstallning')) {
-				$query->orWhere('type', '=', 'anstallning');
-			}
-
-			if (Input::has('tips')) {
-				$query->orWhere('type', '=', 'tips');
-			}
+            foreach(marketType::getAllTypes() as $key => $val)
+            {
+                if(Input::has('t' . $key))
+                {
+                    $query->orWhere('marketType', '=', $key);
+                }
+            }
+//
+//
+//
+//			if (Input::has('kopes')) {
+//				$query->orWhere('type', '=', 'kopes');
+//			}
+//
+//			if (Input::has('bytes')) {
+//				$query->orWhere('type', '=', 'bytes');
+//			}
+//
+//			if (Input::has('skankes')) {
+//				$query->orWhere('type', '=', 'skankes');
+//			}
+//
+//			if (Input::has('samkop')) {
+//				$query->orWhere('type', '=', 'samkop');
+//			}
+//
+//			if (Input::has('tjanst_erbjudes')) {
+//				$query->orWhere('type', '=', 'tjanst_erbjudes');
+//			}
+//
+//			if (Input::has('tjanst_sökes')) {
+//				$query->orWhere('type', '=', 'tjanst_sökes');
+//			}
+//
+//			if (Input::has('anstallning')) {
+//				$query->orWhere('type', '=', 'anstallning');
+//			}
+//
+//			if (Input::has('tips')) {
+//				$query->orWhere('type', '=', 'tips');
+//			}
 		});
 
 		if (Input::has('hiddenAds')) {
@@ -128,6 +139,7 @@ class MarketsController extends ControllerMarket {
 			//TODO: Check for hidden sellers
 		}
 
+        //Query the db
 		$temp = $query->get();
 
 		// add a menu to each market if user is logged in
@@ -139,6 +151,7 @@ class MarketsController extends ControllerMarket {
 			}
 		}
 
+        //Why is this here?
 		Input::flash();
 		return view('markets.index', ['markets' => $temp]);
 	}
@@ -194,7 +207,7 @@ class MarketsController extends ControllerMarket {
 		$this->addMarketMenu($temp);
 		//$tempCount = $temp->getUserMarketsCount;
 		//echo("<script>console.log('Count: " .$tempCount."');</script>");
-		//dd($temp);
+//		dd($temp);
 
 		return view('markets.show', ['market' => $temp]);
 	}
@@ -235,7 +248,7 @@ class MarketsController extends ControllerMarket {
 		$input = $this->saveImage($input, 'image6');
 
 		$temp->fill($input)->save();
-
+		//TODO: Add changes to separate db table
 		return redirect()->route('markets.index');
 	}
 

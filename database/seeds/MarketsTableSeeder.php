@@ -1,7 +1,7 @@
 <?php
 
 // Composer: "fzaninotto/faker": "v1.4.0"
-use Faker\Factory as Faker;
+//use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use market\Market;
 
@@ -12,17 +12,15 @@ class MarketsTableSeeder extends Seeder {
 		DB::table('markets')->delete();
 		
 		$lindningsmaskin = Market::create(array(
-			/*id*/
+			'id' => '1',
 			'createdByUser'	=>	'2',
 			'title'	=>	'Lindningsmaskin',
-			/*type*/
-			'type' => 'saljes',
+			'marketType' => '0',
 			'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 			'price'	=>	'2500.00',
             'extra_price_info' => 'Lorem ipsum',
 			'number_of_items' => '3',
-			/*contactOptions*/
-			'contact_options' => 'mail',
+//			'contact_options' => 'mail',
 			'image1_std' => '/market/public/images/2014/11/lindningsmaskin.jpg',
 			'image1_thumb' => '/market/public/images/2014/11/lindningsmaskin_small.jpg',
 			/*
@@ -41,8 +39,11 @@ class MarketsTableSeeder extends Seeder {
 			'created_at'
 			'update_at'
 			'deleted_at'
-			*/
-
+*/
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'false',
 		));
 		
 		$usbladdare = Market::create(array(
@@ -78,9 +79,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'saljes',
-			'contact_options' => 'mail',
+			'marketType' => '0',
+//			'contact_options' => 'mail',
 
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'false',
 		));
 		
 		$nixieklocka = Market::create(array(
@@ -110,8 +115,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'saljes',
-			'contact_options' => 'mail',
+			'marketType' => '0',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 		
@@ -142,8 +152,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'saljes',
-			'contact_options' => 'mail',
+			'marketType' => '0',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 		
@@ -174,8 +189,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'sellRow',
-			'contact_options' => 'mail',
+			'marketType' => '0',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 		
@@ -206,8 +226,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'saljes',
-			'contact_options' => 'mail',
+			'marketType' => '0',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 
@@ -238,8 +263,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'kopes',
-			'contact_options' => 'mail',
+			'marketType' => '1',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'false',
 
 		));
 
@@ -270,8 +300,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'kopes',
-			'contact_options' => 'mail',
+			'marketType' => '1',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'false',
 
 		));
 
@@ -302,8 +337,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'kopes',
-			'contact_options' => 'mail',
+			'marketType' => '1',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 
@@ -334,8 +374,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'skankes',
-			'contact_options' => 'mail',
+			'marketType' => '3',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 
@@ -366,8 +411,13 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 			*/
-			'type' => 'skankes',
-			'contact_options' => 'mail',
+			'marketType' => '3',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 
@@ -398,8 +448,13 @@ class MarketsTableSeeder extends Seeder {
 			'updated_at' => '2015-01-23 19:50:40',
 			'deleted_at' => '2015-01-24 19:50:40',
 
-			'type' => 'skankes',
-			'contact_options' => 'mail',
+			'marketType' => '3',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 
@@ -430,8 +485,13 @@ class MarketsTableSeeder extends Seeder {
 			'updated_at' => '2015-01-23 19:50:40',
 			'deleted_at' => '2015-01-24 19:50:40',
 
-			'type' => 'skankes',
-			'contact_options' => 'mail',
+			'marketType' => '3',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
 
 		));
 		

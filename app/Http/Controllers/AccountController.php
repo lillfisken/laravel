@@ -202,7 +202,7 @@ class AccountController extends Controller
 
         $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
 
-        return view('account.profile', ['user' => $user, 'markets' => $markets]);
+        return view('account.markets.active', ['user' => $user, 'markets' => $markets]);
     }
 
     //region Market Blocking
