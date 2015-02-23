@@ -92,7 +92,8 @@
 			{{--Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />--}}
 		</p>
 		<p>
-			Skicka pm <- Not implemented yet <br/>
+            {{--IF MARKET IS SET TO USE PM--}}
+			<a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}", class="btn"> Skicka pm </a> <br/>
 			Skicka mail <- Not implemented yet <br/>
 			Ring <- Not implemented yet <br/>
 		</p>

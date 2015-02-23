@@ -1,7 +1,7 @@
-@extends('account/_layout')
+@extends('layout/site')
 
 @section('title')
-    Inställningar - @Auth::user()->username
+    Inställningar - {{ Auth::user()->username }}
 
 @stop
 

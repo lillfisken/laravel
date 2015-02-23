@@ -14,11 +14,6 @@ Route::bind('user', function($username)
 });
 //Route::model('user', 'market\User');
 
-//Route::bind('market', function($id, $route)
-//{
-////	dd(market\Market::withTrashed()->find($id));
-//	return market\Market::withTrashed()->find($id);
-
 //endregion
 
 //--------------------------------------------------------------------------
@@ -39,7 +34,7 @@ Route::get('markets/delete/{market}', ['as' => 'markets.delete', 'uses' => 'Mark
 Route::delete('markets', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
 Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
 Route::post('question', ['as' => 'markets.question', 'uses' => 'MarketsController@question', 'middleware' => 'auth']);
-
+Route::get('markets/pm/{title}/{toUser}', ['as' => 'markets.pm', 'uses' => 'MarketsController@sendPm', 'middleware' => 'auth']);
 
 //endregion
 
@@ -84,7 +79,7 @@ Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountCon
 
 //region Profile/account Routes
 
-//TODO: Add filter/middleware for access only if logged in user is the same as requested user/ post requests???
+//TODO: Alter route to not useuser if not neccesarey
 Route::get('profile/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
 Route::get('profile/blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'AccountController@blockMarket', 'middleware' => 'auth']);
 Route::get('profile/unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'AccountController@unblockMarket', 'middleware' => 'auth']);
@@ -97,13 +92,26 @@ Route::get('profile/trashed/{user}', ['as' => 'accounts.trashed', 'uses' => 'Acc
 Route::get('profile/blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
 Route::get('profile/blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
 
-Route::get('profile/inbox/{user}', ['as' => 'accounts.inbox', 'uses' => 'AccountController@inbox', 'middleware' => 'auth']);
-Route::get('profile/draft/{user}', ['as' => 'accounts.draft', 'uses' => 'AccountController@draft', 'middleware' => 'auth']);
-Route::get('profile/sent/{user}', ['as' => 'accounts.sent', 'uses' => 'AccountController@sent', 'middleware' => 'auth']);
-Route::get('profile/trash/{user}', ['as' => 'accounts.trash', 'uses' => 'AccountController@trash', 'middleware' => 'auth']);
+Route::get('profile/settings/show', ['as' => 'accounts.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
 
-Route::get('profile/settings/{user}', ['as' => 'accounts.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
 
 //endregion
+
+//--------------------------------------------------------------------------
+
+//region Message
+Route::get('message/inbox', ['as' => 'message.inbox', 'uses' => 'MessageController@inbox', 'middleware' => 'auth']);
+Route::get('message/conversation/{conversationId}', ['as' => 'message.show', 'uses' => 'MessageController@show', 'middleware' => 'auth']);
+
+Route::get('message/draft', ['as' => 'message.draft', 'uses' => 'MessageController@draft', 'middleware' => 'auth']);
+Route::get('message/trash', ['as' => 'message.trash', 'uses' => 'MessageController@trash', 'middleware' => 'auth']);
+Route::get('message/new', ['as' => 'message.new', 'uses' => 'MessageController@newMessage', 'middleware' => 'auth']);
+Route::post('message/new', ['as' => 'message.send', 'uses' => 'MessageController@sendMessage', 'middleware' => 'auth']);
+
+Route::get('message/mail', ['as' => 'message.mail', 'uses' => 'MessageController@mail', 'middleware' => 'auth']);
+Route::post('message/mail', ['as' => 'message.mail', 'uses' => 'MessageController@mailPost', 'middleware' => 'auth']);
+
+//endregion
+
 
 //-----------------------------------------------------------------------------

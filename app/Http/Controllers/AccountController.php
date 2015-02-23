@@ -195,10 +195,12 @@ class AccountController extends Controller
      * @var user
      * @return
     */
-    public function show($user)
+    public function show()
     {
         //TODO::Change to show public userprofile
-        $markets = Market::where('createdByUser', '=', $user->id)->get();
+        $markets = Market::where('createdByUser', '=', Auth::id())->get();
+        $user = User::find(Auth::id())->first();
+//        dd($markets);
 
         $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
 
@@ -362,72 +364,7 @@ class AccountController extends Controller
 
     //endregion
 
-    //region Mail/PM
-    /* Show user profile
-             *
-             * get 'profile/inbox/{user}'
-             * route 'accounts.inbox'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function inbox($user)
-    {
-        //dd('AccountController@inbox');
-        return view('account.message.inbox');
-    }
 
-    /* Show user profile
-             *
-             * get 'profile/draft/{user}'
-             * route 'accounts.draft'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function draft($user)
-    {
-//        dd('AccountController@draft');
-        return view('account.message.draft');
-
-    }
-
-    /* Show user profile
-             *
-             * get 'profile/sent/{user}'
-             * route 'accounts.sent'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function sent($user)
-    {
-//        dd('AccountController@sent')
-        return view('account.message.sent');
-
-    }
-
-//Route::get('profile/trash/{user}', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
-    /* Show user profile
-             *
-             * get 'profile/trash/{user}'
-             * route 'accounts.trash'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function trash($user)
-    {
-//        dd('AccountController@trash');
-        return view('account.message.trash');
-
-    }
-
-    //endregion
 
     /* Show user settings
              *
@@ -438,7 +375,7 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function settings($user)
+    public function settings()
     {
 //        dd('AccountController@settings');
         return view('account.settings');

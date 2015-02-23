@@ -14,7 +14,7 @@
 
                 <div class="market-list-rows-price">
                     <h3>{{ $market->price }} sek</h3><br/>
-                    <!--Buy now 2345:--->
+                    <h4>{{ market\helper\marketType::getTypeName($market->marketType) }}</h4>
                 </div>
 
                 <div class="market-list-rows-desc">

@@ -364,6 +364,11 @@ class MarketsController extends ControllerMarket {
 		return Redirect::back();
  	}
 
+    public function sendPm($toUser, $title)
+    {
+        return view('account.message.new', ['reciever' => $toUser, 'title' => 'Angående: ' . $title]);
+    }
+
 	/*
 	 * Process input/image-stream to save imagename to db and imagefile to disc
 	 *

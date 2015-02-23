@@ -1,4 +1,4 @@
-@extends('account/_layout')
+@extends('account/message/index')
 
 @section('title')
     Utkast - @Auth::user()->username

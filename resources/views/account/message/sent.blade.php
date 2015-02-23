@@ -1,4 +1,4 @@
-@extends('account/_layout')
+@extends('account/message/index')
 
 @section('title')
     Skickadat - @Auth::user()->username

@@ -11,11 +11,9 @@
 	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
-		-> "Dropdown" för annonstyp, eventuellt flera olika sidor för olika typer av annons... <br />
 		-> Kontaktinformation, förifylld från användarens profil <br/>
 		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
 		-> Lägg till orsak till avslutad annons i datljvy<br/>
-		-> PM-funktion <a href="https://packagist.org/search/?tags=messaging">paket</a> <br />
 		-> BB-Code <br/>
 		-> Mail <br/>
 		-> Möjlighet att välja kontaktsätt <br/>
@@ -71,11 +69,24 @@
 		-> Datumvisning, använd plugin typ Carbon???<br/>
         -> Kompatipel med IE6/7/8 etc<br/>
         -> Responsiv<br/>
-	</p>
-	<hr/>
-	<p>
+        -> Meddelandefält, design???<br/>
+        -> Notifiering vid nytt meddelande<br/>
+
+    </p>
+    <hr/>
+    <p>
+        Meddelanden<br/>
+        -> Visning antal ny pm i menyrad, helper?<br/>
+        -> Visning i inkorgen, konversationspartner, antal nya Pm etc<br/>
+        -> Paginering både inbox och meddelanden<br/>
+        -> Inboxen, sortera på nysate först.<br/>
+        -> Ta bort markeringara för nytt inlägg i show<br/>
+    </p>
+    <hr/>
+    <p>
 	    STOR Säkerhetsgenomgång<br/>
-	    -> SQL Injection
+	    -> SQL Injection <br/>
+        -> Logga ip för annons, inlägg, pm etc.
 	</p>
 	<hr/>
 	<p>
