@@ -85,7 +85,7 @@ Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountCon
 
 //region Profile/account Routes
 
-//TODO: Alter route to not useuser if not neccesarey
+//TODO: Alter route to not use user if not neccesarey
 Route::get('profile/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
 Route::get('profile/blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'AccountController@blockMarket', 'middleware' => 'auth']);
 Route::get('profile/unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'AccountController@unblockMarket', 'middleware' => 'auth']);

@@ -9,12 +9,13 @@
 @section('content')
 	<h1>Ändra annons : 
 	{!! $market->title !!}</h1>
-	{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}
+    {{--{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}--}}
+    {!! Form::model($market, ['url' => URL::route('markets.update', array($market->id)), 'method'=>'PATCH', 'files' => true]) !!}
 
 		@include('partials._marketCreate')
 		
-		{!! Form::submit('Uppdatera', array('class' => 'btn-right')); !!}
-		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}
+		{!! Form::submit('Uppdatera', array('class' => 'btn-right', 'name'=>'publish')); !!}
+		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right', 'name' => 'preview')); !!}
 
 	{!! Form::close() !!}
 @stop

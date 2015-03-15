@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use File;
 //use Intervention\Image\Facades\Image;
 use Image;
+use Request;
 
 class marketCRUD
 {
@@ -29,7 +30,7 @@ class marketCRUD
         return redirect()->route('markets.index');
     }
 
-    public static function preview($input)
+    public static function preview($input, $postBackURL, $postBackType)
     {
 //        dd(Input::all());
 //        dd('preview');
@@ -39,7 +40,9 @@ class marketCRUD
         $temp['preview'] = true;
 //            dd($temp);
 
-        return view('markets.preview', ['market' => $temp]);
+        return view('markets.preview', ['market' => $temp,
+            'postBackURL' => $postBackURL,
+            'postBackType' => $postBackType]);
     }
 
     public static function editPreview($input)
@@ -49,6 +52,26 @@ class marketCRUD
         return view('markets.previewEdit', ['market' => $temp]);
 
 //        dd(Input::all());
+    }
+
+    public static function update($id, $input){
+        //Assuming input is validated
+        //Add some error handling
+
+//        dd(Request::getClientIp());
+
+        $temp = Market::find($id);
+//        dd([$input, $temp]);
+        //TODO: Not updating images
+        $input = self::saveImage($input, 'image1');
+        $input = self::saveImage($input, 'image2');
+        $input = self::saveImage($input, 'image3');
+        $input = self::saveImage($input, 'image4');
+        $input = self::saveImage($input, 'image5');
+        $input = self::saveImage($input, 'image6');
+
+        $temp->fill($input)->save();
+        //TODO: Add changes to separate db table
     }
 
     /*
@@ -64,7 +87,9 @@ class marketCRUD
     {
         //dd($input);
 //        if (Input::hasFile($image_name))
-        if ($input[$image_name])
+        //dd(isset($input[$image_name]));
+//        dd(['imageName'=>$image_name, 'input'=>$input]);
+        if (isset($input[$image_name]) && $input[$image_name] != "")
         {
             //-------------------------------------------------------------------------------------
             // Settings for saving image
@@ -155,5 +180,38 @@ class marketCRUD
 
         return $input;
     }
+
+    public static function addMarketMenu($market)
+    {
+        //dd($market);
+
+        if(Auth::check()) {
+            $id = Auth::id();
+            $temp = array();
+            //dd($id);
+            //Adds link to edit market if it's created by logged in user
+            if ($id == $market->createdByUser && $market->deleted_at == null) {
+                $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id ));
+                $temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id ));
+            }
+
+            if  ($id != $market->createdByUser) {
+                //TODO: Check if market is blocked, then ad link to unblock instead
+                $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
+                //TODO: Check if market is seller, then ad link to unblock instead
+                $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
+            }
+//			dd($temp);
+//			dd(gettype($market));
+//			dd($market);
+
+//			$market->offsetSet('marketmenu', $temp);
+
+            $market['marketmenu'] = $temp;
+
+//			dd($market);
+        }
+    }
+
 
 }

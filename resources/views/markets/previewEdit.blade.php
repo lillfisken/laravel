@@ -1,5 +1,3 @@
-<!-- /var/www/lara/resources/views/markets/create.blade.php -->
-
 @extends('layout/site')
 
 @section('title')

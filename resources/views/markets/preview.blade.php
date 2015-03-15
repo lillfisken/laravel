@@ -1,5 +1,3 @@
-<!-- /var/www/lara/resources/views/markets/show.blade.php -->
-
 @extends('layout/site')
 
 @section('title')
@@ -9,7 +7,7 @@
 @section('content')
     <div class="clearfix padding5">
         <h1 class="inline">FÖRHANDSGRANSKA</h1>
-        {!! Form::model($market, array('route' => 'markets.store')) !!}
+        {!! Form::model($market, array('url' => $postBackURL, 'method' => $postBackType)) !!}
         {!! Form::hidden('createdByUser') !!}
         {!! Form::hidden('title') !!}
         {!! Form::hidden('marketType') !!}

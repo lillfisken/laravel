@@ -10,7 +10,7 @@
 	<hr />
 	<p>
 		Förhandsvisning av annonser<br />
-		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
+		-> Alla fält för annons ifyllbara/uppdateringsbara (kontaktsätt)<br />
 		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
 		-> BB-Code <br/>
 		-> Mail <br/>
@@ -18,7 +18,6 @@
 		-> Förhandsvisning frågor <br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Bilduppladning, även i preview<br/>
-        -> Uppdateringsbara bilder<br/>
         -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
         -> Visa bara PM, Mail och Telefon för inloggade i annons
 	</p>
@@ -131,6 +130,7 @@
     <p>
         Footer, Using:<br/>
         -> Laravel<br/>
+        -> Intervention/Image<br/>
         ->
     </p>
 	

@@ -54,7 +54,7 @@ class MarketsController extends ControllerMarket {
 			//Set menu for each market
 			foreach ($temp as $market)
 			{
-				$this->addMarketMenu($market);
+				marketCRUD::addMarketMenu($market);
 			}
 
 			//echo("<script>console.log('MarketsController->index');</script>");
@@ -183,7 +183,7 @@ class MarketsController extends ControllerMarket {
         }
         else if(Input::get('preview'))
         {
-            return marketCRUD::preview(Input::all());
+            return marketCRUD::preview(Input::all(), URL::route('markets.store'), 'POST');
         }
         elseif(Input::get('edit'))
         {
@@ -207,7 +207,7 @@ class MarketsController extends ControllerMarket {
 		//dd($market);
 		//echo("<script>console.log('Markets controller -> show');</script>");
 		$temp = Market::withTrashed()->with(['user.markets', 'marketQuestions.user'])->find($market);
-		$this->addMarketMenu($temp);
+		marketCRUD::addMarketMenu($temp);
 		//$tempCount = $temp->getUserMarketsCount;
 		//echo("<script>console.log('Count: " .$tempCount."');</script>");
 //		dd($temp);
@@ -238,21 +238,31 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function update( $id , Request $request)
 	{
-		//TODO: Validation
-		$input = Input::all();
-		$temp = Market::find($id);
+        //TODO: Validate input, Change to marketRequest, If request is valid...
 
-		//TODO: Not updating images
-		$input = $this->saveImage($input, 'image1');
-		$input = $this->saveImage($input, 'image2');
-		$input = $this->saveImage($input, 'image3');
-		$input = $this->saveImage($input, 'image4');
-		$input = $this->saveImage($input, 'image5');
-		$input = $this->saveImage($input, 'image6');
+        if(Input::get('publish'))
+        {
+            //dd($id);
+            marketCRUD::update($id, Input::all());
+            return redirect()->route('markets.show', $id);
+        }
+        else if(Input::get('preview'))
+        {
+            return marketCRUD::preview(Input::all(), URL::route('markets.update', array($id)), 'Patch');
+        }
+        elseif(Input::get('edit'))
+        {
+//            dd('Edit update preview');
+            $temp = new Market(Input::all());
+            $temp['id'] = $id;
+            //dd($temp, $id);
 
-		$temp->fill($input)->save();
-		//TODO: Add changes to separate db table
-		return redirect()->route('markets.index');
+            return view('markets.edit', ['market' => $temp]);
+        }
+        else
+        {
+            dd('error');
+        }
 	}
 
 	/**
@@ -363,38 +373,6 @@ class MarketsController extends ControllerMarket {
     {
         return view('account.message.new', ['reciever' => $toUser, 'title' => 'Angående: ' . $title]);
     }
-
-
-	protected function addMarketMenu($market)
-	{
-		//dd($market);
-
-		if(Auth::check()) {
-			$id = Auth::id();
-			$temp = array();
-			//dd($id);
-			//Adds link to edit market if it's created by logged in user
-			if ($id == $market->createdByUser ) {
-				$temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id ));
-				$temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id ));
-			}
-
-			//TODO: Check if market is blocked, then ad link to unblock instead
-			$temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id ));
-			//TODO: Check if market is seller, then ad link to unblock instead
-			$temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser ));
-
-//			dd($temp);
-//			dd(gettype($market));
-//			dd($market);
-
-//			$market->offsetSet('marketmenu', $temp);
-
-			$market['marketmenu'] = $temp;
-
-//			dd($market);
-		}
-	}
 
 	protected function filterMarket()
 	{
