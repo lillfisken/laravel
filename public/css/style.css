@@ -156,6 +156,14 @@
 		margin-right: 7px;
 		/*background-color: red;*/
 	}
+
+    .clearfix{
+        clear: both;
+    }
+
+    .padding5{
+        padding: 5px;
+    }
 	
 	/*---------------------------------------
 	General
@@ -177,7 +185,6 @@
 		color: #364150;
 		text-decoration: none;
 	}
-	
 	/*
 	div {
 		box-sizing: border-box;
@@ -236,14 +243,7 @@
 		display: inline-block;
 		margin-right: 5px;
 	}
-	
-	#market-detail,
-	#market-price-info{
-		border-bottom: 1px solid #516177;
-		/*margin-top: 0;
-		margin-bottom: auto;*/
-	}
-	
+
 	#market-forum{
 		
 	}

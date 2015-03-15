@@ -13,10 +13,10 @@
 
 		{!! Form::open(array('route' => 'markets.store' , 'files' => true )) !!}
 
-		@include('partials._market')
+		@include('partials._marketCreate')
 
-		{!! Form::submit('Publicera', array('class' => 'btn-right')); !!}
-		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}
+		{!! Form::submit('Publicera', array('class' => 'btn-right', 'name'=>'publish')); !!}
+		{!! Form::submit('Förhandsgranska', array('class' => 'btn-right', 'name'=>'preview')); !!}
 
 		{!! Form::close() !!}
 	</div>

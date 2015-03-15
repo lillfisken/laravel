@@ -24,7 +24,9 @@
             <p>Var först med en fråga till säljaren!</p>
         @endif
 
-        @if(Auth::check())
+        @if($market->preview)
+            <p>Förhandsgranskning</p>
+        @elseif(Auth::check())
             {{--Form for sending question/answers--}}
             {!! Form::open(array('route' => 'markets.question')) !!}
             {!! Form::hidden('market', $market->id) !!}

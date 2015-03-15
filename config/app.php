@@ -151,6 +151,7 @@ return [
         */
 
         'Illuminate\Html\HtmlServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
 //      'Intervention\Image\ImageServiceProvider'
 
 		/*
@@ -217,6 +218,7 @@ return [
         'Form'=> 'Illuminate\Html\FormFacade',
         'HTML'=> 'Illuminate\Html\HtmlFacade',
 //        'Image' => 'Intervention\Image\Facades\Image',
+        'Image' => 'Intervention\Image\Facades\Image',
 
 	],
 

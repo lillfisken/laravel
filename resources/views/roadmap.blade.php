@@ -11,15 +11,16 @@
 	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara <br />
-		-> Kontaktinformation, förifylld från användarens profil <br/>
 		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
-		-> Lägg till orsak till avslutad annons i datljvy<br/>
 		-> BB-Code <br/>
 		-> Mail <br/>
 		-> Möjlighet att välja kontaktsätt <br/>
 		-> Förhandsvisning frågor <br/>
-		-> Fixa annonsvisningmeny vid lång annons
-		-> Helper för annonstyp, ändra till int i db
+		-> Fixa annonsvisningmeny vid lång annons<br/>
+        -> Bilduppladning, även i preview<br/>
+        -> Uppdateringsbara bilder<br/>
+        -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
+        -> Visa bara PM, Mail och Telefon för inloggade i annons
 	</p>
 	<hr />
 	<p>
@@ -71,6 +72,7 @@
         -> Responsiv<br/>
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
+        -> Klocka i menyraden med servertiden...<br/>
 
     </p>
     <hr/>
@@ -86,7 +88,8 @@
     <p>
 	    STOR Säkerhetsgenomgång<br/>
 	    -> SQL Injection <br/>
-        -> Logga ip för annons, inlägg, pm etc.
+        -> Logga ip för annons, inlägg, pm etc.<br/>
+        -> Historik för annonser
 	</p>
 	<hr/>
 	<p>
@@ -120,8 +123,15 @@
 		-> Eager loading where applicable??<br />
 		-> Kolla antal sql frågor vid respektive fråga
 	</p>
+    <hr/>
 	<p>
 		API för externa verktyg att ladda upp och hantera annonser.<br/>
 	</p>
+    <hr/>
+    <p>
+        Footer, Using:<br/>
+        -> Laravel<br/>
+        ->
+    </p>
 	
 @stop
