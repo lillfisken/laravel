@@ -38,7 +38,27 @@ class marketCRUD
 
         $temp['createdByUser'] = Auth::id();
         $temp['preview'] = true;
-//            dd($temp);
+
+        // IMAGES -----------------------------------------------------
+
+        //Save images in a temp file
+        // Add temp parameter to saveimages -> call images with this true
+        //Add this to temp market
+
+        // Every week, clean temp images...
+
+        //Process images in input
+        $input = self::saveImage($input, 'image1', true);
+        $input = self::saveImage($input, 'image2', true);
+        $input = self::saveImage($input, 'image3', true);
+        $input = self::saveImage($input, 'image4', true);
+        $input = self::saveImage($input, 'image5', true);
+        $input = self::saveImage($input, 'image6', true);
+
+
+        // IMAGES -----------------------------------------------------
+
+
 
         return view('markets.preview', ['market' => $temp,
             'postBackURL' => $postBackURL,
@@ -83,12 +103,10 @@ class marketCRUD
 	 * @return Processed inputstream
 	 *
 	 */
-    public static function saveImage($input, $image_name)
+    public static function saveImage($input, $image_name, $temp = false)
     {
-        //dd($input);
-//        if (Input::hasFile($image_name))
-        //dd(isset($input[$image_name]));
-//        dd(['imageName'=>$image_name, 'input'=>$input]);
+        dd($temp);
+
         if (isset($input[$image_name]) && $input[$image_name] != "")
         {
             //-------------------------------------------------------------------------------------
@@ -102,7 +120,14 @@ class marketCRUD
             $month = date('m');
             $rdm = str_random(5);
 
-            //TODO: Move path to separete config file instead of saving in db, Low priority
+            //Create a temporary director to store images in when previewing markets
+            $temp_path = public_path() . '/tmp/';
+            if (!File::exists($temp_path))
+            {
+                File::makeDirectory($temp_path, 0774 , true);
+            }
+
+            //Create the real path to store the images persistent
             $real_path = public_path() . '/images/' . $year . '/';
             if (!File::exists($real_path))
             {

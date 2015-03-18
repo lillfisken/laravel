@@ -149,7 +149,7 @@ class MarketsController extends ControllerMarket {
 		{
 			foreach ($temp as $market)
 			{
-				$this->addMarketMenu($market);
+				marketCRUD::addMarketMenu($market);
 			}
 		}
 
@@ -340,7 +340,7 @@ class MarketsController extends ControllerMarket {
 			//Set menu for each market
 			foreach ($result as $market)
 			{
-				$this->addMarketMenu($market);
+				marketCRUD::addMarketMenu($market);
 			}
 
             return view('markets.index', ['markets' => $result]);

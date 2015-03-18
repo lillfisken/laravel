@@ -11,11 +11,9 @@
 	<p>
 		Förhandsvisning av annonser<br />
 		-> Alla fält för annons ifyllbara/uppdateringsbara (kontaktsätt)<br />
-		-> Bildvisning, rätt storlek, beskärning, ej hoppande etc<br/>
 		-> BB-Code <br/>
 		-> Mail <br/>
 		-> Möjlighet att välja kontaktsätt <br/>
-		-> Förhandsvisning frågor <br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Bilduppladning, även i preview<br/>
         -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
@@ -131,7 +129,7 @@
         Footer, Using:<br/>
         -> Laravel<br/>
         -> Intervention/Image<br/>
-        ->
+        -> hammer.js<br/>
     </p>
 	
 @stop

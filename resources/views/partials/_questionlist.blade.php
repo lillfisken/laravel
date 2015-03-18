@@ -33,7 +33,7 @@
             {!! Form::textarea('message', null , ['class' => "form-input" ] ) !!}
             <br/>
             {!! Form::submit('Skicka', array('class' => 'btn-right')); !!}
-            {!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}
+            {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}--}}
             {!! Form::close() !!}
         @else
             <a href="{{ route('accounts.login') }}"><h3> Logga in för att skriva en kommentar.</h3></a>

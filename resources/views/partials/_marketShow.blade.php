@@ -6,46 +6,40 @@
         </div>
 
         <div class="market-detail-images">
-            @if(isset($market->image1_std))
-                <img class="market-detail-big-image"  src="{{ $market->image1_std }}" id="bigImage" />
-            @endif
-            <div class="market-detail-small-images">
-                @if(isset($market->image1_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image1_thumb }}"
-                         onclick="ChangeImage('{{ $market->image1_std }}','bigImage')" />
-                @endif
-                @if(isset($market->image2_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image2_thumb }}"
-                         onclick="ChangeImage('{{ $market->image2_std }}','bigImage')" />
-                @endif
-                @if(isset($market->image3_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image3_thumb }}"
-                         onclick="ChangeImage('{{ $market->image3_std }}','bigImage')" />
-                @endif
-                @if(isset($market->image4_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image4_thumb }}"
-                         onclick="ChangeImage('{{ $market->image4_std }}','bigImage')" />
-                @endif
-                @if(isset($market->image5_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image5_thumb }}"
-                         onclick="ChangeImage('{{ $market->image5_std }}','bigImage')" />
-                @endif
-                @if(isset($market->image6_thumb))
-                    <img class="market-detail-small-image"  src="{{ $market->image6_thumb }}"
-                         onclick="ChangeImage('{{ $market->image6_std }}','bigImage')" />
-                @endif
+            <div class="okg">
+                <ul>
+                    @if(isset($market->image1_std))
+                        <li><img src="{{ $market->image1_thumb }}" alt="" data-large="{{ $market->image1_std }}" data-full="{{ $market->image1_full }}"></li>
+                    @endif
+                    @if(isset($market->image2_std))
+                        <li><img src="{{ $market->image2_thumb }}" alt="" data-large="{{ $market->image2_std }}" data-full="{{ $market->image2_full }}"></li>
+                    @endif
+                    @if(isset($market->image3_std))
+                        <li><img src="{{ $market->image3_thumb }}" alt="" data-large="{{ $market->image3_std }}" data-full="{{ $market->image3_full }}"></li>
+                    @endif
+                    @if(isset($market->image4_std))
+                        <li><img src="{{ $market->image4_thumb }}" alt="" data-large="{{ $market->image4_std }}" data-full="{{ $market->image4_full }}"></li>
+                    @endif
+                    @if(isset($market->image5_std))
+                        <li><img src="{{ $market->image5_thumb }}" alt="" data-large="{{ $market->image5_std }}" data-full="{{ $market->image5_full }}"></li>
+                    @endif
+                    @if(isset($market->image6_std))
+                        <li><img src="{{ $market->image6_thumb }}" alt="" data-large="{{ $market->image6_std }}" data-full="{{ $market->image6_full }}"></li>
+                    @endif
+                </ul>
             </div>
         </div>
 
-        <p>
         <h1>Beskrivning</h1>
-
-        {!! $market->description or 'Beskrivning saknas' !!}
+        <p>
+            {!! $market->description or 'Beskrivning saknas' !!}
         </p>
+
+
     </div>
 
     {{--TODO:If säljaren valt öppna frågor--}}
-    @include('partials._questionlist')
+        @include('partials._questionlist')
     {{--endif--}}
 
 </div>
@@ -70,11 +64,13 @@
         <p>
             Inlagd {{ $market->created_at }}
         </p>
-        {{--TODO: Check if there is any extra info, else hide this part--}}
-        <h3>Extra info</h3>
-        <p>
-            {{ $market->extra_price_info }}
-        </p>
+
+        @if(isset($market->extra_price_info) && $market->extra_price_info != ''){{--TODO: Check if there is any extra info, else hide this part--}}
+            <h3>Extra info</h3>
+            <p>
+                {{ $market->extra_price_info }}
+            </p>
+        @endif
     </div>
 
     <div id="market-seller-info" class="layout">
@@ -85,12 +81,20 @@
             {{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>
             {{--Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />--}}
         </p>
-        <p>
-            {{--IF MARKET IS SET TO USE PM--}}
-            <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}", class="btn"> Skicka pm </a> <br/>
-            Skicka mail <- Not implemented yet <br/>
-            Ring <- Not implemented yet <br/>
-        </p>
+        <hr/>
+        @if(\Illuminate\Support\Facades\Auth::check())
+            <p>
+                {{--IF MARKET IS SET TO USE PM--}}
+                <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn"> Skicka pm </a> <br/>
+                Skicka mail <- Not implemented yet <br/>
+                Ring <- Not implemented yet <br/>
+            </p>
+        @else
+            <p>
+                <a href="{!! Route('accounts.login') !!}">Logga</a>  in för att kontakta säljaren
+            </p>
+        @endif
+
     </div>
     <hr />
 </div>
