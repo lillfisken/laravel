@@ -26,7 +26,7 @@ Route::get('markets', ['as' => 'markets.index', 'uses' => 'MarketsController@ind
 Route::get('markets/filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter'] );
 Route::get('markets/create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
 Route::get('markets/reactivate/{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
-Route::post('markets/store', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
+Route::post('markets/{market}', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
 Route::get('markets/{markets}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
 Route::get('markets/{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
 Route::patch('markets/{markets}', ['as' => 'markets.update', 'uses' => 'MarketsController@update', 'middleware' => 'auth']);
@@ -46,6 +46,7 @@ if(Config::get('app.debug'))
 {
 	Route::get('/dev', function(){
 
+        dd(Config::get('market.public_path_images'));
         $temp = new market\Market();
         $temp['title'] = 'hebchdk';
         $temp['createdByUser'] = Auth::id();
@@ -59,7 +60,6 @@ if(Config::get('app.debug'))
 		dd(Config::get('app.debug'));
 
 	});
-    Route::post('skit', ['uses'=>'MarketsController@skit']);
 	Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'DevController@road', 'middleware' => 'auth']);
 	Route::get('geturl', ['as' => 'geturl', 'uses' => 'DevController@getUrl', 'middleware' => 'auth']);
 	Route::get('session', ['as' => 'session', 'uses' => 'DevController@session', 'middleware' => 'auth']);

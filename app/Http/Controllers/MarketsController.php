@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use market\helper\debug;
 use market\helper\marketType;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
@@ -177,12 +178,15 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function store(/*CreateMarketRequest $request, Market $market*/)
 	{
+        debug::logConsole('MarketsController -> store');
+
         if(Input::get('publish'))
         {
             return marketCRUD::save(Input::all());
         }
         else if(Input::get('preview'))
         {
+            debug::logConsole('Marketscontroller -> store -> preview');
             return marketCRUD::preview(Input::all(), URL::route('markets.store'), 'POST');
         }
         elseif(Input::get('edit'))
@@ -225,6 +229,9 @@ class MarketsController extends ControllerMarket {
 	public function edit($market)
 	{
 		$temp = Market::find($market);
+        //dd($temp);
+
+        //dd($temp);
 
 		return view('markets.edit', ['market' => $temp]);
 	}
@@ -242,12 +249,15 @@ class MarketsController extends ControllerMarket {
 
         if(Input::get('publish'))
         {
-            //dd($id);
+            //dd(Input::all());
+            //dd('MarketsControler -> update -> publish', $id);
             marketCRUD::update($id, Input::all());
             return redirect()->route('markets.show', $id);
         }
         else if(Input::get('preview'))
         {
+            debug::logConsole('Marketscontroller -> update -> preview');
+
             return marketCRUD::preview(Input::all(), URL::route('markets.update', array($id)), 'Patch');
         }
         elseif(Input::get('edit'))

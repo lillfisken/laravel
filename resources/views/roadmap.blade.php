@@ -13,16 +13,17 @@
 		-> Alla fält för annons ifyllbara/uppdateringsbara (kontaktsätt)<br />
 		-> BB-Code <br/>
 		-> Mail <br/>
-		-> Möjlighet att välja kontaktsätt <br/>
+		-> Möjlighet att välja kontaktsätt, inklusive visning i annons <br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
-        -> Bilduppladning, även i preview<br/>
         -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
-        -> Visa bara PM, Mail och Telefon för inloggade i annons
+        -> byt bild i annons<br/>
+        -> Lägg till månad/år vid flytt av bilder (glöm inte kolla att mappar finns)
 	</p>
 	<hr />
 	<p>
 		Sida för användaren att ändra sina uppgifter<br />
-		->  <br />
+		-> Market menu blir fel  <br />
+        -> <br/>
 	</p>
 	<hr />
 	<p>
@@ -70,7 +71,6 @@
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
-
     </p>
     <hr/>
     <p>
@@ -84,7 +84,7 @@
     <hr/>
     <p>
 	    STOR Säkerhetsgenomgång<br/>
-	    -> SQL Injection <br/>
+	    -> SQL Injection (testa "<script>alert('SQL')</script>"<br/>
         -> Logga ip för annons, inlägg, pm etc.<br/>
         -> Historik för annonser
 	</p>

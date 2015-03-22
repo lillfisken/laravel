@@ -286,8 +286,10 @@
 	}
 	
 	.market-detail-small-image{
-		width: 80px;
-		height: 80px;
+        /*width: 80px;*/
+        /*height: 80px;*/
+        max-width: 80px;
+        max-height: 80px;
 		/*background-color: #f1f53a;*/
 		display: inline-block;
 		/*text-align: center;*/

@@ -15,12 +15,42 @@
         {!! Form::hidden('price') !!}
         {!! Form::hidden('extra_price_info') !!}
         {!! Form::hidden('numberOfItems') !!}
-        {!! Form::hidden('image1') !!}
-        {!! Form::hidden('image2') !!}
-        {!! Form::hidden('image3') !!}
-        {!! Form::hidden('image4') !!}
-        {!! Form::hidden('image5') !!}
-        {!! Form::hidden('image6') !!}
+        @if(isset($market->image1_thumb))
+            {!! Form::hidden('image1') !!}
+            {!! Form::hidden('image1_thumb') !!}
+            {!! Form::hidden('image1_std') !!}
+            {!! Form::hidden('image1_full') !!}
+        @endif
+        @if(isset($market->image2_thumb))
+            {!! Form::hidden('image2') !!}
+            {!! Form::hidden('image2_thumb') !!}
+            {!! Form::hidden('image2_std') !!}
+            {!! Form::hidden('image2_full') !!}
+        @endif
+        @if(isset($market->image3_thumb))
+            {!! Form::hidden('image3') !!}
+            {!! Form::hidden('image3_thumb') !!}
+            {!! Form::hidden('image3_std') !!}
+            {!! Form::hidden('image3_full') !!}
+        @endif
+        @if(isset($market->image4_thumb))
+            {!! Form::hidden('image4') !!}
+            {!! Form::hidden('image4_thumb') !!}
+            {!! Form::hidden('image4_std') !!}
+            {!! Form::hidden('image4_full') !!}
+        @endif
+        @if(isset($market->image5_thumb))
+            {!! Form::hidden('image5') !!}
+            {!! Form::hidden('image5_thumb') !!}
+            {!! Form::hidden('image5_std') !!}
+            {!! Form::hidden('image5_full') !!}
+        @endif
+        @if(isset($market->image6_thumb))
+            {!! Form::hidden('image6') !!}
+            {!! Form::hidden('image6_thumb') !!}
+            {!! Form::hidden('image6_std') !!}
+            {!! Form::hidden('image6_full') !!}
+        @endif
         {!! Form::hidden('contactPm') !!}
         {!! Form::hidden('contactMail') !!}
         {!! Form::hidden('contactPhone') !!}
