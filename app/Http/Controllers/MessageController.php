@@ -176,9 +176,14 @@ class MessageController extends Controller
 
     }
 
-    public function mail()
+    public function mail(Request $request)
     {
-        return view('account.message.mail');
+        $reciever = $request->query('reciever');
+        $title = 'Ang: ' . $request->query('title');
+
+        //dd('reciever: ' . $reciever . ', title: ' . $title);
+//        dd($request;
+        return view('account.message.mail', ['toUser' => $reciever, 'title' => $title]);
     }
 
     public function mailPost()

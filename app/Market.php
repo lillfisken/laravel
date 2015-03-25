@@ -10,41 +10,6 @@ class Market extends Model {
 	protected $dates = ['deleted_at'];
 	protected $softDelete = true;
 
-	/*
-	id
-	createdByUser
-	title
-	type
-	description
-	price
-	extraPriceInfo
-	numberOfItems
-	contactOptions
-	image1_thumb
-	image1_std
-	image1_full
-	image2_thumb
-	image2_std
-	image2_full
-	image3_thumb
-	image3_std
-	image3_full
-	image4_thumb
-	image4_std
-	image4_full
-	image5_thumb
-	image5_std
-	image5_full
-	image6_thumb
-	image6_std
-	image6_full
-	
-	endAt
-	created_at
-	update_at
-	deleted_at
-	*/
-	
 	protected $table = 'markets';
 
 	protected $fillable = [
@@ -56,7 +21,13 @@ class Market extends Model {
 		'extra_price_info',
 		'number_of_items',
         'marketType',
-		/*'contactOptions',*/
+
+//        Contact options
+        'contactMail',
+        'contactPhone',
+        'contactPm',
+        'contactQuestions',
+
 		'image1_small',
 		'image1_thumb',
 		'image1_std',
@@ -76,8 +47,6 @@ class Market extends Model {
 		'image6_thumb',
 		'image6_std',
 		'image6_full',
-
-
 
 		'created_at',
 		'update_at',

@@ -45,7 +45,10 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
-		if(Auth::check())
+        echo '<script>console.log("Market index  -----------------------")</script>';
+        debug::logConsole('Echoing thru debug');
+
+        if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
@@ -178,10 +181,12 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function store(/*CreateMarketRequest $request, Market $market*/)
 	{
-        debug::logConsole('MarketsController -> store');
+        debug::logConsole('MarketsController -> store -------------------------------------------');
+        //dd(Input::all());
 
         if(Input::get('publish'))
         {
+            debug::logConsole('Marketscontroller -> store -> publish');
             return marketCRUD::save(Input::all());
         }
         else if(Input::get('preview'))
@@ -191,6 +196,8 @@ class MarketsController extends ControllerMarket {
         }
         elseif(Input::get('edit'))
         {
+            debug::logConsole('Marketscontroller -> store -> edit');
+
             return marketCRUD::editPreview(Input::all());
         }
         else
@@ -249,6 +256,8 @@ class MarketsController extends ControllerMarket {
 
         if(Input::get('publish'))
         {
+            debug::logConsole('MarketsController -> Update -> publish ---------------------------------');
+//            debug::logConsole('MarketsController -> Update -> publish ---------------------------------');
             //dd(Input::all());
             //dd('MarketsControler -> update -> publish', $id);
             marketCRUD::update($id, Input::all());

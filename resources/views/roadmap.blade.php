@@ -9,43 +9,38 @@
 	<p>Tänkt utveckling för sidan, preliminär</p>
 	<hr />
 	<p>
-		Förhandsvisning av annonser<br />
-		-> Alla fält för annons ifyllbara/uppdateringsbara (kontaktsätt)<br />
+		Annonser<br />
+		-> Alla fält för annons ifyllbara/uppdateringsbara (testa) ???<br />
 		-> BB-Code <br/>
 		-> Mail <br/>
-		-> Möjlighet att välja kontaktsätt, inklusive visning i annons <br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
-        -> byt bild i annons<br/>
-        -> Lägg till månad/år vid flytt av bilder (glöm inte kolla att mappar finns)
 	</p>
+    <hr />
+    <p>
+        Login<br />
+        -> Glömt lösenord <br />
+        -> Allmänna varningsmeddelanden, meddelanden etc<br/>
+        -> Redirect back<br/>
+        <br/>
+        Extern inloggning och verifiering<br/>
+        -> Koppling phpBB inloggning<br />
+        -> google/facebook<br/>
+    </p>
 	<hr />
 	<p>
 		Sida för användaren att ändra sina uppgifter<br />
-		-> Market menu blir fel  <br />
+		-> Market menu blir fel (vad menar jag?) <br />
         -> <br/>
 	</p>
-	<hr />
-	<p>
-	    Extern inloggning och verifiering<br/>
-		-> Koppling phpBB inloggning<br />
-		-> google/facebook<br/>
-	</p>
-	<hr />
-	<p>
-    	Login<br />
-    	-> Glömt lösenord <br />
-    	-> Allmänna varningsmeddelanden, meddelanden etc<br/>
-		-> Redirect back
-    </p>
-    <hr />
-	<p>
-    	Filter/sökfunktion<br />
-    	-> Avancerad sökning ??? <br />
-    	-> Visa dolda annonser/säljare <br />
-    	-> Sidvisning sökresultat, antal per sida etc<br />
-    	-> Olika visningsalternativ<br />
-    	-> Möjlighet att söka med flera ord som inte behöver finnas i föld<br />
+    <hr/>
+    <p>
+        Meddelanden<br/>
+        -> Visning antal ny pm i menyrad, helper?<br/>
+        -> Visning i inkorgen, konversationspartner, antal nya Pm etc<br/>
+        -> Paginering både inbox och meddelanden<br/>
+        -> Inboxen, sortera på nysate först.<br/>
+        -> Ta bort markeringara för nytt inlägg i show<br/>
     </p>
 	<hr />
 	<p>
@@ -59,7 +54,7 @@
 		-> Sidvisning sökresultat<br />
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
-		-> Valideringar av annonsmodel<br />
+		-> Valideringar av annonsmodel (inkluderar filtyp img vid uppladdning)<br />
 		-> Error messages in forms<br />
 		-> CSS, change to SCSS using parameters for colors etc??? <br />
 		-> Redirekt efter login tll önskad sida<br/>
@@ -71,15 +66,6 @@
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
-    </p>
-    <hr/>
-    <p>
-        Meddelanden<br/>
-        -> Visning antal ny pm i menyrad, helper?<br/>
-        -> Visning i inkorgen, konversationspartner, antal nya Pm etc<br/>
-        -> Paginering både inbox och meddelanden<br/>
-        -> Inboxen, sortera på nysate först.<br/>
-        -> Ta bort markeringara för nytt inlägg i show<br/>
     </p>
     <hr/>
     <p>
@@ -101,6 +87,15 @@
     		-> -> Sökes/erbjudes/tipsas/etc <br />
 			-> Auktion Eller Annons, inte båda
     	</p>
+    <hr />
+    <p>
+        Filter/sökfunktion<br />
+        -> Avancerad sökning ??? <br />
+        -> Visa dolda annonser/säljare <br />
+        -> Sidvisning sökresultat, antal per sida etc<br />
+        -> Olika visningsalternativ<br />
+        -> Möjlighet att söka med flera ord som inte behöver finnas i föld<br />
+    </p>
     <hr />
 	<p>
 		Review-system<br />

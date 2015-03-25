@@ -26,7 +26,7 @@ Route::get('markets', ['as' => 'markets.index', 'uses' => 'MarketsController@ind
 Route::get('markets/filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter'] );
 Route::get('markets/create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
 Route::get('markets/reactivate/{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
-Route::post('markets/{market}', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
+Route::post('markets', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
 Route::get('markets/{markets}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
 Route::get('markets/{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
 Route::patch('markets/{markets}', ['as' => 'markets.update', 'uses' => 'MarketsController@update', 'middleware' => 'auth']);
@@ -99,6 +99,7 @@ Route::get('profile/blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'u
 Route::get('profile/blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
 
 Route::get('profile/settings/show', ['as' => 'accounts.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
+Route::post('profile/settings/', ['as' => 'accounts.save', 'uses' => 'AccountController@saveSettings', 'middleware' => 'auth']);
 
 
 //endregion

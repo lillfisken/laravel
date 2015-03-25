@@ -84,10 +84,22 @@
         <hr/>
         @if(\Illuminate\Support\Facades\Auth::check())
             <p>
-                {{--IF MARKET IS SET TO USE PM--}}
-                <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn"> Skicka pm </a> <br/>
-                Skicka mail <- Not implemented yet <br/>
-                Ring <- Not implemented yet <br/>
+                @if($market->contactPm)
+                    {{-- If market is set to use pm --}}
+                    <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn">
+                        Skicka pm
+                    </a> <br/>
+                @endif
+                @if($market->contactMail)
+                    {{-- If market is set to use pm --}}
+                    <a href="{{ Route('message.mail', ['reciever' => $market->user->username, 'title' => $market->title]) }}" class="btn">
+                        Skicka mail <- Not implemented yet
+                    </a><br/>
+                @endif
+                @if($market->contactPhone && isset($market->user->phone1))
+                    {{-- If market is set to use pm --}}
+                    <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn">Ring säljaren ({{ $market->user->phone1 }})</a>
+                @endif
             </p>
         @else
             <p>

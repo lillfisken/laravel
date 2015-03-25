@@ -1,4 +1,4 @@
-@if(isset($market))
+@if(isset($market) && $market->contactQuestions)
     <div id="market-forum" class="layout">
         <h1 class="market-title" >Frågor</h1>
 

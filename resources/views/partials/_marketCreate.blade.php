@@ -68,11 +68,11 @@
 	<hr />
 	<h3>Välj hur köparna ska kunna kontakta dig</h3>
     {!! Form::label('contactPm', 'PM') !!}
-    {!! Form::checkbox('contactPm', 'pm', true) !!}
+    {!! Form::checkbox('contactPm', '1', true) !!}
 	{!! Form::label('contactMail', 'Mail') !!}
-	{!! Form::checkbox('contactMail', 'mail', true) !!}
+	{!! Form::checkbox('contactMail', '1', true) !!}
     {!! Form::label('contactPhone', 'Telefon') !!}
-    {!! Form::checkbox('contactPhone', 'phone', true) !!}
-	{!! Form::label('contactQuestion', 'Via öppna frågor') !!}
-	{!! Form::checkbox('contactQuestion', 'forum', true) !!}<br />
+    {!! Form::checkbox('contactPhone', '1', true) !!}
+	{!! Form::label('contactQuestions', 'Via öppna frågor') !!}
+	{!! Form::checkbox('contactQuestions', '1', true) !!}<br />
 	<hr />

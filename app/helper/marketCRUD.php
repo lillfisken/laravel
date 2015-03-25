@@ -14,15 +14,18 @@ class marketCRUD
     {
         //This assumes correct input values have been checked and validated
         //Some error handling will have to be attached here
+        $input = self::saveImages($input, true);
 
-        self::saveImages($input, true);
+        //dd($input);
 
         //Create new market and save
         $m = new Market($input);
         $m['createdByUser'] = Auth::id();
+
+        //dd($m);
         $m->save();
 
-        return redirect()->route('markets.index');
+        return redirect()->route('markets.show', $m->id);
     }
 
     public static function preview($input, $postBackURL, $postBackType)
@@ -50,18 +53,10 @@ class marketCRUD
     public static function update($id, $input){
         //Assuming input is validated
         //Add some error handling
-        //dd($input);
+
         $market = Market::find($id);
 
         $input = self::saveImages($input, true);
-//        $input = self::saveImage($input, 'image1', true);
-//        $input = self::saveImage($input, 'image2', true);
-//        $input = self::saveImage($input, 'image3', true);
-//        $input = self::saveImage($input, 'image4', true);
-//        $input = self::saveImage($input, 'image5', true);
-//        $input = self::saveImage($input, 'image6', true);
-
-//        dd($input);
 
         $market->fill($input)->save();
 
@@ -94,41 +89,32 @@ class marketCRUD
 	 */
     private static function saveImage($input, $image_name, $persistent)
     {
-        debug::logConsole('marketCRUD -> saveImage -----------------------------------------------------------------');
-        debug::logConsole('$image_name: ' . $image_name);
-        debug::logConsole('$persistent: ' . $persistent);
-//        dd($input);
-        if(isset($input[$image_name . '_thumb']) )
-        {
-            debug::logConsole('$input[$image_name . _thumb]: ' . $input[$image_name . '_thumb']);
-        }
-        else
-        {
-            debug::logConsole($image_name . '_thumb not set');
-        }
+        debug::logConsole('marketCRUD -> saveImage -> image_name: ' . $image_name);
+        debug::logConsole('marketCRUD -> saveImage -> persistent: ' . $persistent);
+//        debug::logConsole('marketCRUD -> saveImage -> image_name: ' . $image_name);
+//        debug::logConsole('marketCRUD -> saveImage -> image_name: ' . $image_name);
 
-
-        if(isset($input[$image_name . '_thumb']) && $persistent )
+        if(isset($input[$image_name . '_thumb']) && $persistent && !isset($input[$image_name]))
         {
-            debug::logConsole('marketCRUD -> saveImage -> first if');
+            debug::logConsole('marketCRUD -> saveImage -> $input[$image_name . _thumb]: ' . $input[$image_name . '_thumb']);
+
             $year = date('y');
             $month = date('m');
 
-            debug::logConsole('Input thumb before: ' . $input[$image_name . '_thumb']);
             $input = images::moveImageFromTempToPublic($input, $image_name, '_thumb', $year, $month);
-            debug::logConsole('Input thumb after: ' . $input[$image_name . '_thumb']);
             $input = images::moveImageFromTempToPublic($input, $image_name, '_std', $year, $month);
             $input = images::moveImageFromTempToPublic($input, $image_name, '_full', $year, $month);
         }
         else if (isset($input[$image_name]) && $input[$image_name] != "")
         {
+            debug::logConsole('marketCRUD -> saveImage -> second if');
+
+
             //-------------------------------------------------------------------------------------
             // Settings for saving image
             // Create a two base paths for images, one real and one virtual
             // Create directore if non existing based by month and year
             //-------------------------------------------------------------------------------------
-
-            debug::logConsole('marketCRUD -> saveImage -> second if');
 
             //TODO: add check 'is image'
 
@@ -137,41 +123,48 @@ class marketCRUD
             $month = date('m');
             $rdm = str_random(5);
 
-            $web_public_path = Config::get('market.public_path_images');
-            $system_public_path = Config::get('market.system_path_images');
+            $web_public_path = Config::get('market.public_path_images') . $year . '/' . $month . '/';
+            $system_public_path = Config::get('market.system_path_images') . $year . '/' . $month . '/';
 
             $web_public_temp_path = Config::get('market.public_path_images_temp');
             $system_public_temp_path = Config::get('market.system_path_images_temp');
+
+            debug::logConsole('-> $web_public_path: ' . $web_public_path);
+            debug::logConsole('-> $web_public_temp_path: ' . $web_public_temp_path);
+            debug::logConsole('-> $system_public_path: ' . $system_public_path);
+            debug::logConsole('-> $system_public_temp_path: ' . $system_public_temp_path);
 
             #endregion
 
             #region Set directory structure
 
             //Create a temporary director to store images in when previewing markets
-            if (!File::exists($system_public_temp_path))
-            {
-                echo '<script>console.log("Maging directory")</script>';
-                File::makeDirectory($system_public_temp_path, 0774 , true);
-            }
+            images::makeDirectory($system_public_temp_path);
+//            if (!File::exists($system_public_temp_path))
+//            {
+//                echo '<script>console.log("Maging directory")</script>';
+//                File::makeDirectory($system_public_temp_path, 0774 , true);
+//            }
 
             //Create the real path to store the images persistent
+            images::makeDirectory($system_public_path);
             // Adding directory for year
-            $system_path = $system_public_path . $year . '/';
-            if (!File::exists($system_path))
-            {
-                File::makeDirectory($system_path, 0774 , true);
-            }
-
-            //Adding directory for month
-            $system_path = $system_path . $month . '/';
-            if (!File::exists($system_path))
-            {
-                File::makeDirectory($system_path, 0774 , true);
-            }
+//            $system_path = $system_public_path . $year . '/';
+//            if (!File::exists($system_path))
+//            {
+//                File::makeDirectory($system_path, 0774 , true);
+//            }
+//
+//            //Adding directory for month
+//            $system_path = $system_path . $month . '/';
+//            if (!File::exists($system_path))
+//            {
+//                File::makeDirectory($system_path, 0774 , true);
+//            }
 
             //1: Path to public directory from root, 2: Path to store image directory
-            $public_path_base = $web_public_path . $year . '/' . $month . '/';
-            $system_path_base = $system_path;
+//            $public_path_base = $web_public_path;
+//            $system_path_base = $system_public_path;
 
             #endregion
 
@@ -180,44 +173,20 @@ class marketCRUD
 
             $file_name = $rdm . '_std_' .  $input[$image_name]->getClientOriginalName();
 
-            //HERE, Check if file already exist, first in real and then in temp
-            //  If file exist in real
-            //      Add name to input
-            //  Else if file exist in temp
-            //      if persistent
-            //          Add to storage, move file
-            //          Add name to input
-            //      else
-            //          Add name to input
-            //  Else
-            //      if persistent
-            //          Add to storage
-            //          Add name to input
-            //      else
-            //          Add to temp storage
-            //          Add name to input
-
-
             //Resize image to max 700 width keeping aspect ratio
-            $image = Image::make($input[$image_name]->getRealPath());
-
-            $image = $image->resize(700, null, function ($constraint) {
+            $image = Image::make($input[$image_name]->getRealPath())->resize(700, null, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
 
             if($persistent){
-                $public_path = $public_path_base . $file_name;
-                $system_path = $system_path_base . $file_name;
+                $public_path = $web_public_path . $file_name;
+                $system_path = $system_public_path . $file_name;
             }
             else{
                 $public_path = $web_public_temp_path . $file_name;
                 $system_path = $system_public_temp_path . $file_name;
             }
-
-//            echo '<script>console.log("Public path: ' . $public_path . '")</script>';
-//            echo '<script>console.log("System path: ' . $system_path . '")</script>';
-
 
             $image->save($system_path);
             $input[$image_name . '_std'] = $public_path;
@@ -236,8 +205,8 @@ class marketCRUD
             });
 
             if($persistent){
-                $public_path = $public_path_base . $file_name;
-                $system_path = $system_path_base . $file_name;
+                $public_path = $web_public_path . $file_name;
+                $system_path = $system_public_path . $file_name;
             }
             else{
                 $public_path = $web_public_temp_path . $file_name;
@@ -246,8 +215,6 @@ class marketCRUD
 
             $image->save($system_path);
             $input[$image_name . '_thumb'] = $public_path;
-
-            debug::logConsole('$input[$image_name . _thumb]: ' . $input[$image_name . '_thumb'] );
 
             #endregion
 
@@ -259,8 +226,8 @@ class marketCRUD
             $image = Image::make($input[$image_name]);
 
             if($persistent){
-                $public_path = $public_path_base . $file_name;
-                $system_path = $system_path_base . $file_name;
+                $public_path = $web_public_path . $file_name;
+                $system_path = $system_public_path . $file_name;
             }
             else{
                 $public_path = $web_public_temp_path . $file_name;
@@ -272,26 +239,21 @@ class marketCRUD
 
             #endregion
         }
-        else{
-            debug::logConsole('Image processing and saving never hit');
+        else
+        {
+            debug::logConsole('marketCRUD -> saveImage -> saving never hit');
+
         }
 
-//        if($image_name==='image2' && $persistent)
-//        {
-//            dd('End of saveImage', $input);
-//
-//        }
         return $input;
     }
 
     public static function addMarketMenu($market)
     {
-        //dd($market);
-
         if(Auth::check()) {
             $id = Auth::id();
             $temp = array();
-            //dd($id);
+
             //Adds link to edit market if it's created by logged in user
             if ($id == $market->createdByUser && $market->deleted_at == null) {
                 $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id ));
@@ -304,15 +266,8 @@ class marketCRUD
                 //TODO: Check if market is seller, then ad link to unblock instead
                 $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
             }
-//			dd($temp);
-//			dd(gettype($market));
-//			dd($market);
-
-//			$market->offsetSet('marketmenu', $temp);
 
             $market['marketmenu'] = $temp;
-
-//			dd($market);
         }
     }
 

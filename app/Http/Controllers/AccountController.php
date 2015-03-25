@@ -377,12 +377,19 @@ class AccountController extends Controller
             */
     public function settings()
     {
+        $user = User::find(Auth::Id());
 //        dd('AccountController@settings');
-        return view('account.settings');
+        return view('account.settings', ['user' => $user]);
 
+    }
+
+    public function saveSettings()
+    {
+        dd(Input::all());
     }
 }
     //endregion
+
 
     //---------------------------------------------------------------
 
