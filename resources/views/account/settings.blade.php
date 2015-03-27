@@ -1,7 +1,7 @@
 @extends('layout/site')
 
 @section('title')
-    Inställningar - {{ $user()->username }}
+    Inställningar - {{ $user->username }}
 
 @stop
 
@@ -40,6 +40,6 @@
     Twitter<br/>
     <hr>
 
-    {!! Form::submit('Spara') !!}
+    {!! Form::submit('Spara', ['class'=>'btn']) !!}
     {!! Form::close() !!}
 @stop

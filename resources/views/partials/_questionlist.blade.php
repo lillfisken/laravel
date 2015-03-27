@@ -32,11 +32,11 @@
             {!! Form::hidden('market', $market->id) !!}
             {!! Form::textarea('message', null , ['class' => "form-input" ] ) !!}
             <br/>
-            {!! Form::submit('Skicka', array('class' => 'btn-right')); !!}
+            {!! Form::submit('Skicka', array('class' => 'btn')); !!}
             {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}--}}
             {!! Form::close() !!}
         @else
-            <a href="{{ route('accounts.login') }}"><h3> Logga in för att skriva en kommentar.</h3></a>
+            <a href="{{ route('accounts.login') }}" class="btn">Logga in för att skriva en kommentar.</a>
         @endif
 
     </div>

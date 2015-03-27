@@ -14,7 +14,7 @@
         {!! Form::hidden('description') !!}
         {!! Form::hidden('price') !!}
         {!! Form::hidden('extra_price_info') !!}
-        {!! Form::hidden('numberOfItems') !!}
+        {!! Form::hidden('number_of_items') !!}
         @if(isset($market->image1_thumb))
             {!! Form::hidden('image1') !!}
             {!! Form::hidden('image1_thumb') !!}
@@ -55,8 +55,8 @@
         {!! Form::hidden('contactMail') !!}
         {!! Form::hidden('contactPhone') !!}
         {!! Form::hidden('contactQuestion') !!}
-        {!! Form::submit('Publicera', ['name'=>'publish']) !!}
-        {!! Form::submit('Ändra', ['name'=>'edit']) !!}
+        {!! Form::submit('Publicera', ['name'=>'publish', 'class'=>'btn']) !!}
+        {!! Form::submit('Ändra', ['name'=>'edit', 'class'=>'btn']) !!}
         <hr/>
     </div>
     <div class="clearfix">
@@ -66,8 +66,8 @@
     <div class="clearfix padding5">
         <hr/>
         <h1>FÖRHANDSGRANSKA</h1>
-        {!! Form::submit('Publicera', ['name'=>'publish']) !!}
-        {!! Form::submit('Ändra', ['name'=>'edit']) !!}
+        {!! Form::submit('Publicera', ['name'=>'publish', 'class'=>'btn']) !!}
+        {!! Form::submit('Ändra', ['name'=>'edit', 'class'=>'btn']) !!}
         {!! Form::close() !!}
     </div>
 @stop

@@ -16,7 +16,7 @@
             {!! Form::hidden('market', $markets->id ) !!}<br/>
             {!! Form::select('reason', $reasons) !!}
 
-            {!! Form::submit('Avsluta', array('class' => 'btn-right')); !!}
+            {!! Form::submit('Avsluta', array('class' => 'btn')); !!}
         {!! Form::close() !!}
 
         Form to delete and choose reason

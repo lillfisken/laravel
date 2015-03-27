@@ -9,13 +9,15 @@ use market\helper\debug;
 use market\helper\marketType;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
+use market\Http\Requests\MarketCreateUpdateRequest;
 use market\Market;
 use market\MarketQuestions;
 use Illuminate\Http\Request;
 use Input;
-use market\Http\Requests\CreateMarketRequest;
 use DB;
 use Session;
+use Chromabits\Purifier\Contracts\Purifier;
+use HTMLPurifier_Config;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -32,10 +34,20 @@ class MarketsController extends ControllerMarket {
 	|
 	*/
 
-	public function __construct(Market $market)
-	{
-		//$this->market = $market;
-	}
+    /**
+     * @var Purifier
+     */
+    protected $purifier;
+
+    /**
+     * Construct an instance of MyClass
+     *
+     * @param Purifier $purifier
+     */
+    public function __construct(Purifier $purifier) {
+        // Inject dependencies
+        $this->purifier = $purifier;
+    }
 	
 	/**
 	 * Display a listing of the resource.
@@ -179,15 +191,28 @@ class MarketsController extends ControllerMarket {
 	 *
 	 * @return Response
 	 */
-	public function store(/*CreateMarketRequest $request, Market $market*/)
+	public function store(MarketCreateUpdateRequest $request)
 	{
         debug::logConsole('MarketsController -> store -------------------------------------------');
-        //dd(Input::all());
+//        dd(Input::all());
+//        Purifier::clean(Input::get('description'));
+        //dd($request->input('description'));
+
+//        $request->input('description')->replace($this->purifier->clean($request->input('description')));
+        $input = Input::all();
+        //dd($input['description']);
+        $input['description'] = $this->purifier->clean($input['description']);
+        //dd($input['description']);
+
+
+        //dd(Input::get('description'));
+        //dd($request->input('description'));
 
         if(Input::get('publish'))
         {
             debug::logConsole('Marketscontroller -> store -> publish');
-            return marketCRUD::save(Input::all());
+            return marketCRUD::save($input);
+//            return marketCRUD::save(Input::all());
         }
         else if(Input::get('preview'))
         {
@@ -250,7 +275,7 @@ class MarketsController extends ControllerMarket {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update( $id , Request $request)
+	public function update( $id , MarketCreateUpdateRequest $request)
 	{
         //TODO: Validate input, Change to marketRequest, If request is valid...
 

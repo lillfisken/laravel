@@ -111,13 +111,13 @@ return [
 
 	'providers' => [
 
-		/*
-		 * Application Service Providers...
-		 */
-		'market\Providers\AppServiceProvider',
-		//'market\Providers\BusServiceProvider',
-		'market\Providers\EventServiceProvider',
-		'market\Providers\RouteServiceProvider',
+//		/*
+//		 * Application Service Providers...
+//		 */
+//		'market\Providers\AppServiceProvider',
+//		//'market\Providers\BusServiceProvider',
+//		'market\Providers\EventServiceProvider',
+//		'market\Providers\RouteServiceProvider',
 
 
 		/*
@@ -152,7 +152,7 @@ return [
 
         'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-//      'Intervention\Image\ImageServiceProvider'
+        'Chromabits\Purifier\PurifierServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -217,9 +217,8 @@ return [
 
         'Form'=> 'Illuminate\Html\FormFacade',
         'HTML'=> 'Illuminate\Html\HtmlFacade',
-//        'Image' => 'Intervention\Image\Facades\Image',
         'Image' => 'Intervention\Image\Facades\Image',
-
-	],
+//        'Purifier' => 'Mews\Purifier\Facades\Purifier',
+    ],
 
 ];

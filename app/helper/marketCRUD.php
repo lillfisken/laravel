@@ -8,8 +8,16 @@ use File;
 use Image;
 use Request;
 
+/**
+ * Class marketCRUD
+ * @package market\helper
+ */
 class marketCRUD
 {
+    /**
+     * @param $input
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public static function save($input)
     {
         //This assumes correct input values have been checked and validated
@@ -28,6 +36,12 @@ class marketCRUD
         return redirect()->route('markets.show', $m->id);
     }
 
+    /**
+     * @param $input
+     * @param $postBackURL
+     * @param $postBackType
+     * @return \Illuminate\View\View
+     */
     public static function preview($input, $postBackURL, $postBackType)
     {
         $input = self::saveImages($input);
@@ -43,6 +57,10 @@ class marketCRUD
         'postBackType' => $postBackType]);
     }
 
+    /**
+     * @param $input
+     * @return \Illuminate\View\View
+     */
     public static function editPreview($input)
     {
         $temp = new Market($input);
@@ -50,6 +68,10 @@ class marketCRUD
         return view('markets.previewEdit', ['market' => $temp]);
     }
 
+    /**
+     * @param $id
+     * @param $input
+     */
     public static function update($id, $input){
         //Assuming input is validated
         //Add some error handling
@@ -63,6 +85,11 @@ class marketCRUD
         //TODO: Add changes to separate db table
     }
 
+    /**
+     * @param $input
+     * @param bool $persistent
+     * @return mixed
+     */
     private static function saveImages($input, $persistent = false){
 
 //        dd($input);
@@ -87,6 +114,12 @@ class marketCRUD
 	 * @return Processed inputstream
 	 *
 	 */
+    /**
+     * @param $input
+     * @param $image_name
+     * @param $persistent
+     * @return mixed
+     */
     private static function saveImage($input, $image_name, $persistent)
     {
         debug::logConsole('marketCRUD -> saveImage -> image_name: ' . $image_name);
@@ -248,6 +281,9 @@ class marketCRUD
         return $input;
     }
 
+    /**
+     * @param $market
+     */
     public static function addMarketMenu($market)
     {
         if(Auth::check()) {

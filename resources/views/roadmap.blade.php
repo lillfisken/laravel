@@ -10,30 +10,32 @@
 	<hr />
 	<p>
 		Annonser<br />
-		-> Alla fält för annons ifyllbara/uppdateringsbara (testa) ???<br />
-		-> BB-Code <br/>
-		-> Mail <br/>
+        -> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")/MarkItUp<br />
+		-> Mail (redirect back, uri helper)<br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
-        -> Telefon, från profil om valt i annons och det finns ett registrerat telefonnr<br/>
+        -> Validate with error messages<br/>
+        -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
+        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons, bbCode)<br/>
+        ->
 	</p>
+    <hr />
+    <p>
+        Sida för användaren att ändra sina uppgifter<br />
+        -> Market menu blir fel (vad menar jag?) <br />
+        -> <br/>
+    </p>
+    <hr/>
     <hr />
     <p>
         Login<br />
         -> Glömt lösenord <br />
         -> Allmänna varningsmeddelanden, meddelanden etc<br/>
         -> Redirect back<br/>
-        <br/>
-        Extern inloggning och verifiering<br/>
-        -> Koppling phpBB inloggning<br />
-        -> google/facebook<br/>
+        -> OAuth (facebook, twitter, google, linkedin)<br/>
+        -> PhpBB<br/>
+        -> Redirekt efter login tll önskad sida<br/>
+
     </p>
-	<hr />
-	<p>
-		Sida för användaren att ändra sina uppgifter<br />
-		-> Market menu blir fel (vad menar jag?) <br />
-        -> <br/>
-	</p>
-    <hr/>
     <p>
         Meddelanden<br/>
         -> Visning antal ny pm i menyrad, helper?<br/>
@@ -41,23 +43,24 @@
         -> Paginering både inbox och meddelanden<br/>
         -> Inboxen, sortera på nysate först.<br/>
         -> Ta bort markeringara för nytt inlägg i show<br/>
+        -> Maila användaren vid händelser såsom registrering, glömt lösenord, nytt meddelande etc.<br/>
+        -> Inställningar i användarprofilen för notifieringar<br/>
     </p>
 	<hr />
 	<p>
 		STOR designöversyn<br />
-		-> SEO friendly paths<br />
+        -> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")<br />
+        -> SEO friendly paths<br />
 		-> Regex? priser 1:- istället för 1.00, ta bort decimalerna<br />
 		-> Radbrytningar i text från db, spara radbrytningar etc i db<br />
-		-> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")<br />
 		-> Fixa HTAccess för att bli av med "index.php", även market/public<br />
 		-> HTML input encoding to prevent attacks<br />
 		-> Sidvisning sökresultat<br />
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
-		-> Valideringar av annonsmodel (inkluderar filtyp img vid uppladdning)<br />
+		-> Valideringar av annonsmodel (inkluderar filtyp img vid uppladdning) (requests)<br />
+        -> Less/Elixir etc för att bundla/minifiera script och css
 		-> Error messages in forms<br />
-		-> CSS, change to SCSS using parameters for colors etc??? <br />
-		-> Redirekt efter login tll önskad sida<br/>
 		-> Enhetliga menyer överallt<br/>
 		-> Se över obligatoriska fält i formulär (annons, registrering etc)<br/>
 		-> Datumvisning, använd plugin typ Carbon???<br/>
@@ -66,13 +69,15 @@
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
+        -> Button, länk etc (.btn) enhetligt utseende med font
     </p>
     <hr/>
     <p>
 	    STOR Säkerhetsgenomgång<br/>
 	    -> SQL Injection (testa "<script>alert('SQL')</script>"<br/>
         -> Logga ip för annons, inlägg, pm etc.<br/>
-        -> Historik för annonser
+        -> Historik för annonser<br/>
+        -> Byt tecken för visning av radbrytningar etc. <br/>
 	</p>
 	<hr/>
 	<p>
@@ -124,7 +129,9 @@
         Footer, Using:<br/>
         -> Laravel<br/>
         -> Intervention/Image<br/>
-        -> hammer.js<br/>
+        -> hammerjs/hammer.js<br/>
+        -> mews/purifier<br/>
+        -> golonka/bbcodeparser<br/>
     </p>
 	
 @stop

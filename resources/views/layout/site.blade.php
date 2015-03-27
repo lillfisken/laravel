@@ -77,6 +77,14 @@
 				<div class="row-divider"></div>
             @endif
 
+            {{--@if($errors->any())--}}
+                {{--<ul>--}}
+                    {{--@foreach($errors as $error)--}}
+                        {{--<li>$error</li>--}}
+                    {{--@endforeach--}}
+                {{--</ul>--}}
+            {{--@endif--}}
+
 			@if (array_key_exists('menu2', View::getSections()))
 				<div id="menu2" class="margin0">
 					<div class="borderbox">

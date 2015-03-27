@@ -1,5 +1,6 @@
 <?php namespace market\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use market\Conversation;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
@@ -178,6 +179,7 @@ class MessageController extends Controller
 
     public function mail(Request $request)
     {
+        //TODO: add uri from to use in mail post
         $reciever = $request->query('reciever');
         $title = 'Ang: ' . $request->query('title');
 
@@ -188,8 +190,24 @@ class MessageController extends Controller
 
     public function mailPost()
     {
-        //TODO: Send email
-        dd('mailPost not inplemented yet');
+        //TODO: Everything about mail, configure
+        $from = User::find(Auth::Id())->email;
+        $to = User::where('userName', '=', Input::get('toUser'))->first()->email;
+        $subject = Input::get('title');
+        $body = Input::get('message');
+
+        //dd($from, $to, $subject, $body);
+
+        Mail::raw($body, function($message) use ($from, $to, $subject){
+            $message->from($from); //Add username
+            $message->to($to);
+            $message->subject($subject);
+
+            //dd($message);
+        });
+        //dd('mailPost not inplemented yet');
+
+        return 'Email sent';
     }
 
     //endregion

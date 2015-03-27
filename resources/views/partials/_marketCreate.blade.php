@@ -1,6 +1,6 @@
 	<h3>{!! Form::label('title', 'Rubrik') !!}</h3>
-	{!! Form::text('title', null , ['class' => "form-input" ] ) !!}
-	{!! $errors->first('title', '<span class="help-block">:message</span>') !!}
+    {!! $errors->first('title', '<div class="help-block">:message</div>') !!}
+    {!! Form::text('title', null , ['class' => "form-input" ] ) !!}
 	<hr />
     <h3>{!! Form::label('type', 'Annonstyp') !!}</h3>
     {!! Form::select('marketType', market\helper\marketType::getTypesMarket(), null,  ['class' => 'form-input'] ) !!}
@@ -10,12 +10,13 @@
 	{!! Form::textarea('description', null, ['class' => 'form-input'] ) !!}
 	<hr />
 	<h3>{!! Form::label('price', 'Pris') !!}</h3>
+    {!! $errors->first('price', '<div class="help-block">:message</div>') !!}
 	{!! Form::text('price', null , ['class' => 'form-input'] ) !!}
 
-	<h3>{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}</h3>
+    <h3>{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}</h3>
 	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input'] ) !!}
-	<h3>{!! Form::label('numberOfItems', 'Antal') !!}</h3>
-	{!! Form::text('numberOfItems', '1', ['class' => 'form-input'] ) !!}
+	<h3>{!! Form::label('number_of_items', 'Antal') !!}</h3>
+	{!! Form::text('number_of_items', null, ['class' => 'form-input'] ) !!}
 	<hr />
 	@if(isset($market->image1_thumb))
 		<img class="market-detail-small-image"  src="{{ $market->image1_thumb }}"/>
@@ -67,6 +68,11 @@
   	{!! Form::file('image6','',array('id'=>'','class'=>'')) !!}<br />
 	<hr />
 	<h3>Välj hur köparna ska kunna kontakta dig</h3>
+    {!! $errors->first('contactPm', '<div class="help-block">:message</div>') !!}
+    {!! $errors->first('contactMail', '<div class="help-block">:message</div>') !!}
+    {!! $errors->first('contactPhone', '<div class="help-block">:message</div>') !!}
+    {!! $errors->first('contactQuestions', '<div class="help-block">:message</div>') !!}
+
     {!! Form::label('contactPm', 'PM') !!}
     {!! Form::checkbox('contactPm', '1', true) !!}
 	{!! Form::label('contactMail', 'Mail') !!}

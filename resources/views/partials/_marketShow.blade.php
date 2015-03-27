@@ -81,32 +81,30 @@
             {{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>
             {{--Omdöme 4,9 ({{ $market->user->getUserTotalMarketsCount() }} omdömen) <- Not implemented yet <br />--}}
         </p>
-        <hr/>
         @if(\Illuminate\Support\Facades\Auth::check())
             <p>
                 @if($market->contactPm)
                     {{-- If market is set to use pm --}}
-                    <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn">
+                    <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn btn80">
                         Skicka pm
                     </a> <br/>
                 @endif
                 @if($market->contactMail)
                     {{-- If market is set to use pm --}}
-                    <a href="{{ Route('message.mail', ['reciever' => $market->user->username, 'title' => $market->title]) }}" class="btn">
-                        Skicka mail <- Not implemented yet
+                    <a href="{{ Route('message.mail', ['reciever' => $market->user->username, 'title' => $market->title]) }}" class="btn btn80">
+                        Skicka mail
                     </a><br/>
                 @endif
                 @if($market->contactPhone && isset($market->user->phone1))
                     {{-- If market is set to use pm --}}
-                    <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn">Ring säljaren ({{ $market->user->phone1 }})</a>
+                    <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn btn80">Ring säljaren ({{ $market->user->phone1 }})</a>
                 @endif
             </p>
         @else
             <p>
-                <a href="{!! Route('accounts.login') !!}">Logga</a>  in för att kontakta säljaren
+                <a href="{!! Route('accounts.login') !!}" class="btn btn80">Logga in för att kontakta säljaren </a>
             </p>
         @endif
 
     </div>
-    <hr />
 </div>

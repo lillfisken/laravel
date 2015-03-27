@@ -162,7 +162,32 @@
     }
 
     .padding5{
-        padding: 5px;
+        padding: 0.5em;
+    }
+
+    .btn{
+        display: inline-block;
+        padding: 0.5em;
+        margin: 0.2em;
+        border: solid 1px #516177;
+        text-decoration: none;
+        color: #516177;
+        font-size: 1em;
+        background-color: #d9d9d9;
+    }
+
+    .btn40{
+        min-width: 40%;
+    }
+    
+    .btn80{
+        min-width: 80%;
+    }
+
+    .help-block{
+        color: red;
+        margin-top: 0.5em;
+        margin-bottom: 5px;
     }
 	
 	/*---------------------------------------
@@ -404,7 +429,7 @@
 /*-----------------------------------------------*/
 .form-input {
 	display: block;
-	width: 70%;
+	width: 100%;
 	overflow: hidden;
 }
 	
