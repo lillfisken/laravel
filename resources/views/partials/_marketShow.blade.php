@@ -32,7 +32,7 @@
 
         <h1>Beskrivning</h1>
         <p>
-            {!! $market->description or 'Beskrivning saknas' !!}
+            {!! nl2br($market->description)!!}
         </p>
 
 

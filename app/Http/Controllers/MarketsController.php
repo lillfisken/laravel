@@ -9,6 +9,7 @@ use market\helper\debug;
 use market\helper\marketType;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
+use market\helper\text;
 use market\Http\Requests\MarketCreateUpdateRequest;
 use market\Market;
 use market\MarketQuestions;
@@ -48,6 +49,7 @@ class MarketsController extends ControllerMarket {
         // Inject dependencies
         $this->purifier = $purifier;
     }
+
 	
 	/**
 	 * Display a listing of the resource.
@@ -88,7 +90,7 @@ class MarketsController extends ControllerMarket {
 
 	public function filter()
 	{
-		//TODO:: Move all all market type to separate file/enum and update db
+		//TODO:: Sanitize
 		// Begining of building db query
 		$query = Market::select('*');
 
@@ -200,10 +202,21 @@ class MarketsController extends ControllerMarket {
 
 //        $request->input('description')->replace($this->purifier->clean($request->input('description')));
         $input = Input::all();
+        $inputPurified = $input;
         //dd($input['description']);
-        $input['description'] = $this->purifier->clean($input['description']);
-        //dd($input['description']);
+//        $inputPurified['description'] = $this->purifier->clean($input['description']);
+//        dd($input['description']);
+//
+//        $test = 'test';
+//        $testCopy = $test;
+//        $testCopy = 'testCopy';
+//        dd('test: ' . $test . ', testCopy: ' . $testCopy);
 
+//        $p = new;
+
+//        $inputPurified = text::getText()->purifyMarketInput($input);
+        $input = text::purifyMarketInput($input, $this->purifier);
+//        dd($input, $inputPurified);
 
         //dd(Input::get('description'));
         //dd($request->input('description'));
@@ -217,13 +230,13 @@ class MarketsController extends ControllerMarket {
         else if(Input::get('preview'))
         {
             debug::logConsole('Marketscontroller -> store -> preview');
-            return marketCRUD::preview(Input::all(), URL::route('markets.store'), 'POST');
+            return marketCRUD::preview($input, URL::route('markets.store'), 'POST');
         }
         elseif(Input::get('edit'))
         {
             debug::logConsole('Marketscontroller -> store -> edit');
 
-            return marketCRUD::editPreview(Input::all());
+            return marketCRUD::editPreview($input);
         }
         else
         {
@@ -277,7 +290,8 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function update( $id , MarketCreateUpdateRequest $request)
 	{
-        //TODO: Validate input, Change to marketRequest, If request is valid...
+        $input = Input::all();
+        $input = text::purifyMarketInput($input, $this->purifier);
 
         if(Input::get('publish'))
         {
@@ -285,19 +299,19 @@ class MarketsController extends ControllerMarket {
 //            debug::logConsole('MarketsController -> Update -> publish ---------------------------------');
             //dd(Input::all());
             //dd('MarketsControler -> update -> publish', $id);
-            marketCRUD::update($id, Input::all());
+            marketCRUD::update($id, $input);
             return redirect()->route('markets.show', $id);
         }
         else if(Input::get('preview'))
         {
             debug::logConsole('Marketscontroller -> update -> preview');
 
-            return marketCRUD::preview(Input::all(), URL::route('markets.update', array($id)), 'Patch');
+            return marketCRUD::preview($input, URL::route('markets.update', array($id)), 'Patch');
         }
         elseif(Input::get('edit'))
         {
 //            dd('Edit update preview');
-            $temp = new Market(Input::all());
+            $temp = new Market($input);
             $temp['id'] = $id;
             //dd($temp, $id);
 
@@ -397,6 +411,8 @@ class MarketsController extends ControllerMarket {
 	public function question()
 	{
 		//TODO::Add validation, questionRequest
+        //TODO:: Sanitize
+
 //		dd(Input::all());
 		//dd(Redirect::back());
 

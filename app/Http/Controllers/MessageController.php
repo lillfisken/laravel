@@ -105,6 +105,8 @@ class MessageController extends Controller
     //Post,
     public  function sendMessage(Request $request)
     {
+        //TODO:: Sanitize
+
 //        dd($request->all());
         //dd(Input::all());
         if(Auth::check())
@@ -180,6 +182,7 @@ class MessageController extends Controller
     public function mail(Request $request)
     {
         //TODO: add uri from to use in mail post
+
         $reciever = $request->query('reciever');
         $title = 'Ang: ' . $request->query('title');
 
@@ -191,6 +194,8 @@ class MessageController extends Controller
     public function mailPost()
     {
         //TODO: Everything about mail, configure
+        //TODO:: Sanitize?
+
         $from = User::find(Auth::Id())->email;
         $to = User::where('userName', '=', Input::get('toUser'))->first()->email;
         $subject = Input::get('title');

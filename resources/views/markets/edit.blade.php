@@ -7,15 +7,16 @@
 @stop
 
 @section('content')
-	<h1>Ändra annons : 
-	{!! $market->title !!}</h1>
-    {{--{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}--}}
-    {!! Form::model($market, ['url' => URL::route('markets.update', array($market->id)), 'method'=>'PATCH', 'files' => true]) !!}
+    <div class="inner-content">
+        <h1>Ändra annons : {!! $market->title !!}</h1>
+        {{--{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}--}}
+        {!! Form::model($market, ['url' => URL::route('markets.update', array($market->id)), 'method'=>'PATCH', 'files' => true]) !!}
 
-		@include('partials._marketCreate')
-		
-		{!! Form::submit('Uppdatera', array('class' => 'btn', 'name'=>'publish')); !!}
-		{!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name' => 'preview')); !!}
+            @include('partials._marketCreate')
 
-	{!! Form::close() !!}
+            {!! Form::submit('Uppdatera', array('class' => 'btn', 'name'=>'publish')); !!}
+            {!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name' => 'preview')); !!}
+
+        {!! Form::close() !!}
+    </div>
 @stop
