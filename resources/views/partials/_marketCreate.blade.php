@@ -7,17 +7,22 @@
 
 	<hr />
 	<h3>{!! Form::label('description', 'Beskrivning') !!}</h3>
-	{!! Form::textarea('description', null, ['class' => 'form-input'] ) !!}
+    {!! $errors->first('description', '<div class="help-block">:message</div>') !!}
+    {!! Form::textarea('description', null, ['class' => 'form-input okgbb'] ) !!}
 	<hr />
 	<h3>{!! Form::label('price', 'Pris') !!}</h3>
     {!! $errors->first('price', '<div class="help-block">:message</div>') !!}
 	{!! Form::text('price', null , ['class' => 'form-input'] ) !!}
 
     <h3>{!! Form::label('extra_price_info', 'Extra info om betalning, frakt etc.') !!}</h3>
-	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input'] ) !!}
+	{!! Form::textarea('extra_price_info', null , ['class' => 'form-input okgbb'] ) !!}
 	<h3>{!! Form::label('number_of_items', 'Antal') !!}</h3>
-	{!! Form::text('number_of_items', null, ['class' => 'form-input'] ) !!}
-	<hr />
+    @if(isset($market->number_of_items))
+	    {!! Form::text('number_of_items', null, ['class' => 'form-input'] ) !!}
+    @else
+        {!! Form::text('number_of_items', '1', ['class' => 'form-input'] ) !!}
+    @endif
+    <hr />
 	@if(isset($market->image1_thumb))
 		<img class="market-detail-small-image"  src="{{ $market->image1_thumb }}"/>
         {!! Form::hidden('image1_thumb', $market->image1_thumb) !!}

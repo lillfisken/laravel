@@ -171,22 +171,24 @@ class marketCRUD
 
             #region Set directory structure
 
+            //TODO: FIX IT
             //Create a temporary director to store images in when previewing markets
-            images::makeDirectory($system_public_temp_path);
-//            if (!File::exists($system_public_temp_path))
-//            {
-//                echo '<script>console.log("Maging directory")</script>';
-//                File::makeDirectory($system_public_temp_path, 0774 , true);
-//            }
+//            images::makeDirectory($system_public_temp_path);
+            if (!File::exists($system_public_temp_path))
+            {
+                echo '<script>console.log("Making directory $system_public_temp_path: ' . $system_public_temp_path . '")</script>';
+                File::makeDirectory($system_public_temp_path, 0774 , true);
+            }
 
             //Create the real path to store the images persistent
-            images::makeDirectory($system_public_path);
-            // Adding directory for year
+//            images::makeDirectory($system_public_path);
+//             Adding directory for year
 //            $system_path = $system_public_path . $year . '/';
-//            if (!File::exists($system_path))
-//            {
-//                File::makeDirectory($system_path, 0774 , true);
-//            }
+            if (!File::exists($system_public_path))
+            {
+                echo '<script>console.log("Making directory $system_public_path: ' . $system_public_path . '")</script>';
+                File::makeDirectory($system_public_path, 0774 , true);
+            }
 //
 //            //Adding directory for month
 //            $system_path = $system_path . $month . '/';

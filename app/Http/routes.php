@@ -42,24 +42,155 @@ Route::get('markets/pm/{title}/{toUser}', ['as' => 'markets.pm', 'uses' => 'Mark
 
 //region Development Routes
 
-if(Config::get('app.debug'))
+if(Config::get('app.debug') === 'true')
 {
 	Route::get('/dev', function(){
 
-        dd(Config::get('market.public_path_images'));
-        $temp = new market\Market();
-        $temp['title'] = 'hebchdk';
-        $temp['createdByUser'] = Auth::id();
-        $temp['marketType'] = '1';
-        $temp['preview'] = true;
-            //dd($temp);
-            //dd($temp);
-
-        return view('markets.preview', ['market' => $temp]);
-
-		dd(Config::get('app.debug'));
-
+        echo '<a href="/market/public/index.php/dev/list">Visa lista &ouml;ver alla mappar och filer med dess beh&ouml;righeter i \'public\'</a>';
 	});
+    Route::get('dev/list', function(){
+        $root = '/var/www/market/public';
+
+        //http://stackoverflow.com/questions/952263/deep-recursive-array-of-directory-structure-in-php
+
+        function fillArrayWithFileNodes( DirectoryIterator $dir )
+        {
+
+            $data = array();
+            foreach ( $dir as $node )
+            {
+                if ( $node->isDir() && !$node->isDot() )
+                {
+                    //http://php.net/manual/en/function.fileperms.php
+                    $perms = fileperms($dir->getPathname());
+
+                    if (($perms & 0xC000) == 0xC000) {
+                        // Socket
+                        $info = 's';
+                    } elseif (($perms & 0xA000) == 0xA000) {
+                        // Symbolic Link
+                        $info = 'l';
+                    } elseif (($perms & 0x8000) == 0x8000) {
+                        // Regular
+                        $info = '-';
+                    } elseif (($perms & 0x6000) == 0x6000) {
+                        // Block special
+                        $info = 'b';
+                    } elseif (($perms & 0x4000) == 0x4000) {
+                        // Directory
+                        $info = 'd';
+                    } elseif (($perms & 0x2000) == 0x2000) {
+                        // Character special
+                        $info = 'c';
+                    } elseif (($perms & 0x1000) == 0x1000) {
+                        // FIFO pipe
+                        $info = 'p';
+                    } else {
+                        // Unknown
+                        $info = 'u';
+                    }
+
+                    // Owner
+                    $info .= (($perms & 0x0100) ? 'r' : '-');
+                    $info .= (($perms & 0x0080) ? 'w' : '-');
+                    $info .= (($perms & 0x0040) ?
+                        (($perms & 0x0800) ? 's' : 'x' ) :
+                        (($perms & 0x0800) ? 'S' : '-'));
+
+                    // Group
+                    $info .= (($perms & 0x0020) ? 'r' : '-');
+                    $info .= (($perms & 0x0010) ? 'w' : '-');
+                    $info .= (($perms & 0x0008) ?
+                        (($perms & 0x0400) ? 's' : 'x' ) :
+                        (($perms & 0x0400) ? 'S' : '-'));
+
+                    // World
+                    $info .= (($perms & 0x0004) ? 'r' : '-');
+                    $info .= (($perms & 0x0002) ? 'w' : '-');
+                    $info .= (($perms & 0x0001) ?
+                        (($perms & 0x0200) ? 't' : 'x' ) :
+                        (($perms & 0x0200) ? 'T' : '-'));
+
+                    $data[$info . ' : ' . $node->getFilename()] = fillArrayWithFileNodes( new DirectoryIterator( $node->getPathname() ) );
+                }
+                else if ( $node->isFile() )
+                {
+                    //http://php.net/manual/en/function.fileperms.php
+                    $perms = fileperms($dir->getPathname());
+
+                    if (($perms & 0xC000) == 0xC000) {
+                        // Socket
+                        $info = 's';
+                    } elseif (($perms & 0xA000) == 0xA000) {
+                        // Symbolic Link
+                        $info = 'l';
+                    } elseif (($perms & 0x8000) == 0x8000) {
+                        // Regular
+                        $info = '-';
+                    } elseif (($perms & 0x6000) == 0x6000) {
+                        // Block special
+                        $info = 'b';
+                    } elseif (($perms & 0x4000) == 0x4000) {
+                        // Directory
+                        $info = 'd';
+                    } elseif (($perms & 0x2000) == 0x2000) {
+                        // Character special
+                        $info = 'c';
+                    } elseif (($perms & 0x1000) == 0x1000) {
+                        // FIFO pipe
+                        $info = 'p';
+                    } else {
+                        // Unknown
+                        $info = 'u';
+                    }
+
+                    // Owner
+                    $info .= (($perms & 0x0100) ? 'r' : '-');
+                    $info .= (($perms & 0x0080) ? 'w' : '-');
+                    $info .= (($perms & 0x0040) ?
+                        (($perms & 0x0800) ? 's' : 'x' ) :
+                        (($perms & 0x0800) ? 'S' : '-'));
+
+                    // Group
+                    $info .= (($perms & 0x0020) ? 'r' : '-');
+                    $info .= (($perms & 0x0010) ? 'w' : '-');
+                    $info .= (($perms & 0x0008) ?
+                        (($perms & 0x0400) ? 's' : 'x' ) :
+                        (($perms & 0x0400) ? 'S' : '-'));
+
+                    // World
+                    $info .= (($perms & 0x0004) ? 'r' : '-');
+                    $info .= (($perms & 0x0002) ? 'w' : '-');
+                    $info .= (($perms & 0x0001) ?
+                        (($perms & 0x0200) ? 't' : 'x' ) :
+                        (($perms & 0x0200) ? 'T' : '-'));
+
+                    //dd($dir->getPathname());
+                    $data[] = $info . ' : ' . $node->getFilename();
+                }
+            }
+            return $data;
+        }
+        $fileData = fillArrayWithFileNodes( new DirectoryIterator( $root ) );
+
+        dd($fileData);
+
+//http://stackoverflow.com/questions/14304935/php-listing-all-directories-and-sub-directories-recursively-in-drop-down-menu
+        $iter = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($root, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST,
+            RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+        );
+
+        $paths = array($root);
+        foreach ($iter as $path => $dir) {
+            if ($dir->isDir()) {
+                $paths[] = $path;
+            }
+        }
+
+        dd($paths);
+    });
 	Route::get('roadmap', ['as' => 'roadmap', 'uses' => 'DevController@road', 'middleware' => 'auth']);
 	Route::get('geturl', ['as' => 'geturl', 'uses' => 'DevController@getUrl', 'middleware' => 'auth']);
 	Route::get('session', ['as' => 'session', 'uses' => 'DevController@session', 'middleware' => 'auth']);

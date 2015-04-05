@@ -8,7 +8,7 @@
             <a href="{{ route('markets.create') }}"><li class="menu-item">Skapa annons</li></a>
             <a href="{{ route('accounts.settings') }}"><li class="menu-item">Inställningar</li></a>
             <a href="{{ route('accounts.logout') }}"><li class="menu-item"> Logga ut</li></a>
-			@if(Config::get('app.debug'))
+			@if(Config::get('app.debug') === 'true')
 			  	<a href="/market/public/index.php/roadmap"><li class="menu-item">Roadmap</li></a>
 				<a href="/market/public/index.php/dev"><li class="menu-item">Dev</li> </a>
 			@endif

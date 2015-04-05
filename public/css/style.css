@@ -165,7 +165,8 @@
         padding: 0.5em;
     }
 
-    .btn{
+    .btn,
+    .btnSmall{
         display: inline-block;
         padding: 0.5em;
         margin: 0.2em;
@@ -182,6 +183,12 @@
     
     .btn80{
         min-width: 80%;
+    }
+
+    .btnSmall{
+        font-size: 0.8em;
+        padding: 0.2em 0.5em;
+        height: 2em;
     }
 
     .help-block{
@@ -215,6 +222,18 @@
 		box-sizing: border-box;
 	}
 	*/
+
+    .red{
+        color: #ff0000;
+    }
+
+    .green{
+        color: #008000;
+    }
+    
+    .blue{
+        color: #0000ff;
+    }
 	
 	/*---------------------------------------
 	Navigation
@@ -431,6 +450,10 @@
 	display: block;
 	width: 100%;
 	overflow: hidden;
+}
+
+textarea.form-input{
+    overflow-y: auto;
 }
 	
 	

@@ -196,46 +196,34 @@ class MarketsController extends ControllerMarket {
 	public function store(MarketCreateUpdateRequest $request)
 	{
         debug::logConsole('MarketsController -> store -------------------------------------------');
-//        dd(Input::all());
-//        Purifier::clean(Input::get('description'));
-        //dd($request->input('description'));
 
-//        $request->input('description')->replace($this->purifier->clean($request->input('description')));
         $input = Input::all();
-        $inputPurified = $input;
-        //dd($input['description']);
-//        $inputPurified['description'] = $this->purifier->clean($input['description']);
-//        dd($input['description']);
-//
-//        $test = 'test';
-//        $testCopy = $test;
-//        $testCopy = 'testCopy';
-//        dd('test: ' . $test . ', testCopy: ' . $testCopy);
 
-//        $p = new;
-
-//        $inputPurified = text::getText()->purifyMarketInput($input);
         $input = text::purifyMarketInput($input, $this->purifier);
-//        dd($input, $inputPurified);
 
-        //dd(Input::get('description'));
-        //dd($request->input('description'));
-
-        if(Input::get('publish'))
+        if(Input::get('publishBB'))
         {
-            debug::logConsole('Marketscontroller -> store -> publish');
+            debug::logConsole('Marketscontroller -> store -> publishBB');
+            $input = text::marketFromBbToHtml($input);
             return marketCRUD::save($input);
 //            return marketCRUD::save(Input::all());
         }
-        else if(Input::get('preview'))
+        elseif(Input::get('publishHTML'))
+        {
+            debug::logConsole('Marketscontroller -> store -> publishHTML');
+            $input = text::marketFromHtmlToBB($input);
+            return marketCRUD::save($input);
+        }
+        elseif(Input::get('preview'))
         {
             debug::logConsole('Marketscontroller -> store -> preview');
+            $input = text::marketFromBbToHtml($input);
             return marketCRUD::preview($input, URL::route('markets.store'), 'POST');
         }
         elseif(Input::get('edit'))
         {
             debug::logConsole('Marketscontroller -> store -> edit');
-
+            $input = text::marketFromHtmlToBB($input);
             return marketCRUD::editPreview($input);
         }
         else
@@ -293,19 +281,24 @@ class MarketsController extends ControllerMarket {
         $input = Input::all();
         $input = text::purifyMarketInput($input, $this->purifier);
 
-        if(Input::get('publish'))
+        if(Input::get('publishBB'))
         {
-            debug::logConsole('MarketsController -> Update -> publish ---------------------------------');
-//            debug::logConsole('MarketsController -> Update -> publish ---------------------------------');
-            //dd(Input::all());
-            //dd('MarketsControler -> update -> publish', $id);
+            debug::logConsole('MarketsController -> Update -> publishBB ---------------------------------');
+            $input = text::marketFromBbToHtml($input);
             marketCRUD::update($id, $input);
             return redirect()->route('markets.show', $id);
         }
-        else if(Input::get('preview'))
+        elseif(Input::get('publishHTML'))
+        {
+            debug::logConsole('MarketsController -> Update -> publishHTML ---------------------------------');
+            $input = text::marketFromHtmlToBB($input);
+            marketCRUD::update($id, $input);
+            return redirect()->route('markets.show', $id);
+        }
+        elseif(Input::get('preview'))
         {
             debug::logConsole('Marketscontroller -> update -> preview');
-
+            $input = text::marketFromBbToHtml($input);
             return marketCRUD::preview($input, URL::route('markets.update', array($id)), 'Patch');
         }
         elseif(Input::get('edit'))
@@ -314,6 +307,7 @@ class MarketsController extends ControllerMarket {
             $temp = new Market($input);
             $temp['id'] = $id;
             //dd($temp, $id);
+            $temp = text::marketFromHtmlToBB($temp);
 
             return view('markets.edit', ['market' => $temp]);
         }
@@ -413,16 +407,15 @@ class MarketsController extends ControllerMarket {
 		//TODO::Add validation, questionRequest
         //TODO:: Sanitize
 
-//		dd(Input::all());
-		//dd(Redirect::back());
+        //$input = request->all()
+        //Purifier
+        //$input = text::questionBBToHTML($input)
 
  		$question = new MarketQuestions;
 
 		$question->createdByUser = Auth::id();
 		$question->market = Input::get('market');
 		$question->message = Input::get('message');
-
-//		dd($question);
 
 		$question->save();
 

@@ -30,7 +30,7 @@
             {{--Form for sending question/answers--}}
             {!! Form::open(array('route' => 'markets.question')) !!}
             {!! Form::hidden('market', $market->id) !!}
-            {!! Form::textarea('message', null , ['class' => "form-input" ] ) !!}
+            {!! Form::textarea('message', null , ['class' => "form-input okgbb" ] ) !!}
             <br/>
             {!! Form::submit('Skicka', array('class' => 'btn')); !!}
             {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}--}}

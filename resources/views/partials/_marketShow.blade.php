@@ -95,7 +95,7 @@
                         Skicka mail
                     </a><br/>
                 @endif
-                @if($market->contactPhone && isset($market->user->phone1))
+                @if($market->contactPhone && isset($market->user->phone1) && $market->user->phone1 !== '')
                     {{-- If market is set to use pm --}}
                     <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn btn80">Ring säljaren ({{ $market->user->phone1 }})</a>
                 @endif

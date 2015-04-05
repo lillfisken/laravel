@@ -7,15 +7,10 @@ class debug
 {
     public static function logConsole($text)
     {
-//        echo '<script>console.log("-----------------------")</script>';
-
-        if(Config::get('app.debug'))
+        if(Config::get('app.debug')==='true')
         {
             echo '<script>console.log("' . $text . '")</script>';
         }
-
-        //dd('debug: ' . Config::get('app.debug') . '|, text: ' . $text . '|');
-
     }
 
 }

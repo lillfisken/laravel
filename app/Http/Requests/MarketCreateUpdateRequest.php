@@ -1,6 +1,7 @@
 <?php namespace market\Http\Requests;
 
 use market\Http\Requests\Request;
+use market\helper\text;
 
 class MarketCreateUpdateRequest extends Request {
 
@@ -28,9 +29,11 @@ class MarketCreateUpdateRequest extends Request {
 	 */
 	public function rules()
 	{
+
 		return [
-            'title' => 'required|min:5',
+            'title' => 'required|min:3',
             'price' => 'required|numeric|min:0',
+            'description' => 'required|min:5',
             'contactPm' => 'boolean',
             'contactPhone' => 'boolean',
             'contactMail' => 'boolean',
@@ -52,6 +55,7 @@ class MarketCreateUpdateRequest extends Request {
         return [
             'title' => 'Rubrik',
             'price' => 'Pris',
+            'description' => 'Beskrivning'
         ];
     }
 }

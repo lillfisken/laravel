@@ -7,25 +7,23 @@
 @section('content')
 	<h1>Roadmap</h1>
 	<p>Tänkt utveckling för sidan, preliminär</p>
-	<hr />
+	<hr/>
 	<p>
 		Annonser<br />
-        -> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")/MarkItUp<br />
+        -> BBCode, lägg till beskrivning, snygga till<br />
+        -> -> Regex url html till bb, citat lägger till p från html till bb<br/>
 		-> Mail (redirect back, uri helper)<br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
-        -> Validate with error messages<br/>
         -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
-        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons, bbCode)<br/>
-        ->
+        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons, parsa bbcode, validation, request)<br/>
+        -> Använd Font-awsame<br/>
+
 	</p>
     <hr />
     <p>
         Sida för användaren att ändra sina uppgifter<br />
-        -> Market menu blir fel (vad menar jag?) <br />
-        -> <br/>
     </p>
     <hr/>
-    <hr />
     <p>
         Login<br />
         -> Glömt lösenord <br />
@@ -36,6 +34,7 @@
         -> Redirekt efter login tll önskad sida<br/>
 
     </p>
+    <hr />
     <p>
         Meddelanden<br/>
         -> Visning antal ny pm i menyrad, helper?<br/>
@@ -81,17 +80,17 @@
 	</p>
 	<hr/>
 	<p>
-    		Fler annonstyper<br />
-    		-> Auktion <br />
-    		-> -> Auktionsscript <br />
-			-> -> Ingen editering efter första köp/bud, bara tillägg<br/>
-			-> -> +5 min vid auktion, obligatoriskt<br/>
-    		-> Samköp <br />
-    		-> -> ??? <br />
-    		-> Tjänst/jobb <br />
-    		-> -> Sökes/erbjudes/tipsas/etc <br />
-			-> Auktion Eller Annons, inte båda
-    	</p>
+        Fler annonstyper<br />
+        -> Auktion <br />
+        -> -> Auktionsscript <br />
+        -> -> Ingen editering efter första köp/bud, bara tillägg<br/>
+        -> -> +5 min vid auktion, obligatoriskt<br/>
+        -> Samköp <br />
+        -> -> ??? <br />
+        -> Tjänst/jobb <br />
+        -> -> Sökes/erbjudes/tipsas/etc <br />
+        -> Auktion Eller Annons, inte båda
+    </p>
     <hr />
     <p>
         Filter/sökfunktion<br />
@@ -113,6 +112,7 @@
 		-> Svartlista användare<br/>
 		-> Radera annonser helt (Flytta till dold db tabell)<br/>
 		-> Återställa radera annonser (från dold db)<br />
+        -> Ändra annonser<br/>
 	</p>
 	<hr/>
 	<p>
@@ -132,6 +132,7 @@
         -> hammerjs/hammer.js<br/>
         -> mews/purifier<br/>
         -> golonka/bbcodeparser<br/>
+        -> SCEditor<br/>
     </p>
 	
 @stop
