@@ -10,7 +10,6 @@
 	<hr/>
 	<p>
 		Annonser<br />
-		-> Mail (redirect back, uri helper)<br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
         -> Använd Font-awsame<br/>

@@ -13,6 +13,7 @@ use market\Message;
 use Redirect;
 use market\User;
 use Illuminate\Http\Request;
+use Session;
 
 //use Illuminate\Contracts\Auth\Guard;
 //use Illuminate\Contracts\Auth\Registrar;
@@ -181,7 +182,7 @@ class MessageController extends Controller
 
     public function mail(Request $request)
     {
-        //TODO: add uri from to use in mail post
+        Session::put('uri', Session::get('_previous'));
 
         $reciever = $request->query('reciever');
         $title = 'Ang: ' . $request->query('title');
@@ -195,6 +196,11 @@ class MessageController extends Controller
     {
         //TODO: Everything about mail, configure
         //TODO:: Sanitize?
+
+        //Rules:
+        //Must have message
+        //Must have title
+        //Check user, must have valid email etc
 
         $from = User::find(Auth::Id())->email;
         $to = User::where('userName', '=', Input::get('toUser'))->first()->email;
@@ -212,7 +218,23 @@ class MessageController extends Controller
         });
         //dd('mailPost not inplemented yet');
 
-        return 'Email sent';
+//        return Redirect::back(); Fungerar inte, redirectar bara tillbaka till formuläret
+//        return 'Email sent';
+
+        $uri = Session::get('uri');
+        if(isset($uri))
+        {
+            if(isset($uri['url']))
+            {
+                //dd($uri['url']);
+                return redirect($uri['url'])->with('message', 'Mail skickat');
+            }
+            return redirect()->route('markets.index')->with('message', 'Mail skickat');
+        }
+        else
+        {
+            return redirect()->route('markets.index')->with('message', 'Mail skickat');;
+        }
     }
 
     //endregion

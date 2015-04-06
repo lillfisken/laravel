@@ -51,6 +51,11 @@
 			</div>
 				
 			<div class="row-divider"></div>
+
+            @if(Session::has('message'))
+                <p class="alert">{{ Session::get('message') }}</p>
+                <div class="row-divider"></div>
+            @endif
 			
 			<div id="menu">
 				<div class="borderbox">
@@ -77,13 +82,6 @@
             	@include('layout.banner3')
 			</div>
 			--}}
-
-
-
-			@if(Session::has('message'))
-                <p class="alert">{{ Session::get('message') }}</p>
-				<div class="row-divider"></div>
-            @endif
 
             {{--@if($errors->any())--}}
                 {{--<ul>--}}
