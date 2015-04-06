@@ -36,8 +36,12 @@ class text
         return $input;
     }
 
-    public static function purifyQuestionInput($input)
+    public static function purifyQuestionInput($input, $purifier)
     {
+        if(isset($input['message']))
+        {
+            $input['message'] = self::purify($input['message'], $purifier);
+        }
 
         return $input;
     }

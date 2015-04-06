@@ -21,7 +21,7 @@ function bbbar($target){
     //        [red] - <span color=red> - Röd text
     createBtn('red','red',$target,targetId);
     //        [mark] - <mark> - Markerad
-    createBtn('<mark>mark</mark>','mark',$target,targetId);
+    //createBtn('<mark>mark</mark>','mark',$target,targetId);
     //        [code] - <code> - Kodblock
     createBtn('code','code',$target,targetId);
     //        [url] - <url> - Länk

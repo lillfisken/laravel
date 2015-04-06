@@ -14,7 +14,7 @@
                         <h4 class="inline">{{ $question->user->username or 'null' }}</h4> <small class="align-right">{{ $question->created_at }}</small>
                     </div>
                     <div>
-                        {{ $question->message }}
+                        {!! $question->message !!}
                     </div>
                 </div>
 
@@ -30,6 +30,7 @@
             {{--Form for sending question/answers--}}
             {!! Form::open(array('route' => 'markets.question')) !!}
             {!! Form::hidden('market', $market->id) !!}
+            {!! $errors->first('message', '<div class="help-block">:message</div>') !!}
             {!! Form::textarea('message', null , ['class' => "form-input okgbb" ] ) !!}
             <br/>
             {!! Form::submit('Skicka', array('class' => 'btn')); !!}

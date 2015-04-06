@@ -15,7 +15,7 @@
 
 		@include('partials._marketCreate')
 
-		{!! Form::submit('Publicera', array('class' => 'btn', 'name'=>'publish')); !!}
+		{!! Form::submit('Publicera', array('class' => 'btn', 'name'=>'publishBB')); !!}
 		{!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name'=>'preview')); !!}
 
 		{!! Form::close() !!}

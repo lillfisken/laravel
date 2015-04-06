@@ -55,7 +55,7 @@
         {!! Form::hidden('contactMail') !!}
         {!! Form::hidden('contactPhone') !!}
         {!! Form::hidden('contactQuestion') !!}
-        {!! Form::submit('Publicera', ['name'=>'publish', 'class'=>'btn']) !!}
+        {!! Form::submit('Publicera', ['name'=>'publishHTML', 'class'=>'btn']) !!}
         {!! Form::submit('Ändra', ['name'=>'edit', 'class'=>'btn']) !!}
         <hr/>
     </div>
@@ -66,7 +66,7 @@
     <div class="clearfix padding5">
         <hr/>
         <h1>FÖRHANDSGRANSKA</h1>
-        {!! Form::submit('Publicera', ['name'=>'publish', 'class'=>'btn']) !!}
+        {!! Form::submit('PubliceraHTML', ['name'=>'publish', 'class'=>'btn']) !!}
         {!! Form::submit('Ändra', ['name'=>'edit', 'class'=>'btn']) !!}
         {!! Form::close() !!}
     </div>

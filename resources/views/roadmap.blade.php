@@ -11,11 +11,11 @@
 	<p>
 		Annonser<br />
         -> BBCode, lägg till beskrivning, snygga till<br />
-        -> -> Regex url html till bb, citat lägger till p från html till bb<br/>
+        -> -> Regex citat lägger till p från html till bb<br/>
 		-> Mail (redirect back, uri helper)<br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
-        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons, parsa bbcode, validation, request)<br/>
+        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons)<br/>
         -> Använd Font-awsame<br/>
 
 	</p>
@@ -61,14 +61,14 @@
         -> Less/Elixir etc för att bundla/minifiera script och css
 		-> Error messages in forms<br />
 		-> Enhetliga menyer överallt<br/>
-		-> Se över obligatoriska fält i formulär (annons, registrering etc)<br/>
 		-> Datumvisning, använd plugin typ Carbon???<br/>
         -> Kompatipel med IE6/7/8 etc<br/>
         -> Responsiv<br/>
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
-        -> Button, länk etc (.btn) enhetligt utseende med font
+        -> Button, länk etc (.btn) enhetligt utseende med font<br/>
+        -> Förhandsvisning marketQuestion
     </p>
     <hr/>
     <p>

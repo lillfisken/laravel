@@ -10,6 +10,7 @@ use market\helper\marketType;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
 use market\helper\text;
+use market\Http\Requests\CreateUpdateQuestionRequest;
 use market\Http\Requests\MarketCreateUpdateRequest;
 use market\Market;
 use market\MarketQuestions;
@@ -402,20 +403,21 @@ class MarketsController extends ControllerMarket {
         return 'Searchterm is missing';
     }
 
-	public function question()
+	public function question(CreateUpdateQuestionRequest $request)
 	{
 		//TODO::Add validation, questionRequest
         //TODO:: Sanitize
+        debug::logConsole('MarketsController->question post');
 
-        //$input = request->all()
-        //Purifier
-        //$input = text::questionBBToHTML($input)
+        $input = $request->all();
+        $input = text::purifyQuestionInput($input, $this->purifier);
+        $input = text::questionFromBBToHTML($input);
 
  		$question = new MarketQuestions;
 
 		$question->createdByUser = Auth::id();
-		$question->market = Input::get('market');
-		$question->message = Input::get('message');
+		$question->market = $input['market'];
+		$question->message = $input['message'];
 
 		$question->save();
 
