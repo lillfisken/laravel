@@ -46,9 +46,8 @@
 
 <div id="market-right" class="layout">
     <div id="market-price-info" class="layout">
-        <h2  class="market-title">Pris</h2>
+        <h2  class="market-title">{!! $market->price !!} Sek</h2>
         <h4>{{ market\helper\marketType::getTypeName($market->marketType) }}</h4>
-        <h2>{!! $market->price !!} Sek</h2>
         @if($market->deleted_at != null)
             <h3>
                 Avslutad<br/>
@@ -62,11 +61,17 @@
         @endif
 
         <p>
-            Inlagd {{ $market->created_at }}
+            <small>
+                Inlagd {{ $market->created_at }}
+                @if($market->created_at !== $market->updated_at)
+                    <br/>Senast uppdaterad {{ $market->updated_at }}
+                @endif
+            </small>
         </p>
 
         @if(isset($market->extra_price_info) && $market->extra_price_info != ''){{--TODO: Check if there is any extra info, else hide this part--}}
-            <h3>Extra info</h3>
+            <hr/>
+            <h3>Övrig info</h3>
             <p>
                 {{ $market->extra_price_info }}
             </p>
@@ -74,8 +79,7 @@
     </div>
 
     <div id="market-seller-info" class="layout">
-        <h2  class="market-title" >Säljare</h2>
-        <h3>{{ $market->user->username or 'null'}}</h3>
+        <h2  class="market-title" >{{ $market->user->username or 'null'}}</h2>
         <p>
             {{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
             {{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>

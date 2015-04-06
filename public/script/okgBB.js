@@ -32,8 +32,8 @@ function bbbar($target){
     createBtn('ol','ol',$target,targetId);
     //        [ul] - <ul> - Punktlista
     createBtn('ul','ul',$target,targetId);
-    //        [quote] - <blockquote> - citat
-    createBtn('quote','quote',$target,targetId);
+    ////        [quote] - <blockquote> - citat
+    //createBtn('quote','quote',$target,targetId);
     //        [x2] - <sub> - nersänkt
     createBtn('X<sub>2</sub>','sub',$target,targetId);
     //        [x2] - <sup> - upphöjd

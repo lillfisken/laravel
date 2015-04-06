@@ -10,14 +10,10 @@
 	<hr/>
 	<p>
 		Annonser<br />
-        -> BBCode, lägg till beskrivning, snygga till<br />
-        -> -> Regex citat lägger till p från html till bb<br/>
 		-> Mail (redirect back, uri helper)<br/>
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
-        -> Snygga till QuestionList (fyll hela, begränsa vid kort annons)<br/>
         -> Använd Font-awsame<br/>
-
 	</p>
     <hr />
     <p>
@@ -48,7 +44,6 @@
 	<hr />
 	<p>
 		STOR designöversyn<br />
-        -> BBCode möjlighet ("golonka/bbcodeparser": "dev-master")<br />
         -> SEO friendly paths<br />
 		-> Regex? priser 1:- istället för 1.00, ta bort decimalerna<br />
 		-> Radbrytningar i text från db, spara radbrytningar etc i db<br />
@@ -60,23 +55,20 @@
 		-> Valideringar av annonsmodel (inkluderar filtyp img vid uppladdning) (requests)<br />
         -> Less/Elixir etc för att bundla/minifiera script och css
 		-> Error messages in forms<br />
-		-> Enhetliga menyer överallt<br/>
 		-> Datumvisning, använd plugin typ Carbon???<br/>
         -> Kompatipel med IE6/7/8 etc<br/>
         -> Responsiv<br/>
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
-        -> Button, länk etc (.btn) enhetligt utseende med font<br/>
-        -> Förhandsvisning marketQuestion
+        -> Förhandsvisning marketQuestion<br/>
+        -> Market validation, minst ett kontaktsätt måste vara valt
     </p>
     <hr/>
     <p>
 	    STOR Säkerhetsgenomgång<br/>
-	    -> SQL Injection (testa "<script>alert('SQL')</script>"<br/>
         -> Logga ip för annons, inlägg, pm etc.<br/>
         -> Historik för annonser<br/>
-        -> Byt tecken för visning av radbrytningar etc. <br/>
 	</p>
 	<hr/>
 	<p>

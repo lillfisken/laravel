@@ -125,8 +125,8 @@ class text
             '/(\[sup\])((.|\n)*?)(\[\/sup\])/',
 //        [x2] - <sub> - nersänkt
             '/(\[sub\])((.|\n)*?)(\[\/sub\])/',
-//        [quote] - <blockquote> - citat
-            '/(\[quote\])((.|\n)*?)(\[\/quote\])/',
+////        [quote] - <blockquote> - citat
+//            '/(\[quote\])((.|\n)*?)(\[\/quote\])/',
 //        [ul] - <ul> - Punktlista
             '/(\[ul\])((.|\n)*?)(\[\/ul\])/',
 //        [ol] - <ol> - Nummrerad lista
@@ -138,8 +138,8 @@ class text
             '/(\[url\])((.|\n)*?)(\[\/url\])/',
 //        [code] - <code> - Kodblock
             '/(\[code\])((.|\n)*?)(\[\/code\])/',
-//////        [mark] - <mark> - Markerad
-////            '/(\[mark\])(.*?)(\[\/mark\])/',
+////        [mark] - <mark> - Markerad
+//            '/(\[mark\])(.*?)(\[\/mark\])/',
 //        [red] - <span color=red> - Röd text
             '/(\[red\])((.|\n)*?)(\[\/red\])/',
 //        [green] - <span color=green> - Grön text
@@ -167,8 +167,8 @@ class text
             '<sup>$2</sup>',
 //        [x2] - <sub> - nersänkt
             '<sub>$2</sub>',
-//        [quote] - <blockquote> - citat
-            '<blockquote>$2</blockquote>',
+////        [quote] - <blockquote> - citat
+//            '<blockquote>$2</blockquote>',
 //        [ul] - <ul> - Punktlista
             '<ul>$2</ul>',
 //        [ol] - <ol> - Nummrerad lista
@@ -202,6 +202,7 @@ class text
     {
         debug::logConsole('text -> htmlToBbCode -----------------------');
 //        debug::logConsole('content: ' . $content);
+//        dd($content);
 
         $search = [
 //            [b] - <strong> - fetstil
@@ -222,8 +223,8 @@ class text
             '/(\<sup\>)((.|\n)*?)(\<\/sup\>)/',
 //            [x2] - <sub> - nersänkt
             '/(\<sub\>)((.|\n)*?)(\<\/sub\>)/',
-//            [quote] - <blockquote> - citat
-            '/(\<blockquote\>)((.|\n)*?)(\<\/blockquote\>)/',
+////            [quote] - <blockquote> - citat
+//            '/(\<blockquote\>)((.|\n)*?)(\<\/blockquote\>)/',
 //            [ul] - <ul> - Punktlista
             '/(\<ul\>)((.|\n)*?)(\<\/ul\>)/',
 //            [ol] - <ol> - Nummrerad lista
@@ -262,8 +263,8 @@ class text
             '[sup]$2[/sup]',
 //        [x2] - <sub> - nersänkt
             '[sub]$2[/sub]',
-//        [quote] - <blockquote> - citat
-            '[quote]$2[/quote]',
+////        [quote] - <blockquote> - citat
+//            '[quote]$2[/quote]',
 //        [ul] - <ul> - Punktlista
             '[ul]$2[/ul]',
 //        [ol] - <ol> - Nummrerad lista
