@@ -182,7 +182,9 @@ class MessageController extends Controller
 
     public function mail(Request $request)
     {
+        //TODO: Add if previous and current is not equal
         Session::put('uri', Session::get('_previous'));
+//        dd(Session::get('_previous'));
 
         $reciever = $request->query('reciever');
         $title = 'Ang: ' . $request->query('title');

@@ -1,17 +1,22 @@
 <?php namespace market\Http\Controllers;
 
+use Exception;
+use Illuminate\Support\Facades\Session;
+use market\helper\debug;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
 use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
+use market\Http\Requests\UserSettingsRequest;
 use market\Market;
 use Redirect;
 use market\User;
 use Illuminate\Http\Request;
 use DB;
 use Hash;
+use market\helper\text;
 
 //use Illuminate\Contracts\Auth\Guard;
 //use Illuminate\Contracts\Auth\Registrar;
@@ -54,6 +59,8 @@ class AccountController extends Controller
 
     public function login()
     {
+        Session::put('uri', Session::get('_previous'));
+
         return view('account.login');
     }
 
@@ -96,14 +103,29 @@ class AccountController extends Controller
             // for now we'll just echo success (even though echoing in a controller is bad)
             //return 'SUCCESS!';
 
-            return Redirect::back();
+//            return Redirect::back();
+            $uri = Session::get('uri');
+            if(isset($uri))
+            {
+                if(isset($uri['url']))
+                {
+                    //dd($uri['url']);
+                    return redirect($uri['url']);
+                }
+                return redirect()->route('markets.index');
+            }
+            else
+            {
+                return redirect()->route('markets.index');
+            }
 
         } else {
 
             // validation not successful, send back to form
-            return Redirect::route('accounts.login')->with(Input);
-            //TODO:Add error message to redirect
+            return Redirect::route('accounts.login')->with(Input::all())->with('message', 'Inloggningen misslyckades');
         }
+
+
 
 //        }
 
@@ -195,17 +217,37 @@ class AccountController extends Controller
      * @var user
      * @return
     */
-    public function show()
+    public function show($username)
     {
         //TODO::Change to show public userprofile
-        $markets = Market::where('createdByUser', '=', Auth::id())->get();
-        $user = User::find(Auth::id())->first();
-//        dd($markets);
 
-        $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
+        $user = User::where('username', '=', $username)->first();
 
-        return view('account.markets.active', ['user' => $user, 'markets' => $markets]);
+        dd($user);
+
+
+
+
+
+
+
+
+
+
+        return view('account.profileView.userProfile', ['user' => $user]);
+//        $markets = Market::where('createdByUser', '=', Auth::id())->get();
+//        $user = User::find(Auth::id())->first();
+////        dd($markets);
+//
+//        $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
+
+//        return view('account.profileView.userProfile', ['user' => $user, 'markets' => $markets]);
+
+
     }
+
+    //endregion
+
 
     //region Market Blocking
 
@@ -365,6 +407,7 @@ class AccountController extends Controller
     //endregion
 
 
+    //region settings
 
     /* Show user settings
              *
@@ -377,18 +420,51 @@ class AccountController extends Controller
             */
     public function settings()
     {
-        $user = User::find(Auth::Id());
-//        dd('AccountController@settings');
-        return view('account.settings', ['user' => $user]);
+        $user = Auth::user();
+
+        $user['presentation'] = text::htmlToBbCode($user['presentation']);
+
+        return view('account.settings.settings', ['user' => $user]);
 
     }
 
-    public function saveSettings()
+    /**
+     * @param UserSettingsRequest $userSettingsRequest
+     * @return mixed
+     */
+    public function saveSettings(UserSettingsRequest $userSettingsRequest)
     {
-        dd(Input::all());
+        $user = Auth::user();
+
+        $input = $userSettingsRequest->all();
+        $input['presentation'] = text::bbCodeToHtml($input['presentation']);
+
+        //TODO: BBCode presentation
+        //TODO: Purify input
+
+        $user->fill($input);
+
+        $user->save();
+
+        $user['presentation'] = text::htmlToBbCode($user['presentation']);
+
+        return view('account.settings.settings', ['user' => $user])->withMessage('Inställningar sparade');
     }
-}
+
+    public function newPassword()
+    {
+        return view('account.settings.newPassword', ['user' => Auth::user()]);
+    }
+
+    public function newPasswordPost()
+    {
+
+    }
+
     //endregion
+
+
+}
 
 
     //---------------------------------------------------------------

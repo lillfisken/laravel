@@ -13,6 +13,8 @@
 		-> Fixa annonsvisningmeny vid lång annons<br/>
         -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
         -> Använd Font-awsame<br/>
+        -> Validation, minst ett kontaktsätt måste vara ifyllt samt godkänt i profilen<br/>
+        -> Paginering
 	</p>
     <hr />
     <p>
@@ -27,7 +29,7 @@
         -> OAuth (facebook, twitter, google, linkedin)<br/>
         -> PhpBB<br/>
         -> Redirekt efter login tll önskad sida<br/>
-
+        -> Mail vid registrering <br/>
     </p>
     <hr />
     <p>
@@ -39,6 +41,8 @@
         -> Ta bort markeringara för nytt inlägg i show<br/>
         -> Maila användaren vid händelser såsom registrering, glömt lösenord, nytt meddelande etc.<br/>
         -> Inställningar i användarprofilen för notifieringar<br/>
+        -> Mail, request, verify user exist and has allowed e-mail
+        -> Mail, purify
     </p>
 	<hr />
 	<p>
@@ -57,6 +61,7 @@
 		-> Datumvisning, använd plugin typ Carbon???<br/>
         -> Kompatipel med IE6/7/8 etc<br/>
         -> Responsiv<br/>
+        -> BB Code responsiv<br/>
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
@@ -122,8 +127,7 @@
         -> Intervention/Image<br/>
         -> hammerjs/hammer.js<br/>
         -> mews/purifier<br/>
-        -> golonka/bbcodeparser<br/>
-        -> SCEditor<br/>
+        -> jbbcode<br/>
     </p>
 	
 @stop

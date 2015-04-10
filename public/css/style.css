@@ -5,7 +5,11 @@
 		height: 100%;
 		margin: 0;
 		padding: 0px;
-	}
+    }
+
+    div{
+        box-sizing: border-box;
+    }
 	
 	body {
   		font-family: "Times new roman";
@@ -234,6 +238,18 @@
     .blue{
         color: #0000ff;
     }
+
+    .table-100{
+        width:100%;
+        max-width: 700px;
+        border-collapse:collapse;
+    }
+
+    .table-100 td{
+        height: auto;
+        white-space: nowrap;
+        padding: 0.1em 0.2em;
+    }
 	
 	/*---------------------------------------
 	Navigation
@@ -448,14 +464,8 @@
 /*-----------------------------------------------*/
 .form-input {
 	display: block;
-	width: 90%;
-	overflow: hidden;
+	width: 100%;
 }
-
-textarea.form-input{
-    overflow-y: auto;
-}
-	
 	
 /*-----------------------------------------------*/
 /* Menu Button */

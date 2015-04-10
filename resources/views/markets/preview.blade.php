@@ -66,7 +66,7 @@
     <div class="clearfix padding5">
         <hr/>
         <h1>FÖRHANDSGRANSKA</h1>
-        {!! Form::submit('PubliceraHTML', ['name'=>'publish', 'class'=>'btn']) !!}
+        {!! Form::submit('Publicera', ['name'=>'publishHTML', 'class'=>'btn']) !!}
         {!! Form::submit('Ändra', ['name'=>'edit', 'class'=>'btn']) !!}
         {!! Form::close() !!}
     </div>

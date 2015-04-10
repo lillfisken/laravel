@@ -212,7 +212,7 @@ class MarketsController extends ControllerMarket {
         elseif(Input::get('publishHTML'))
         {
             debug::logConsole('Marketscontroller -> store -> publishHTML');
-            $input = text::marketFromHtmlToBB($input);
+//            $input = text::marketFromHtmlToBB($input);
             return marketCRUD::save($input);
         }
         elseif(Input::get('preview'))
@@ -263,6 +263,8 @@ class MarketsController extends ControllerMarket {
 	public function edit($market)
 	{
 		$temp = Market::find($market);
+        $temp = text::marketFromHtmlToBB($temp);
+
         //dd($temp);
 
         //dd($temp);
@@ -411,6 +413,7 @@ class MarketsController extends ControllerMarket {
 
         $input = $request->all();
         $input = text::purifyQuestionInput($input, $this->purifier);
+//        $input = text::purifyQuestionInput($input);
         $input = text::questionFromBBToHTML($input);
 
  		$question = new MarketQuestions;

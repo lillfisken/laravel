@@ -229,8 +229,12 @@ Route::get('profile/trashed/{user}', ['as' => 'accounts.trashed', 'uses' => 'Acc
 Route::get('profile/blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
 Route::get('profile/blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
 
-Route::get('profile/settings/show', ['as' => 'accounts.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
-Route::post('profile/settings/', ['as' => 'accounts.save', 'uses' => 'AccountController@saveSettings', 'middleware' => 'auth']);
+Route::get('profile/settings/show', ['as' => 'accounts.settings.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
+Route::post('profile/settings/', ['as' => 'accounts.settings.save', 'uses' => 'AccountController@saveSettings', 'middleware' => 'auth']);
+Route::get('profile/settings/password', ['as' => 'accounts.settings.password', 'uses' => 'AccountController@newPassword', 'middleware' => 'auth']);
+Route::post('profile/settings/password', ['as' => 'accounts.settings.passwordPost', 'uses' => 'AccountController@newPasswordPost', 'middleware' => 'auth']);
+Route::get('profile/settings/oauth', ['as' => 'accounts.settings.oauth', 'uses' => 'AccountController@oauth', 'middleware' => 'auth']);
+Route::post('profile/settings/oauth', ['as' => 'accounts.settings.oauthPost', 'uses' => 'AccountController@oathPost', 'middleware' => 'auth']);
 
 
 //endregion

@@ -36,6 +36,11 @@ class text
         return $input;
     }
 
+    /**
+     * @param $input
+     * @param Purifier $purifier
+     * @return mixed
+     */
     public static function purifyQuestionInput($input, $purifier)
     {
         if(isset($input['message']))
