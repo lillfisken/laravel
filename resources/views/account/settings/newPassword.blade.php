@@ -22,11 +22,8 @@
             </td>
         </tr>
         {!! $errors->first('pswdOld', '<tr><td colspan="2"><div class="help-block">:message</div></td></tr>') !!}
-        {{--@if(isset($pswdOldError))--}}
-        {{--<tr><td colspan="2"><div class="help-block">{{ $pswdOldError }}</div></td></tr>--}}
-        {{--@endif--}}
-        @if(Session::get('pswdOldError'))
-            <tr><td colspan="2"><div class="help-block">{!! Session::get('pswdOldError') !!}</div></td></tr>
+        @if(Session::get('pswdOld'))
+            <tr><td colspan="2"><div class="help-block">{!! Session::get('pswdOld') !!}</div></td></tr>
         @endif
         <tr>
             <td>

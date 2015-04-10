@@ -9,6 +9,7 @@ use market\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
+use market\Http\Requests\passwordRequest;
 use market\Http\Requests\UserSettingsRequest;
 use market\Market;
 use Redirect;
@@ -456,8 +457,24 @@ class AccountController extends Controller
         return view('account.settings.newPassword', ['user' => Auth::user()]);
     }
 
-    public function newPasswordPost()
+    public function newPasswordPost(passwordRequest $passwordRequest )
     {
+        //TODO: Move password verification to custom rule in request
+
+        if(Hash::check($passwordRequest->input('pswdOld'), Auth::user()->password))
+        {
+            //User entered correct password
+            $user = Auth::user();
+            $user->password = Hash::make($passwordRequest->input('password'));
+            $user->save();
+            return Redirect::route('accounts.settings.password')->withMessage('Lösenord ändrat');
+        }
+        else
+        {
+//            dd(Redirect::back()->withError(['pswdOld' => 'Fel lösenord']));
+            return Redirect::back()->with('pswdOld' , 'Fel lösenord');
+        }
+
 
     }
 

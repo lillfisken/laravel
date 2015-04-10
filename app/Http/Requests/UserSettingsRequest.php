@@ -54,8 +54,7 @@ class UserSettingsRequest extends Request {
             'zip' => 'required|digits:5',
             'city' => 'required',
             'cityAllowed' => 'boolean',
-            'pswdOld' => 'required_with:password',
-            'password' => 'min:6|confirmed|required_with:pswdOld'
+
 		];
 	}
 
