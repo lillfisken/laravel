@@ -1,4 +1,4 @@
-@extends('account/_layout')
+@extends('account._partials._layout')
 
 @section('title')
     Bevakade annonser - @Auth::user()->username
@@ -6,5 +6,5 @@
 
 @section('content')
     <h1>Bevakade annonser</h1>
-    @include('partials._marketlist')
+    @include('markets.partials._marketlist')
 @stop

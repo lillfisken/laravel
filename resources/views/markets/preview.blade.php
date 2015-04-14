@@ -60,7 +60,7 @@
         <hr/>
     </div>
     <div class="clearfix">
-        @include('partials._marketShow')
+        @include('markets.partials._marketShow')
     </div>
 
     <div class="clearfix padding5">

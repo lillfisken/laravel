@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
 use market\Http\Requests\passwordRequest;
+use market\Http\Requests\registerRequest;
 use market\Http\Requests\UserSettingsRequest;
 use market\Market;
 use Redirect;
@@ -151,32 +152,36 @@ class AccountController extends Controller
         return view('account.register');
     }
 
-    public function registerPost(Request $request, User $user)
+    public function registerPost(registerRequest $request)
     {
-        //TODO:Add validation for input
-        //TODO:Add registration logic, change Request to new UserNewRequest
-        //TODO:Critical Prevent SQL-injection
+        //TODO:Purify
 
-        //Save new user
-        $temp = new User;
-        $temp->name = Input::get('name');
-        $temp->email = Input::get('email');
+//        //Save new user
+//        $temp = new User;
+//        $temp->name = Input::get('name');
+//        $temp->email = Input::get('email');
+//
+//        $temp->username = Input::get('username');
+//        $temp->address = Input::get('address');
+//        $temp->city = Input::get('city');
+//        $temp->zipcode = Input::get('zipcode');
+//        $temp->phone1 = Input::get('phone1');
+//        $temp->phone2 = Input::get('phone2');
+//
+//        $temp->password = Hash::make(Input::get('password'));
+//
+//        $temp->save();
 
-        $temp->username = Input::get('username');
-        $temp->address = Input::get('address');
-        $temp->city = Input::get('city');
-        $temp->zipcode = Input::get('zipcode');
-        $temp->phone1 = Input::get('phone1');
-        $temp->phone2 = Input::get('phone2');
+        $newUser = new User($request->all());
+        $newUser->password = Hash::make($request->input('password'));
+        $newUser->username = $request->input('username');
+        $newUser->save();
 
-        $temp->password = Hash::make(Input::get('password'));
-
-        $temp->save();
+//        dd($newUser);
 
         //Login user
-        Auth::login($temp);
+        Auth::login($newUser);
         //TODO:Sen email to new user
-
 
         return redirect()->route('markets.index')->with('message', 'Användare skapad');
     }
@@ -248,7 +253,6 @@ class AccountController extends Controller
     }
 
     //endregion
-
 
     //region Market Blocking
 
@@ -407,7 +411,6 @@ class AccountController extends Controller
 
     //endregion
 
-
     //region settings
 
     /* Show user settings
@@ -440,7 +443,6 @@ class AccountController extends Controller
         $input = $userSettingsRequest->all();
         $input['presentation'] = text::bbCodeToHtml($input['presentation']);
 
-        //TODO: BBCode presentation
         //TODO: Purify input
 
         $user->fill($input);

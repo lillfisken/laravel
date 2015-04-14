@@ -200,6 +200,10 @@
         margin-top: 0.5em;
         margin-bottom: 5px;
     }
+
+    .wrap{
+        white-space: normal;
+    }
 	
 	/*---------------------------------------
 	General

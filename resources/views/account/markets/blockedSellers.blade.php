@@ -1,4 +1,4 @@
-@extends('account/_layout')
+@extends('account._partials._layout')
 
 @section('title')
     Blockerade säljare - @Auth::user()->username

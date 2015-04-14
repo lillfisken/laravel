@@ -8,28 +8,15 @@
 	<h1>Roadmap</h1>
 	<p>Tänkt utveckling för sidan, preliminär</p>
 	<hr/>
-	<p>
-		Annonser<br />
-		-> Fixa annonsvisningmeny vid lång annons<br/>
-        -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
-        -> Använd Font-awsame<br/>
-        -> Validation, minst ett kontaktsätt måste vara ifyllt samt godkänt i profilen<br/>
-        -> Paginering
-	</p>
-    <hr />
-    <p>
-        Sida för användaren att ändra sina uppgifter<br />
-    </p>
-    <hr/>
     <p>
         Login<br />
         -> Glömt lösenord <br />
-        -> Allmänna varningsmeddelanden, meddelanden etc<br/>
-        -> Redirect back<br/>
         -> OAuth (facebook, twitter, google, linkedin)<br/>
         -> PhpBB<br/>
         -> Redirekt efter login tll önskad sida<br/>
         -> Mail vid registrering <br/>
+        -> felmeddelanden, mail, användarnamn finns redan<br/>
+        ->
     </p>
     <hr />
     <p>
@@ -47,11 +34,8 @@
 	<hr />
 	<p>
 		STOR designöversyn<br />
-        -> SEO friendly paths<br />
 		-> Regex? priser 1:- istället för 1.00, ta bort decimalerna<br />
-		-> Radbrytningar i text från db, spara radbrytningar etc i db<br />
 		-> Fixa HTAccess för att bli av med "index.php", även market/public<br />
-		-> HTML input encoding to prevent attacks<br />
 		-> Sidvisning sökresultat<br />
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
@@ -59,16 +43,26 @@
         -> Less/Elixir etc för att bundla/minifiera script och css
 		-> Error messages in forms<br />
 		-> Datumvisning, använd plugin typ Carbon???<br/>
-        -> Kompatipel med IE6/7/8 etc<br/>
+        -> Kompatipel med IE6/7/8 etc (modernizr?)<br/>
         -> Responsiv<br/>
         -> BB Code responsiv<br/>
         -> Meddelandefält, design???<br/>
         -> Notifiering vid nytt meddelande<br/>
         -> Klocka i menyraden med servertiden...<br/>
         -> Förhandsvisning marketQuestion<br/>
-        -> Market validation, minst ett kontaktsätt måste vara valt
+        -> Publik profilsida (obs script injection)<br/>
+        -> Lägg till meddelande 'inställningar sparade' efter uppdatering av inställningar
     </p>
     <hr/>
+    <p>
+        Annonser<br />
+        -> Fixa annonsvisningmeny vid lång annons<br/>
+        -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
+        -> Använd Font-awsame<br/>
+        -> Validation, minst ett kontaktsätt måste vara ifyllt samt godkänt i profilen vid skapande/ändrande av annons<br/>
+        -> Paginering
+    </p>
+    <hr />
     <p>
 	    STOR Säkerhetsgenomgång<br/>
         -> Logga ip för annons, inlägg, pm etc.<br/>

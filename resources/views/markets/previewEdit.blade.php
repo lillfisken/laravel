@@ -11,7 +11,7 @@
 
         {!! Form::model($market, array('route' => 'markets.store' , 'files' => true )) !!}
 
-        @include('partials._marketCreate')
+        @include('markets.partials._marketCreate')
 
         {!! Form::submit('Publicera', array('class' => 'btn', 'name'=>'publishBB')); !!}
         {!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name'=>'preview')); !!}

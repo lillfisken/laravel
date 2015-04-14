@@ -8,6 +8,6 @@
 
 @section('content')
 		
-    @include('partials._marketShow')
+    @include('markets.partials._marketShow')
 
 @stop

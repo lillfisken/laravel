@@ -2,7 +2,7 @@
     <div id="market-detail" class="layout">
         <div class="market-title">
             <h1 class="marketmenu-title"> {{ $market->title }} </h1>
-            <div class="marketmenu-right"> @include('partials._marketmenu') </div>
+            <div class="marketmenu-right"> @include('markets.partials._marketmenu') </div>
         </div>
 
         <div class="market-detail-images">
@@ -39,7 +39,7 @@
     </div>
 
     {{--TODO:If säljaren valt öppna frågor--}}
-        @include('partials._questionlist')
+        @include('markets.partials._questionlist')
     {{--endif--}}
 
 </div>

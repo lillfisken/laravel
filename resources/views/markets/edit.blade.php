@@ -12,7 +12,7 @@
         {{--{!! Form::model($market, ['url' => 'markets/' . $market->id, 'method'=>'PATCH', 'files' => true]) !!}--}}
         {!! Form::model($market, ['url' => URL::route('markets.update', array($market->id)), 'method'=>'PATCH', 'files' => true]) !!}
 
-            @include('partials._marketCreate')
+            @include('markets.partials._marketCreate')
 
             {!! Form::submit('Uppdatera', array('class' => 'btn', 'name'=>'publishBB')); !!}
             {!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name' => 'preview')); !!}
