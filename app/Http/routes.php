@@ -9,7 +9,8 @@
 Route::model('market', 'market\Market');
 Route::bind('user', function($username)
 {
-	//dd($username);
+//	dd($username);
+//    dd(market\User::where('username', '=', $username)->firstOrFail());
 	 return market\User::where('username', '=', $username)->firstOrFail();
 });
 //Route::model('user', 'market\User');

@@ -223,22 +223,16 @@ class AccountController extends Controller
      * @var user
      * @return
     */
-    public function show($username)
+    public function show($user)
     {
+        debug::logConsole('AccountController -> show ---');
         //TODO::Change to show public userprofile
 
-        $user = User::where('username', '=', $username)->first();
-
-        dd($user);
-
-
-
-
-
-
-
-
-
+//        dd($username);
+//
+//        $user = User::where('username', '=', $username)->first();
+//
+//        dd($user);
 
         return view('account.profileView.userProfile', ['user' => $user]);
 //        $markets = Market::where('createdByUser', '=', Auth::id())->get();

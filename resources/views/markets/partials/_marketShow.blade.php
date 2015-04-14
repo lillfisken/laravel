@@ -79,7 +79,7 @@
     </div>
 
     <div id="market-seller-info" class="layout">
-        <h2  class="market-title" >{{ $market->user->username or 'null'}}</h2>
+        <a href="{{ Route('accounts.profile', $market->user->username) }}"> <h2  class="market-title" >{{ $market->user->username or 'null'}}</h2></a>
         <p>
             {{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
             {{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>

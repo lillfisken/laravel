@@ -1,13 +1,10 @@
-@extends('layout.site')
+@extends('account._partials._layout')
+
+{{--@extends('layout.site')--}}
 
 @section('title')
     Inställningar - {{ $user->username }}
-
 @stop
-
-@section('menu2')
-    @include('account.settings.menu')
-@endsection
 
 @section('content')
     {!! Form::model($user, ['route' => 'accounts.settings.save']) !!}

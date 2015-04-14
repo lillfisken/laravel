@@ -1,3 +1,4 @@
+
 <ul class="menu-row">
     <a href="{{ route('accounts.watched', @Auth::user()->username) }}"><li class="menu-item">Bevakade</li></a>
     <a href="{{ route('accounts.active', @Auth::user()->username) }}"><li class="menu-item">Aktiva</li></a>
