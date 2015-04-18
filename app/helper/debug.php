@@ -7,7 +7,7 @@ class debug
 {
     public static function logConsole($text)
     {
-//        dd('btvdnuxikbfnox');
+//        dd($text);
 //        if(Config::get('app.debug')=='true')
 //        {
             echo '<script>console.log("' . $text . '")</script>';

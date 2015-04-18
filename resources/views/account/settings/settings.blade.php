@@ -1,7 +1,5 @@
 @extends('account._partials._layout')
 
-{{--@extends('layout.site')--}}
-
 @section('title')
     Inställningar - {{ $user->username }}
 @stop

@@ -211,6 +211,11 @@ Route::get('logout', ['as' => 'accounts.logout', 'uses' => 'AccountController@lo
 Route::get('register', ['as' => 'accounts.register', 'uses' => 'AccountController@register' ]);
 Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'AccountController@registerPost', 'before' => 'csrf']);
 
+Route::get('profile/forgotPassword', ['as' => 'accounts.forgotPassword', 'uses' => 'Auth\PasswordController@getEmail', 'middleware' => 'guest']);
+Route::post('profile/forgotPassword', ['as' => 'accounts.forgotPasswordPost', 'uses' => 'Auth\PasswordController@postEmail', 'middleware' => 'guest']);
+Route::get('profile/resetPassword/{token}', ['as' => 'accounts.resetPassword', 'uses' => 'Auth\PasswordController@getReset', 'middleware' => 'guest']);
+Route::post('profile/resetPassword', ['as' => 'accounts.resetPasswordPost', 'uses' => 'Auth\PasswordController@postReset', 'middleware' => 'guest']);
+
 //endregion
 
 //--------------------------------------------------------------------------
@@ -236,7 +241,6 @@ Route::get('profile/settings/password', ['as' => 'accounts.settings.password', '
 Route::post('profile/settings/password', ['as' => 'accounts.settings.passwordPost', 'uses' => 'AccountController@newPasswordPost', 'middleware' => 'auth']);
 Route::get('profile/settings/oauth', ['as' => 'accounts.settings.oauth', 'uses' => 'AccountController@oauth', 'middleware' => 'auth']);
 Route::post('profile/settings/oauth', ['as' => 'accounts.settings.oauthPost', 'uses' => 'AccountController@oathPost', 'middleware' => 'auth']);
-
 
 //endregion
 

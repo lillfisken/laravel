@@ -63,7 +63,7 @@ class AccountController extends Controller
     {
         Session::put('uri', Session::get('_previous'));
 
-        return view('account.login');
+        return view('account.auth.login');
     }
 
     public function loginPost()
@@ -149,7 +149,7 @@ class AccountController extends Controller
 
     public function register()
     {
-        return view('account.register');
+        return view('account.auth.register');
     }
 
     public function registerPost(registerRequest $request)
@@ -186,26 +186,11 @@ class AccountController extends Controller
         return redirect()->route('markets.index')->with('message', 'Användare skapad');
     }
 
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  RegisterRequest $request
-     * @return Response
-     */
-//    public function postRegister(Request $request)
+//    public function forgotPassword()
 //    {
-//        $validator = $this->registrar->validator($request->all());
+////        dd('AccountController -> forgotPassword');
 //
-//        if ($validator->fails())
-//        {
-//            $this->throwValidationException(
-//                $request, $validator
-//            );
-//        }
-//
-//        $this->auth->login($this->registrar->create($request->all()));
-//
-//        return redirect($this->redirectPath());
+//        return view('account.auth.reset');
 //    }
 
 //endregion
@@ -476,9 +461,5 @@ class AccountController extends Controller
 
     //endregion
 
-
 }
-
-
-    //---------------------------------------------------------------
 

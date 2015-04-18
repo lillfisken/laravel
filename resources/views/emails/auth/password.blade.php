@@ -7,9 +7,9 @@
 		<h2>Password Reset</h2>
 
 		<div>
-			To reset your password, complete this form: {{ url('password/reset', [$token]) }}.<br><br>
+			To reset your password, complete this form: {{ route('accounts.resetPassword', [$token]) }} <br><br>
 
-			This link will expire in {{ config('auth.reminder.expire', 60) }} minutes.
+			This link will expire in {{ config('auth.password.expire', 60) }} minutes.
 		</div>
 	</body>
 </html>
