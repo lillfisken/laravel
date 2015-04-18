@@ -46,7 +46,7 @@
 
 <div id="market-right" class="layout">
     <div id="market-price-info" class="layout">
-        <h2  class="market-title">{!! $market->price !!} Sek</h2>
+        <h2  class="market-title">{!! preg_replace('/(\.000*)/', ':-', $market->price) !!}</h2>
         <h4>{{ market\helper\marketType::getTypeName($market->marketType) }}</h4>
         @if($market->deleted_at != null)
             <h3>

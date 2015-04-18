@@ -10,13 +10,12 @@
 	<hr/>
     <p>
         Login<br />
-        -> Glömt lösenord <br />
         -> OAuth (facebook, twitter, google, linkedin)<br/>
         -> PhpBB<br/>
         -> Redirekt efter login tll önskad sida<br/>
         -> Mail vid registrering mailview<br/>
         -> felmeddelanden, mail, användarnamn finns redan<br/>
-        -> Översättning i email för lösenordsåterställning
+        -> Översättning i email för lösenordsåterställning<br/>
         ->
     </p>
     <hr />
@@ -36,15 +35,12 @@
 	<hr />
 	<p>
 		STOR designöversyn<br />
-		-> Regex? priser 1:- istället för 1.00, ta bort decimalerna<br />
 		-> Fixa HTAccess för att bli av med "index.php", även market/public<br />
 		-> Sidvisning sökresultat<br />
 		-> Spara kopia av annons i separat db-table vid updates<br />
 		-> Visa senaste ändring/antal ändringar av annons<br />
 		-> Valideringar av annonsmodel (inkluderar filtyp img vid uppladdning) (requests)<br />
         -> Less/Elixir etc för att bundla/minifiera script och css
-		-> Error messages in forms<br />
-		-> Datumvisning, använd plugin typ Carbon???<br/>
         -> Kompatipel med IE6/7/8 etc (modernizr?)<br/>
         -> Responsiv<br/>
         -> BB Code responsiv<br/>
