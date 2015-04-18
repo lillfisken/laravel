@@ -1,5 +1,8 @@
 <br/>
-<a href="http://oskarkorall.se" target="_blank"><h3>Webb: Oskar Korall</h3></a>
+<h3>
+    <a href="http://geekjoan.com/" target="_blank">Idé: GeekJoan</a> |
+    <a href="http://oskarkorall.se" target="_blank">Webb: Oskar Korall </a>
+</h3>
 			
 <p><a href="http://laravel.com/" target="_blank">Laravel</a> |
     <a href="http://image.intervention.io/" target="_blank">Intervention/Image</a> |
