@@ -9,11 +9,11 @@ class marketType
         '1' => 'Köpes',
         '2' => 'Bytes',
         '3' => 'Skänkes',
-        '4' => 'Samköp',
-        '5' => 'Tjänst erbjudes',
-        '6' => 'Tjänst sökes ',
-        '7' => 'Anställning',
-        '8' => 'Tips',
+//        '4' => 'Samköp',
+//        '5' => 'Tjänst erbjudes',
+//        '6' => 'Tjänst sökes ',
+//        '7' => 'Anställning',
+//        '8' => 'Tips',
     ];
 
     private static $typesMarket = [

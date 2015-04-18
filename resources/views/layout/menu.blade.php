@@ -18,8 +18,8 @@
 
         <li class="menu-item">
             {!! Form::open(array('route' => 'markets.search', 'method' => 'GET' )) !!}
-                {!! Form::text('s', null , ['class' => '{{--form-input--}} inline'] ) !!}
-                {!! Form::submit('Sök', ['class' => '{{--btn-right--}} btnSmall inline']); !!}
+                {!! Form::text('s', null , ['class' => 'inline'] ) !!}
+                {!! Form::submit('Sök', ['class' => 'btnSmall inline']); !!}
             {!! Form::close() !!}
         </li>
 

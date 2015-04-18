@@ -35,7 +35,7 @@
 					</li>
 				@endif
 				<li class="menu-item">
-				{!! Form::submit('Uppdatera', array('class' => 'btn-right')); !!}
+				{!! Form::submit('Uppdatera', array('class' => 'btnSmall')); !!}
 				</li>
 			</ul>
 		{!! Form::close() !!}

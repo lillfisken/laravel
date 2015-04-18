@@ -16,7 +16,6 @@
         -> Mail vid registrering mailview<br/>
         -> felmeddelanden, mail, användarnamn finns redan<br/>
         -> Översättning i email för lösenordsåterställning<br/>
-        ->
     </p>
     <hr />
     <p>
@@ -51,9 +50,11 @@
         -> Publik profilsida (obs script injection)<br/>
         -> Lägg till meddelande 'inställningar sparade' efter uppdatering av inställningar<br/>
         -> Lightbox okg
-        -> länk till profil i annons<br/>
         -> Visa forumkopplingar i profil<br/>
-        -> CSRF Token mismatch vid inloggning efter ett misslyckat
+        -> CSRF Token mismatch vid inloggning efter ett misslyckat<br/>
+        -> Divs inner content för snyggare visning<br/>
+        -> Menyer...<br/>
+        -> Styling chackboxes???<br/>
     </p>
     <hr/>
     <p>
@@ -116,14 +117,5 @@
 	<p>
 		API för externa verktyg att ladda upp och hantera annonser.<br/>
 	</p>
-    <hr/>
-    <p>
-        Footer, Using:<br/>
-        -> Laravel<br/>
-        -> Intervention/Image<br/>
-        -> hammerjs/hammer.js<br/>
-        -> mews/purifier<br/>
-        -> jbbcode<br/>
-    </p>
 	
 @stop
