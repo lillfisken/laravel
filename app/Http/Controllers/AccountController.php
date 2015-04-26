@@ -181,7 +181,12 @@ class AccountController extends Controller
 
         //Login user
         Auth::login($newUser);
-        //TODO:Sen email to new user
+
+        //TODO:Sen email to new user, test if this is working...
+        Mail::send('emails.auth.register', ['user' => $newUser], function($message, $newUser)
+        {
+            $message->to($newUser->email, $newUser->username)->subject('Välkommen!');
+        });
 
         return redirect()->route('markets.index')->with('message', 'Användare skapad');
     }

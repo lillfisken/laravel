@@ -24,7 +24,8 @@ class registerRequest extends userSettingsBaseRequest {
         $rulesParent = parent::rules();
         $rulesThis = [
             'username' => 'required|min:3|unique:users,username',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'email' => 'required|email|unique:users,email'
         ];
         $rules = array_merge($rulesParent, $rulesThis);
 //        dd($rules);

@@ -31,7 +31,7 @@ class userSettingsBaseRequest extends Request {
             //'presentation',
             'phone1' => 'required',
             'phoneAllowed' => 'boolean',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'emailAllowed' => 'boolean',
             'name' => 'required',
             'street' => 'required',
