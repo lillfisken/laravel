@@ -16,9 +16,12 @@
 
         {{--<link rel="stylesheet" href="/market/public/css/sceditor/default.min.css" type="text/css" media="all" />--}}
 
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/market/public/css/okg.css" />
         <link rel="stylesheet" href="/market/public/css/style.css" />
-		<!--<link rel="stylesheet" type="text/css" href="/css/btn.css">-->
+        <link rel="stylesheet" href="/market/public/css/menuTest.css" />
+
+        <!--<link rel="stylesheet" type="text/css" href="/css/btn.css">-->
 
         {{--<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>--}}
         {{--<script src="/market/public/js/vendor/jquery.js"></script>--}}
@@ -59,7 +62,7 @@
 			
 			<div id="menu">
 				<div class="borderbox">
-					@include('layout.menu')
+					@include('layout.menuTest')
 				</div>
 			</div>
 

@@ -55,11 +55,10 @@
             -> Visa forumkopplingar i profil<br/>
             -> CSRF Token mismatch vid inloggning efter ett misslyckat<br/>
             -> Divs inner content för snyggare visning<br/>
-            -> Menyer...<br/>
             -> Styling chackboxes???<br/>
-            -> Skins<br/>
             -> Aktiveringslänk för att bekräfta mail vid registrering<br/>
             -> Visningsalternativ (spara i cockies)<br/>
+            -> Aktiva annonser, marketmenu blir bara större och större</br>
         </p>
         <hr/>
         <p>

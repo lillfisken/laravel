@@ -5,9 +5,9 @@
 
 @stop
 
-@section('menu2')
-    @include('account.settings.menu')
-@endsection
+{{--@section('menu2')--}}
+    {{--@include('account.settings.menu')--}}
+{{--@endsection--}}
 
 @section('content')
     {!! Form::open(['route' => 'accounts.settings.passwordPost']) !!}
