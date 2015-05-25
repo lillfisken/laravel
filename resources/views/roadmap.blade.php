@@ -59,6 +59,7 @@
             -> Aktiveringslänk för att bekräfta mail vid registrering<br/>
             -> Visningsalternativ (spara i cockies)<br/>
             -> Aktiva annonser, marketmenu blir bara större och större</br>
+            -> Menyn döljs av bilder vid visning av enskild annons (Sparatn?)<br/>
         </p>
         <hr/>
         <p>
@@ -74,6 +75,7 @@
             STOR Säkerhetsgenomgång<br/>
             -> Logga ip för annons, inlägg, pm etc.<br/>
             -> Historik för annonser<br/>
+            -> HtAccess, Blockera mååånga filer
         </p>
         <hr/>
         <p>

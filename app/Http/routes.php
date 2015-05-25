@@ -6,7 +6,11 @@
 
 //TODO:Create model bindning and alter controllers
 //http://laravel.com/docs/master/routing#route-model-binding
+//use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use GuzzleHttp\Client;
+
 
 Route::model('market', 'market\Market');
 Route::bind('user', function($username)
@@ -25,7 +29,7 @@ Route::group(['prefix'=>'market'], function(){
     Route::get('/', ['as' => 'markets.index', 'uses' => 'MarketsController@index']);
     Route::get('filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter'] );
     Route::get('create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
-    Route::get('{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
+//    Route::get('{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
     Route::post('/', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
     Route::get('{markets}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
     Route::get('{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
@@ -43,7 +47,8 @@ if(Config::get('app.debug') === 'true')
 	Route::get('/dev', function(){
 
         echo '<a href="/market/public/index.php/dev/list">Visa lista &ouml;ver alla mappar och filer med dess beh&ouml;righeter i \'public\'</a><br/>';
-        echo '<a href="/market/public/index.php/dev/phpinfo">PhpInfo</a>';
+        echo '<a href="/market/public/index.php/dev/phpinfo">PhpInfo</a><br/>';
+        echo '<a href="/market/public/index.php/dev/apiTest">Send test request phpBB API</a></br>';
 
     });
     Route::get('dev/list', function(){
@@ -194,6 +199,14 @@ if(Config::get('app.debug') === 'true')
 	Route::get('session', ['as' => 'session', 'uses' => 'DevController@session', 'middleware' => 'auth']);
     Route::get('dev/phpinfo', function(){
         echo phpinfo();
+    });
+    Route::get('dev/apiTest', function(){
+        //Using Guzzle
+        $client = new Client();
+        $response = $client->get('http://elektro.coo/phpBB3/api/test');
+        $responseCode = $response->getStatusCode();
+        $json = $response->json();
+        dd($responseCode, $json);
     });
 }
 //-----------------------------------------------------------------------------

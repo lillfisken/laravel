@@ -6,6 +6,8 @@ $public = '/market/public/';
 $system = '/var/www/market/public/';
 
 return [
+    //----- Paths ---------------------------------------------------------
+
     'public_path' => $public,
     'public_path_images' => $public . 'images/',
     'public_path_images_temp' => $public . 'images/temp/',
@@ -14,4 +16,8 @@ return [
     'system_path_images' => $system . 'images/',
     'system_path_images_temp' => $system . 'images/temp/',
 
+    //----- phpBB Auth ----------------------------------------------------
+
+    'phpBB_api_path' => 'http://elektro.coo/phpBB3/api.php',
+    'phpBB_key' => '',
 ];
