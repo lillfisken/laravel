@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="/market/public/css/okg.css" />
         <link rel="stylesheet" href="/market/public/css/style.css" />
         <link rel="stylesheet" href="/market/public/css/menuTest.css" />
+        <link rel="stylesheet" href="/market/public/css/jquery.datetimepicker.css" />
 
         <!--<link rel="stylesheet" type="text/css" href="/css/btn.css">-->
 
@@ -35,6 +36,7 @@
 
         <!-- Include the Hammer.js library -->
         <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+        <script src="/market/public/script/jquery.datetimepicker.js"></script>
 
 
 

@@ -40,9 +40,9 @@ class MarketsTableSeeder extends Seeder {
 			'update_at'
 			'deleted_at'
 */
-            'contactMail' => 'true',
-            'contactPhone' => 'true',
-            'contactPm' => 'true',
+            'contactMail' => true,
+            'contactPhone' => true,
+            'contactPm' => true,
             'contactQuestions' => 'false',
 		));
 		
@@ -483,7 +483,6 @@ class MarketsTableSeeder extends Seeder {
 			*/
 			'created_at' => '2015-01-23 19:50:40',
 			'updated_at' => '2015-01-23 19:50:40',
-			'deleted_at' => '2015-01-24 19:50:40',
 
 			'marketType' => '3',
 //			'contact_options' => 'mail',
@@ -494,8 +493,79 @@ class MarketsTableSeeder extends Seeder {
             'contactQuestions' => 'true',
 
 		));
-		
-	
+
+        $auction1 = Market::create([
+            /*id*/
+            'createdByUser'	=>	'4',
+            'title'	=>	'Auktion 1',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
+            'price'	=>	'550.00',
+            'extra_price_info' => '',
+            'number_of_items' => '1',
+            'image1_std' => '/market/public/images/2014/11/UVbox.jpg',
+            'image1_thumb' => '/market/public/images/2014/11/UVbox_small.jpg',
+            /*
+            'image2'
+            'image2_small'
+            'image3'
+            'image3_small'
+            'image4'
+            'image4_small'
+            'image5'
+            'image5_small'
+            'image6'
+            'image6_small'
+            'endAt'
+            */
+            'created_at' => '2015-01-23 19:50:40',
+            'updated_at' => '2015-01-23 19:50:40',
+            'deleted_at' => '2015-01-24 19:50:40',
+
+            'marketType' => '4',
+            'endingAt' => '2015-11-23 19:31:12',
+//			'contact_options' => 'mail',
+
+            'contactMail' => true,
+            'contactPhone' => true,
+            'contactPm' => true,
+            'contactQuestions' => true,
+        ]);
+
+        $auction1 = Market::create([
+            'id' => 54,
+            'createdByUser'	=>	'4',
+            'title'	=>	'Auktion 2',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel tortor at purus consequat gravida a at justo. Donec vel efficitur ex. Aliquam tempor nisl non mauris feugiat, eu lobortis leo tempor. Aliquam eu erat posuere diam malesuada sollicitudin in quis tellus. Donec semper purus sit amet diam tristique porta. Quisque at purus dui. Morbi gravida lectus eu nibh sagittis, sed sodales nunc varius. Sed nisl lectus, dignissim eu fermentum et, placerat vel nunc. Vivamus augue ipsum, porttitor vitae ultrices vitae, tempor quis sem. Nulla vestibulum diam orci, non scelerisque dolor aliquet eget. Aliquam sodales pellentesque erat, nec dapibus turpis pretium nec. Morbi eu eros iaculis risus vestibulum luctus a sit amet metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
+            'price'	=>	'550.00',
+            'extra_price_info' => '',
+            'number_of_items' => '1',
+            'image1_std' => '/market/public/images/2014/11/UVbox.jpg',
+            'image1_thumb' => '/market/public/images/2014/11/UVbox_small.jpg',
+            /*
+            'image2'
+            'image2_small'
+            'image3'
+            'image3_small'
+            'image4'
+            'image4_small'
+            'image5'
+            'image5_small'
+            'image6'
+            'image6_small'
+            'endAt'
+            */
+            'created_at' => '2015-01-23 19:50:40',
+            'updated_at' => '2015-01-23 19:50:40',
+
+            'marketType' => '4',
+            'endingAt' => '2015-11-23 19:31:12',
+//			'contact_options' => 'mail',
+
+            'contactMail' => 'true',
+            'contactPhone' => 'true',
+            'contactPm' => 'true',
+            'contactQuestions' => 'true',
+        ]);
 	}
 }
 

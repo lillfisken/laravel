@@ -1,6 +1,6 @@
 <!-- /var/www/lara/resources/views/markets/edit.blade.php -->
 
-@extends('layout/site')
+@extends('layout.site')
 
 @section('title')
 	Ändra annons

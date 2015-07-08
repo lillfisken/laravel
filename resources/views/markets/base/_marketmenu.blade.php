@@ -1,4 +1,4 @@
-@if(isset($market->marketmenu))
+@if(isset($market->marketmenu) && !empty($market->marketmenu))
     <nav class="market-menu">
         <ul class="clearfix">
             <li>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use market\helper\debug;
-use market\helper\marketType;
+use market\helper\market as markethelper;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
 use market\helper\text;
@@ -70,9 +70,12 @@ class MarketsController extends ControllerMarket {
 
 			$temp = Market::select()->with('User')->get();
 
+
+
 			//Set menu for each market
 			foreach ($temp as $market)
 			{
+                //TODO: Different menus for different market types
 				marketCRUD::addMarketMenu($market);
 			}
 
@@ -85,7 +88,7 @@ class MarketsController extends ControllerMarket {
 		}
 
 		//dd($market);
-
+//        dd($temp);
 		return view('markets.index', ['markets' => $temp]);
 	}
 
@@ -116,40 +119,7 @@ class MarketsController extends ControllerMarket {
                     $query->orWhere('marketType', '=', $key);
                 }
             }
-//
-//
-//
-//			if (Input::has('kopes')) {
-//				$query->orWhere('type', '=', 'kopes');
-//			}
-//
-//			if (Input::has('bytes')) {
-//				$query->orWhere('type', '=', 'bytes');
-//			}
-//
-//			if (Input::has('skankes')) {
-//				$query->orWhere('type', '=', 'skankes');
-//			}
-//
-//			if (Input::has('samkop')) {
-//				$query->orWhere('type', '=', 'samkop');
-//			}
-//
-//			if (Input::has('tjanst_erbjudes')) {
-//				$query->orWhere('type', '=', 'tjanst_erbjudes');
-//			}
-//
-//			if (Input::has('tjanst_sökes')) {
-//				$query->orWhere('type', '=', 'tjanst_sökes');
-//			}
-//
-//			if (Input::has('anstallning')) {
-//				$query->orWhere('type', '=', 'anstallning');
-//			}
-//
-//			if (Input::has('tips')) {
-//				$query->orWhere('type', '=', 'tips');
-//			}
+
 		});
 
 		if (Input::has('hiddenAds')) {
@@ -185,7 +155,7 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function create()
 	{
-		return view('markets.create');
+		return view('markets.sell.create');
 	}
 
 	/**
@@ -206,14 +176,14 @@ class MarketsController extends ControllerMarket {
         {
             debug::logConsole('Marketscontroller -> store -> publishBB');
             $input = text::marketFromBbToHtml($input);
-            return marketCRUD::save($input);
+            return marketCRUD::save($input, 'markets.show');
 //            return marketCRUD::save(Input::all());
         }
         elseif(Input::get('publishHTML'))
         {
             debug::logConsole('Marketscontroller -> store -> publishHTML');
 //            $input = text::marketFromHtmlToBB($input);
-            return marketCRUD::save($input);
+            return marketCRUD::save($input, 'markets.show');
         }
         elseif(Input::get('preview'))
         {
@@ -250,7 +220,7 @@ class MarketsController extends ControllerMarket {
 		//echo("<script>console.log('Count: " .$tempCount."');</script>");
 //		dd($temp);
 
-		return view('markets.show', ['market' => $temp]);
+		return view('markets.sell.show', ['market' => $temp]);
 	}
 
 	/**
@@ -269,7 +239,7 @@ class MarketsController extends ControllerMarket {
 
         //dd($temp);
 
-		return view('markets.edit', ['market' => $temp]);
+		return view('markets.sell.edit', ['market' => $temp]);
 	}
 
 	/**
@@ -334,7 +304,7 @@ class MarketsController extends ControllerMarket {
         $reasons = marketEndReason::getAllTypes();
 //        $reasons = ['Varan såld' => 'Varan såld', 'Övrigt' => 'Övrigt'];
 
-		return view('markets.delete', ['markets' => $market, 'reasons' => $reasons]);
+		return view('markets.sell.delete', ['markets' => $market, 'reasons' => $reasons]);
 	}
 
 	/**
@@ -431,10 +401,5 @@ class MarketsController extends ControllerMarket {
     {
         return view('account.message.new', ['reciever' => $toUser, 'title' => 'Angående: ' . $title]);
     }
-
-	protected function filterMarket()
-	{
-
-	}
 
 }

@@ -31,7 +31,16 @@
             </ul>
         </li>
 
-        <li><a href="{{ route('markets.create') }}">Skapa annons</a></li>
+        <li>
+            <a href="#">Skapa annons</a>
+            <ul>
+                <li><a href="{{ route('auction.create') }}">Auktion</a></li>
+                <li><a href="{{ route('markets.create') }}">Säljes</a></li>
+                <li><a href="{{ route('markets.create') }}">Köpes</a></li>
+                <li><a href="{{ route('markets.create') }}">Skänkes</a></li>
+                <li><a href="{{ route('markets.create') }}">Bytes</a></li>
+            </ul>
+        </li>
         <li>
             <a href="#">Inställningar</a>
             <ul>

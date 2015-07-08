@@ -64,6 +64,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('market\Market', 'createdByUser', 'id');
 	}
 
+    public function bids()
+    {
+        return $this->hasMany('market\Bid', 'bidder', 'id');
+    }
+
 	public function getUserActiveMarketsCount()
 	{
 		return Market::where('createdByUser', '=' , $this->id)->count();

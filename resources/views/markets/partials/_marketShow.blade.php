@@ -2,7 +2,7 @@
     <div id="market-detail" class="layout">
         <div class="market-title">
             <h1 class="marketmenu-title"> {{ $market->title }} </h1>
-            <div class="marketmenu-right"> @include('markets.partials._marketmenu') </div>
+            <div class="marketmenu-right"> @include('markets.base._marketmenu') </div>
         </div>
 
         <div class="market-detail-images">
@@ -51,7 +51,7 @@
         @if($market->deleted_at != null)
             <h3>
                 Avslutad<br/>
-                <small>{{ market\helper\marketEndReason::getTypeName($market->endReason) }},
+                <small>{{ market\helper\marketEndReason::getTypeName($market->endReason) }}<br/>
                         {{ $market->deleted_at }}</small>
             </h3>
         @else
@@ -63,7 +63,7 @@
         <p>
             <small>
                 Inlagd {{ $market->created_at }}
-                @if($market->created_at !== $market->updated_at)
+                @if($market->created_at != $market->updated_at)
                     <br/>Senast uppdaterad {{ $market->updated_at }}
                 @endif
             </small>

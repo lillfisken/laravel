@@ -3,7 +3,7 @@
 {{--* Date: 2015-01-29--}}
 {{--* Time: 22:18--}}
 
-@extends('layout/site')
+@extends('layout.site')
 
 @section('title')
     Avsluta {{ $markets->title }}

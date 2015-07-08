@@ -41,6 +41,8 @@ class AlterUserTable extends Migration {
             //'pswdOld' => 'Gammalt lösenord',
             //'pswd' => 'Nytt lösenord'
             //$table->timestamp('updated_at');
+            $table->text('presentation')->nullable();
+
         });
     }
 
@@ -60,6 +62,7 @@ class AlterUserTable extends Migration {
             $table->dropColumn('emailAllowed');
             $table->dropColumn('emailAllowed');
             $table->dropColumn('cityAllowed');
+            $table->dropColumn('presentation');
 
         });
     }

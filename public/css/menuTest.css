@@ -53,6 +53,7 @@ ul.resp-menu li:hover {
 }
 ul.resp-menu li:hover ul {
     display: block;
+    z-index: 999;
 }
 
 /*Hide checkbox*/

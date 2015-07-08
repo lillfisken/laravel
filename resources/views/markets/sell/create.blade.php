@@ -1,6 +1,4 @@
-<!-- /var/www/lara/resources/views/markets/create.blade.php -->
-
-@extends('layout/site')
+@extends('layout.site')
 
 @section('title')
 	Skapa annons
@@ -8,10 +6,11 @@
 
 @section('content')
 	<div class="inner-content">
-		<h1>Skapa ny annons</h1>
+		<h1>Skapa ny säljesannons</h1>
 		<hr />
 
 		{!! Form::open(array('route' => 'markets.store' , 'files' => true )) !!}
+        {!! Form::hidden('marketType', '0') !!}
 
 		@include('markets.partials._marketCreate')
 

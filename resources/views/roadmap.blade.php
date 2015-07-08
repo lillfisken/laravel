@@ -60,6 +60,10 @@
             -> Visningsalternativ (spara i cockies)<br/>
             -> Aktiva annonser, marketmenu blir bara större och större</br>
             -> Menyn döljs av bilder vid visning av enskild annons (Sparatn?)<br/>
+            -> Meddelande om att javascript krävs och webbläsare över ??? (rad ovanför, för bästa funktion...) <br/>
+            -> Marketmenu i aucktion, möjlighet att avbryta samt göra tillägg efter första budet <br/>
+            -> Möjlighet att ladda upp pdf till annons<br/>
+            -> Cronjob, radera temp bilder äldre än 1 dygn
         </p>
         <hr/>
         <p>
@@ -68,7 +72,9 @@
             -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
             -> Använd Font-awsame<br/>
             -> Validation, minst ett kontaktsätt måste vara ifyllt samt godkänt i profilen vid skapande/ändrande av annons<br/>
-            -> Paginering
+            -> Paginering <br/>
+            -> Om en annons har några bud, tillåt inga ändringar eller avslut i förtid
+
         </p>
         <hr />
         <p>
@@ -98,6 +104,7 @@
             -> Sidvisning sökresultat, antal per sida etc<br />
             -> Olika visningsalternativ<br />
             -> Möjlighet att söka med flera ord som inte behöver finnas i föld<br />
+            -> "Sök-paket"<br/>
         </p>
         <hr />
         <p>
@@ -122,6 +129,11 @@
         <hr/>
         <p>
             API för externa verktyg att ladda upp och hantera annonser.<br/>
+        </p>
+        <hr/>
+        <p>
+            Using:<br/>
+            http://xdsoft.net/jqplugins/datetimepicker/<br/>
         </p>
     </div>
 @stop

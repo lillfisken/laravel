@@ -110,16 +110,6 @@ return [
 	*/
 
 	'providers' => [
-
-//		/*
-//		 * Application Service Providers...
-//		 */
-//		'market\Providers\AppServiceProvider',
-//		//'market\Providers\BusServiceProvider',
-//		'market\Providers\EventServiceProvider',
-//		'market\Providers\RouteServiceProvider',
-
-
 		/*
 		 * Laravel Framework Service Providers...
 		 */

@@ -17,7 +17,6 @@ class Market extends Model {
 		'title', 
 		'description', 
 		'price',
-		//TODO:Fix all fields fillable
 		'extra_price_info',
 		'number_of_items',
         'marketType',
@@ -51,6 +50,7 @@ class Market extends Model {
 		'created_at',
 		'update_at',
 		'deleted_at',
+        'end_at',
 	];
 
 	/*
@@ -69,11 +69,17 @@ class Market extends Model {
 		return $this->belongsTo('market\User', 'createdByUser');
 	}
 
+    public function bids()
+    {
+        return $this->hasMany('market\Bid', 'auctionId', 'id');
+//        return $this->hasMany('market\MarketQuestions', 'market', 'id');
+
+    }
+
 	public function marketQuestions()
 	{
 		return $this->hasMany('market\MarketQuestions', 'market', 'id');
 	}
-
 
 	
 	

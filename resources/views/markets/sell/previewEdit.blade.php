@@ -1,4 +1,4 @@
-@extends('layout/site')
+@extends('layout.site')
 
 @section('title')
     Redigera annons: {{ $market->title }}
