@@ -256,7 +256,7 @@ if(Config::get('app.debug') === 'true')
         dd($responseCode, $json);
     });
     Route::get('dev/enviroment', function(){
-       dd(App::environment());
+       dd(gethostname(), App::environment());
     });
 }
 //-----------------------------------------------------------------------------
