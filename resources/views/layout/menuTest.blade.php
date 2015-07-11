@@ -50,7 +50,7 @@
             </ul>
         </li>
         <li><a href="{{ route('accounts.logout') }}">Logga ut</a></li>
-        @if(Config::get('app.debug') === 'true')
+        @if(Config::get('app.debug') == 'true')
             <li><a href="/market/public/index.php/roadmap">Roadmap</a></li>
             <li><a href="/market/public/index.php/dev">Dev</a></li>
         @endif

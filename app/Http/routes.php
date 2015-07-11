@@ -70,25 +70,24 @@ Route::group(['prefix' => 'change'], function(){
 Route::group(['prefix' => 'auction'], function(){
     $controller = 'MarketAuctionController';
 
+    Route::get('/update/{id}', ['as' => 'auction.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => 'auction.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
     Route::get('show/{id}', ['as'=>'auction.show', 'uses'=> $controller . '@show']);
     Route::get('/', ['as' => 'auction.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
     Route::post('/', ['as' => 'auction.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
 
-    Route::get('/update/{id}', ['as' => 'auction.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
-    Route::post('/update', ['as' => 'auction.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
-
-
     Route::post('placebid', ['as' => 'auction.placeBid', 'uses' =>  $controller . '@placeBid', 'middleware' => 'auth']);
-    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
-    Route::patch('{markets}', ['as' => 'auction.update', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+//    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
+//    Route::patch('{markets}', ['as' => 'auction.update.patch', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
     Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' =>  $controller . '@showAllBids', 'middleware' => 'auth']);
 
-    Route::get('delete/{market}', ['as' => 'auction.delete', 'uses' =>  $controller . '@delete', 'middleware' => 'auth']);
-    Route::delete('/', ['as' => 'auction.destroy', 'uses' =>  $controller . '@destroy', 'middleware' => 'auth']);
+    Route::get('delete/{market}', ['as' => 'auction.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => 'auction.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
 });
 
 //--------------------------------------------------------------------------
-if(Config::get('app.debug') === 'true')
+if(Config::get('app.debug') == 'true')
 {
 	Route::get('/dev', function(){
 

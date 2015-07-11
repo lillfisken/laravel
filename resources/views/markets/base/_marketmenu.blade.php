@@ -2,6 +2,7 @@
     <nav class="market-menu">
         <ul class="clearfix">
             <li>
+                {{--TODO: Change to font awesome--}}
                 <a href="#">
                     <div class="btn-menu">
                         <div class="menu-bar"></div>

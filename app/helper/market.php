@@ -62,7 +62,7 @@ class market{
 
     //region Market Menu
 
-//    private static function addMarketMenu($market, $routeBase)
+//    public static function addMarketMenu($market, $routeBase)
 //    {
 //        if(Auth::check()) {
 //            $id = Auth::id();
@@ -98,8 +98,8 @@ class market{
 
             //Adds link to edit market if it's created by logged in user
             if ($id == $market->createdByUser && $market->deleted_at == null) {
-                $temp[] = array('text' => 'Redigera', 'href' => route( $this->routeBase . '.edit', $market->id ));
-                $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.delete', $market->id ));
+                $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
+                $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
             }
 
             if  ($id != $market->createdByUser) {

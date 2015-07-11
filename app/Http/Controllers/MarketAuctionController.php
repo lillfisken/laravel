@@ -1,6 +1,7 @@
 <?php namespace market\Http\Controllers;
 
 use Chromabits\Purifier\Contracts\Purifier;
+use DateTime;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -25,6 +26,7 @@ class MarketAuctionController extends Controller {
      */
     protected $purifier;
     protected $auctionHelper;
+    protected $routeBase;
 
     /**
      * Construct an instance of MyClass
@@ -36,6 +38,8 @@ class MarketAuctionController extends Controller {
         $this->purifier = $purifier;
 
         $this->auctionHelper = new helper\auction();
+
+        $this->routeBase = 'auction';
     }
 
     //region create
@@ -117,6 +121,65 @@ class MarketAuctionController extends Controller {
 
     //endregion
 
+    //region read
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+
+        // If auction exist and is of type auction
+        if($auction != null && $auction->marketType == 4)
+        {
+            $bidCount = $auction->bids->count();
+            if($bidCount > 0)
+            {
+                $bidHighest = $auction->bids->sortByDesc('bid')->first()->bid;
+            }
+            else
+            {
+                $bidHighest = 0;
+            }
+
+            $yourBid = $auction->bids->where('bidder', Auth::id())->first();
+            if($yourBid)
+            {
+                $yourBid = $auction->bids->where('bidder', Auth::id())->first()->bid;
+            }
+            else
+            {
+                $yourBid = 0;
+            }
+
+            //TODO: Add market menu
+            $this->auctionHelper->addMarketMenu($auction);
+
+//            helper\auction::addMarketMenu($auction, )
+//            marketCRUD::addMarketMenu($auction);
+//            marketHelper::addMarketMenuAuction($auction);
+            //$this->auctionHelper->addMarketMenuPerType($auction);
+
+            return view('markets.auction.show', [
+                'market'=>$auction,
+                'bidCount' => $bidCount,
+                'bidHighest' => $bidHighest,
+                'yourBid' => $yourBid,
+            ]);
+        }
+        else
+        {
+            dd('Null or not auction');
+            abort(404);
+        }
+    }
+
+    //endregion
+
     //region update
 
     public function updateForm($id)
@@ -153,67 +216,69 @@ class MarketAuctionController extends Controller {
 
     //endregion
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-        $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+    //region delete
 
-        if($auction != null && $auction->marketType == 4)
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /markets/{id}
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroyGet($market, Request $request)
+    {
+        Session::put('uri', Session::get('_previous'));
+
+//        $reasons = marketEndReason::getAllTypes();
+        $reasons = $this->auctionHelper->getAllEndReasons();
+//        $reasons = ['Varan såld' => 'Varan såld', 'Övrigt' => 'Övrigt'];
+
+        return view('markets.base.delete', ['market' => $market, 'reasons' => $reasons, 'callBackRoute' => $this->routeBase . '.destroy.post']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /markets/{id}
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroyPost(Request $request)
+    {
+        //TODO:
+//        dd('deleteing market in marketAuctionController');
+        $id = Input::get('market');
+        $market = Market::where('id', '=', $id)->firstorfail();
+        //dd(Input::all());
+
+        $market['endReason'] = Input::get('reason');
+        $market['deleted_at'] = new DateTime();
+        $market->save();
+
+        $uri = Session::get('uri');
+//        dd($uri);
+
+        if(isset($uri))
         {
-            $bidCount = $auction->bids->count();
-            if($bidCount > 0)
+            //dd($uri);
+            if(isset($uri['url']))
             {
-                $bidHighest = $auction->bids->sortByDesc('bid')->first()->bid;
+                //dd($uri['url']);
+                return redirect($uri['url']);
             }
-            else
-            {
-                $bidHighest = 0;
-            }
+            return redirect()->route('markets.index');
+            //return URL::to($uri);
 
-            $yourBid = $auction->bids->where('bidder', Auth::id())->first();
-            if($yourBid)
-            {
-                $yourBid = $auction->bids->where('bidder', Auth::id())->first()->bid;
-            }
-            else
-            {
-                $yourBid = 0;
-            }
-
-            //TODO: Add market menu
-//            marketCRUD::addMarketMenu($auction);
-//            marketHelper::addMarketMenuAuction($auction);
-            //$this->auctionHelper->addMarketMenuPerType($auction);
-
-            return view('markets.auction.show', [
-                'market'=>$auction,
-                'bidCount' => $bidCount,
-                'bidHighest' => $bidHighest,
-                'yourBid' => $yourBid,
-            ]);
+            //return redirect('markets/public');
         }
         else
         {
-            dd('Null or not auction');
-            abort(404);
+            dd('redirect route');
+            return redirect()->route('markets.index');
         }
-	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    }
+    //endregion
 
     //region Bids
 

@@ -306,15 +306,11 @@ class auction extends market
 
     protected function save($market)
     {
-//        $input = images::saveImages($input, true);
-//        $m = new MarketModel($input);
         return $market->save();
     }
 
     protected function update($market)
     {
-//        dd('auction -> update', $market);
-
         if(isset($market->createdByUser) &&
             isset($market->id) &&
             $market->id > 0)
@@ -324,6 +320,15 @@ class auction extends market
         }
 
         abort(400);
+    }
+
+    public function delete($id)
+    {
+
+    }
+
+    public function deletePost()
+    {
 
     }
 

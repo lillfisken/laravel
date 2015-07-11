@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use market\helper\auction;
 use market\helper\debug;
 use market\helper\market as markethelper;
 use market\helper\marketEndReason;
@@ -41,6 +42,8 @@ class MarketsController extends ControllerMarket {
      */
     protected $purifier;
 
+    protected $auctionHelper;
+
     /**
      * Construct an instance of MyClass
      *
@@ -49,6 +52,8 @@ class MarketsController extends ControllerMarket {
     public function __construct(Purifier $purifier) {
         // Inject dependencies
         $this->purifier = $purifier;
+
+        $this->auctionHelper = new auction();
     }
 
 	
@@ -76,7 +81,14 @@ class MarketsController extends ControllerMarket {
 			foreach ($temp as $market)
 			{
                 //TODO: Different menus for different market types
-				marketCRUD::addMarketMenu($market);
+                switch($market->marketType)
+                {
+                    case 4:
+                        // 4 = auction
+                        $this->auctionHelper->addMarketMenu($market);
+                        break;
+                }
+//				marketCRUD::addMarketMenu($market);
 			}
 
 			//echo("<script>console.log('MarketsController->index');</script>");
