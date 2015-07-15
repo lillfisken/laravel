@@ -1,9 +1,13 @@
-<?php namespace market\helper;
+<?php namespace market\helper\markets;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 use market\Market as MarketModel;
 use market\User;
+use market\helper\images;
+use market\helper\text;
 
 /**
  * Created by PhpStorm.
@@ -12,10 +16,8 @@ use market\User;
  * Time: 22:15
  */
 
-class auction extends market
+abstract class MarketBase
 {
-    var $routeBase = 'auction';
-
     //region Create
 
     public function saveFromCreateForm($input)
@@ -27,15 +29,23 @@ class auction extends market
 //
 //        return marketCRUD::save($input, 'auction.show');
 
+//        dd('saveFromCreateForm', $input);
         $input = text::marketFromBbToHtml($input);
+//        dd('saveFromCreateForm, after marketFromBbToHtml', $input);
+
         $input = images::saveImages($input, true);
+//        dd('saveFromCreateForm, after saveImages', $input);
 
         $market = new MarketModel($input);
         $market['createdByUser'] = Auth::id();
 
+//        dd($market, $this->routeBase);
         $this->save($market);
 
-        return redirect()->route($this->routeBase . '.show', ['id' => $market->id]);
+//        dd($market, $this->routeBase, $market->id);
+
+
+        return redirect()->route( $this->routeBase . '.show', ['id' => $market->id]);
 
     }
 
@@ -48,7 +58,7 @@ class auction extends market
 
         $this->clearSession();
 
-        return redirect()->route('auction.show', ['id' => $auction->id]);
+        return redirect()->route($this->routeBase . '.show', ['id' => $auction->id]);
     }
 
     public function previewFromCreateForm($input)
@@ -62,10 +72,10 @@ class auction extends market
 
         $this->putAuctionInSession($auction);
 
-        return view('markets.auction.show' , [
+        return view('markets.' . $this->routeBase . '.show' , [
             'type' => 'create',
             'preview' => true,
-            'callbackRoute' => 'auction.store',
+            'callbackRoute' => $this->routeBase . '.store',
             'market' => $auction,
             'bidCount' => 0,
             'bidHighest' => 0,
@@ -87,10 +97,10 @@ class auction extends market
     {
         $auction = $this->getAuctionFromSession();
 
-        return view('markets.auction.create', [
-            'title'=>'Ny auktion',
-            'callbackRoute' => 'auction.create',
-            'marketType' => '4',
+        return view('markets.' . $this->routeBase . '.create', [
+            'title'=>'Titel saknas',
+            'callbackRoute' => $this->routeBase . '.create',
+            'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
@@ -105,56 +115,37 @@ class auction extends market
         ]);
     }
 
+    protected function save($market)
+    {
+        return $market->save();
+    }
+
     //endregion
 
     //region Read
 
     public function show($id)
     {
-        dd('helper -> auction');
-        $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+        $market = MarketModel::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
 
         // If auction exist and is of type auction
-        if($auction != null && $auction->marketType == 4)
+        if($market != null)
         {
-            $bidCount = $auction->bids->count();
-            if($bidCount > 0)
-            {
-                $bidHighest = $auction->bids->sortByDesc('bid')->first()->bid;
-            }
-            else
-            {
-                $bidHighest = 0;
-            }
-
-            $yourBid = $auction->bids->where('bidder', Auth::id())->first();
-            if($yourBid)
-            {
-                $yourBid = $auction->bids->where('bidder', Auth::id())->first()->bid;
-            }
-            else
-            {
-                $yourBid = 0;
-            }
-
             //TODO: Add market menu
-            $this->auctionHelper->addMarketMenu($auction);
+            $this->addMarketMenu($market);
 
 //            helper\auction::addMarketMenu($auction, )
 //            marketCRUD::addMarketMenu($auction);
 //            marketHelper::addMarketMenuAuction($auction);
             //$this->auctionHelper->addMarketMenuPerType($auction);
 
-            return view('markets.auction.show', [
-                'market'=>$auction,
-                'bidCount' => $bidCount,
-                'bidHighest' => $bidHighest,
-                'yourBid' => $yourBid,
+            return view('markets.' . $this->routeBase .'.show', [
+                'market'=>$market,
             ]);
         }
         else
         {
-//            dd('Null or not auction');
+            dd('Null or not auction');
             abort(404);
         }
     }
@@ -171,11 +162,11 @@ class auction extends market
 
         self::putAuctionDataInSession($id, $auction['createdByUser']);
 
-        return view('markets.auction.create', [
+        return view('markets.' . $this->routeBase . '.create', [
 //            'type' => 'edit',
             'title'=> 'Redigera ' . $auction['title'],
-            'callbackRoute' => 'auction.update.store',
-            'marketType' => '4',
+            'callbackRoute' => $this->routeBase . '.update.store',
+            'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
@@ -214,7 +205,7 @@ class auction extends market
 
         $this->clearSession();
 
-        return redirect()->route('auction.show', $auctionData['id']);
+        return redirect()->route($this->routeBase . '.show', $auctionData['id']);
     }
 
     public function previewFromEditForm($input)
@@ -229,10 +220,10 @@ class auction extends market
 
         //Todo: (Bids/preview, not needed, not able to edit after first bid)
 
-        return view('markets.auction.show' , [
+        return view('markets.' . $this->routeBase . '.show' , [
             'type' => 'edit',
             'preview' => true,
-            'callbackRoute' => 'auction.update.store',
+            'callbackRoute' => $this->routeBase . '.update.store',
             'market' => $auction,
             'bidCount' => 0,
             'bidHighest' => 0,
@@ -260,7 +251,7 @@ class auction extends market
         $this->update($auction);
         $this->clearSession();
 
-        return redirect()->route('auction.show', ['id' => $auction->id]);
+        return redirect()->route($this->routeBase . '.show', ['id' => $auction->id]);
     }
 
     public function editFromEditPreview()
@@ -268,11 +259,11 @@ class auction extends market
         $auction = $this->getAuctionFromSession();
         $this->putAuctionDataInSession($auction->id, $auction->createdByUser);
 
-        return view('markets.auction.create', [
+        return view('markets.' . $this->routeBase . '.create', [
 //            'type' => 'edit',
             'title'=> 'Redigera ' . $auction->title,
-            'callbackRoute' => 'auction.update.store',
-            'marketType' => '4',
+            'callbackRoute' => $this->routeBase . '.update.store',
+            'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
@@ -286,6 +277,74 @@ class auction extends market
             ],
         ]);
     }
+
+    protected function update($market)
+    {
+        if(isset($market->createdByUser) &&
+            isset($market->id) &&
+            $market->id > 0)
+        {
+            $market->exists = true;
+            return $market->save();
+        }
+
+        abort(400);
+    }
+    //endregion
+
+    //region Delete
+
+    public function deleteGet($id)
+    {
+        Session::put('uri', Session::get('_previous'));
+
+//        $reasons = marketEndReason::getAllTypes();
+        $reasons = $this->getAllEndReasons();
+//        $reasons = ['Varan såld' => 'Varan såld', 'Övrigt' => 'Övrigt'];
+
+        $market = MarketModel::find($id);
+
+        return view('markets.base.delete', [
+            'market' => $market,
+            'reasons' => $reasons,
+            'callBackRoute' => $this->routeBase . '.destroy.post']);
+    }
+
+    public function deletePost()
+    {
+//TODO:
+//        dd('deleteing market in marketAuctionController');
+        $id = Input::get('market');
+        $market = MarketModel::where('id', '=', $id)->firstorfail();
+        //dd(Input::all());
+
+        $market['endReason'] = Input::get('reason');
+        $market['deleted_at'] = new DateTime();
+        $market->save();
+
+        $uri = Session::get('uri');
+//        dd($uri);
+
+        if(isset($uri))
+        {
+            //dd($uri);
+            if(isset($uri['url']))
+            {
+                //dd($uri['url']);
+                return redirect($uri['url']);
+            }
+            return redirect()->route('markets.index');
+            //return URL::to($uri);
+
+            //return redirect('markets/public');
+        }
+        else
+        {
+            return redirect()->route('markets.index');
+        }
+
+    }
+
     //endregion
 
     //region Session
@@ -356,35 +415,103 @@ class auction extends market
 
     //endregion
 
-    //region CRUD
 
-    protected function save($market)
+
+    //region Market menu
+
+    public function addMarketMenu($market)
     {
-        return $market->save();
+        if(Auth::check()) {
+            $id = Auth::id();
+            $temp = array();
+
+            //Adds link to edit market if it's created by logged in user
+            if ($id == $market->createdByUser && $market->deleted_at == null) {
+                $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
+                $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
+            }
+
+            if  ($id != $market->createdByUser) {
+                //TODO: Check if market is blocked, then ad link to unblock instead
+                $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
+                //TODO: Check if market is seller, then ad link to unblock instead
+                $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
+            }
+
+            $market['marketmenu'] = $temp;
+        }
     }
 
-    protected function update($market)
+    //endregion
+
+    //region Market Type
+    private static $marketTypes = [
+        '0' => 'Säljes',
+        '1' => 'Köpes',
+        '2' => 'Bytes',
+        '3' => 'Skänkes',
+        '4' => 'Auktion',
+    ];
+
+    public static function getAllMarketTypes()
     {
-        if(isset($market->createdByUser) &&
-            isset($market->id) &&
-            $market->id > 0)
+        return self::$marketTypes;
+    }
+
+    public static function getMarketTypeName($number)
+    {
+        if(self::$marketTypes[$number] != null)
         {
-            $market->exists = true;
-            return $market->save();
+            return self::$marketTypes[$number];
+        }
+        else
+        {
+            abort('404', 'Number is not a market type');
+        }
+    }
+
+    //endregion
+
+    //region Market end reason
+    private static $endreasons = [
+        '0' => 'Såld/Skänkt',
+        '1' => 'Slängd',
+        '2' => 'Återtagen',
+        '3' => 'Övrigt'
+    ];
+
+    public static function getAllEndReasons()
+    {
+        return self::$endreasons;
+    }
+
+    public static function getEndReasonName($number)
+    {
+        if(self::$endreasons[$number] != null)
+        {
+            return self::$endreasons[$number];
+        }
+        else
+        {
+            abort('404', 'Number is not a market end type');
+        }
+    }
+    //endregion
+
+    //region misc
+        public function getRouteBase()
+        {
+            return $this->routeBase;
         }
 
-        abort(400);
-    }
+        public function getMarketType()
+        {
+            return $this->marketType;
+        }
 
-    public function delete($id)
-    {
-
-    }
-
-    public function deletePost()
-    {
-
-    }
-
+        public function getTitleNew()
+        {
+            return $this->titleNew;
+        }
     //endregion
 }

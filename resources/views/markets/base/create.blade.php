@@ -7,12 +7,12 @@
 @section('content')
     <div class="inner-content">
         @section('market-title')
-            <h1>{{ $title }}</h1>
+            <h1>{{ $model->title or $title }}</h1>
         @show
         <hr />
 
         @section('formOpen')
-            {!! Form::open(array('route' => $callbackRoute , 'files' => true )) !!}
+            {!! Form::model($model, array('route' => $callbackRoute , 'files' => true )) !!}
         @show
 
             {!! Form::hidden('marketType', $marketType) !!}
@@ -92,28 +92,24 @@
             {!! Form::label('image6','Bild 6',array('id'=>'','class'=>'')) !!}
             {!! Form::file('image6','',array('id'=>'','class'=>'')) !!}<br />
             <hr />
-            <h3>Välj hur köparna ska kunna kontakta dig</h3>
-            {!! $errors->first('contactPm', '<div class="help-block">:message</div>') !!}
-            {!! $errors->first('contactMail', '<div class="help-block">:message</div>') !!}
-            {!! $errors->first('contactPhone', '<div class="help-block">:message</div>') !!}
-            {!! $errors->first('contactQuestions', '<div class="help-block">:message</div>') !!}
 
-            {!! Form::label('contactPm', 'PM') !!}
-            {!! Form::checkbox('contactPm', '1', true) !!}
-            {!! Form::label('contactMail', 'Mail') !!}
-            {!! Form::checkbox('contactMail', '1', true) !!}
-            {!! Form::label('contactPhone', 'Telefon') !!}
-            {!! Form::checkbox('contactPhone', '1', true) !!}
-            {!! Form::label('contactQuestions', 'Via öppna frågor') !!}
-            {!! Form::checkbox('contactQuestions', '1', true) !!}<br />
-            <hr />
+            @section('contact')
+                <h3>Välj hur köparna ska kunna kontakta dig</h3>
+                {!! $errors->first('contactPm', '<div class="help-block">:message</div>') !!}
+                {!! $errors->first('contactMail', '<div class="help-block">:message</div>') !!}
+                {!! $errors->first('contactPhone', '<div class="help-block">:message</div>') !!}
+                {!! $errors->first('contactQuestions', '<div class="help-block">:message</div>') !!}
 
-            {{--@section('formClose')--}}
-                {{--{!! Form::submit('Publicera', array('class' => 'btn', 'name'=>'publishBB')); !!}--}}
-                {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn', 'name'=>'preview')); !!}--}}
-
-                {{--{!! Form::close() !!}--}}
-            {{--@show--}}
+                {!! Form::label('contactPm', 'PM') !!}
+                {!! Form::checkbox('contactPm', '1', true) !!}
+                {!! Form::label('contactMail', 'Mail') !!}
+                {!! Form::checkbox('contactMail', '1', true) !!}
+                {!! Form::label('contactPhone', 'Telefon') !!}
+                {!! Form::checkbox('contactPhone', '1', true) !!}
+                {!! Form::label('contactQuestions', 'Via öppna frågor') !!}
+                {!! Form::checkbox('contactQuestions', '1', true) !!}<br />
+                <hr />
+            @show
 
             @section('formStop')
                 @if(isset($buttons))

@@ -1,0 +1,49 @@
+<?php namespace market\Http\Controllers\Markets;
+
+use Chromabits\Purifier\Purifier;
+use Illuminate\Support\Facades\Auth;
+use market\Http\Requests;
+use market\Http\Controllers\Controller;
+use market\helper;
+
+use Illuminate\Http\Request;
+use market\Market;
+
+class AuctionController extends MarketBaseController {
+
+    public function __construct(Purifier $purifier)
+    {
+        parent::__construct($purifier);
+
+        $this->marketHelper = new helper\markets\auction();
+
+    }
+
+    //region Bids
+
+    public function placeBid(Request $request)
+    {
+        //TODO: BidRequest
+        $market = $request->id;
+        $bid = $request->bid;
+        $bidder = Auth::id();
+
+        $placedBid = helper\bid::placeBid($market, $bidder, $bid);
+
+        return redirect()->route('auction.show', $market);
+    }
+
+    public function showAllBids($id)
+    {
+        $auction = Market::
+        with(['bids'=>function($query){
+            $query->with('user')->orderBy('updated_at', 'desc');
+        }])
+            ->where('id','=',$id)
+            ->first();
+
+        return view('markets.auction.showAllBids', ['auction'=>$auction]);
+    }
+
+    //endregion
+}

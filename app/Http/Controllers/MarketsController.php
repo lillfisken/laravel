@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use market\helper\auction;
+use market\helper\buy;
 use market\helper\debug;
 use market\helper\market as markethelper;
 use market\helper\marketEndReason;
@@ -42,7 +43,8 @@ class MarketsController extends ControllerMarket {
      */
     protected $purifier;
 
-    protected $auctionHelper;
+//    protected $auctionHelper;
+//    protected $buyHelper;
 
     /**
      * Construct an instance of MyClass
@@ -53,7 +55,8 @@ class MarketsController extends ControllerMarket {
         // Inject dependencies
         $this->purifier = $purifier;
 
-        $this->auctionHelper = new auction();
+//        $this->auctionHelper = new auction();
+//        $this->buyHelper = new buy();
     }
 
 	
@@ -75,7 +78,8 @@ class MarketsController extends ControllerMarket {
 
 			$temp = Market::select()->with('User')->get();
 
-
+            $auctionHelper = new \market\helper\markets\auction();
+            $buyHelper = new \market\helper\markets\buy();
 
 			//Set menu for each market
 			foreach ($temp as $market)
@@ -83,12 +87,15 @@ class MarketsController extends ControllerMarket {
                 //TODO: Different menus for different market types
                 switch($market->marketType)
                 {
+                    case 1:
+                        // 1 = wish to buy
+                        $buyHelper->addMarketMenu($market);
+                        break;
                     case 4:
                         // 4 = auction
-                        $this->auctionHelper->addMarketMenu($market);
+                        $auctionHelper->addMarketMenu($market);
                         break;
                 }
-//				marketCRUD::addMarketMenu($market);
 			}
 
 			//echo("<script>console.log('MarketsController->index');</script>");
@@ -100,7 +107,7 @@ class MarketsController extends ControllerMarket {
 		}
 
 		//dd($market);
-//        dd($temp);
+//        dd($temp[15]);
 		return view('markets.index', ['markets' => $temp]);
 	}
 

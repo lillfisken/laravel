@@ -36,9 +36,9 @@
             <ul>
                 <li><a href="{{ route('auction.create') }}">Auktion</a></li>
                 <li><a href="{{ route('markets.create') }}">Säljes</a></li>
-                <li><a href="{{ route('markets.create') }}">Köpes</a></li>
-                <li><a href="{{ route('markets.create') }}">Skänkes</a></li>
-                <li><a href="{{ route('markets.create') }}">Bytes</a></li>
+                <li><a href="{{ route('buy.create') }}">Köpes</a></li>
+                <li><a href="{{ route('giveaway.create') }}">Skänkes</a></li>
+                <li><a href="{{ route('change.create') }}">Bytes</a></li>
             </ul>
         </li>
         <li>

@@ -10,6 +10,15 @@
         <p>Tänkt utveckling för sidan, preliminär</p>
         <hr/>
         <p>
+            Huvudpunkter:<br/>
+            -> Meddelande<br/>
+            -> Profil<br/>
+            -> Radering av annonser<br/>
+            -> Extern login <br/>
+            -> Requests<br/>
+        </p>
+        <hr/>
+        <p>
             Login<br />
             -> OAuth (facebook, twitter, google, linkedin)<br/>
             -> PhpBB<br/>
@@ -63,7 +72,8 @@
             -> Meddelande om att javascript krävs och webbläsare över ??? (rad ovanför, för bästa funktion...) <br/>
             -> Marketmenu i aucktion, möjlighet att avbryta samt göra tillägg efter första budet <br/>
             -> Möjlighet att ladda upp pdf till annons<br/>
-            -> Cronjob, radera temp bilder äldre än 1 dygn
+            -> Cronjob, radera temp bilder äldre än 1 dygn<br/>
+            -> Möjlighet att redigera kontaktsätt<br/>
         </p>
         <hr/>
         <p>

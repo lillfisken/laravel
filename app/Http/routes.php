@@ -10,10 +10,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use GuzzleHttp\Client;
+//use GuzzleHttp\Client;
 
 
-Route::model('market', 'market\Market');
+//Route::model('market', 'market\Market');
 Route::bind('user', function($username)
 {
 //	dd($username);
@@ -35,7 +35,6 @@ Route::group(['prefix'=>'market'], function(){
     Route::post('question', ['as' => 'markets.question', 'uses' => 'MarketsController@question', 'middleware' => 'auth']);
     Route::get('delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
     Route::delete('/', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
-
 });
 
 //sell
@@ -53,38 +52,123 @@ Route::group(['prefix' => 'sell'], function(){
 
 //buy
 Route::group(['prefix' => 'buy'], function(){
+    $controller = 'Markets\BuyController';
+    $routeBase = 'buy';
+
+    //Create
+    Route::get('/', ['as' => $routeBase . '.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+    Route::post('/', ['as' => $routeBase . '.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+
+    //Read
+    Route::get('show/{id}', ['as'=> $routeBase . '.show', 'uses'=> $controller . '@show']);
+
+    //Update
+    Route::get('/update/{id}', ['as' => $routeBase . '.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => $routeBase . '.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
+    //Delete
+    Route::get('delete/{market}', ['as' => $routeBase . '.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => $routeBase . '.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+
+    //Misc
 
 });
 
 //giveaway
 Route::group(['prefix' => 'giveaway'], function(){
+    $controller = 'Markets\GiveawayController';
+    $routeBase = 'giveaway';
+
+    //Create
+    Route::get('/', ['as' => $routeBase . '.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+    Route::post('/', ['as' => $routeBase . '.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+
+    //Read
+    Route::get('show/{id}', ['as'=> $routeBase . '.show', 'uses'=> $controller . '@show']);
+
+    //Update
+    Route::get('/update/{id}', ['as' => $routeBase . '.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => $routeBase . '.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
+    //Delete
+    Route::get('delete/{market}', ['as' => $routeBase . '.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => $routeBase . '.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+
+    //Misc
 
 });
 
 //change
 Route::group(['prefix' => 'change'], function(){
+    $controller = 'Markets\ChangeController';
+    $routeBase = 'change';
+
+    //Create
+    Route::get('/', ['as' => $routeBase . '.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+    Route::post('/', ['as' => $routeBase . '.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+
+    //Read
+    Route::get('show/{id}', ['as'=> $routeBase . '.show', 'uses'=> $controller . '@show']);
+
+    //Update
+    Route::get('/update/{id}', ['as' => $routeBase . '.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => $routeBase . '.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
+    //Delete
+    Route::get('delete/{market}', ['as' => $routeBase . '.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => $routeBase . '.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+
+    //Misc
 
 });
 
-//auction
+//change
 Route::group(['prefix' => 'auction'], function(){
-    $controller = 'MarketAuctionController';
+    $controller = 'Markets\AuctionController';
+    $routeBase = 'auction';
 
-    Route::get('/update/{id}', ['as' => 'auction.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
-    Route::post('/update', ['as' => 'auction.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+    //Create
+    Route::get('/', ['as' => $routeBase . '.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+    Route::post('/', ['as' => $routeBase . '.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
 
-    Route::get('show/{id}', ['as'=>'auction.show', 'uses'=> $controller . '@show']);
-    Route::get('/', ['as' => 'auction.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
-    Route::post('/', ['as' => 'auction.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+    //Read
+    Route::get('show/{id}', ['as'=> $routeBase . '.show', 'uses'=> $controller . '@show']);
 
+    //Update
+    Route::get('/update/{id}', ['as' => $routeBase . '.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => $routeBase . '.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
+    //Delete
+    Route::get('delete/{market}', ['as' => $routeBase . '.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => $routeBase . '.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+
+    //Misc
     Route::post('placebid', ['as' => 'auction.placeBid', 'uses' =>  $controller . '@placeBid', 'middleware' => 'auth']);
 //    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
 //    Route::patch('{markets}', ['as' => 'auction.update.patch', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
     Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' =>  $controller . '@showAllBids', 'middleware' => 'auth']);
 
-    Route::get('delete/{market}', ['as' => 'auction.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
-    Route::delete('delete', ['as' => 'auction.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
 });
+
+//auction
+//Route::group(['prefix' => 'auction'], function(){
+//    $controller = 'MarketAuctionController';
+//
+//    Route::get('/update/{id}', ['as' => 'auction.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+//    Route::post('/update', ['as' => 'auction.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+//
+//    Route::get('show/{id}', ['as'=>'auction.show', 'uses'=> $controller . '@show']);
+//    Route::get('/', ['as' => 'auction.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+//    Route::post('/', ['as' => 'auction.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+//
+//    Route::post('placebid', ['as' => 'auction.placeBid', 'uses' =>  $controller . '@placeBid', 'middleware' => 'auth']);
+////    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
+////    Route::patch('{markets}', ['as' => 'auction.update.patch', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+//    Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' =>  $controller . '@showAllBids', 'middleware' => 'auth']);
+//
+//    Route::get('delete/{market}', ['as' => 'auction.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+//    Route::delete('delete', ['as' => 'auction.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+//});
 
 //--------------------------------------------------------------------------
 if(Config::get('app.debug') == 'true')
@@ -255,7 +339,7 @@ if(Config::get('app.debug') == 'true')
         dd($responseCode, $json);
     });
     Route::get('dev/enviroment', function(){
-       dd(gethostname(), App::environment());
+       dd(gethostname(), App::environment(), $_ENV);
     });
 }
 //-----------------------------------------------------------------------------
@@ -277,7 +361,6 @@ Route::group(['prefix' => 'auth'], function(){
 
     Route::controller('oauth', 'Auth\OAuthController');
 });
-
 //--------------------------------------------------------------------------
 //Profile
 Route::group(['prefix'=>'profile'], function(){
