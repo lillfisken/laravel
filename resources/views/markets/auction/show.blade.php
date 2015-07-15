@@ -2,7 +2,7 @@
 
 @section('priceInfo')
     <h2 id="higestBid" class="market-title">{{ preg_replace('/(\.000*)/', '', $bidHighest > 0 ? $bidHighest : $market->price) }}:-</h2>
-    <h4>{{ market\helper\market::getMarketTypeName($market->marketType) }}</h4>
+    <h4>{{ market\helper\markets\MarketBase::getMarketTypeName($market->marketType) }}</h4>
     @if($market->deleted_at != null)
         <h3>
             Avslutad<br/>

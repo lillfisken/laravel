@@ -87,7 +87,6 @@ abstract class MarketBaseController extends Controller {
             return $this->marketHelper->saveFromCreatePreview($input);
         }
 
-
         abort(404);
     }
 
@@ -104,23 +103,6 @@ abstract class MarketBaseController extends Controller {
     public function show($id)
     {
         return $this->marketHelper->show($id);
-//        $market = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
-//
-//        // If auction exist and is of type auction
-//        if($market != null)
-//        {
-//            $this->marketHelper->addMarketMenu($market);
-//
-//            return view('markets.' . $this->marketHelper->getRouteBase() .'.show', [
-//                'market'=>$market,
-//            ]);
-//        }
-//        else
-//        {
-//            Log::debug('MarketBaseController -> show: Wrong market type');
-//
-//            abort(404);
-//        }
     }
 
     //endregion
@@ -172,18 +154,6 @@ abstract class MarketBaseController extends Controller {
      */
     public function destroyGet($id)
     {
-//        Session::put('uri', Session::get('_previous'));
-//
-////        $reasons = marketEndReason::getAllTypes();
-//        $reasons = $this->marketHelper->getAllEndReasons();
-////        $reasons = ['Varan såld' => 'Varan såld', 'Övrigt' => 'Övrigt'];
-//
-//        return view('markets.base.delete', [
-//            'market' => $market,
-//            'reasons' => $reasons,
-//            'callBackRoute' => $this->marketHelper->routeBase . '.destroy.post']);
-
-//        dd('marketbasecontroller destroyGet', $id);
         return $this->marketHelper->deleteGet($id);
     }
 

@@ -1,3 +1,3 @@
-@extends('markets.auction.master')
+@extends('markets.auction.create')
 
 

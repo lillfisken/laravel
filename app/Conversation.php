@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conversation extends Model
 {
-
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];

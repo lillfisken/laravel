@@ -18,7 +18,7 @@
 
     <div class="market-list-rows-price">
         <h3>Högsta bud eller 0:-</h3>
-        <h4>{{ market\helper\market::getMarketTypeName($market->marketType) }}</h4>
+        <h4>{{ market\helper\markets\MarketBase::getMarketTypeName($market->marketType) }}</h4>
         <hr/>
         <p>
             Utropspris: {{ preg_replace('/(\.000*)/', ':-', $market->price) }}<br/>
