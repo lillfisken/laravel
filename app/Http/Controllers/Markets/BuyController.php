@@ -11,7 +11,7 @@ use market\helper;
 use market\Market;
 
 
-class BuyController extends MarketBaseController {
+class BuyController extends BaseController {
 
     public function __construct(Purifier $purifier)
     {

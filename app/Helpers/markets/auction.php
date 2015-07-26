@@ -17,7 +17,7 @@ class auction extends MarketBase
      */
     public function show($id)
     {
-//        dd('market\auction');
+        //        dd('market\auction');
         $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
 
         // If auction exist and is of type auction
@@ -46,11 +46,6 @@ class auction extends MarketBase
             //TODO: Add market menu
             $this->addMarketMenu($auction);
 
-//            helper\auction::addMarketMenu($auction, )
-//            marketCRUD::addMarketMenu($auction);
-//            marketHelper::addMarketMenuAuction($auction);
-            //$this->auctionHelper->addMarketMenuPerType($auction);
-
             return view('markets.auction.show', [
                 'market'=>$auction,
                 'bidCount' => $bidCount,
@@ -64,5 +59,16 @@ class auction extends MarketBase
             abort(404);
         }
     }
+
+    //region Validate
+
+    public function getValidationRulesPreviewFromCreateForm(){
+        return [];
+    }
+
+    public function getValidationMessages(){
+        return [];
+    }
+    //endregion
 
 }

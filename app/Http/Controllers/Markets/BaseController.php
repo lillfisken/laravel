@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use market\helper;
 use market\Market;
 
-abstract class MarketBaseController extends Controller {
+abstract class BaseController extends Controller {
 
     /**
      * @var Purifier
@@ -64,6 +64,7 @@ abstract class MarketBaseController extends Controller {
     public function create(Request $request)
     {
         // Create a new market or show preview for creating a new market
+//        $this->marketHelper->validate($request);
 
         $input = Input::all();
 
@@ -72,6 +73,15 @@ abstract class MarketBaseController extends Controller {
 
         if(isset($input['previewFromCreateForm']))
         {
+            $validation = $this->marketHelper->validate($request);
+            if($validation != null)
+            {
+                return $validation;
+            }
+
+            $this->validate($request,
+                $this->marketHelper->getValidationRulesPreviewFromCreateForm(),
+                $this->marketHelper->getValidationMessages() );
             return $this->marketHelper->previewFromCreateForm($input);
         }
         elseif(isset($input['editFromPreview']))
@@ -80,6 +90,12 @@ abstract class MarketBaseController extends Controller {
         }
         elseif(isset($input['save']))
         {
+            $validation = $this->marketHelper->validate($request);
+            if($validation != null)
+            {
+                return $validation;
+            }
+
             return $this->marketHelper->saveFromCreateForm($input);
         }
         elseif(isset($input['saveFromPreview']))
@@ -111,11 +127,15 @@ abstract class MarketBaseController extends Controller {
 
     public function updateForm($id)
     {
+        //TODO: Authorize
         return $this->marketHelper->editFromStart($id);
     }
 
     public function update(Request $request)
     {
+        //TODO: Authorize
+
+
         $input = Input::all();
 
         //TODO: change to purify auction, add type to request etc...
@@ -123,10 +143,22 @@ abstract class MarketBaseController extends Controller {
 
         if(isset($input['previewFromEditForm']))
         {
+            $validation = $this->marketHelper->validate($request);
+            if($validation != null)
+            {
+                return $validation;
+            }
+
             return $this->marketHelper->previewFromEditForm($input);
         }
         elseif(isset($input['save']))
         {
+            $validation = $this->marketHelper->validate($request);
+            if($validation != null)
+            {
+                return $validation;
+            }
+
             return $this->marketHelper->saveFromEditForm($input);
         }
         elseif(isset($input['saveFromPreview']))

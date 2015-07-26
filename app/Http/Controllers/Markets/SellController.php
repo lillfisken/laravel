@@ -7,7 +7,7 @@ use market\helper;
 
 use Illuminate\Http\Request;
 
-class SellController extends MarketBaseController {
+class SellController extends BaseController {
 
     public function __construct(Purifier $purifier)
     {

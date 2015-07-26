@@ -1,9 +1,11 @@
 <?php namespace market\helper\markets;
 use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use market\Market as MarketModel;
 use market\User;
 use market\helper\images;
@@ -183,18 +185,9 @@ abstract class MarketBase
 
     public function saveFromEditForm($input)
     {
-        Log::debug('saveFromEditForm');
-//        TODO: Something wrong here...
-//        images::saveImages($input, true);
-
-
-        Log::debug('saveFromEditForm ->  marketCRUD::update');
-        //GET ID FROM SESSION?
-//        marketCRUD::update($auctionData['id'], $input);
         $input = text::marketFromBbToHtml($input);
         $auctionData = $this->getAuctionDataFromSession();
 
-        //TODO: Save images
         $input = images::saveImages($input, true);
 
         $market = new MarketModel($input);
@@ -415,7 +408,45 @@ abstract class MarketBase
 
     //endregion
 
+    //region Validate
+    protected $rules = [
+        'title' => 'required|min:3',
+        'price' => 'required|numeric|min:0',
+        'description' => 'required|min:5',
+        'contactPm' => 'boolean',
+        'contactPhone' => 'boolean',
+        'contactMail' => 'boolean',
+        'contactQuestions' => 'boolean',
+    ];
+    protected $messages = [
+        'price.min' => 'Priset måste vara över 0',
+        'required' => ':attribute är obligatoriskt.',
+        'numeric' => ':attribute får bara innehålla ett tal (decimal med &#39.&#39)',
+        'min' => ':attribute måste innehålla minst :min bokstäver'
+    ];
+    protected $attributes = [
+        'title' => 'Rubrik',
+        'price' => 'Pris',
+        'description' => 'Beskrivning'
+    ];
 
+    public function validate(Request $request)
+    {
+//        return $this->validate($request, [
+//           'title' => 'required'
+//        ]);
+
+        $validator = Validator::make($request->all(), $this->rules, $this->messages, $this->attributes);
+
+        if ($validator->fails()) {
+            Log::debug($validator->errors());
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+    }
+    //endregion
 
     //region Market menu
 

@@ -9,7 +9,7 @@ use market\helper;
 use Illuminate\Http\Request;
 use market\Market;
 
-class QuestionController extends MarketBaseController {
+class QuestionController extends BaseController {
 
     public function question(CreateUpdateQuestionRequest $request)
     {

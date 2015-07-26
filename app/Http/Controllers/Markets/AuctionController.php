@@ -2,14 +2,16 @@
 
 use Chromabits\Purifier\Purifier;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\helper;
 
 use Illuminate\Http\Request;
 use market\Market;
+use market\Http\Requests as MarketRequests;
 
-class AuctionController extends MarketBaseController {
+class AuctionController extends BaseController {
 
     public function __construct(Purifier $purifier)
     {
