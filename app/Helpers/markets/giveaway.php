@@ -6,4 +6,9 @@ class giveaway extends MarketBase
     protected $marketType = 3;
     protected $titleNew = 'Ny bortskänkesannons';
 
+    public function __construct()
+    {
+        $this->rules['price'] = 'not_in';
+    }
+
 }

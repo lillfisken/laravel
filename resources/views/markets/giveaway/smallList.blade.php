@@ -2,7 +2,7 @@
     @include('markets.base._marketmenu')
 </div>
 
-<a href="{{ route('markets.show', $market->id) }}" class="market-list-container">
+<a href="{{ route('giveaway.show', $market->id) }}" class="market-list-container">
     <div class="market-list-rows-image">
         <img src="{{ $market->image1_thumb }}" />
     </div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="market-list-rows-desc">
-        <h3>{{ str_limit($market->title , 30) }}</h3>
+        <h3><small>SK:</small> {{ str_limit($market->title , 30) }}</h3>
         {!! str_limit($market->description, 500) !!}
     </div>
 </a>

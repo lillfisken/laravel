@@ -23,7 +23,7 @@
         <p>
             Utropspris: {{ preg_replace('/(\.000*)/', ':-', $market->price) }}<br/>
             Antal bud: {{ $market->bids->count() }}<br/>
-            Slutar: {{ $market->endingAt }}
+            Slutar: {{ $market->end_at }}
 
         </p>
         @if(isset($market->deleted_at))

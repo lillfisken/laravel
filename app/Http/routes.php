@@ -30,24 +30,44 @@ Route::get('/', 'MarketsController@index');
 Route::group(['prefix'=>'market'], function(){
     Route::get('/', ['as' => 'markets.index', 'uses' => 'MarketsController@index']);
     Route::get('filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter'] );
+    Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
 
     Route::get('pm/{title}/{toUser}', ['as' => 'markets.pm', 'uses' => 'MarketsController@sendPm', 'middleware' => 'auth']);
     Route::post('question', ['as' => 'markets.question', 'uses' => 'MarketsController@question', 'middleware' => 'auth']);
-    Route::get('delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
-    Route::delete('/', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
 });
 
 //sell
 Route::group(['prefix' => 'sell'], function(){
-    Route::get('create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
-//    Route::get('{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
-    Route::post('/', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
-    Route::get('show/{id}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
-    Route::get('{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
-    Route::patch('{markets}', ['as' => 'markets.update', 'uses' => 'MarketsController@update', 'middleware' => 'auth']);
-    Route::get('delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
-    Route::delete('/', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
-    Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
+//    Route::get('create', ['as' => 'markets.create', 'uses' => 'MarketsController@create', 'middleware' => 'auth']);
+////    Route::get('{market}', ['as' => 'markets.reactivate', 'uses' => 'MarketsController@reactivate', 'middleware' => 'auth']);
+//    Route::post('/', ['as' => 'markets.store', 'uses' => 'MarketsController@store']);
+//    Route::get('show/{id}', ['as' => 'markets.show', 'uses' => 'MarketsController@show']);
+//    Route::get('{markets}/edit', ['as' => 'markets.edit', 'uses' => 'MarketsController@edit', 'middleware' => 'auth']);
+//    Route::patch('{markets}', ['as' => 'markets.update', 'uses' => 'MarketsController@update', 'middleware' => 'auth']);
+//    Route::get('delete/{market}', ['as' => 'markets.delete', 'uses' => 'MarketsController@delete', 'middleware' => 'auth']);
+//    Route::delete('/', ['as' => 'markets.destroy', 'uses' => 'MarketsController@destroy', 'middleware' => 'auth']);
+//    Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
+
+    $controller = 'Markets\SellController';
+    $routeBase = 'sell';
+
+    //Create
+    Route::get('create', ['as' => $routeBase . '.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
+    Route::post('create', ['as' => $routeBase . '.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
+
+    //Read
+    Route::get('show/{id}', ['as'=> $routeBase . '.show', 'uses'=> $controller . '@show']);
+
+    //Update
+    Route::get('/update/{id}', ['as' => $routeBase . '.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
+    Route::post('/update', ['as' => $routeBase . '.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
+
+    //Delete
+    Route::get('delete/{market}', ['as' => $routeBase . '.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
+    Route::delete('delete', ['as' => $routeBase . '.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
+
+    //Misc
+
 });
 
 //buy

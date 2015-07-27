@@ -58,7 +58,6 @@ class text
 
     public static function marketFromBbToHtml($input)
     {
-        debug::logConsole('marketFromBbToHtml');
         $input['description'] = self::bbCodeToHtml($input['description']);
         $input['extra_price_info'] = self::bbCodeToHtml($input['extra_price_info']);
 
@@ -67,7 +66,6 @@ class text
 
     public static function marketFromHtmlToBB($input)
     {
-        debug::logConsole('marketFromHtmlToBB');
         $input['description'] = self::htmlToBbCode($input['description']);
         $input['extra_price_info'] = self::htmlToBbCode($input['extra_price_info']);
 
@@ -89,7 +87,6 @@ class text
     public static function bbCodeToHtml($content)
     {
         //TODO: Build new bb -> html -> bb parser with php script
-        debug::logConsole('text -> bbCodeToHtml -----------------------');
 
         /*[b] - <strong> - fetstil
         [i] - <em> - kursiv
@@ -197,7 +194,6 @@ class text
             '<span class="blue">$2</span>'
         ];
 //
-        debug::logConsole('Search: ' . count($search) . ' ,Replace: ' . count($replace));
 //        dd(preg_replace($search, $replace, $content),$search,$replace);
 //
         return preg_replace($search, $replace, $content);
@@ -205,7 +201,6 @@ class text
 
     public static function htmlToBbCode($content)
     {
-        debug::logConsole('text -> htmlToBbCode -----------------------');
 //        debug::logConsole('content: ' . $content);
 //        dd($content);
 
@@ -289,7 +284,6 @@ class text
             '[blue]$2[/blue]'
         ];
 
-        debug::logConsole('Search length: ' . count($search) . ', Replace length: ' . count($replace));
 //
 //        dd($search, $replace, $content, preg_replace($search, $replace, $content));
         return preg_replace($search, $replace, $content);

@@ -9,9 +9,6 @@ class images
 {
     public static function moveImageFromTempToPublic($input, $imageName, $suffix, $paths)
     {
-        debug::logConsole('Images -> moveImageFromTempToPublic');
-        debug::logConsole('-> imageName: ' . $imageName . ', suffix: ' . $suffix);
-
         Log::debug('Images -> moveImageFromTempToPublic -> imageName: ' . $imageName . ', suffix: ' . $suffix);
 
         // If file is set AND If file is in temp folder
@@ -67,14 +64,9 @@ class images
 
     public static function makeDirectory($path)
     {
-        debug::logConsole('Images -> makeDirectory -> path: ' . $path);
-
         if ($path != null && !File::exists($path))
         {
             File::makeDirectory($path, 0774 , true);
-
-            debug::logConsole('Making directory');
-
         }
     }
 

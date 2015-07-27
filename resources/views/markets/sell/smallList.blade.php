@@ -2,7 +2,7 @@
     @include('markets.base._marketmenu')
 </div>
 
-<a href="{{ route('markets.show', $market->id) }}" class="market-list-container">
+<a href="{{ route('sell.show', $market->id) }}" class="market-list-container">
     <div class="market-list-rows-image">
         <img src="{{ $market->image1_thumb }}" />
     </div>

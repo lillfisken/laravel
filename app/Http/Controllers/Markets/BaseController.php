@@ -42,7 +42,7 @@ abstract class BaseController extends Controller {
      */
     public function createForm()
     {
-        return view('markets.auction.create', [
+        return view('markets.' . $this->marketHelper->getRouteBase() . '.create', [
 //            'type' => 'create',
             'title'=> $this->marketHelper->getTitleNew(),
             'callbackRoute' => $this->marketHelper->getRouteBase() . '.store',
@@ -79,9 +79,6 @@ abstract class BaseController extends Controller {
                 return $validation;
             }
 
-            $this->validate($request,
-                $this->marketHelper->getValidationRulesPreviewFromCreateForm(),
-                $this->marketHelper->getValidationMessages() );
             return $this->marketHelper->previewFromCreateForm($input);
         }
         elseif(isset($input['editFromPreview']))

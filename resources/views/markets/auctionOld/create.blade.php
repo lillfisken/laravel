@@ -1,3 +1,0 @@
-@extends('markets.auction.create')
-
-

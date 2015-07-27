@@ -32,7 +32,10 @@
                     Ditt nuvarande bud:   {{ $yourBid or 'null' }}:-<br/><br/>
                 @endif
                     {!! Form::close() !!}
-            <small>Observera att lagt bud är bindande och kan inte ändras.</small>
+            <small>
+                Observera att lagt bud är bindande och kan inte ändras.<br/>
+                Sluttiden förlängs automatiskt med 10 min vid bud närmre sluttiden än 10 min.
+            </small>
             <hr/>
         @else
             <a href="{!! Route('accounts.login') !!}" class="btn btn80">Logga in för att lägga ett bud </a>

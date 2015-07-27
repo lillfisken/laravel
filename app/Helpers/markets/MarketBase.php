@@ -20,6 +20,11 @@ use market\helper\text;
 
 abstract class MarketBase
 {
+    public function __construct()
+    {
+
+    }
+
     //region Create
 
     public function saveFromCreateForm($input)
@@ -161,8 +166,10 @@ abstract class MarketBase
 
         $auction = MarketModel::find($id);
         if(!$auction) { abort(404); }
+//        dd($auction);
+        if($auction->createdByUser != Auth::id()) {abort(403);}
 
-        self::putAuctionDataInSession($id, $auction['createdByUser']);
+        $this->putAuctionDataInSession($id, $auction['createdByUser']);
 
         return view('markets.' . $this->routeBase . '.create', [
 //            'type' => 'edit',
@@ -341,7 +348,7 @@ abstract class MarketBase
     //endregion
 
     //region Session
-    private function getAuctionFromSession($withUser = true)
+    protected function getAuctionFromSession($withUser = true)
     {
         $auctionArray = json_decode(Session::get('auction'), true);
 
@@ -367,7 +374,7 @@ abstract class MarketBase
         return $auction;
     }
 
-    private function putAuctionInSession($auction, $id=null, $createdByUser=null)
+    protected function putAuctionInSession($auction, $id=null, $createdByUser=null)
     {
         Session::put('auction', $auction);
 
@@ -386,7 +393,7 @@ abstract class MarketBase
     /**
      *     Return array vith auction data
      */
-    private function getAuctionDataFromSession()
+    protected function getAuctionDataFromSession()
     {
         $auctionData = json_decode(Session::get('auctionData'), true);
         if(!$auctionData) { abort(403); } //Abort if auction is not in session
@@ -394,13 +401,13 @@ abstract class MarketBase
         return $auctionData;
     }
 
-    private function putAuctionDataInSession($id, $createdByUser)
+    protected function putAuctionDataInSession($id, $createdByUser)
     {
 //        dd('putAuctionDataInSession', $id, $createdByUser);
         Session::put('auctionData', json_encode(['id'=> $id, 'createdByUser' => $createdByUser]));
     }
 
-    private function clearSession()
+    protected function clearSession()
     {
         Session::forget('auction');
         Session::forget('auctionData');
@@ -457,9 +464,12 @@ abstract class MarketBase
             $temp = array();
 
             //Adds link to edit market if it's created by logged in user
-            if ($id == $market->createdByUser && $market->deleted_at == null) {
-                $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
-                $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
+            if ($id == $market->createdByUser &&
+                $market->deleted_at == null &&
+                !($market->bids->count() > 0))
+            {
+                    $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
+                    $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
             }
 
             if  ($id != $market->createdByUser) {

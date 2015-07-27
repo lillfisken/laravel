@@ -1,7 +1,9 @@
 <?php namespace market\helper\markets;
 
 use Illuminate\Support\Facades\Auth;
-use market\Market;
+use Illuminate\Support\Facades\Log;
+use market\Market as MarketModel;
+
 
 class auction extends MarketBase
 {
@@ -9,6 +11,13 @@ class auction extends MarketBase
     protected $marketType = 4;
     protected $titleNew = 'Ny auktion';
 
+    public function __construct()
+    {
+        $this->rules['end_at'] = 'required|date';
+        parent::__construct();
+    }
+
+    //region Read
     /**
      * Display the specified resource.
      *
@@ -17,8 +26,7 @@ class auction extends MarketBase
      */
     public function show($id)
     {
-        //        dd('market\auction');
-        $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+        $auction = MarketModel::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
 
         // If auction exist and is of type auction
         if($auction != null && $auction->marketType == 4)
@@ -60,15 +68,51 @@ class auction extends MarketBase
         }
     }
 
-    //region Validate
-
-    public function getValidationRulesPreviewFromCreateForm(){
-        return [];
-    }
-
-    public function getValidationMessages(){
-        return [];
-    }
     //endregion
 
+    //region Update
+    public function editFromStart($id)
+    {
+        Log::debug('editFromStart');
+
+        $auction = MarketModel::where('id', $id)->with('bids')->first();
+
+        if(!$auction) { abort(404, 'Market not found'); }
+        if($auction->createdByUser != Auth::id()) {abort(403, 'Market created by another user');}
+        if($auction->bids->count() > 0) {abort(403, 'Auction not allowed to update with bids'); }
+
+        $this->putAuctionDataInSession($id, $auction['createdByUser']);
+
+        return view('markets.' . $this->routeBase . '.create', [
+//            'type' => 'edit',
+            'title'=> 'Redigera ' . $auction['title'],
+            'callbackRoute' => $this->routeBase . '.update.store',
+            'marketType' => $this->marketType,
+            'model' => $auction,
+            'buttons' => [
+                'save' => [
+                    'title' => 'Publicera',
+                    'name' => 'save'
+                ],
+                'preview' => [
+                    'title' => 'Förhandsgranska',
+                    'name' => 'previewFromEditForm'
+                ]
+            ],
+        ]);
+    }
+
+    //endregion
+
+    //region Bid
+    public function placeBid()
+    {
+
+    }
+
+    public function getAllBids()
+    {
+
+    }
+    //endregion
 }

@@ -60,15 +60,10 @@
             -> Förhandsvisning marketQuestion<br/>
             -> Publik profilsida (obs script injection)<br/>
             -> Lägg till meddelande 'inställningar sparade' efter uppdatering av inställningar<br/>
-            -> Lightbox okg
             -> Visa forumkopplingar i profil<br/>
             -> CSRF Token mismatch vid inloggning efter ett misslyckat<br/>
-            -> Divs inner content för snyggare visning<br/>
-            -> Styling chackboxes???<br/>
             -> Aktiveringslänk för att bekräfta mail vid registrering<br/>
             -> Visningsalternativ (spara i cockies)<br/>
-            -> Aktiva annonser, marketmenu blir bara större och större</br>
-            -> Menyn döljs av bilder vid visning av enskild annons (Sparatn?)<br/>
             -> Meddelande om att javascript krävs och webbläsare över ??? (rad ovanför, för bästa funktion...) <br/>
             -> Marketmenu i aucktion, möjlighet att avbryta samt göra tillägg efter första budet <br/>
             -> Möjlighet att ladda upp pdf till annons<br/>
@@ -79,12 +74,16 @@
         <p>
             Annonser<br />
             -> Fixa annonsvisningmeny vid lång annons<br/>
-            -> Liten annons, fyll ut hela fönstret så att hela menyer etc visas<br/>
             -> Använd Font-awsame<br/>
             -> Validation, minst ett kontaktsätt måste vara ifyllt samt godkänt i profilen vid skapande/ändrande av annons<br/>
             -> Paginering <br/>
-            -> Om en annons har några bud, tillåt inga ändringar eller avslut i förtid
-
+            -> Om en annons har några bud, tillåt inga ändringar eller avslut i förtid<br/>
+            -> Kontaktsätt sparas inte<br/>
+            <br/>
+            -> Validering<br/>
+            -> Auction, sluttid följa med vid redigering<br/>
+            -> Endast redigera sina egna<br/>
+            -> Endast redigera auction utan bud<br/>
         </p>
         <hr />
         <p>
@@ -98,13 +97,10 @@
             Fler annonstyper<br />
             -> Auktion <br />
             -> -> Auktionsscript <br />
-            -> -> Ingen editering efter första köp/bud, bara tillägg<br/>
-            -> -> +5 min vid auktion, obligatoriskt<br/>
             -> Samköp <br />
             -> -> ??? <br />
             -> Tjänst/jobb <br />
             -> -> Sökes/erbjudes/tipsas/etc <br />
-            -> Auktion Eller Annons, inte båda
         </p>
         <hr />
         <p>

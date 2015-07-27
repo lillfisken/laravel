@@ -14,19 +14,18 @@
         @section('formOpen')
             {!! Form::model($model, array('route' => $callbackRoute , 'files' => true )) !!}
         @show
-
             {!! Form::hidden('marketType', $marketType) !!}
 
-            <h3>{!! Form::label('title', 'Rubrik') !!}</h3>
+            <h3>{!! Form::label('title', 'Rubrik *') !!}</h3>
             {!! $errors->first('title', '<div class="help-block">:message</div>') !!}
             {!! Form::text('title', null , ['class' => "form-input" ] ) !!}
             <hr />
-            <h3>{!! Form::label('description', 'Beskrivning') !!}</h3>
+            <h3>{!! Form::label('description', 'Beskrivning *') !!}</h3>
             {!! $errors->first('description', '<div class="help-block">:message</div>') !!}
             {!! Form::textarea('description', null, ['class' => 'form-input okgbb'] ) !!}
             <hr />
             @section('market-price-settings')
-                <h3>{!! Form::label('price', 'Pris') !!}</h3>
+                <h3>{!! Form::label('price', 'Pris *') !!}</h3>
                 {!! $errors->first('price', '<div class="help-block">:message</div>') !!}
                 {!! Form::text('price', null , ['class' => 'form-input'] ) !!}
             @show
@@ -34,7 +33,7 @@
             {!! Form::textarea('extra_price_info', null , ['class' => 'form-input okgbb'] ) !!}
 
             @section('numberOfItemsForSale')
-            <h3>{!! Form::label('number_of_items', 'Antal') !!}</h3>
+            <h3>{!! Form::label('number_of_items', 'Antal *') !!}</h3>
                 @if(isset($market->number_of_items))
                     {!! Form::text('number_of_items', null, ['class' => 'form-input'] ) !!}
                 @else
