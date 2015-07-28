@@ -82,8 +82,6 @@
             <br/>
             -> Validering<br/>
             -> Auction, sluttid följa med vid redigering<br/>
-            -> Endast redigera sina egna<br/>
-            -> Endast redigera auction utan bud<br/>
         </p>
         <hr />
         <p>

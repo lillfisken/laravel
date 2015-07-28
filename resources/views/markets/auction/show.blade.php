@@ -21,22 +21,28 @@
         @if(isset($preview) && $preview == true)
             <h4>Förhandsgranskning</h4>
         @elseif(\Illuminate\Support\Facades\Auth::check())
-            {!! Form::open(array('route' => 'auction.placeBid')) !!}
-                {!! Form::hidden('id', $market->id) !!}
-                {!! $errors->first('bid', '<div class="help-block">:message</div>') !!}
-                {!! Form::text('bid', null , ['class' => "form-input" ] ) !!}
-                @if($yourBid == 0)
-                    {!! Form::submit('Lägg bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}
-                @else
-                    {!! Form::submit('Uppdatera bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}<br/>
-                    Ditt nuvarande bud:   {{ $yourBid or 'null' }}:-<br/><br/>
-                @endif
-                    {!! Form::close() !!}
-            <small>
-                Observera att lagt bud är bindande och kan inte ändras.<br/>
-                Sluttiden förlängs automatiskt med 10 min vid bud närmre sluttiden än 10 min.
-            </small>
-            <hr/>
+            @if($market->createdByUser != \Illuminate\Support\Facades\Auth::id())
+                {!! Form::open(array('route' => 'auction.placeBid')) !!}
+                    {!! Form::hidden('id', $market->id) !!}
+                    {!! $errors->first('bid', '<div class="help-block">:message</div>') !!}
+                    {!! Form::text('bid', null , ['class' => "form-input" ] ) !!}
+                    @if($yourBid == 0)
+                        {!! Form::submit('Lägg bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}
+                    @else
+                        {!! Form::submit('Uppdatera bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}<br/>
+                        Ditt nuvarande bud:   {{ $yourBid or 'null' }}:-<br/><br/>
+                    @endif
+                        {!! Form::close() !!}
+                <small>
+                    Observera att lagt bud är bindande och kan inte ändras.<br/>
+                    Sluttiden förlängs automatiskt med 10 min vid bud närmre sluttiden än 10 min.
+                </small>
+                <hr/>
+            @else
+                <p>
+                    Du kan inte lägga bud på din egna annons
+                </p>
+            @endif
         @else
             <a href="{!! Route('accounts.login') !!}" class="btn btn80">Logga in för att lägga ett bud </a>
         @endif
