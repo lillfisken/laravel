@@ -104,15 +104,4 @@ class auction extends MarketBase
 
     //endregion
 
-    //region Bid
-    public function placeBid()
-    {
-
-    }
-
-    public function getAllBids()
-    {
-
-    }
-    //endregion
 }

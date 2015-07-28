@@ -8,6 +8,7 @@ use market\Http\Controllers\Controller;
 use market\helper;
 
 use Illuminate\Http\Request;
+use market\Http\Requests\BidRequest;
 use market\Market;
 use market\Http\Requests as MarketRequests;
 
@@ -23,14 +24,14 @@ class AuctionController extends BaseController {
 
     //region Bids
 
-    public function placeBid(Request $request)
+    public function placeBid(BidRequest $request)
     {
         //TODO: BidRequest
         $market = $request->id;
         $bid = $request->bid;
         $bidder = Auth::id();
 
-        $placedBid = helper\bid::placeBid($market, $bidder, $bid);
+        helper\bid::placeBid($market, $bidder, $bid);
 
         return redirect()->route('auction.show', $market);
     }

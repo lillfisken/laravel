@@ -13,48 +13,21 @@ class bid
 
         $b = BidEloquent::where('bidder', $userId)->where('auctionId', $marketId)->first();
         $market = Market::where('id', $marketId)->with('bids')->first();
-        if($market)
+        if($market && strtotime($market->end_at) < time() + 60*10)
         {
-            //Check bid
-            if($market->bids->sortByDesc('bid')->first()->bid > $bid)
-            {
-                //New bid is lower than highest bid
-                //TODO: Return proper code with errors to user
-                abort(418);
-            }
+            //If auction is due to end at in 10 minutes
+            //Extend auction with 10 minutes
 
-            //Check time
-            if(strtotime($market->end_at) < time() + 60*10)
-            {
-                //If auction is due to end at in 10 minutes
-                //Extend auction with 10 minutes
-
-//                dd('2015-07-27 19:17:23',
-//                    $market->end_at,
-//                    $market->end_at + 60*10,
-//                    strtotime($market->end_at),
-//                    strtotime($market->end_at) + 60*10,
-//                    date('Y-m-d H:i:s', strtotime($market->end_at) + 60*10)
-//                );
-
-                $market->end_at = date('Y-m-d H:i:s', strtotime($market->end_at) + 60*10);
-                $market->save();
-            }
-        }
-        else
-        {
-            abort(404, 'Market missing');
+            $market->end_at = date('Y-m-d H:i:s', strtotime($market->end_at) + 60*10);
+            $market->save();
         }
 
-        $setter = 'null';
         if($b)
         {
-            $setter='updating';
             $b->bid = $bid;
         }
         else
         {
-            $setter='new';
             $b = new BidEloquent();
             $b->auctionId = $marketId;
             $b->bidder = $userId;
@@ -69,10 +42,5 @@ class bid
         $b = BidEloquent::where('auctionId', $marketId);
 
         return $b;
-
     }
-
-
-
-
 }
