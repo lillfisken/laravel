@@ -1,5 +1,6 @@
 <?php
 
+use market\helper\markets\auction;
 //--------------------------------------------------------------------------
 
 //region Model Binding
@@ -10,7 +11,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-//use GuzzleHttp\Client;
+//use Laracurl;
+//use GuzzleHttp;
 
 
 //Route::model('market', 'market\Market');
@@ -199,10 +201,15 @@ if(Config::get('app.debug') == 'true')
         echo '<a href="/market/public/index.php/dev/phpinfo">PhpInfo</a><br/>';
         echo '<a href="/market/public/index.php/dev/apiTest">Send test request phpBB API</a></br>';
         echo '<a href="/market/public/index.php/dev/enviroment">Enviroment</a></br>';
+        echo '<a href="/market/public/index.php/dev/show-autoloaders">Show autoloaders</a></br>';
+        echo '<a href="/market/public/index.php/dev/testAuctionHelper">Test AuctionHelper</a></br>';
+        echo '<a href="/market/public/index.php/dev/classmap">Class map</a></br>';
+        echo '<a href="/market/public/index.php/dev/testResponse">Test response</a></br>';
+
 
     });
     Route::get('dev/list', function(){
-        $root = '/var/www/market/public';
+        $root = '/home/saljdemo/market/';
 
         //http://stackoverflow.com/questions/952263/deep-recursive-array-of-directory-structure-in-php
 
@@ -361,6 +368,121 @@ if(Config::get('app.debug') == 'true')
     Route::get('dev/enviroment', function(){
        dd(gethostname(), App::environment(), $_ENV);
     });
+    Route::get('dev/show-autoloaders', function(){
+        foreach(spl_autoload_functions() as $callback)
+        {
+            if(is_string($callback))
+            {
+                echo '- ',$callback,"\n<br>\n";
+            }
+
+            else if(is_array($callback))
+            {
+                if(is_object($callback[0]))
+                {
+                    echo '- ',get_class($callback[0]);
+                }
+                elseif(is_string($callback[0]))
+                {
+                    echo '- ',$callback[0];
+                }
+                echo '::',$callback[1],"\n<br>\n";
+            }
+            else
+            {
+                var_dump($callback);
+            }
+        }
+    });
+    Route::get('dev/testAuctionHelper', function(){
+
+//        $require = '/home/saljdemo/market/app/helper/markets/auction.php';
+//        $require = getcwd() . '/../app/helper/markets/auction.php';
+//        $required = include_once($require);
+
+        dd(
+            '$require',
+//            $require,
+            '$required',
+//            $required,
+            "class_exists('market\helper\markets\auction')",
+            class_exists('market\helper\markets\auction', false),
+            "class_exists('market\helper\markets\auction', false)",
+            class_exists('market\helper\markets\auction'),
+            "base_path('market\helper')",
+            base_path('market/helper')
+        );
+
+        $auction = new auction();
+
+        dd($auction);
+    });
+    Route::get('dev/classmap', function(){
+
+        dd(spl_classes(), get_declared_classes());
+        //Thanks to: http://stackoverflow.com/questions/22761554/php-get-all-class-names-inside-a-particular-namespace/27207776#27207776
+        $namespace = 'market\helper\markets';
+
+// Relative namespace path
+        $namespaceRelativePath = str_replace('\\', DIRECTORY_SEPARATOR, $namespace);
+
+// Include paths
+        $includePathStr = get_include_path();
+        $includePathArr = explode(PATH_SEPARATOR, $includePathStr);
+
+// Iterate include paths
+        $classArr = array();
+        foreach ($includePathArr as $includePath) {
+            $path = $includePath . DIRECTORY_SEPARATOR . $namespaceRelativePath;
+            if (is_dir($path)) { // Does path exist?
+                $dir = dir($path); // Dir handle
+                while (false !== ($item = $dir->read())) {  // Read next item in dir
+                    $matches = array();
+                    if (preg_match('/^(?<class>[^.].+)\.php$/', $item, $matches)) {
+                        $classArr[] = $matches['class'];
+                    }
+                }
+                $dir->close();
+            }
+        }
+
+        dd($namespace,$includePathArr, $classArr, get_include_path());
+
+// Debug output
+        var_dump($includePathArr);
+        var_dump($classArr);
+    });
+
+    Route::get('dev/testResponse', function() {
+
+//        dd(response()->json(['name' => 'Abigail', 'state' => 'CA']));
+
+//        $url = Laracurl::buildUrl('http://www.google.com', ['s' => 'curl']);
+//        $url = Laracurl::buildUrl('http://elektro.coo/market/public/index.php/dev/getResponse', []);
+//        $url = Laracurl::buildUrl('http://elektro.coo/market/public/index.php/auth/forgotPassword', []);
+//        $response = Laracurl::post($url);
+        $response = Laracurl::post('http://elektro.coo/market/public/index.php/dev/getResponse');
+//        $response = Laracurl::post('http://postcatcher.in/catchers/55bfba8939d86f0300001115');
+
+
+
+//
+//        $client = new GuzzleHttp\Client();
+//        $response = $client->post('http://elektro.coo/market/public/index.php/dev/getResponse');
+        dd('Test response', $response->statusText, $response);
+
+    });
+
+    Route::post('dev/getResponse', function() {
+//        return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+
+//        dd('bguyvfcjsxzmkl');
+        return 'return get response';
+////        echo ('echo get response');
+//        dd('getResponse');
+    });
+
+
 }
 //-----------------------------------------------------------------------------
 //auth
@@ -385,15 +507,15 @@ Route::group(['prefix' => 'auth'], function(){
 //Profile
 Route::group(['prefix'=>'profile'], function(){
     //TODO: Alter route to not use user if not neccesarey
-    Route::get('{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
+    Route::get('user/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
     Route::get('blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'AccountController@blockMarket', 'middleware' => 'auth']);
     Route::get('unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'AccountController@unblockMarket', 'middleware' => 'auth']);
     Route::get('blockseller/{user}', ['as' => 'accounts.blockSeller', 'uses' => 'AccountController@blockSeller', 'middleware' => 'auth']);
     Route::get('unblockseller/{user}', ['as' => 'accounts.unblockSeller', 'uses' => 'AccountController@unblockSeller', 'middleware' => 'auth']);
 
     Route::get('watched/{user}', ['as' => 'accounts.watched', 'uses' => 'AccountController@watched', 'middleware' => 'auth']);
-    Route::get('active/{user}', ['as' => 'accounts.active', 'uses' => 'AccountController@active', 'middleware' => 'auth']);
-    Route::get('trashed/{user}', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
+    Route::get('active', ['as' => 'accounts.active', 'uses' => 'AccountController@active', 'middleware' => 'auth']);
+    Route::get('inactive', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
     Route::get('blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
     Route::get('blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
 

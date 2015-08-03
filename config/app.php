@@ -143,10 +143,12 @@ return [
         'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Chromabits\Purifier\PurifierServiceProvider',
+        'Zjango\Laracurl\LaracurlServiceProvider',
 
-		/*
-		 * Application Service Providers...
-		 */
+
+        /*
+         * Application Service Providers...
+         */
 		'market\Providers\AppServiceProvider',
 		'market\Providers\BusServiceProvider',
 		'market\Providers\ConfigServiceProvider',
@@ -208,6 +210,8 @@ return [
         'Form'=> 'Illuminate\Html\FormFacade',
         'HTML'=> 'Illuminate\Html\HtmlFacade',
         'Image' => 'Intervention\Image\Facades\Image',
+        'Laracurl'  =>  'Zjango\Laracurl\Facades\Laracurl',
+
 //        'Purifier' => 'Mews\Purifier\Facades\Purifier',
     ],
 

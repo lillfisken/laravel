@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use market\helper\text;
+use market\helper\marketMenu;
 
 //use Illuminate\Contracts\Auth\Guard;
 //use Illuminate\Contracts\Auth\Registrar;
@@ -26,39 +27,7 @@ use market\helper\text;
 
 class AccountController extends Controller
 {
-
-    //---------------------------------------------------------------
-
-    //region Login/logout/register
-
-//    /*/**
-//     * The Guard implementation.
-//     *
-//     * @var Guard
-//     */
-//    protected $auth;
-//
-//    /**
-//     * The registrar implementation.
-//     *
-//     * @var Registrar
-//     */
-//    protected $registrar;
-//
-//    /**
-//     * Create a new authentication controller instance.
-//     *
-//     * @param  Guard  $auth
-//     * @return void
-//     */
-//    public function __construct(Guard $auth, Registrar $registrar)
-//    {
-//        $this->auth = $auth;
-//        $this->registrar = $registrar;
-//
-//        $this->middleware('guest', ['except' => 'getLogout']);
-//    }*/
-
+    //region login/logout
     public function login()
     {
         Session::put('uri', Session::get('_previous'));
@@ -72,23 +41,6 @@ class AccountController extends Controller
         //TODO:Check if user already logged in
 
         //http://scotch.io/tutorials/simple-and-easy-laravel-login-authentication
-
-
-//        // validate the info, create rules for the inputs
-//        $rules = array(
-//            'email'    => 'required|email', // make sure the email is an actual email
-//            'password' => 'required|alphaNum|min:3' // password can only be alphanumeric and has to be greater than 3 characters
-//        );
-//
-//        // run the validation rules on the inputs from the form
-//        $validator = Validator::make(Input::all(), $rules);
-//
-//        // if the validator fails, redirect back to the form
-//        if ($validator->fails()) {
-//            return Redirect::to('login')
-//                ->withErrors($validator) // send back all errors to the login form
-//                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
-//        } else {
 
         $remember = false;
 
@@ -147,6 +99,10 @@ class AccountController extends Controller
         return Redirect::to('/');
     }
 
+    //endregion
+
+    //region Register
+
     public function register()
     {
         return view('account.auth.register');
@@ -198,6 +154,7 @@ class AccountController extends Controller
 //        return view('account.auth.reset');
 //    }
 
+
 //endregion
 
     //---------------------------------------------------------------
@@ -215,16 +172,35 @@ class AccountController extends Controller
     */
     public function show($user)
     {
-        debug::logConsole('AccountController -> show ---');
         //TODO::Change to show public userprofile
 
-//        dd($username);
-//
-//        $user = User::where('username', '=', $username)->first();
-//
 //        dd($user);
 
-        return view('account.profileView.userProfile', ['user' => $user]);
+        $activeMarkets = Market::where('createdByUser', $user->id)->paginate(5);
+        foreach($activeMarkets as $market)
+        {
+            marketMenu::addMarketMenu($market);
+
+        }
+
+        $inactiveMarkets = Market::where('createdByUser', $user->id)->onlyTrashed()->paginate(5);
+        foreach($inactiveMarkets as $market)
+        {
+            marketMenu::addMarketMenu($market);
+
+        }
+        dd($activeMarkets, $inactiveMarkets);
+
+//        dd($user);
+
+        return view(
+            'account.profileView.userProfile',
+            [
+                'user' => $user,
+                'activeMarkets' => $activeMarkets,
+                'inactiveMarkets' => $inactiveMarkets
+            ]
+        );
 //        $markets = Market::where('createdByUser', '=', Auth::id())->get();
 //        $user = User::find(Auth::id())->first();
 ////        dd($markets);
@@ -323,20 +299,24 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function active($user)
+    public function active()
     {
         //dd('AccountController@active');
 
-        $markets = Market::where('createdByUser', '=', $user->id)->get();
-
-        foreach ($markets as $market) {
-            $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id));
-            $temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id));
-
-            $market['marketmenu'] = $temp;
+        $markets = Market::where('createdByUser', Auth::id())->get();
+        //TODO: Market menus
+        foreach($markets as $market)
+        {
+            marketMenu::addMarketMenu($market);
         }
+//        foreach ($markets as $market) {
+//            $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id));
+//            $temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id));
+//
+//            $market['marketmenu'] = $temp;
+//        }
 
-        return view('account.markets.active', ['user' => $user, 'markets' => $markets]);
+        return view('account.markets.active', ['markets' => $markets]);
     }
 
     /* Show user profile
@@ -348,17 +328,20 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function trashed($user)
+    public function trashed()
     {
         //dd('AccountController@trashed');
-        $markets = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
+        $markets = Market::onlyTrashed()->where('createdByUser', Auth::id())->get();
+        //TODO: Add market menu
 
-        foreach ($markets as $market) {
-            $temp[] = array('text' => 'Aktivera', 'href' => route('markets.reactivate', $market->id));
+//        foreach ($markets as $market) {
+//            $temp[] = array('text' => 'Aktivera', 'href' => route('markets.reactivate', $market->id));
+//
+//            $market['marketmenu'] = $temp;
+//
+//        }
 
-            $market['marketmenu'] = $temp;
-
-        }   return view('account.markets.trashed', ['user' => $user, 'markets' => $markets]);
+        return view('account.markets.trashed', ['markets' => $markets]);
     }
 
     /* Show user profile

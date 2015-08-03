@@ -6,5 +6,5 @@
 
 @section('content')
     <h1>Avslutade annonser</h1>
-    @include('markets.partials._marketlist')
+    @include('markets.base._marketsSmallList')
 @stop

@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Config;
 
-$public = '/market/public/';
-$system = '/var/www/market/public/';
+$public = env('PUBLIC_PATH');
+$system = env('SYSTEM_PATH');
+//$public = '/market/public/';
+//$system = '/var/www/market/public/';
 
 return [
     //----- Paths ---------------------------------------------------------
