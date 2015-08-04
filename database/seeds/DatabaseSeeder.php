@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder {
-
-	/**
+class DatabaseSeeder extends Seeder
+{
+    /**
 	 * Run the database seeds.
 	 *
 	 * @return void
@@ -14,14 +14,14 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		// $this->call('UserTableSeeder');
-        $this->call('UserTableSeeder');
-        $this->call('MarketsTableSeeder');
-        $this->call('QuestionTableSeeder');
-        $this->call('ConversationTableSeeder');
-        $this->call('MessageTableSeeder');
-        $this->call('BidTableSeeder');
+		// $this->call('UserTableSeeder::class');
+        $this->call('UserTableSeeder::class');
+        $this->call('MarketsTableSeeder::class');
+        $this->call('QuestionTableSeeder::class');
+        $this->call('ConversationTableSeeder::class');
+        $this->call('MessageTableSeeder::class');
+        $this->call('BidTableSeeder::class');
 
+        Model::reguard();
     }
-
 }

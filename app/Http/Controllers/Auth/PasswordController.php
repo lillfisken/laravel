@@ -15,18 +15,18 @@ use Illuminate\Http\Request;
 use market\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PasswordController extends Controller {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Password Reset Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller is responsible for handling password reset requests
-	| and uses a simple trait to include this behavior. You're free to
-	| explore this trait and override any methods you wish to tweak.
-	|
-	*/
+class PasswordController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Password Reset Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling password reset requests
+    | and uses a simple trait to include this behavior. You're free to
+    | explore this trait and override any methods you wish to tweak.
+    |
+    */
 
 //	use ResetsPasswords;
 
@@ -150,5 +150,4 @@ class PasswordController extends Controller {
             return redirect()->route('markets.index')->with('message', 'Lösenordet ändrat');
         }
     }
-
 }

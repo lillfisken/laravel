@@ -50,14 +50,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'zip',
         'city',
         'cityAllowed',
+		'password'
     ];
-
+	
 	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = ['password', 'remember_token'];
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
 	public function markets()
 	{
@@ -83,5 +84,4 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return $this->hasMany('market\MarketQuestion', 'user', 'id');
 	}
-
 }

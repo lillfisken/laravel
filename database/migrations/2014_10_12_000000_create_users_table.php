@@ -3,22 +3,21 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration {
-
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('users', function(Blueprint $table)
-		{
-			$table->bigIncrements('id');
+class CreateUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
 			$table->string('name');
             $table->string('username')->unique();
 			$table->string('email')->unique();
-			$table->string('password', 120);
+			$table->string('password', 60);
 
             //TODO: Make this not nullable after development
             $table->string('address')->nullable();
@@ -26,20 +25,19 @@ class CreateUsersTable extends Migration {
             $table->integer('zipcode')->nullable();
             $table->string('phone1');
             $table->string('phone2')->nullable();
+			
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
 
-			$table->rememberToken();
-			$table->timestamps();
-		});
-	}
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('users');
-	}
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('users');
+    }
 }
