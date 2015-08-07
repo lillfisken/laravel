@@ -1,41 +1,32 @@
-<?php
-namespace market\Http\Middleware;
-use Closure;
-use Illuminate\Contracts\Auth\Guard;
-class Authenticate
-{
-    /**
-     * The Guard implementation.
-     *
-     * @var Guard
-     */
-    protected $auth;
-    /**
-     * Create a new filter instance.
-     *
-     * @param  Guard  $auth
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
-        }
-        return $next($request);
-    }
+<?php namespace market\Http;
+
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel {
+
+	/**
+	 * The application's global HTTP middleware stack.
+	 *
+	 * @var array
+	 */
+	protected $middleware = [
+		'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
+		'Illuminate\Cookie\Middleware\EncryptCookies',
+		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
+		'Illuminate\Session\Middleware\StartSession',
+		'Illuminate\View\Middleware\ShareErrorsFromSession',
+		'market\Http\Middleware\VerifyCsrfToken',
+	];
+
+	/**
+	 * The application's route middleware.
+	 *
+	 * @var array
+	 */
+	protected $routeMiddleware = [
+		'auth' => 'market\Http\Middleware\Authenticate',
+		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+		'guest' => 'market\Http\Middleware\RedirectIfAuthenticated',
+	];
+
 }

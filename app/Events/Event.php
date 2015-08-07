@@ -1,8 +1,7 @@
-<?php
+<?php namespace market\Events;
 
-namespace App\Events;
+abstract class Event {
 
-abstract class Event
-{
-    //
+	//
+
 }

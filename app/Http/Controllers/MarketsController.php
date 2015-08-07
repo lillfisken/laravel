@@ -68,6 +68,7 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
+        //dd('WORKING');
         if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
