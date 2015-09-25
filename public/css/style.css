@@ -192,6 +192,10 @@
         min-width: 80%;
     }
 
+    .btn100{
+        width: 100%;
+    }
+
     .btnSmall{
         font-size: 0.8em;
         padding: 0.1em 0.5em;

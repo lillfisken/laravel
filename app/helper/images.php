@@ -124,6 +124,8 @@ class images
 
         // USE paths()
 
+//        dd($input, $image_name, $persistent, $paths = self::getPaths(), env('PUBLIC_PATH'), $system = env('SYSTEM_PATH'));
+
         if(isset($input[$image_name . '_thumb']) && $persistent && !isset($input[$image_name]))
         {
             Log::debug('saveImage, moving image from temporary directory to persistant, image name: ' . $image_name);

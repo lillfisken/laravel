@@ -1,13 +1,14 @@
 <?php namespace market\Http\Controllers;
 
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use market\helper\debug;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
 use Illuminate\Contracts\Auth\Authenticator;
-use Auth;
 use Input;
 use market\Http\Requests\passwordRequest;
 use market\Http\Requests\registerRequest;
@@ -20,6 +21,8 @@ use DB;
 use Hash;
 use market\helper\text;
 use market\helper\marketMenu;
+use Symfony\Component\HttpFoundation\Response;
+use Zjango\Laracurl\Facades\Laracurl;
 
 //use Illuminate\Contracts\Auth\Guard;
 //use Illuminate\Contracts\Auth\Registrar;
@@ -30,9 +33,17 @@ class AccountController extends Controller
     //region login/logout
     public function login()
     {
+        //TODO: Redirect to index if user is logged in
+        if(Auth::check())
+        {
+            return redirect('/');
+        }
+
         Session::put('uri', Session::get('_previous'));
 
-        return view('account.auth.login');
+        $phpBBforum = Config::get('phpBBforums');
+
+        return view('account.auth.login', ['phpBBforums' => $phpBBforum]);
     }
 
     public function loginPost()
@@ -378,7 +389,7 @@ class AccountController extends Controller
 
     //endregion
 
-    //region settings
+    //region Settings
 
     /* Show user settings
              *
@@ -444,6 +455,43 @@ class AccountController extends Controller
             return Redirect::back()->with('pswdOld' , 'Fel lösenord');
         }
 
+
+    }
+
+    public function auth()
+    {
+        //Show user a page to manage external logins
+        $user = User::where('id', Auth::id())->with('phpBBUsers')->get()->first();
+        $forums = Config::get('phpBBforums');
+        $forumsUser = $user->phpBBUsers;
+        $phpBBNonRegistered = [];
+        $phpBBRegistered = [];
+
+        foreach($forums as $forum)
+        {
+            $match = false;
+            foreach($forumsUser as $forumUser)
+            {
+                if($forum['key'] == $forumUser['forumKey'])
+                {
+                    $forum['username'] = $forumUser['username'];
+                    array_push($phpBBRegistered, $forum);
+                    $match = true;
+                    break 1;
+                }
+            }
+            if(!$match)
+            {
+                array_push($phpBBNonRegistered, $forum);
+            }
+        }
+        return view('account.settings.oAuth', ['user' => $user,
+            'phpBBRegistered' => $phpBBRegistered,
+            'phpBBNonRegistered' => $phpBBNonRegistered]);
+    }
+
+    public function authPost()
+    {
 
     }
 

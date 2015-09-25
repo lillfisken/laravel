@@ -6,37 +6,59 @@
 @stop
 
 @section('content')
-    {!! Form::model($user, ['route' => 'accounts.save']) !!}
-    <table class="table-100">
+    <div class="inner-content">
+        <h3>Externa kopplingar</h3>
+
+        <table class="table-100">
         <colgroup>
             <col width="auto"/>
             <col width="100%"/>
         </colgroup>
-        <tr>
-            <td colspan="2"><h3>Externa kopplingar</h3></td>
-        </tr>
-        <tr>
-            <td>
-                Elektronikforumet
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Google
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Facebook
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Twitter
-            </td>
-        </tr>
+        <tr><td colspan="2"><hr/></td></tr>
+
+        <tr><td colspan="2">
+            <p>
+                Uppdatera dina inlogningar på respektive forum.<br/>
+                Om du redan ärinloggad på respektive forum kommer datan att uppdateras, annars kommer du ombeds ange dina inloggningsuppgifter.<br/>
+                Inga andra data än ditt användarnamn delas.
+            </p>
+        </td></tr>
+
+        @foreach($phpBBRegistered as $phpBB)
+            <tr>
+                {!! Form::open(['route' => ['phpBB.register', $phpBB['id'] ] ]) !!}
+                <td>
+                    {!! Form::submit('Ändra användare, ' . $phpBB['displayName'] . ', Nuvarande: ' . $phpBB['username'], ['class'=>'btnSmall btn100']) !!}
+                </td>
+                <td>
+                </td>
+                {!! Form::close() !!}
+            </tr>
+        @endforeach
+
+        <tr><td colspan="2"><hr/></td></tr>
+
+        <tr><td colspan="2">
+            <p>
+                Lägg till respektive forum för att användas vid inloggning.<br/>
+                Om du redan ärinloggad på respektive forum kommer datan att hämtas, annars kommer du ombeds ange dina inloggningsuppgifter.<br/>
+                Inga andra data än ditt användarnamn delas.
+            </p>
+        </td></tr>
+
+        @foreach($phpBBNonRegistered as $phpBB)
+            <tr>
+                {!! Form::open(['route' => ['phpBB.register', $phpBB["id"] ] ]) !!}
+                <td>
+                    {!! Form::submit('Lägg till ' . $phpBB['displayName'], ['class'=>'btnSmall btn100']) !!}
+                </td>
+                <td>
+                </td>
+                {!! Form::close() !!}
+            </tr>
+        @endforeach
+
         <tr><td colspan="2"><hr/></td></tr>
     </table>
-    {!! Form::submit('Spara', ['class'=>'btn']) !!}
-    {!! Form::close() !!}
+    </div>
 @stop

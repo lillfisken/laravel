@@ -39,25 +39,30 @@
         </div>
         <div class="loginBox">
             <h2>Använd extern inloggning</h2>
-            {!! Form::open(['url'=>'/oauth/elektronikforumet', 'method'=>'get']) !!}
-                {!! Form::submit('Elektronikforumet', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close() !!}
+            @foreach($phpBBforums as $phpBB)
+                {!! Form::open(['route' => ['phpBB.login', $phpBB['id'] ] ]) !!}
+                {!! Form::submit($phpBB['displayName'], array('class' => 'btnSmall form-input')); !!}
+                {!! Form::close() !!}
+            @endforeach
+            {{--{!! Form::open(['url'=>'/oauth/elektronikforumet', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Elektronikforumet', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}
-                {!! Form::submit('Facebook', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close() !!}
+            {{--{!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Facebook', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}
-                {!! Form::submit('Google', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close() !!}
+            {{--{!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Google', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}
-                {!! Form::submit('Twitter', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close() !!}
+            {{--{!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Twitter', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}
-                {!! Form::submit('GitHub', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close() !!}
+            {{--{!! Form::open(['url'=>'/oauth/facebook', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('GitHub', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
             <br/>
         </div>
         <div class="loginBox">

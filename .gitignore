@@ -8,3 +8,5 @@ resources/views/welcome.blade.php
 /old
 /resources/assets
 
+.idea/deployment.xml
+.idea/workspace.xml

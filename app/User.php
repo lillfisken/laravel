@@ -6,10 +6,12 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword;
+//    use SoftDeletes;
     //
     //`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     //`name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -68,6 +70,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function bids()
     {
         return $this->hasMany('market\Bid', 'bidder', 'id');
+    }
+
+    public function phpBBUsers()
+    {
+        return $this->hasMany('market\phpBBUsers', 'user', 'id');
     }
 
 	public function getUserActiveMarketsCount()

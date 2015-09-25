@@ -501,7 +501,7 @@ Route::group(['prefix' => 'auth'], function(){
     Route::get('resetPassword/{token}', ['as' => 'accounts.resetPassword', 'uses' => 'Auth\PasswordController@getReset', 'middleware' => 'guest']);
     Route::post('resetPassword', ['as' => 'accounts.resetPasswordPost', 'uses' => 'Auth\PasswordController@postReset', 'middleware' => 'guest']);
 
-    Route::controller('oauth', 'Auth\OAuthController');
+//    Route::controller('oauth', 'Auth\OAuthController');
 });
 //--------------------------------------------------------------------------
 //Profile
@@ -523,8 +523,8 @@ Route::group(['prefix'=>'profile'], function(){
     Route::post('settings/', ['as' => 'accounts.settings.save', 'uses' => 'AccountController@saveSettings', 'middleware' => 'auth']);
     Route::get('settings/password', ['as' => 'accounts.settings.password', 'uses' => 'AccountController@newPassword', 'middleware' => 'auth']);
     Route::post('settings/password', ['as' => 'accounts.settings.passwordPost', 'uses' => 'AccountController@newPasswordPost', 'middleware' => 'auth']);
-    Route::get('settings/oauth', ['as' => 'accounts.settings.oauth', 'uses' => 'AccountController@oauth', 'middleware' => 'auth']);
-    Route::post('settings/oauth', ['as' => 'accounts.settings.oauthPost', 'uses' => 'AccountController@oathPost', 'middleware' => 'auth']);
+    Route::get('settings/auth', ['as' => 'accounts.settings.oauth', 'uses' => 'AccountController@auth', 'middleware' => 'auth']);
+    Route::post('settings/auth', ['as' => 'accounts.settings.oauthPost', 'uses' => 'AccountController@authPost', 'middleware' => 'auth']);
 });
 //--------------------------------------------------------------------------
 //Message
@@ -542,4 +542,15 @@ Route::group(['prefix'=>'message'], function(){
 
 });
 //-----------------------------------------------------------------------------
+//phpBB
+Route::group(['prefix'=> 'phpBB'], function(){
+    Route::post('login/{forumName}', ['as' => 'phpBB.login', 'uses' => 'phpBBController@loginUser' ]);
+    Route::post('register/{forumName}', ['as' => 'phpBB.register', 'uses' => 'phpBBController@registerUser', 'middleware' => 'auth' ]);
 
+    // CSRF excepted
+    Route::post('response/{id}', ['as' => 'phpBB.respond', 'uses' => 'phpBBController@externalResponse' ]);
+
+    Route::get('redirect/{token}', ['as' => 'phpBB.redirect', 'uses' => 'phpBBController@redirected' ]);
+});
+
+//http://elektro.coo/market/public/phpBB/response/Z9Ly9tlgWeRrLnYTmXhJ2JAdw4semzvat8JaWAthvb3rgmGw3AZIy3kUb6eo2RstVmDi9dq1IlAkKKYRuLV6PxU8ngEhMVfVrIIy6L0i4ZbZyEF7pkssuXt7XYqfqO5dldCpKvQBIQNHhbjLMVcotgIcn53XaOQh1Ii76BpzmpCWwPojGB1RfCxVTYJ7x7FtWSpTvH2J7hBkcXaJCTjQt66V8Sg9auvFfiGiUBv9FqHZc13TFbnz5ENuw345pm1

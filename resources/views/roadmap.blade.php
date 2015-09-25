@@ -69,6 +69,7 @@
             -> Möjlighet att ladda upp pdf till annons<br/>
             -> Cronjob, radera temp bilder äldre än 1 dygn<br/>
             -> Möjlighet att redigera kontaktsätt<br/>
+            -> Cron: Radera gamla phpBBConnect...
         </p>
         <hr/>
         <p>
