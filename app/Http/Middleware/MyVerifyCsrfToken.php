@@ -7,7 +7,7 @@ class MyVerifyCsrfToken extends BaseVerifier {
 
     protected $openRoutes = [
         'dev/*',
-        'phpBB/response/*'
+        'phpBB/*'
     ];
 
     /**openRoutes

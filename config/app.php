@@ -152,6 +152,7 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Chromabits\Purifier\PurifierServiceProvider',
         'Zjango\Laracurl\LaracurlServiceProvider',
+        'market\Providers\ViewComposerProvider',
 		
 	],
 

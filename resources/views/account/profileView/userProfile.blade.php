@@ -23,6 +23,14 @@
         <p>
             Här kommer du senare kunna se omdömen från andra om säljaren samt även kunna lämnna ditt egna omdöme efter en förhoppningsvis lyckad affär.
         </p>
+        @if(! empty($phpBBs))
+            <h3>Användaren på andra forum</h3>
+            <p>
+                @foreach($phpBBs as $phpBB)
+                    <a href="{{ $phpBB['url'] }}">{{ $phpBB['forumName'] }}: {{ $phpBB['username'] }}</a><br/>
+                @endforeach
+            </p>
+        @endif
         <h3>Kontakt</h3>
         <p>
             <a href="{{ route('message.new', ['title' => 'hubba']) }}" class="btn">Skicka PM </a>

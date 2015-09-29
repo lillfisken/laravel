@@ -18,6 +18,7 @@ class CreatePhpBBusers extends Migration {
             $t->bigInteger('user')->unsigned();
             $t->char('forumKey', 255);
             $t->string('username');
+            $t->string('url');
             $t->timestamps();
 
             $t->primary(['user', 'forumKey']);

@@ -65,4 +65,10 @@
         {!! Form::close() !!}
     </li>
 
+    <li class="text right">
+        {{ $time }}
+    </li>
+
 </ul>
+
+{{--<div style="float: right">{{ $time }}</div>--}}

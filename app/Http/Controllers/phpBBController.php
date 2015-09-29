@@ -15,6 +15,7 @@ use market\phpBBconnect;
 use market\phpBBUsers;
 use market\User;
 use Zjango\Laracurl\Facades\Laracurl;
+use GuzzleHttp\Client;
 
 class phpBBController extends Controller {
 
@@ -30,6 +31,8 @@ class phpBBController extends Controller {
         if($phpConnect != null)
         {
             Log::debug('external response -> phpConnect is not null');
+            Log::debug('external response -> url: ' . $request->get('url'));
+
 
             // Token is ok!
 
@@ -79,6 +82,8 @@ class phpBBController extends Controller {
                 $user['forumKey'] = $phpConnect->forumKey;
                 $user['user'] =  $phpConnect->user;
                 $user['username'] = $username;
+                $user['url'] = $request->get('url', '#');
+
 
                 $response['user'] = $user;
 
@@ -129,6 +134,8 @@ class phpBBController extends Controller {
 
     protected function getForumById($id)
     {
+        Log::debug('phpBBController -> getForumById');
+
         $forums = Config::get('phpBBforums');
 
         foreach($forums as $forum)
@@ -145,6 +152,8 @@ class phpBBController extends Controller {
 
     protected function generateToken()
     {
+        Log::debug('phpBBController -> generate token');
+
         return substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',10)),0,255);
     }
 
@@ -181,6 +190,8 @@ class phpBBController extends Controller {
 
     public function registerUser($forumId)
     {
+        Log::debug('phpBBController -> register user');
+
         // Get data
         // Store data in DB
         // Send connect request
@@ -205,11 +216,17 @@ class phpBBController extends Controller {
         $phpBBRegister = new phpBBconnect($new);
         if($phpBBRegister->save())
         {
-            // Create and redirect
-            $response = Laracurl::post($forum['urlConnect'], [
+            $url = $forum['urlConnect'];
+            $data = [
                 'forumKey' => $phpBBRegister['forumKey'],
                 'token' => $phpBBRegister['token']
-            ]);
+                ];
+
+            // Create and redirect
+            $client = new Client();
+//            $response = $client->post($url, $data);
+            $response = Laracurl::post($url, $data);
+
         }
         else
         {
@@ -231,6 +248,8 @@ class phpBBController extends Controller {
 
     public function loginUser($forumId)
     {
+        Log::debug('phpBBController -> login user');
+
         $forum = $this->getForumById($forumId);
 
         $new = [];
@@ -246,16 +265,20 @@ class phpBBController extends Controller {
         $phpBBLogin = new phpBBconnect($new);
         if($phpBBLogin->save())
         {
-            $response = Laracurl::post($forum['urlConnect'], [
+            $data = [
                 'forumKey' => $phpBBLogin['forumKey'],
                 'token' => $phpBBLogin['token']
-            ]);
+            ];
+
+            $client = new Client();
+//            $response = $client->post($forum['urlConnect'], $data);
+            $response = Laracurl::post($forum['urlConnect'], $data);
+//            dd($response, $data);
         }
         else
         {
             return new Response('Error register request', 500);
         }
-
 
         $responseDecoded = json_decode($response);
 
@@ -272,6 +295,8 @@ class phpBBController extends Controller {
 
     public function redirected($token)
     {
+        Log::debug('phpBBController -> redirected');
+
         $phpConnect = phpBBconnect::where('token', $token)->get()->first();
 
         if($phpConnect != null)

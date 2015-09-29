@@ -11,6 +11,7 @@ ul.resp-menu {
     padding:0;
     background: #f1f1f1;
     margin: 0em;
+    margin-bottom: 2px;
     color: #516777;
     /*overflow: hidden;*/
     /*border: 1px solid #516777;*/
@@ -34,7 +35,8 @@ ul.resp-menu ul {
 }
 
 ul.resp-menu a,
-ul.resp-menu form{
+ul.resp-menu form,
+ul.resp-menu .text{
     cursor: pointer;
     display: block;
     line-height: 2em;
@@ -55,6 +57,18 @@ ul.resp-menu li:hover ul {
     display: block;
     z-index: 999;
 }
+
+ul.resp-menu .right{
+    /*padding-right: 0;*/
+    /*padding-left: auto;*/
+    /*margin-right: 0;*/
+    /*margin-left: auto;*/
+    float: right;
+    border-right: none;
+    border-left: 1px solid #516777;
+    padding-left: 1em;
+}
+
 
 /*Hide checkbox*/
 input[type=checkbox].menu-bar{

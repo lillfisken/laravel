@@ -10,7 +10,8 @@ class phpBBUsers extends Model {
     protected $fillable = [
         'forumKey',
         'user',
-        'username'
+        'username',
+        'url'
     ];
     //TODO: Add link to profile
 

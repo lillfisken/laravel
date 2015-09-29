@@ -14,6 +14,7 @@ use market\Http\Requests\passwordRequest;
 use market\Http\Requests\registerRequest;
 use market\Http\Requests\UserSettingsRequest;
 use market\Market;
+use market\phpBBUsers;
 use Redirect;
 use market\User;
 use Illuminate\Http\Request;
@@ -200,8 +201,18 @@ class AccountController extends Controller
             marketMenu::addMarketMenu($market);
 
         }
-        dd($activeMarkets, $inactiveMarkets);
-
+//        dd($activeMarkets, $inactiveMarkets);
+        $phpBBUsers = phpBBUsers::where('user', $user->id)->get();
+        $phpBB = [];
+        foreach($phpBBUsers as $phpBBUser)
+        {
+            $phpBB[] = [
+                'forumName' => $this->getForumByKey($phpBBUser->forumKey)['displayName'],
+                'username' => $phpBBUser->username,
+                'url' => $phpBBUser->url,
+            ];
+        }
+        //dd($phpBBUsers, $phpBB);
 //        dd($user);
 
         return view(
@@ -209,7 +220,8 @@ class AccountController extends Controller
             [
                 'user' => $user,
                 'activeMarkets' => $activeMarkets,
-                'inactiveMarkets' => $inactiveMarkets
+                'inactiveMarkets' => $inactiveMarkets,
+                'phpBBs' => $phpBB
             ]
         );
 //        $markets = Market::where('createdByUser', '=', Auth::id())->get();
@@ -221,6 +233,23 @@ class AccountController extends Controller
 //        return view('account.profileView.userProfile', ['user' => $user, 'markets' => $markets]);
 
 
+    }
+
+    protected function getForumByKey($key)
+    {
+        //TODO: Move this to helper
+        $forums = Config::get('phpBBforums');
+
+        foreach($forums as $forum)
+        {
+            if($forum['key'] == $key)
+            {
+                return $forum;
+            }
+        }
+
+        // We couldn't match the forumId to any forum
+        return new Response('No forum', 400);
     }
 
     //endregion
