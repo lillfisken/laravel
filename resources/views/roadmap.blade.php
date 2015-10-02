@@ -41,6 +41,7 @@
             -> Mail, request, verify user exist and has allowed e-mail<br/>
             -> Mail, purify<br/>
             -> E-mail vid nytt pm, skapa mailview<br/>
+            -> MasterMailLayout för epost<br/>
         </p>
         <hr />
         <p>

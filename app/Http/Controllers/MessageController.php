@@ -37,16 +37,60 @@ class MessageController extends Controller
         //$conversations = Conversation::with(['messages.sender'])->get();
 
         $conversations = Conversation::where('user1', Auth::id())->
-            orWhere('user2', Auth::id())->with('messages.sender')->get();
+            orWhere('user2', Auth::id())
+            ->with('messages.sender', 'getUser1', 'getUser2')->get();
 //        dd($conversations);
+
+        foreach($conversations as $conversation)
+        {
+            $unread = 0;
+
+            foreach($conversation->messages as $message)
+            {
+                if(!$message->isRead() && $message->senderId != Auth::id())
+                {
+                    $unread++;
+                }
+            }
+
+            $conversation['unread'] = $unread;
+            $conversation['username1'] = $conversation->getUser1->username;
+            $conversation['username2'] = $conversation->getUser2->username;
+        }
+//        dd($conversations);
+
+//        dd('Auth: ' . Auth::id(),
+//            $conversations);
         return view('account.message.inbox', ['conversations' => $conversations]);
     }
 
     public function show($conversationId)
     {
-        //dd($conversationId);
-        $messages = Message::where('conversationId', '=', $conversationId)->orderBy('created_at', 'desc')->with(['sender', 'Conversation'])->get();
-//        dd($messages);
+        $messages = Message::where('conversationId', '=', $conversationId)
+            ->orderBy('created_at', 'desc')
+            ->with(['sender', 'Conversation'])
+            ->get();
+
+        $unread = Message::where('conversationId', '=', $conversationId)
+            ->where('senderId', '!=', Auth::id())
+            ->where('read', '=', 0)
+            ->update(['read' => 1]);
+
+//        $save = 0;
+//        foreach($unread as $m)
+//        {
+//            if($m->read == 0)
+//            {
+//                $m->read = 1;
+//                $save = 1;
+//            }
+//        }
+//        if($save == 1)
+//        {
+////            $unread->save();
+//        }
+
+//        dd($messages, $unread);
 
         return view('account.message.show', ['messages' => $messages]);
     }
@@ -113,6 +157,7 @@ class MessageController extends Controller
         if(Auth::check())
         {
             //TODO: Validation, redirect back at error with message etc.
+            //TODO: Sen email notification if asked for
 //            dd(Input::all());
 
             $message = new Message();

@@ -13,9 +13,9 @@
 
     @if(Auth::check())
         <li>
-            <a href="#">{{ Auth::user()->username ?: 'null' }} </a>
+            <a href="#">{{ $username }}<span class="badge">12</span> </a>
             <ul>
-                <li><a href="{{ route('accounts.profile', @Auth::user()->username) }}">Profil</a></li>
+                <li><a href="{{ route('accounts.profile', $username) }}">Profil</a></li>
                 <li><a href="{{ route('accounts.watched', @Auth::user()->username) }}">Bevakade</a></li>
                 <li><a href="{{ route('accounts.active', @Auth::user()->username) }}">Aktiva</a></li>
                 <li><a href="{{ route('accounts.trashed', @Auth::user()->username) }}">Avslutade</a></li>
@@ -24,7 +24,12 @@
             </ul>
         </li>
         <li>
-            <a href="#">PM</a>
+            {{--<a href="#">PM<div class="circle-text"><div>5</div></div> </a>--}}
+            <a href="#">PM
+                @if($unreadMessages > 0)
+                    <span class="badge">{{ $unreadMessages }}</span>
+                @endif
+            </a>
             <ul>
                 <li><a href="{{ route('message.inbox') }}">Inkorg</a></li>
                 <li><a href="{{ route('message.new') }}">Nytt PM</a></li>
@@ -32,7 +37,7 @@
         </li>
 
         <li>
-            <a href="#">Skapa annons</a>
+            <a href="#">Ny annons</a>
             <ul>
                 <li><a href="{{ route('auction.create') }}">Auktion</a></li>
                 <li><a href="{{ route('sell.create') }}">Säljes</a></li>

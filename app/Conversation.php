@@ -20,4 +20,14 @@ class Conversation extends Model
     {
         return $this->hasMany('market\Message', 'conversationId');
     }
+
+    public function getUser1()
+    {
+        return $this->hasOne('market\User', 'id', 'user1');
+    }
+
+    public function getUser2()
+    {
+        return $this->hasOne('market\User', 'id', 'user2');
+    }
 }

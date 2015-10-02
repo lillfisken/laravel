@@ -1,5 +1,9 @@
 <?php
 
+//use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use market\helper\markets\auction;
 //--------------------------------------------------------------------------
 
@@ -482,7 +486,30 @@ if(Config::get('app.debug') == 'true')
 //        dd('getResponse');
     });
 
+    //http://stackoverflow.com/questions/19131731/laravel-4-logging-sql-queries
+    Event::listen('illuminate.query', function($query, $bindings, $time, $name)
+    {
+        $data = compact('bindings', 'time', 'name');
 
+        // Format binding data for sql insertion
+        foreach ($bindings as $i => $binding)
+        {
+            if ($binding instanceof \DateTime)
+            {
+                $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
+            }
+            else if (is_string($binding))
+            {
+                $bindings[$i] = "'$binding'";
+            }
+        }
+
+        // Insert bindings into query
+        $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
+        $query = vsprintf($query, $bindings);
+
+        Log::info($query, $data);
+    });
 }
 //-----------------------------------------------------------------------------
 //auth
@@ -553,4 +580,4 @@ Route::group(['prefix'=> 'phpBB'], function(){
     Route::get('redirect/{token}', ['as' => 'phpBB.redirect', 'uses' => 'phpBBController@redirected' ]);
 });
 
-//http://elektro.coo/market/public/phpBB/response/Z9Ly9tlgWeRrLnYTmXhJ2JAdw4semzvat8JaWAthvb3rgmGw3AZIy3kUb6eo2RstVmDi9dq1IlAkKKYRuLV6PxU8ngEhMVfVrIIy6L0i4ZbZyEF7pkssuXt7XYqfqO5dldCpKvQBIQNHhbjLMVcotgIcn53XaOQh1Ii76BpzmpCWwPojGB1RfCxVTYJ7x7FtWSpTvH2J7hBkcXaJCTjQt66V8Sg9auvFfiGiUBv9FqHZc13TFbnz5ENuw345pm1
+//---------------------------------------------------------------------------------

@@ -31,4 +31,9 @@ class Message extends Model {
         return $this->belongsTo('market\Conversation', 'conversationId');
     }
 
+    public function isRead()
+    {
+        return $this->getAttribute('read');
+    }
+
 }
