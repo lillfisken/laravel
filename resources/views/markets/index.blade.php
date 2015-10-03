@@ -15,7 +15,7 @@
 		{!! Form::open(array('route' => 'markets.filter', 'method' => 'get')) !!}
 			<ul class="menu-row">
 
-                @foreach($types = market\helper\markets\MarketBase::getAllMarketTypes() as $key => $val)
+                @foreach($marketCommon->getAllMarketTypes() as $key => $val)
                     <li class="menu-item">
                         {!! Form::label('t' . $key, $val) !!} {!! Form::checkbox('t' . $key , 1,  true); !!}
                     </li>

@@ -5,4 +5,9 @@ class sell extends MarketBase
     protected $routeBase = 'sell';
     protected $marketType = 0;
     protected $titleNew = 'Ny säljesannons';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

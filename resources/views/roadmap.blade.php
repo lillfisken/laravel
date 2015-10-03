@@ -31,11 +31,8 @@
         <hr />
         <p>
             Meddelanden<br/>
-            -> Visning antal ny pm i menyrad, helper?<br/>
-            -> Visning i inkorgen, konversationspartner, antal nya Pm etc<br/>
             -> Paginering både inbox och meddelanden<br/>
             -> Inboxen, sortera på nysate först.<br/>
-            -> Ta bort markeringara för nytt inlägg i show<br/>
             -> Maila användaren vid händelser såsom registrering, glömt lösenord, nytt meddelande etc.<br/>
             -> Inställningar i användarprofilen för notifieringar<br/>
             -> Mail, request, verify user exist and has allowed e-mail<br/>

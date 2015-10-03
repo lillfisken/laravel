@@ -1,3 +1,9 @@
+/*
+    #516177 - Mörkblå
+    #f1f1f1 - Ljusgrå
+    #d9d9d9 - Mörkgrå
+*/
+
 	/*---------------------------------------
 	Basic layout
 	---------------------------------------*/
@@ -670,7 +676,29 @@
 		color: white;
 	}
 
-    
+/* Pagination ---------------------------------------------------------------------- */
+    ul.pagination{
+        list-style-type: none;
+        /*border: 1px solid #000000;*/
+        text-align: center;
+    }
+
+    ul.pagination li{
+        display: inline;
+        padding: 0.5em 1em ;
+        border-top: 1px solid #516177;
+        border-bottom: 1px solid #516177;
+        color: #516177;
+    }
+
+    ul.pagination .disabled{
+        display: none;
+    }
+
+    ul.pagination .active{
+        background-color: #d9d9d9;
+    }
+/* --------------------------------------------------------------------------------- */
     
     @media screen and (max-width: 700px) {
         #logo-right{

@@ -4,6 +4,7 @@ use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use market\helper\auction;
 use market\helper\buy;
@@ -11,6 +12,7 @@ use market\helper\debug;
 use market\helper\market as markethelper;
 use market\helper\marketEndReason;
 use market\helper\marketCRUD;
+use market\helper\marketMenu;
 use market\helper\text;
 use market\Http\Requests\CreateUpdateQuestionRequest;
 use market\Http\Requests\MarketCreateUpdateRequest;
@@ -22,6 +24,7 @@ use DB;
 use Session;
 use Chromabits\Purifier\Contracts\Purifier;
 use HTMLPurifier_Config;
+use market\helper\markets\common as marketCommon;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -43,6 +46,8 @@ class MarketsController extends ControllerMarket {
      */
     protected $purifier;
 
+    protected $marketCommon;
+
 //    protected $auctionHelper;
 //    protected $buyHelper;
 
@@ -54,6 +59,7 @@ class MarketsController extends ControllerMarket {
     public function __construct(Purifier $purifier) {
         // Inject dependencies
         $this->purifier = $purifier;
+        $this->marketCommon = new marketCommon();
 
 //        $this->auctionHelper = new auction();
 //        $this->buyHelper = new buy();
@@ -68,13 +74,17 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
-        //dd('WORKING');
         if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
 
-			$temp = Market::select()->with('User')->get();
+//			$temp = Market::select()->with('User')->get();
+			$temp = Market::select()
+                ->with('User')
+                ->paginate(config('market.paginationNr'), 20);
+//            $temp->setPath('/market/public/index.php/market');
+            $temp->setPath(route('markets.index'));
 
             $sellHelper = new \market\helper\markets\sell();
             $buyHelper = new \market\helper\markets\buy();
@@ -119,12 +129,15 @@ class MarketsController extends ControllerMarket {
 			$temp = Market::all();
 		}
 
-		return view('markets.index', ['markets' => $temp]);
+		return view('markets.index', [
+            'markets' => $temp,
+            'marketCommon' => $this->marketCommon
+        ]);
 	}
 
 	public function filter()
 	{
-		//TODO:: Sanitize
+        //todo: if input is missing, get from flash, else use default 1
 		// Begining of building db query
 		$query = Market::select('*');
 
@@ -138,11 +151,11 @@ class MarketsController extends ControllerMarket {
 		$query->where(function($query) {
 
 
-			if (Input::has('saljes')) {
-				$query->orWhere('type', '=', 'saljes');
-			}
+//			if (Input::has('saljes')) {
+//				$query->orWhere('type', '=', 'saljes');
+//			}
 
-            foreach(marketType::getAllTypes() as $key => $val)
+            foreach($this->marketCommon->getAllMarketTypes() as $key => $val)
             {
                 if(Input::has('t' . $key))
                 {
@@ -161,20 +174,24 @@ class MarketsController extends ControllerMarket {
 		}
 
         //Query the db
-		$temp = $query->get();
+		$temp = $query->paginate(5);
+        $temp->setPath(route('markets.filter'));
 
 		// add a menu to each market if user is logged in
 		if(Auth::check())
 		{
 			foreach ($temp as $market)
 			{
-				marketCRUD::addMarketMenu($market);
+				marketMenu::addMarketMenu($market);
 			}
 		}
 
-        //Why is this here?
+        //Why is this here?n To save user input when redirecting back...
 		Input::flash();
-		return view('markets.index', ['markets' => $temp]);
+		return view('markets.index', [
+            'markets' => $temp,
+            'marketCommon' => $this->marketCommon
+        ]);
 	}
 
     public function search()

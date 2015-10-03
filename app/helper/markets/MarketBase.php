@@ -20,9 +20,10 @@ use market\helper\text;
 
 abstract class MarketBase
 {
+    protected $marketCommon;
     public function __construct()
     {
-
+        $this->marketCommon = new common();
     }
 
     //region Create
@@ -148,6 +149,7 @@ abstract class MarketBase
 
             return view('markets.' . $this->routeBase .'.show', [
                 'market'=>$market,
+                'marketCommon' => $this->marketCommon,
             ]);
         }
         else
@@ -480,34 +482,6 @@ abstract class MarketBase
             }
 
             $market['marketmenu'] = $temp;
-        }
-    }
-
-    //endregion
-
-    //region Market Type
-    private static $marketTypes = [
-        '0' => 'Säljes',
-        '1' => 'Köpes',
-        '2' => 'Bytes',
-        '3' => 'Skänkes',
-        '4' => 'Auktion',
-    ];
-
-    public static function getAllMarketTypes()
-    {
-        return self::$marketTypes;
-    }
-
-    public static function getMarketTypeName($number)
-    {
-        if(self::$marketTypes[$number] != null)
-        {
-            return self::$marketTypes[$number];
-        }
-        else
-        {
-            abort('404', 'Number is not a market type');
         }
     }
 

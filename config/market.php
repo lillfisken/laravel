@@ -39,5 +39,7 @@ return [
             'key' => 'cnt7jftaGtcA0wnPaOmyqGORoCApjJHru5oTgPgtHFjEyrL8DTuocabyOBYXLkxNYeiBzl3IXnhDMmBBLxRpNr02humSPkbL1H0iIG1lSL4z7ViLU6V7AiGcShqUCnUQVrFVv3Cw9uSK29bpM9IaFR85C3YLYDteuiQI11pnprVoFXbKCwwls3e6M51GAKu20CARy3vec9GCr1ZfXcSXen0QfXFJyDgAIoLPhfFJ3OoOTPkmkb3fax9gZVwI8f9',
         ],
     ],
+
+    'paginationNr' => env('PAGINATION_NR_OF', 5),
 ];
 

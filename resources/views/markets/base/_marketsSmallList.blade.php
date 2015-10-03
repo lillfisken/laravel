@@ -1,6 +1,6 @@
 <p>
-    Paginering << < 1 2 3 |4| 5 6 7 > >>
-    {{--{!! $markets->render() !!}--}}
+    {{--Paginering << < 1 2 3 |4| 5 6 7 > >>--}}
+    {!! $markets->render() !!}
 </p>
 
 @foreach($markets as $market)
@@ -34,5 +34,6 @@
 @endforeach
 
 <p>
-    Paginering << < 1 2 3 |4| 5 6 7 > >>
+    {{--Paginering << < 1 2 3 |4| 5 6 7 > >>--}}
+    {!! $markets->render() !!}
 </p>

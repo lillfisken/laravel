@@ -8,6 +8,7 @@ class change extends MarketBase
 
     public function __construct()
     {
+        parent::__construct();
         $this->rules['price'] = 'not_in';
     }
 }

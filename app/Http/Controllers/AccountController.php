@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use market\helper\debug;
+use market\helper\markets\common;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
@@ -31,6 +32,14 @@ use Zjango\Laracurl\Facades\Laracurl;
 
 class AccountController extends Controller
 {
+    protected $marketCommon;
+
+    public function __construct()
+    {
+//        parent::__construct();
+        $this->marketCommon = new common();
+
+    }
     //region login/logout
     public function login()
     {
@@ -185,7 +194,7 @@ class AccountController extends Controller
     public function show($user)
     {
         //TODO::Change to show public userprofile
-
+        //TODO: Multiple pagination
 //        dd($user);
 
         $activeMarkets = Market::where('createdByUser', $user->id)->paginate(5);
@@ -221,7 +230,8 @@ class AccountController extends Controller
                 'user' => $user,
                 'activeMarkets' => $activeMarkets,
                 'inactiveMarkets' => $inactiveMarkets,
-                'phpBBs' => $phpBB
+                'phpBBs' => $phpBB,
+                'marketCommon' => $this->marketCommon,
             ]
         );
 //        $markets = Market::where('createdByUser', '=', Auth::id())->get();
@@ -343,8 +353,14 @@ class AccountController extends Controller
     {
         //dd('AccountController@active');
 
-        $markets = Market::where('createdByUser', Auth::id())->get();
-        //TODO: Market menus
+        $markets = Market::where('createdByUser', Auth::id())
+//            ->groupBy('created_at')
+//            ->get();
+            ->paginate(config('market.paginationNr'));
+        $markets->setPath(route('accounts.active'));
+
+//        dd($markets, config('market.paginationNr') );
+
         foreach($markets as $market)
         {
             marketMenu::addMarketMenu($market);
@@ -356,7 +372,10 @@ class AccountController extends Controller
 //            $market['marketmenu'] = $temp;
 //        }
 
-        return view('account.markets.active', ['markets' => $markets]);
+        return view('account.markets.active', [
+            'markets' => $markets,
+            'marketCommon' => $this->marketCommon,
+        ]);
     }
 
     /* Show user profile
@@ -371,15 +390,14 @@ class AccountController extends Controller
     public function trashed()
     {
         //dd('AccountController@trashed');
-        $markets = Market::onlyTrashed()->where('createdByUser', Auth::id())->get();
-        //TODO: Add market menu
+        $markets = Market::onlyTrashed()->where('createdByUser', Auth::id())
+            ->paginate(config('market.paginationNr'));
+        $markets->setPath(route('accounts.trashed'));
 
-//        foreach ($markets as $market) {
-//            $temp[] = array('text' => 'Aktivera', 'href' => route('markets.reactivate', $market->id));
-//
-//            $market['marketmenu'] = $temp;
-//
-//        }
+        foreach($markets as $market)
+        {
+            marketMenu::addMarketMenu($market);
+        }
 
         return view('account.markets.trashed', ['markets' => $markets]);
     }
