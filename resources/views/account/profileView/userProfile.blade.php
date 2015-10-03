@@ -42,9 +42,9 @@
                 <a href="tel:{{ $user->phone1 }}" class="btn">Ring {{ $user->phone1 }} </a>
             @endif
         </p>
-        <p>
-            Senaste inloggning: ???
-        </p>
+        {{--<p>--}}
+            {{--Senaste inloggning: ???--}}
+        {{--</p>--}}
 
         <hr/>
 

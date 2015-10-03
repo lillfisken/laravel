@@ -399,7 +399,10 @@ class AccountController extends Controller
             marketMenu::addMarketMenu($market);
         }
 
-        return view('account.markets.trashed', ['markets' => $markets]);
+        return view('account.markets.trashed', [
+            'markets' => $markets,
+            'marketCommon' => $this->marketCommon,
+        ]);
     }
 
     /* Show user profile
@@ -415,6 +418,7 @@ class AccountController extends Controller
     {
         //dd('AccountController@blockedmarked');
 
+        abort(501);
         return view('account.markets.blockedMarkets');
     }
 
@@ -430,7 +434,7 @@ class AccountController extends Controller
     public function blockedseller($user)
     {
 //        dd('AccountController@blockedseller');
-
+        abort(501);
         return view('account.markets.blockedSellers');
     }
 
