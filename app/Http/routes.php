@@ -209,8 +209,7 @@ if(Config::get('app.debug') == 'true')
         echo '<a href="/market/public/index.php/dev/testAuctionHelper">Test AuctionHelper</a></br>';
         echo '<a href="/market/public/index.php/dev/classmap">Class map</a></br>';
         echo '<a href="/market/public/index.php/dev/testResponse">Test response</a></br>';
-
-
+        echo '<a href="/market/public/index.php/dev/endAuction">End auction</a></br>';
     });
     Route::get('dev/list', function(){
         $root = '/home/saljdemo/market/';
@@ -484,6 +483,14 @@ if(Config::get('app.debug') == 'true')
         return 'return get response';
 ////        echo ('echo get response');
 //        dd('getResponse');
+    });
+
+    Route::get('dev/endAuction', function() {
+        $auction = \market\Market::where('marketType', 4)
+            ->where('endingAt', '<', time())
+            ->delete();
+
+        dd($auction);
     });
 
     //http://stackoverflow.com/questions/19131731/laravel-4-logging-sql-queries

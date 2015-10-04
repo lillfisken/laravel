@@ -1,0 +1,5 @@
+cronjob
+php >= 5.???
+write permissions to ???
+cUrl
+mod_rewrite

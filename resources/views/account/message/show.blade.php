@@ -17,11 +17,12 @@
         {!! Form::hidden('conversationId', $messages->first()->conversation->id ) !!}
         {!! Form::textarea('message', null, ['class' => 'form-input']) !!}<br/>
 
-        {!! Form::submit('Förhandsgranska (ej inplementerad)', ['class' => '']) !!}
-        {!! Form::submit('Skicka', ['class' => '']) !!}
+        {!! Form::submit('Förhandsgranska (ej inplementerad)', ['class' => 'btnSmall']) !!}
+        {!! Form::submit('Skicka', ['class' => 'btnSmall']) !!}
 
         {!! Form::close() !!}
         <hr/>
+        {!! $messages->render() !!}
         @foreach($messages as $message)
             <div class="list-row">
                 <h4 class="inline">{{ $message->sender->username or 'null' }}
@@ -34,5 +35,6 @@
                 </p>
             </div>
         @endforeach
+        {!! $messages->render() !!}
     </div>
 @stop

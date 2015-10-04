@@ -38,7 +38,10 @@ class MessageController extends Controller
 
         $conversations = Conversation::where('user1', Auth::id())->
             orWhere('user2', Auth::id())
-            ->with('messages.sender', 'getUser1', 'getUser2')->get();
+            ->with('messages.sender', 'getUser1', 'getUser2')
+            ->paginate(config('market.paginationNr'));
+        $conversations->setPath(route('message.inbox'));
+//            ->get();
 //        dd($conversations);
 
         foreach($conversations as $conversation)
@@ -69,9 +72,10 @@ class MessageController extends Controller
         $messages = Message::where('conversationId', '=', $conversationId)
             ->orderBy('created_at', 'desc')
             ->with(['sender', 'Conversation'])
-            ->get();
+            ->paginate(config('market.paginationNr'));
+        $messages->setPath(route('message.show', [$conversationId]));
 
-        $unread = Message::where('conversationId', '=', $conversationId)
+        Message::where('conversationId', '=', $conversationId)
             ->where('senderId', '!=', Auth::id())
             ->where('read', '=', 0)
             ->update(['read' => 1]);

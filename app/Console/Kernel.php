@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use market\helper\cron;
 
 class Kernel extends ConsoleKernel {
 
@@ -22,8 +23,16 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('inspire')
+        $cron = new cron();
+
+        $cron->endOldAuctions();
+
+        $schedule->command('inspire')
 				 ->hourly();
+        $schedule->call(function() use($cron) {
+//            $cron->endOldAuctions();
+//            $cron->cronIsWorking();
+        })->name('cron5')->withoutOverlapping()->everyFiveMinutes();
 	}
 
 }

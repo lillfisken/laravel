@@ -68,6 +68,7 @@
             -> Cronjob, radera temp bilder äldre än 1 dygn<br/>
             -> Möjlighet att redigera kontaktsätt<br/>
             -> Cron: Radera gamla phpBBConnect...
+            -> Add cron job: http://laravel.com/docs/5.0/artisan#scheduling-artisan-commands
         </p>
         <hr/>
         <p>

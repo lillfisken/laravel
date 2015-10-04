@@ -59,6 +59,7 @@ class auction extends MarketBase
                 'bidCount' => $bidCount,
                 'bidHighest' => $bidHighest,
                 'yourBid' => $yourBid,
+                'marketCommon' => $this->marketCommon,
             ]);
         }
         else

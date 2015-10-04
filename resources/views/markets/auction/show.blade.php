@@ -2,11 +2,11 @@
 
 @section('priceInfo')
     <h2 id="higestBid" class="market-title">{{ preg_replace('/(\.000*)/', '', $bidHighest > 0 ? $bidHighest : $market->price) }}:-</h2>
-    <h4>{{ market\helper\markets\MarketBase::getMarketTypeName($market->marketType) }}</h4>
+    <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
     @if($market->deleted_at != null)
         <h3>
             Avslutad<br/>
-            <small>{{ market\helper\market::getEndReasonName($market->endReason) }},
+            <small>{{ $marketCommon->getEndReasonName($market->endReason) }},
                 {{ $market->deleted_at }}</small>
         </h3>
             <p>
@@ -16,7 +16,7 @@
         Utropspris: {{ preg_replace('/(\.000*)/', '',$market->price) }}:- <br/>
         Högsta bud: {{ preg_replace('/(\.000*)/', '', $bidHighest) }}:- <br/>
         <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">Antal budgivare: {{ $bidCount }}</a><br>
-        Slutar: {{ $market->end_at }}
+        Slutar: {{ $market->endingAt }}
         <hr/>
         @if(isset($preview) && $preview == true)
             <h4>Förhandsgranskning</h4>
