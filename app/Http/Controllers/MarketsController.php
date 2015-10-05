@@ -74,26 +74,32 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index()
 	{
+        $auctionHelper = new \market\helper\markets\auction();
+//        dd('index', Auth::id(), Auth::check());
+
+        $markets = Market::select()
+            ->with('User')
+            ->paginate(config('market.paginationNr'), 20);
+        $markets->setPath(route('markets.index'));
+
         if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
 
 //			$temp = Market::select()->with('User')->get();
-			$temp = Market::select()
-                ->with('User')
-                ->paginate(config('market.paginationNr'), 20);
-//            $temp->setPath('/market/public/index.php/market');
-            $temp->setPath(route('markets.index'));
+//			$temp = Market::select()
+//                ->with('User')
+//                ->paginate(config('market.paginationNr'), 20);
+//            $temp->setPath(route('markets.index'));
 
             $sellHelper = new \market\helper\markets\sell();
             $buyHelper = new \market\helper\markets\buy();
             $changeHelper = new \market\helper\markets\change();
             $giveawayHelper = new \market\helper\markets\giveaway();
-            $auctionHelper = new \market\helper\markets\auction();
 
 			//Set menu for each market
-			foreach ($temp as $market)
+			foreach ($markets as $market)
 			{
                 //TODO: Different menus for different market types
                 switch($market->marketType)
@@ -125,12 +131,22 @@ class MarketsController extends ControllerMarket {
                 }
 			}
 		}
-		else {
-			$temp = Market::all();
-		}
+//		else {
+////            dd('else');
+//			$temp = Market::select('*')->paginate(config('market.paginationNr'), 20);
+////            $temp = Market::all();
+////            dd('else', $temp);
+//        }
+
+        foreach($markets as $market)
+        {
+            $auctionHelper->setHighestBid($market);
+        }
+        //TODO: add highest bid
+//        dd($markets);
 
 		return view('markets.index', [
-            'markets' => $temp,
+            'markets' => $markets,
             'marketCommon' => $this->marketCommon
         ]);
 	}

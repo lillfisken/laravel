@@ -16,7 +16,7 @@
         Utropspris: {{ preg_replace('/(\.000*)/', '',$market->price) }}:- <br/>
         Högsta bud: {{ preg_replace('/(\.000*)/', '', $bidHighest) }}:- <br/>
         <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">Antal budgivare: {{ $bidCount }}</a><br>
-        Slutar: {{ $market->endingAt }}
+        Slutar: {{ $market->end_at }}
         <hr/>
         @if(isset($preview) && $preview == true)
             <h4>Förhandsgranskning</h4>

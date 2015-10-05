@@ -522,7 +522,7 @@ class MarketsTableSeeder extends Seeder {
             'deleted_at' => '2015-01-24 19:50:40',
 
             'marketType' => '4',
-            'endingAt' => '2015-11-23 19:31:12',
+            'end_at' => '2015-11-23 19:31:12',
 //			'contact_options' => 'mail',
 
             'contactMail' => true,
@@ -558,7 +558,7 @@ class MarketsTableSeeder extends Seeder {
             'updated_at' => '2015-01-23 19:50:40',
 
             'marketType' => '4',
-            'endingAt' => '2015-11-23 19:31:12',
+            'end_at' => '2015-11-23 19:31:12',
 //			'contact_options' => 'mail',
 
             'contactMail' => 'true',

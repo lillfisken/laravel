@@ -210,6 +210,7 @@ if(Config::get('app.debug') == 'true')
         echo '<a href="/market/public/index.php/dev/classmap">Class map</a></br>';
         echo '<a href="/market/public/index.php/dev/testResponse">Test response</a></br>';
         echo '<a href="/market/public/index.php/dev/endAuction">End auction</a></br>';
+        echo '<a href="/market/public/index.php/dev/ddAuction">dd auction</a></br>';
     });
     Route::get('dev/list', function(){
         $root = '/home/saljdemo/market/';
@@ -489,6 +490,13 @@ if(Config::get('app.debug') == 'true')
         $auction = \market\Market::where('marketType', 4)
             ->where('endingAt', '<', time())
             ->delete();
+
+        dd($auction);
+    });
+
+    Route::get('dev/ddAuction', function() {
+        $auction = \market\Market::where('marketType', 4)
+            ->get();
 
         dd($auction);
     });

@@ -36,7 +36,6 @@ abstract class MarketBase
 //        $this->clearSession();
 //
 //        return marketCRUD::save($input, 'auction.show');
-
 //        dd('saveFromCreateForm', $input);
         $input = text::marketFromBbToHtml($input);
 //        dd('saveFromCreateForm, after marketFromBbToHtml', $input);
@@ -49,6 +48,8 @@ abstract class MarketBase
 
 //        dd($market, $this->routeBase);
         $this->save($market);
+
+//        dd($input, $market);
 
 //        dd($market, $this->routeBase, $market->id);
 

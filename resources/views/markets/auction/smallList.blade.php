@@ -17,13 +17,18 @@
     </div>
 
     <div class="market-list-rows-price">
-        <h3>Högsta bud eller 0:-</h3>
+{{--        <h3>{{ $market->bidHighest }}</h3>--}}
+        <h3>@if(isset($market->bidHighest))
+                Bud: {{ preg_replace('/(\.000*)/', '', $market->bidHighest) }}:-
+            @else
+                {{ preg_replace('/(\.000*)/', ':-', $market->price) }}
+            @endif</h3>
         <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
         <hr/>
         <p>
             Utropspris: {{ preg_replace('/(\.000*)/', ':-', $market->price) }}<br/>
             Antal bud: {{ $market->bids->count() }}<br/>
-            Slutar: {{ $market->endingAt }}
+            Slutar: {{ $market->end_at }}
 
         </p>
         @if(isset($market->deleted_at))

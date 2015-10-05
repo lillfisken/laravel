@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use market\Bid;
 use market\Market as MarketModel;
 
 
@@ -104,5 +105,25 @@ class auction extends MarketBase
     }
 
     //endregion
+
+    public function setHighestBid($auction)
+    {
+//        dd($auction);
+        //TODO: Add highest bid in market db
+//        dd($auction->id);
+        if($auction->marketType == 4)
+        {
+            $bids = Bid::where('auctionId', $auction->id)->get();
+//        dd($bids, $bids->count());
+            $bidHighest = null;
+            if($bids->count() > 0)
+            {
+                $bidHighest = $bids->sortByDesc('bid')->first()->bid;
+            }
+
+            $auction['bidHighest'] = $bidHighest;
+        }
+
+    }
 
 }
