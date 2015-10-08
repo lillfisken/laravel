@@ -21,7 +21,8 @@ class ViewComposerProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('layout.menuTest', 'market\helper\menu');
+        View::composer('layout.menuTest', 'market\ViewComposers\menu');
+        View::composer('*', 'market\ViewComposers\all');
 //        // Using class based composers...
 //        View::composer('profile', 'App\Http\ViewComposers\ProfileComposer');
 //

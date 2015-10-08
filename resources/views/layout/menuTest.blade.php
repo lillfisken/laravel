@@ -71,7 +71,7 @@
     </li>
 
     <li class="text right">
-        {{ $time }}
+        {{ $time->getTimeString() }}
     </li>
 
 </ul>

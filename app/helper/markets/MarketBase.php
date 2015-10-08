@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use market\helper\time;
 use market\Market as MarketModel;
 use market\User;
 use market\helper\images;
@@ -21,9 +22,12 @@ use market\helper\text;
 abstract class MarketBase
 {
     protected $marketCommon;
+    protected $time;
+
     public function __construct()
     {
         $this->marketCommon = new common();
+        $this->time = new time();
     }
 
     //region Create
@@ -37,6 +41,15 @@ abstract class MarketBase
 //
 //        return marketCRUD::save($input, 'auction.show');
 //        dd('saveFromCreateForm', $input);
+        if(isset($input['end_at']))
+        {
+            $set = true;
+            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+//            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+//            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
+        }
+
         $input = text::marketFromBbToHtml($input);
 //        dd('saveFromCreateForm, after marketFromBbToHtml', $input);
 
@@ -46,9 +59,22 @@ abstract class MarketBase
         $market = new MarketModel($input);
         $market['createdByUser'] = Auth::id();
 
+//        if(isset($market->end_at))
+//        {
+//            $set = true;
+//            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($market->end_at);
+//            $market->end_at = $this->time->parseTimeAndDateFromStringToUnix($market->end_at);
+////            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+////            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
+//        }
+
+//        dd($market, isset($market->end_at));
+
+
 //        dd($market, $this->routeBase);
         $this->save($market);
 
+//        dd($set, $parsedTime, $market);
 //        dd($input, $market);
 
 //        dd($market, $this->routeBase, $market->id);
@@ -503,14 +529,14 @@ abstract class MarketBase
 
     public static function getEndReasonName($number)
     {
-        if(self::$endreasons[$number] != null)
-        {
-            return self::$endreasons[$number];
-        }
-        else
-        {
-            abort('404', 'Number is not a market end type');
-        }
+//        if(self::$endreasons[$number] != null)
+//        {
+//            return self::$endreasons[$number];
+//        }
+//        else
+//        {
+//            abort('404', 'Number is not a market end type');
+//        }
     }
     //endregion
 

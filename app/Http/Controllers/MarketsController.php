@@ -142,8 +142,6 @@ class MarketsController extends ControllerMarket {
         {
             $auctionHelper->setHighestBid($market);
         }
-        //TODO: add highest bid
-//        dd($markets);
 
 		return view('markets.index', [
             'markets' => $markets,
@@ -190,7 +188,7 @@ class MarketsController extends ControllerMarket {
 		}
 
         //Query the db
-		$temp = $query->paginate(5);
+		$temp = $query->paginate(config('market.paginationNr'), 20);
         $temp->setPath(route('markets.filter'));
 
 		// add a menu to each market if user is logged in
@@ -229,6 +227,8 @@ class MarketsController extends ControllerMarket {
 				marketCRUD::addMarketMenu($market);
 			}
 
+            //TODO: Flash filter data
+
             return view('markets.index', ['markets' => $result]);
         }
 
@@ -260,6 +260,11 @@ class MarketsController extends ControllerMarket {
         $question->save();
 
         return Redirect::back();
+    }
+
+    public function getAuctionEndTime($auctionId)
+    {
+
     }
 
 }

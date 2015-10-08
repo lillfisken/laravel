@@ -53,6 +53,12 @@ class Market extends Model {
         'end_at',
 	];
 
+    public function getDates()
+    {
+        return ['created_at', 'updated_at', 'deleted_at', 'end_at'];
+//        return ['created_at', 'updated_at', 'deleted_at', 'end_at'];
+    }
+
 	/*
 	 * Add navigation for user connected with market
 	*/

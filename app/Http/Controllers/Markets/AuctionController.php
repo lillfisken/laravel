@@ -1,6 +1,7 @@
 <?php namespace market\Http\Controllers\Markets;
 
 use Chromabits\Purifier\Purifier;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use market\Http\Requests;
@@ -24,6 +25,7 @@ class AuctionController extends BaseController {
 
     //region Bids
 
+    //TODO: Move to bid controller
     public function placeBid(BidRequest $request)
     {
         //TODO: BidRequest
@@ -49,4 +51,9 @@ class AuctionController extends BaseController {
     }
 
     //endregion
+
+    public function getAuctionEndTimeJson($auctionId)
+    {
+        return new JsonResponse(['ending' => 12345679123]) ;
+    }
 }

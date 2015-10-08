@@ -6,7 +6,7 @@
     @if($market->deleted_at != null)
         <h3>
             Avslutad<br/>
-            <small>{{ $marketCommon->getEndReasonName($market->endReason) }},
+            <small>Avslutad {{-- $marketCommon->getEndReasonName($market->endReason) --}},
                 {{ $market->deleted_at }}</small>
         </h3>
             <p>
@@ -17,6 +17,7 @@
         Högsta bud: {{ preg_replace('/(\.000*)/', '', $bidHighest) }}:- <br/>
         <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">Antal budgivare: {{ $bidCount }}</a><br>
         Slutar: {{ $market->end_at }}
+{{--        Slutar: {{ $time->parseTimeAndDateFromUnixToString($market->end_at) }}--}}
         <hr/>
         @if(isset($preview) && $preview == true)
             <h4>Förhandsgranskning</h4>

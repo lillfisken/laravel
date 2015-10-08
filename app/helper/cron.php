@@ -12,6 +12,14 @@ namespace market\helper;
 use Illuminate\Support\Facades\Log;
 
 class cron {
+
+    protected $time;
+
+    public function __construct()
+    {
+        $this->time = new time();
+    }
+
     public function cleanOldPhpBBConnect()
     {
 
@@ -19,14 +27,15 @@ class cron {
 
     public function endOldAuctions()
     {
-        $deleted = $auction = \market\Market::where('marketType', 4)
-            ->where('endingAt', '<', time())
+//        Log::debug('cron -> end old auctions');
+        $deleted = \market\Market::where('marketType', 4)
+            ->where('end_at', '<', $this->time->getTimeUnix())
             ->delete();
 
-        if($deleted > 0)
-        {
+//        if($deleted > 0)
+//        {
             Log::debug('cron -> end old auctions. Deleted: ' . $deleted);
-        }
+//        }
     }
 
     public function cronIsWorking()
