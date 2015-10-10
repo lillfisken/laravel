@@ -1,5 +1,6 @@
 <?php namespace market\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use market\Conversation;
 use market\Http\Requests;
@@ -36,13 +37,28 @@ class MessageController extends Controller
     {
         //$conversations = Conversation::with(['messages.sender'])->get();
 
-        $conversations = Conversation::where('user1', Auth::id())->
-            orWhere('user2', Auth::id())
+//        $conversations = DB::table('conversations')
+//            ->join('messages', function($join){
+//                $join->on('conversations.id', '=', 'messages.conversationId')
+//                    ->where('conversations.user1', '=', Auth::id())
+//                    ->orWhere('conversations.user2', '=', Auth::id());
+////                    ->where('messages.read', '=', '0');
+//            })
+////            ->with('messages.sender', 'getUser1', 'getUser2')
+////            ->orderBy('created_at')
+////            ->distinct('id')
+//            ->paginate(config('market.paginationNr'));
+////            ->get();
+////        dd($conversations);
+
+        $conversations = Conversation::
+            where('user1', Auth::id())
+            ->orWhere('user2', Auth::id())
             ->with('messages.sender', 'getUser1', 'getUser2')
             ->paginate(config('market.paginationNr'));
         $conversations->setPath(route('message.inbox'));
-//            ->get();
-//        dd($conversations);
+
+//        $latest = [];
 
         foreach($conversations as $conversation)
         {
@@ -59,7 +75,37 @@ class MessageController extends Controller
             $conversation['unread'] = $unread;
             $conversation['username1'] = $conversation->getUser1->username;
             $conversation['username2'] = $conversation->getUser2->username;
+
+            $conversation['latestMessage'] = $conversation->messages->last()->created_at->timestamp;
+//            $conversation['sender'] = $conversation->messages->last()->User;
+            $conversation['sender'] = $conversation->messages->last()->sender->username;
+//            dd($conversation->sender);
+//            $conversation['latestMessage'] = $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp;
+
+//            dd($conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp,
+//                $conversation->messages->first()->created_at->timestamp);
+
+//            dd($conversation);
+//            $conversation->messages->sortBy('created_at');
+
+//            $conversation = $conversation->messages->sortByDesc(function($message){
+//                return $message->created_at;
+//            });
+
+//            array_push($latest, 'Message non ordered' . $conversation->messages->first()->created_at->timestamp);
+//            array_push($latest, 'Message ordered' . $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp);
+//            array_add($latest, 'Message non ordered', $conversation->messages->first()->created_at->timestamp);
+//            array_add($latest, 'Message ordered', $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp);
+
+//            dd($conversation    );
         }
+
+//        dd($latest);
+
+        //sort converations by conversation->messages->newest
+
+        $conversations->sortByDesc('latestMessage');
+//        dd($conversations);
 //        dd($conversations);
 
 //        dd('Auth: ' . Auth::id(),
@@ -79,22 +125,6 @@ class MessageController extends Controller
             ->where('senderId', '!=', Auth::id())
             ->where('read', '=', 0)
             ->update(['read' => 1]);
-
-//        $save = 0;
-//        foreach($unread as $m)
-//        {
-//            if($m->read == 0)
-//            {
-//                $m->read = 1;
-//                $save = 1;
-//            }
-//        }
-//        if($save == 1)
-//        {
-////            $unread->save();
-//        }
-
-//        dd($messages, $unread);
 
         return view('account.message.show', ['messages' => $messages]);
     }
@@ -184,6 +214,10 @@ class MessageController extends Controller
                     return Redirect::back()->withInput()->with(['message' => 'Hittar inte användaren ' . $request->input('reciever')]);
                 }
 //                $c->user2 = get user id from reciever, if not found, redirect back with message
+                if($c->user1 == $c->user2)
+                {
+                    return Redirect::back()->withInput()->with(['message' => 'Du kan inte skicka meddelande till dig själv ' . $request->input('reciever')]);
+                }
 
 //                dd($c);
                 $c->save();

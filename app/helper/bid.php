@@ -18,7 +18,7 @@ class bid
             //If auction is due to end at in 10 minutes
             //Extend auction with 10 minutes
 
-            $market->end_at = date('Y-m-d H:i:s', strtotime($market->end_at) + 60*10);
+            $market->end_at = $market->end_at->timestamp + 60*10;
             $market->save();
         }
 

@@ -18,8 +18,9 @@
                                 <span class="badge">{{ $conversation->unread }}</span>
                             @endif
                         </h3>
-                        <small class="align-right">Senaste meddelande {{ $conversation->messages->last()->created_at }},
-                            {{ $conversation->messages->last()->sender->username }}</small>
+                        <small class="align-right">Senaste meddelande {{ $time->parseTimeAndDateFromUnixToString($conversation->latestMessage) }},
+                        {{--<small class="align-right">Senaste meddelande {{ $conversation->messages->last()->created_at }},--}}
+                            {{ $conversation->sender }}</small>
                         <p>
                             {{--{{ $conversation->user1()->get()->first()->username }},--}}
                             {{--{{ $conversation->user2()->get()->first()->username }},--}}

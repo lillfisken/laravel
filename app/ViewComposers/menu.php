@@ -49,6 +49,34 @@ class menu {
                 ->distinct()
                 ->count();
 
+//            dd(DB::table('messages')
+//                ->join('conversations', function($join){
+//                    $join->on('conversations.id', '=', 'messages.conversationId')
+//                        ->where('conversations.user1', '=', Auth::id())
+//                        ->orWhere('conversations.user2', '=', Auth::id());
+////                    ->where('messages.read', '=', '0');
+//                })
+//                ->where('messages.read', '=', '0')
+//                ->where('messages.senderId', '!=', Auth::id())
+//                ->distinct()
+////                ->count('messages.id')
+//                ->toSql(),
+//
+//                DB::table('messages')
+//                    ->join('conversations', function($join){
+//                        $join->on('conversations.id', '=', 'messages.conversationId')
+//                            ->where('conversations.user1', '=', Auth::id())
+//                            ->orWhere('conversations.user2', '=', Auth::id());
+////                    ->where('messages.read', '=', '0');
+//                    })
+//                    ->where('messages.read', '=', '0')
+//                    ->where('messages.senderId', '!=', Auth::id())
+//                    ->distinct()
+//                ->get(),
+//
+//                'Auth: ' .  Auth::id(),
+//                'Unread: ' . $unread);
+
             $view->with('unreadMessages', $unread);
             $view->with('username', Auth::user()->username);
 //            $view->with('time', $this->time->getTimeString());
