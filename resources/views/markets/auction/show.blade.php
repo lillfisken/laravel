@@ -16,7 +16,11 @@
         Utropspris: {{ preg_replace('/(\.000*)/', '',$market->price) }}:- <br/>
         Högsta bud: {{ preg_replace('/(\.000*)/', '', $bidHighest) }}:- <br/>
         <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">Antal budgivare: {{ $bidCount }}</a><br>
-        Slutar: {{ $market->end_at }}
+        Slutar: <span id="auction-end"
+                      data-unix="{{ $market->end_at_unix }}"
+                      data-url="{{ route('api.getAuctionEndTime', [$market->id]) }}">
+                    {{ $time->parseTimeAndDateFromUnixToString($market->end_at->timestamp) }}
+                </span>
 {{--        Slutar: {{ $time->parseTimeAndDateFromUnixToString($market->end_at) }}--}}
         <hr/>
         @if(isset($preview) && $preview == true)
@@ -59,9 +63,9 @@
 
     <p>
         <small>
-            Inlagd {{ $market->created_at }}<br/>
+            Inlagd {{ $time->parseTimeAndDateFromUnixToString($market->created_at->timestamp) }}<br/>
             @if($market->created_at != $market->updated_at)
-                <br/>Senast uppdaterad {{ $market->updated_at }}
+                <br/>Senast uppdaterad {{ $time->parseTimeAndDateFromUnixToString($market->updated_at->timestamp) }}
             @endif
         </small>
     </p>

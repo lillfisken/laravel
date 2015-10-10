@@ -46,6 +46,7 @@
         {{--<script src="/market/public/script/pgwslideshow.js"></script>--}}
         <script src="/market/public/script/okg.js"></script>
         <script src="/market/public/script/okgBB.js"></script>
+        <script src="/market/public/script/okAuction.js"></script>
         <script src="/market/public/script/myJS.js"></script>
 	</head>
 

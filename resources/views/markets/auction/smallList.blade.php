@@ -28,11 +28,11 @@
         <p>
             Utropspris: {{ preg_replace('/(\.000*)/', ':-', $market->price) }}<br/>
             Antal bud: {{ $market->bids->count() }}<br/>
-            Slutar: {{ $market->end_at }}
+            Slutar: {{ $time->parseTimeAndDateFromUnixToString($market->end_at->timestamp) }}
 
         </p>
         @if(isset($market->deleted_at))
-            <h3>Avslutad {{ $market->deleted_at }}</h3>
+            <h3>Avslutad {{ $time->parseTimeAndDateFromUnixToString($market->deleted_at->timestamp) }}</h3>
             <p>
                 Högsta bud:
             </p>

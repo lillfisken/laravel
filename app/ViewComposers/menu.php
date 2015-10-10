@@ -25,11 +25,11 @@ class menu {
         $this->time = new time();
     }
 
-    public function getTimeAsString()
-    {
-//        return time();
-        return $this->time->getTimeString();
-    }
+//    public function getTimeAsString()
+//    {
+////        return time();
+//        return $this->time->getTimeString();
+//    }
 
     public function compose(View $view)
     {
@@ -51,6 +51,8 @@ class menu {
 
             $view->with('unreadMessages', $unread);
             $view->with('username', Auth::user()->username);
+//            $view->with('time', $this->time->getTimeString());
+//            $view->with('unixTime', $this->time->getTimeUnix());
 
             //TODO: Watched
         }

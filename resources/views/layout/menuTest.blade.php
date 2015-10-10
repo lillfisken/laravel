@@ -71,9 +71,7 @@
     </li>
 
     <li class="text right">
-        {{ $time->getTimeString() }}
+        <span id="time" data-unix="{{ $time->getTimeUnix() }}"> {{ $time->getTimeString() }} </span>
     </li>
 
 </ul>
-
-{{--<div style="float: right">{{ $time }}</div>--}}

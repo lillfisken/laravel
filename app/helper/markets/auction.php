@@ -55,6 +55,8 @@ class auction extends MarketBase
             //TODO: Add market menu
             $this->addMarketMenu($auction);
 
+            $auction->end_at_unix = $auction->end_at->timestamp;
+//            dd($auction->end_at);
             return view('markets.auction.show', [
                 'market'=>$auction,
                 'bidCount' => $bidCount,
@@ -65,7 +67,7 @@ class auction extends MarketBase
         }
         else
         {
-            dd('Null or not auction');
+//            dd('Null or not auction');
             abort(404);
         }
     }

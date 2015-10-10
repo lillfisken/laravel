@@ -14,8 +14,16 @@ use market\helper\time;
 
 class all
 {
+    protected $time;
+
+    public function __construct()
+    {
+        $this->time = new time();
+//        dd('all view composer', $this->time);
+    }
+
     public function compose(View $view)
     {
-        $view->with('time', new time());
+        $view->with('time', $this->time);
     }
 }

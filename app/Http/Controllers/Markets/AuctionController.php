@@ -4,6 +4,7 @@ use Chromabits\Purifier\Purifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use market\Bid;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\helper;
@@ -54,6 +55,15 @@ class AuctionController extends BaseController {
 
     public function getAuctionEndTimeJson($auctionId)
     {
-        return new JsonResponse(['ending' => 12345679123]) ;
+//        $higestBid = Bid::select('bid')->where('auctionId', $auctionId)->orderBy('bid', 'decs')->first();
+        $market = Market::where('id', $auctionId)->first();
+        if($market)
+        {
+            return new JsonResponse(['end_at' => $market->end_at->timestamp ]) ;
+        }
+        else
+        {
+            return new JsonResponse(['end_at' => null]) ;
+        }
     }
 }

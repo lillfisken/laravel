@@ -11,6 +11,9 @@ namespace market\helper;
 
 class time {
 
+    protected $timeFormat = 'H:i';
+    protected $timeAndDateFormat = 'Y-m-d H:i';
+
     public function __construct()
     {
         date_default_timezone_set(env('TIMEZONE', 'Europe/Stockholm'));
@@ -23,7 +26,8 @@ class time {
 
     public function getTimeString()
     {
-        return date('H:i:s', time());
+//        dd('time, get time string', date('H:i:s', time()));
+        return date($this->timeFormat, time());
     }
 
     public function getTimeAndDateString()
@@ -41,13 +45,13 @@ class time {
         return strtotime($timeAndDate);
     }
 
-    public function parseTimeFromUnixToString()
+    public function parseTimeFromUnixToString($unixTime)
     {
-        abort(501);
+        return date($this->timeFormat, $unixTime);
     }
 
     public function parseTimeAndDateFromUnixToString($unixTime)
     {
-        return date('H:i:s', $unixTime);
+        return date($this->timeAndDateFormat, $unixTime);
     }
 }
