@@ -62,6 +62,14 @@
                 <p class="alert">{{ Session::get('message') }}</p>
                 <div class="row-divider"></div>
             @endif
+            @if(Session::has('notification'))
+                <p class="notification">{{ Session::get('notification') }}</p>
+                <div class="row-divider"></div>
+            @endif
+            {{--@if(isset($notification))--}}
+                {{--<p class="notification">{{ $notification }}</p>--}}
+                {{--<div class="row-divider"></div>--}}
+            {{--@endif--}}
 			
 			<div id="menu">
 				<div class="borderbox">

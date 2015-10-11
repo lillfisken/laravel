@@ -473,14 +473,32 @@ class AccountController extends Controller
         $input['presentation'] = text::bbCodeToHtml($input['presentation']);
 
         //TODO: Purify input
+        $checkboxes = [
+            'mailNewPm',
+            'mailNewBidMyAuction',
+            'mailMyAuctionEnded',
+            'mailAuctionWatched',
+            'mailMarketEnded'
+        ];
+
+        foreach($checkboxes as $checkbox)
+        {
+            if(!$userSettingsRequest->has($checkbox))
+            {
+                $input[$checkbox] = 0;
+            }
+        }
 
         $user->fill($input);
-
+//        dd($userSettingsRequest, $user);
         $user->save();
 
         $user['presentation'] = text::htmlToBbCode($user['presentation']);
 
-        return view('account.settings.settings', ['user' => $user])->withMessage('Inställningar sparade');
+        return Redirect::route('accounts.settings.settings')
+            ->with('user', $user)
+            ->with('notification', 'Inställningar sparade');
+//        return view('account.settings.settings', ['user' => $user, 'notification' => 'Inställningar sparade']);//->with('message', 'Inställningar sparade');
     }
 
     public function newPassword()

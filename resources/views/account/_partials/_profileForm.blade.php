@@ -97,3 +97,39 @@
     </td>
 </tr>
 <tr><td colspan="2"><hr/></td></tr>
+<tr>
+    <td colspan="2">
+        <h3>Kontakt</h3>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        {!! Form::label('mailNewPm', 'Skicka mail vid nytt PM') !!}
+        {!! Form::checkbox('mailNewPm', '1', true) !!}
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        {!! Form::label('mailNewBidMyAuction', 'Skicka mail vid nytt bud på någon av mina auktioner') !!}
+        {!! Form::checkbox('mailNewBidMyAuction', '1', true) !!}
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        {!! Form::label('mailMyAuctionEnded', 'Skicka mail när någon av mina auktioner avslutas') !!}
+        {!! Form::checkbox('mailMyAuctionEnded', '1', true) !!}
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        {!! Form::label('mailAuctionWatched', 'Skicka mail vid nytt bud på auktion jag bevakar') !!}
+        {!! Form::checkbox('mailAuctionWatched', '1', true) !!}
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        {!! Form::label('mailMarketEnded', 'Skicka mail när auktion/annons jag bevakar avslutas') !!}
+        {!! Form::checkbox('mailMarketEnded', '1', true) !!}
+    </td>
+</tr>
+<tr><td colspan="2"><hr/></td></tr>

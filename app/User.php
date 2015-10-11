@@ -52,7 +52,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'zip',
         'city',
         'cityAllowed',
-		'password'
+		'password',
+
+        'mailNewPm',
+        'mailNewBidMyAuction',
+        'mailMyAuctionEnded',
+        'mailAuctionWatched',
+        'mailMarketEnded'
     ];
 	
 	/**
