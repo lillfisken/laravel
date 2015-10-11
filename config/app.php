@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG'),
+	'debug' => env('APP_DEBUG', false),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -153,7 +153,6 @@ return [
         'Chromabits\Purifier\PurifierServiceProvider',
         'Zjango\Laracurl\LaracurlServiceProvider',
         'market\Providers\ViewComposerProvider',
-		
 	],
 
 	/*

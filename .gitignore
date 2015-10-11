@@ -3,12 +3,10 @@
 Homestead.yaml
 Homestead.json
 .env
-/.idea
+.idea
 resources/views/welcome.blade.php
 /old
 /resources/assets
 
 .idea/deployment.xml
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/workspace.xml
+.idea/deployment.xml
