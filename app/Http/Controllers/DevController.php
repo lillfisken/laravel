@@ -1,8 +1,12 @@
 <?php namespace market\Http\Controllers;
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Queue;
+use market\Commands\testQueue;
+use market\helper\mailer;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
-use market\Market;
+use market\models\Market;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,6 +23,10 @@ class DevController extends Controller {
         'auction-end-time/374' => 'auctionEndTime/374',
         'all-auctions' => 'DD all auctions',
         'current-timestamp' => 'Current time unix',
+        'timer-test' => 'Timertest',
+        'timer-void-test' => 'Test if void function blocks execution',
+        'send-mail-new-bid' => 'Send mail by new bid',
+        'route-list' => 'List all routes',
 
     ];
 
@@ -79,6 +87,48 @@ class DevController extends Controller {
     {
 //        dd('AllAuctions');
         dd(Market::where('marketType', 4)->get());
+    }
+
+    public function getTimerTest()
+    {
+        $start = microtime(true);
+        sleep(3);
+        $stop = microtime(true);
+
+        dd($start, $stop, ($stop-$start));
+    }
+
+    public function getTimerVoidTest()
+    {
+
+        $start = microtime(true);
+//        Queue::push(new testQueue('sending from dev'));
+//        $test = new testAsync('async');
+//        $test->start();
+        sleep(1);
+        $stop = microtime(true);
+        sleep(3);
+        echo 'Start: ' . $start . '<br/>';
+        echo 'Stop: ' . $stop . '<br/>';
+        echo 'Stop - Start: ' . ($stop - $start) . '<br/>';
+        echo 'Now: ' . microtime(true) . '<br/>';
+    }
+
+    private function sleep()
+    {
+        sleep(3);
+    }
+
+    public function getSendMailNewBid()
+    {
+        $mailer = new mailer();
+        $mailer->sendMailNewBidOnMyAuction(374, 4, 100);
+        dd('sendMailNewBid');
+    }
+
+    public function getRouteList()
+    {
+        dd(Artisan::call('route:list'));
     }
 
     //	Route::get('/dev', function(){
@@ -384,3 +434,18 @@ class DevController extends Controller {
 //    });
 
 }
+
+// Thread not installed
+//class testAsync extends \Thread
+//{
+//    public function __construct($message)
+//    {
+//        $this->message = $message;
+//    }
+//
+//    public function run()
+//    {
+//        sleep(3);
+//        echo $this->message . '<br/>';
+//    }
+//}

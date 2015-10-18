@@ -24,7 +24,7 @@ Route::bind('user', function($username)
 {
 //	dd($username);
 //    dd(market\User::where('username', '=', $username)->firstOrFail());
-	 return market\User::where('username', '=', $username)->firstOrFail();
+	 return market\models\User::where('username', '=', $username)->firstOrFail();
 });
 //Route::model('user', 'market\User');
 
@@ -148,7 +148,7 @@ Route::group(['prefix' => 'change'], function(){
 
 });
 
-//change
+//auction
 Route::group(['prefix' => 'auction'], function(){
     $controller = 'Markets\AuctionController';
     $routeBase = 'auction';
@@ -170,31 +170,9 @@ Route::group(['prefix' => 'auction'], function(){
 
     //Misc
     Route::post('placebid', ['as' => 'auction.placeBid', 'uses' =>  $controller . '@placeBid', 'middleware' => 'auth']);
-//    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
-//    Route::patch('{markets}', ['as' => 'auction.update.patch', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
     Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' =>  $controller . '@showAllBids', 'middleware' => 'auth']);
 
 });
-
-//auction
-//Route::group(['prefix' => 'auction'], function(){
-//    $controller = 'MarketAuctionController';
-//
-//    Route::get('/update/{id}', ['as' => 'auction.update', 'uses' =>  $controller . '@updateForm', 'middleware' => 'auth']);
-//    Route::post('/update', ['as' => 'auction.update.store', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
-//
-//    Route::get('show/{id}', ['as'=>'auction.show', 'uses'=> $controller . '@show']);
-//    Route::get('/', ['as' => 'auction.create', 'uses' => $controller . '@createForm', 'middleware' => 'auth']);
-//    Route::post('/', ['as' => 'auction.store', 'uses' => $controller . '@create', 'middleware' => 'auth']);
-//
-//    Route::post('placebid', ['as' => 'auction.placeBid', 'uses' =>  $controller . '@placeBid', 'middleware' => 'auth']);
-////    Route::get('{markets}/edit', ['as' => 'auction.edit', 'uses' =>  $controller . '@edit', 'middleware' => 'auth']);
-////    Route::patch('{markets}', ['as' => 'auction.update.patch', 'uses' =>  $controller . '@update', 'middleware' => 'auth']);
-//    Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' =>  $controller . '@showAllBids', 'middleware' => 'auth']);
-//
-//    Route::get('delete/{market}', ['as' => 'auction.destroy.get', 'uses' =>  $controller . '@destroyGet', 'middleware' => 'auth']);
-//    Route::delete('delete', ['as' => 'auction.destroy.post', 'uses' =>  $controller . '@destroyPost', 'middleware' => 'auth']);
-//});
 
 //--------------------------------------------------------------------------
 if(Config::get('app.debug') == 'true')
@@ -203,29 +181,29 @@ if(Config::get('app.debug') == 'true')
     Route::controller('dev', 'DevController');
 
     //http://stackoverflow.com/questions/19131731/laravel-4-logging-sql-queries
-    Event::listen('illuminate.query', function($query, $bindings, $time, $name)
-    {
-        $data = compact('bindings', 'time', 'name');
-
-        // Format binding data for sql insertion
-        foreach ($bindings as $i => $binding)
-        {
-            if ($binding instanceof \DateTime)
-            {
-                $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
-            }
-            else if (is_string($binding))
-            {
-                $bindings[$i] = "'$binding'";
-            }
-        }
-
-        // Insert bindings into query
-        $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
-        $query = vsprintf($query, $bindings);
-
-        Log::info($query, $data);
-    });
+//    Event::listen('illuminate.query', function($query, $bindings, $time, $name)
+//    {
+//        $data = compact('bindings', 'time', 'name');
+//
+//        // Format binding data for sql insertion
+//        foreach ($bindings as $i => $binding)
+//        {
+//            if ($binding instanceof \DateTime)
+//            {
+//                $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
+//            }
+//            else if (is_string($binding))
+//            {
+//                $bindings[$i] = "'$binding'";
+//            }
+//        }
+//
+//        // Insert bindings into query
+//        $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
+//        $query = vsprintf($query, $bindings);
+//
+//        Log::info($query, $data);
+//    });
 }
 //-----------------------------------------------------------------------------
 //auth
