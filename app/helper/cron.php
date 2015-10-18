@@ -22,24 +22,25 @@ class cron {
 
     public function cleanOldPhpBBConnect()
     {
+        //TODO: delete old php connect
+    }
 
+    public function deleteOldTempImages()
+    {
+        //TODO: delete old temp images
+        //Older than 24 hours
     }
 
     public function endOldAuctions()
     {
-//        Log::debug('cron -> end old auctions');
         $deleted = \market\Market::where('marketType', 4)
             ->where('end_at', '<', $this->time->getTimeUnix())
+//            ->where('deleted_at', null)
             ->delete();
 
-//        if($deleted > 0)
-//        {
-            Log::debug('cron -> end old auctions. Deleted: ' . $deleted);
-//        }
-    }
-
-    public function cronIsWorking()
-    {
-        Log::debug('Cron Is Working');
+        if($deleted > 0)
+        {
+            Log::info('cron -> end old auctions. Deleted: ' . $deleted);
+        }
     }
 }

@@ -11,11 +11,10 @@
         <hr/>
         <p>
             Huvudpunkter:<br/>
-            -> Meddelande<br/>
             -> Profil<br/>
             -> Radering av annonser<br/>
             -> Extern login <br/>
-            -> Requests<br/>
+            -> Requests && Validation<br/>
             -> Sökning<br/>
             -> Bevakad sökning<br/>
             -> Bavakad annonser<br/>
@@ -102,6 +101,12 @@
             Review-system<br />
             -> Visa samlat betyg för säljare<br />
             -> Lägg till omdöme för köpt vara/allmänt?
+        </p>
+        <hr/>
+        <p>
+            Queue driver<br />
+            -> Build my own queue-driver using cronjob and console command???<br/>
+            -> Queue mailer<br/>
         </p>
         <hr/>
         <p>
