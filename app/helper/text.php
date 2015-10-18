@@ -1,9 +1,7 @@
 <?php namespace market\helper;
 
 use Chromabits\Purifier\Contracts\Purifier;
-use HTMLPurifier_Config;
-use Illuminate\Support\Facades\App;
-use JBBCode;
+//use JBBCode;
 
 //require_once '/vendor/jbbcode/jbbcode/JBBCode/Parser.php';
 

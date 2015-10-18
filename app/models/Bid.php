@@ -1,7 +1,8 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use market\helper\mailer;
 
 class Bid extends Model {
 
@@ -30,12 +31,12 @@ class Bid extends Model {
 
     public function user()
     {
-        return $this->belongsTo('market\User', 'bidder');
+        return $this->belongsTo('market\models\User', 'bidder');
     }
 
     public function market()
     {
-        return $this->belongsTo('market\Market');
+        return $this->belongsTo('market\models\Market');
     }
 
     /**
@@ -56,5 +57,14 @@ class Bid extends Model {
             ->where('bidder', '=', $this->bidder);
 
         return $query;
+    }
+
+    public function save(array $options = array())
+    {
+        parent::save($options);
+
+        $mailer = new mailer();
+        $mailer->sendMailNewBidOnMyAuction($this);
+        $mailer->sendMailNewBidWatchedAuction($this->id);
     }
 }

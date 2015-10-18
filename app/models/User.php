@@ -1,33 +1,16 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Auth;
+//use Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword;
-//    use SoftDeletes;
-    //
-    //`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    //`name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    //`username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    //`email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    //`password` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
-    //`street` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-    //`city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-    //`zip` int(11) DEFAULT NULL,
-    //`phone1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    //`remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-    //`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-    //`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-    //`phoneAllowed` tinyint(1) NOT NULL,
-    //`emailAllowed` tinyint(1) NOT NULL,
-    //`cityAllowed` tinyint(1) NOT NULL,
 
 	/**
 	 * The database table used by the model.
@@ -70,17 +53,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function markets()
 	{
-		return $this->hasMany('market\Market', 'createdByUser', 'id');
+		return $this->hasMany('market\models\Market', 'createdByUser', 'id');
 	}
 
     public function bids()
     {
-        return $this->hasMany('market\Bid', 'bidder', 'id');
+        return $this->hasMany('market\models\Bid', 'bidder', 'id');
     }
 
     public function phpBBUsers()
     {
-        return $this->hasMany('market\phpBBUsers', 'user', 'id');
+        return $this->hasMany('market\models\phpBBUsers', 'user', 'id');
     }
 
 	public function getUserActiveMarketsCount()
@@ -95,6 +78,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function marketQuestions()
 	{
-		return $this->hasMany('market\MarketQuestion', 'user', 'id');
+		return $this->hasMany('market\models\MarketQuestion', 'user', 'id');
 	}
 }

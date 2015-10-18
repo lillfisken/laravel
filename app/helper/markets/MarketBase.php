@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use market\helper\time;
-use market\Market as MarketModel;
-use market\User;
+use market\models\Market as MarketModel;
+use market\models\User;
 use market\helper\images;
 use market\helper\text;
 

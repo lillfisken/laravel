@@ -3,6 +3,7 @@
 use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -16,10 +17,9 @@ use market\helper\marketMenu;
 use market\helper\text;
 use market\Http\Requests\CreateUpdateQuestionRequest;
 use market\Http\Requests\MarketCreateUpdateRequest;
-use market\Market;
-use market\MarketQuestions;
+use market\models\Market;
+use market\models\MarketQuestions;
 use Illuminate\Http\Request;
-use Input;
 use DB;
 use Session;
 use Chromabits\Purifier\Contracts\Purifier;
@@ -81,6 +81,7 @@ class MarketsController extends ControllerMarket {
             ->with('User')
             ->paginate(config('market.paginationNr'), 20);
         $markets->setPath(route('markets.index'));
+//        dd('test');
 
         if(Auth::check())
 		{
@@ -224,7 +225,7 @@ class MarketsController extends ControllerMarket {
 			//Set menu for each market
 			foreach ($result as $market)
 			{
-				marketCRUD::addMarketMenu($market);
+				marketMenu::addMarketMenu($market);
 			}
 
             //TODO: Flash filter data

@@ -2,7 +2,6 @@
 
 use Chromabits\Purifier\Purifier;
 use market\Http\Requests;
-use market\Http\Controllers\Controller;
 use market\helper;
 
 use Illuminate\Http\Request;

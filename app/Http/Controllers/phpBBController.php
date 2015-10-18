@@ -11,9 +11,9 @@ use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use market\phpBBconnect;
-use market\phpBBUsers;
-use market\User;
+use market\models\phpBBconnect;
+use market\models\phpBBUsers;
+use market\models\User;
 use Zjango\Laracurl\Facades\Laracurl;
 use GuzzleHttp\Client;
 

@@ -1,19 +1,14 @@
 <?php namespace market\Http\Controllers\Markets;
 
 use Chromabits\Purifier\Purifier;
-use DateTime;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use market\helper\text;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use market\helper;
-use market\Market;
 
 abstract class BaseController extends Controller {
 

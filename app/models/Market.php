@@ -1,7 +1,8 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use market\helper\mailer;
 
 class Market extends Model {
 
@@ -72,21 +73,35 @@ class Market extends Model {
 
 		//dd($this->belongsTo('market\User'));
 
-		return $this->belongsTo('market\User', 'createdByUser');
+		return $this->belongsTo('market\models\User', 'createdByUser');
 	}
 
     public function bids()
     {
-        return $this->hasMany('market\Bid', 'auctionId', 'id');
+        return $this->hasMany('market\models\Bid', 'auctionId', 'id');
 //        return $this->hasMany('market\MarketQuestions', 'market', 'id');
 
     }
 
 	public function marketQuestions()
 	{
-		return $this->hasMany('market\MarketQuestions', 'market', 'id');
+		return $this->hasMany('market\models\MarketQuestions', 'market', 'id');
 	}
 
+    public function delete()
+    {
+        parent::delete();
+
+        $mailer = new mailer();
+
+        if($this->marketType == 4)
+        {
+            $mailer->sendMailMyAuctionEnded($this->id);
+            $mailer->sendMailToWinnerOfAuction($this->id);
+        };
+        $mailer->sendMailEndedWatchedMarket($this->id);
+
+    }
 	
 	
 

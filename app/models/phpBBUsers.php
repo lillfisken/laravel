@@ -1,24 +1,23 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class phpBBconnect extends Model {
+class phpBBUsers extends Model {
 
-	protected $table = 'phpBBconnect';
+    protected $table = 'phpBBUsers';
 
     protected $fillable = [
-        'token',
         'forumKey',
-        'register',
-        'login',
         'user',
+        'username',
         'url'
     ];
+    //TODO: Add link to profile
 
     public function user()
     {
-        return $this->belongsTo('market\User', 'user');
+        return $this->belongsTo('market\models\User', 'user');
     }
 
     /**
@@ -35,7 +34,8 @@ class phpBBconnect extends Model {
 
         $query
             //Put appropriate values for your keys here:
-            ->where('token', '=', $this->token);
+            ->where('user', '=', $this->user)
+            ->where('forumKey', '=', $this->forumKey);
 
         return $query;
     }

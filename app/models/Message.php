@@ -1,7 +1,8 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use market\helper\mailer;
 
 class Message extends Model {
 
@@ -23,12 +24,12 @@ class Message extends Model {
     */
     public function sender()
     {
-        return $this->belongsTo('market\User', 'senderId');
+        return $this->belongsTo('market\models\User', 'senderId');
     }
 
     public function conversation()
     {
-        return $this->belongsTo('market\Conversation', 'conversationId');
+        return $this->belongsTo('market\models\Conversation', 'conversationId');
     }
 
     public function isRead()
@@ -36,4 +37,11 @@ class Message extends Model {
         return $this->getAttribute('read');
     }
 
+    public function save(array $options = [])
+    {
+        parent::save($options);
+
+        $mailer = new mailer();
+        $mailer->sendMailNewPm($this->id);
+    }
 }

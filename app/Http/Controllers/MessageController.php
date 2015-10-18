@@ -2,17 +2,16 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use market\Conversation;
+use market\models\Conversation;
 use market\Http\Requests;
-use market\Http\Controllers\Controller;
 
 use Illuminate\Contracts\Auth\Authenticator;
 use Auth;
 use Input;
-use market\Market;
-use market\Message;
+use market\models\Market;
+use market\models\Message;
 use Redirect;
-use market\User;
+use market\models\User;
 use Illuminate\Http\Request;
 use Session;
 

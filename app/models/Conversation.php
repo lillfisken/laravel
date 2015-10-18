@@ -1,4 +1,4 @@
-<?php namespace market;
+<?php namespace market\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,16 +18,16 @@ class Conversation extends Model
 
     public function messages()
     {
-        return $this->hasMany('market\Message', 'conversationId');
+        return $this->hasMany('market\models\Message', 'conversationId');
     }
 
     public function getUser1()
     {
-        return $this->hasOne('market\User', 'id', 'user1');
+        return $this->hasOne('market\models\User', 'id', 'user1');
     }
 
     public function getUser2()
     {
-        return $this->hasOne('market\User', 'id', 'user2');
+        return $this->hasOne('market\models\User', 'id', 'user2');
     }
 }

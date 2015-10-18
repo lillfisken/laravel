@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'model' => 'market\User',
+	'model' => 'market\models\User',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -63,5 +63,4 @@ return [
 		'table' => 'password_resets',
 		'expire' => 60,
 	],
-
 ];

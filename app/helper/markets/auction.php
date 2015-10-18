@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use market\Bid;
-use market\Market as MarketModel;
+use market\models\Bid;
+use market\models\Market as MarketModel;
 
 
 class auction extends MarketBase
