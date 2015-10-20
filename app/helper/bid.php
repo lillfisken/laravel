@@ -2,8 +2,8 @@
 
 use DateTime;
 use Illuminate\Support\Facades\Auth;
-use market\Bid as BidEloquent;
-use market\Market;
+use market\models\Bid as BidEloquent;
+use market\models\Market;
 
 class bid
 {

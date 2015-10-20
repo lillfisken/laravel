@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use market\helper\mailer;
+use market\helper\watched as watchedHelper;
 
 class Bid extends Model {
 
@@ -66,5 +67,8 @@ class Bid extends Model {
         $mailer = new mailer();
         $mailer->sendMailNewBidOnMyAuction($this);
         $mailer->sendMailNewBidWatchedAuction($this->id);
+
+        $watched = new watchedHelper();
+        $watched->newBid($this);
     }
 }

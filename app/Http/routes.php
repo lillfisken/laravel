@@ -229,16 +229,21 @@ Route::group(['prefix' => 'auth'], function(){
 Route::group(['prefix'=>'profile'], function(){
     //TODO: Alter route to not use user if not neccesarey
     Route::get('user/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
+
     Route::get('blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'AccountController@blockMarket', 'middleware' => 'auth']);
     Route::get('unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'AccountController@unblockMarket', 'middleware' => 'auth']);
     Route::get('blockseller/{user}', ['as' => 'accounts.blockSeller', 'uses' => 'AccountController@blockSeller', 'middleware' => 'auth']);
     Route::get('unblockseller/{user}', ['as' => 'accounts.unblockSeller', 'uses' => 'AccountController@unblockSeller', 'middleware' => 'auth']);
-
-    Route::get('watched/{user}', ['as' => 'accounts.watched', 'uses' => 'AccountController@watched', 'middleware' => 'auth']);
-    Route::get('active', ['as' => 'accounts.active', 'uses' => 'AccountController@active', 'middleware' => 'auth']);
-    Route::get('inactive', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
     Route::get('blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
     Route::get('blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
+
+    Route::get('watched', ['as' => 'accounts.watched', 'uses' => 'AccountController@watched', 'middleware' => 'auth']);
+    Route::get('watchMarket/{id}', ['as' => 'accounts.watchMarket', 'uses' => 'AccountController@watchMarket', 'middleware' => 'auth']);
+    Route::post('watchMarket', ['as' => 'accounts.watchMarketPost', 'uses' => 'AccountController@watchMarketPost', 'middleware' => 'auth']);
+    Route::get('unwatchMarket/{id}', ['as' => 'accounts.unwatchMarket', 'uses' => 'AccountController@unwatch', 'middleware' => 'auth']);
+
+    Route::get('active', ['as' => 'accounts.active', 'uses' => 'AccountController@active', 'middleware' => 'auth']);
+    Route::get('inactive', ['as' => 'accounts.trashed', 'uses' => 'AccountController@trashed', 'middleware' => 'auth']);
 
     Route::get('settings/show', ['as' => 'accounts.settings.settings', 'uses' => 'AccountController@settings', 'middleware' => 'auth']);
     Route::post('settings/', ['as' => 'accounts.settings.save', 'uses' => 'AccountController@saveSettings', 'middleware' => 'auth']);

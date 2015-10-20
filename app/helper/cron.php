@@ -33,7 +33,7 @@ class cron {
 
     public function endOldAuctions()
     {
-        $deleted = \market\Market::where('marketType', 4)
+        $deleted = \market\models\Market::where('marketType', 4)
             ->where('end_at', '<', $this->time->getTimeUnix())
 //            ->where('deleted_at', null)
             ->delete();

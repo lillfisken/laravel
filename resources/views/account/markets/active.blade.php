@@ -5,6 +5,8 @@
 @stop
 
 @section('content')
-    <h1>Aktiva annonser</h1>
-    @include('markets.base._marketsSmallList')
+    <div class="inner-content">
+        <h1>Aktiva annonser</h1>
+        @include('markets.base._marketsSmallList')
+    </div>
 @stop

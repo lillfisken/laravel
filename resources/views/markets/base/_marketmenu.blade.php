@@ -5,6 +5,9 @@
                 {{--TODO: Change to font awesome--}}
                 <a href="#">
                     <div class="btn-menu">
+                        @if(isset($market->watched) && $market->watched == 1)
+                            <div class="dot"></div>
+                        @endif
                         <div class="menu-bar"></div>
                         <div class="menu-bar"></div>
                         <div class="menu-bar"></div>

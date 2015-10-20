@@ -27,7 +27,7 @@ class AuctionController extends BaseController {
     //region Bids
 
     //TODO: Move to bid controller
-    public function placeBid(BidRequest $request)
+    public function placeBid(Request $request)
     {
         //TODO: BidRequest
         $market = $request->id;

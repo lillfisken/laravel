@@ -15,6 +15,7 @@ use Illuminate\View\View;
 use market\Conversation;
 use market\helper\time;
 use market\Message;
+use market\models\watchedEvent;
 
 class menu {
 
@@ -39,15 +40,17 @@ class menu {
         {
             $unread = DB::table('conversations')
                 ->join('messages', function($join){
-                $join->on('conversations.id', '=', 'messages.conversationId')
+                $join->on(
+                    'conversations.id', '=', 'messages.conversationId')
                     ->where('conversations.user1', '=', Auth::id())
                     ->orWhere('conversations.user2', '=', Auth::id());
-//                    ->where('messages.read', '=', '0');
                 })
                 ->where('messages.read', '=', '0')
                 ->where('messages.senderId', '!=', Auth::id())
-                ->distinct()
+//                ->distinct()
                 ->count();
+
+            $watched = watchedEvent::where('user', Auth::id())->where('read', 0)->count();
 
 //            dd(DB::table('messages')
 //                ->join('conversations', function($join){
@@ -77,8 +80,10 @@ class menu {
 //                'Auth: ' .  Auth::id(),
 //                'Unread: ' . $unread);
 
-            $view->with('unreadMessages', $unread);
+            $view->with('unreadMessagesCount', $unread);
             $view->with('username', Auth::user()->username);
+            $view->with('watchedCount', $watched);
+
 //            $view->with('time', $this->time->getTimeString());
 //            $view->with('unixTime', $this->time->getTimeUnix());
 

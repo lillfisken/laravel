@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use market\helper\marketMenu;
 use market\helper\time;
 use market\models\Market as MarketModel;
 use market\models\User;
@@ -23,11 +24,13 @@ abstract class MarketBase
 {
     protected $marketCommon;
     protected $time;
+    protected $marketMenu;
 
     public function __construct()
     {
         $this->marketCommon = new common();
         $this->time = new time();
+        $this->marketMenu = new marketMenu();
     }
 
     //region Create
@@ -488,28 +491,29 @@ abstract class MarketBase
 
     public function addMarketMenu($market)
     {
-        if(Auth::check()) {
-            $id = Auth::id();
-            $temp = array();
-
-            //Adds link to edit market if it's created by logged in user
-            if ($id == $market->createdByUser &&
-                $market->deleted_at == null &&
-                !($market->bids->count() > 0))
-            {
-                    $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
-                    $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
-            }
-
-            if  ($id != $market->createdByUser) {
-                //TODO: Check if market is blocked, then ad link to unblock instead
-                $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
-                //TODO: Check if market is seller, then ad link to unblock instead
-                $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
-            }
-
-            $market['marketmenu'] = $temp;
-        }
+        $this->marketMenu->addMarketMenu($market);
+//        if(Auth::check()) {
+//            $id = Auth::id();
+//            $temp = array();
+//
+//            //Adds link to edit market if it's created by logged in user
+//            if ($id == $market->createdByUser &&
+//                $market->deleted_at == null &&
+//                !($market->bids->count() > 0))
+//            {
+//                    $temp[] = array('text' => 'Redigera ', 'href' => route($this->routeBase . '.update', $market->id ));
+//                    $temp[] = array('text' => 'Avslutad', 'href' => route( $this->routeBase . '.destroy.get', $market->id ));
+//            }
+//
+//            if  ($id != $market->createdByUser) {
+//                //TODO: Check if market is blocked, then ad link to unblock instead
+//                $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
+//                //TODO: Check if market is seller, then ad link to unblock instead
+//                $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
+//            }
+//
+//            $market['marketmenu'] = $temp;
+////        }
     }
 
     //endregion

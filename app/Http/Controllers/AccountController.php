@@ -3,7 +3,9 @@
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use market\helper\debug;
 use market\helper\markets\common;
 use market\Http\Requests;
@@ -16,6 +18,7 @@ use market\Http\Requests\registerRequest;
 use market\Http\Requests\UserSettingsRequest;
 use market\models\Market;
 use market\models\phpBBUsers;
+use market\models\watched;
 use Redirect;
 use market\models\User;
 use Illuminate\Http\Request;
@@ -25,10 +28,6 @@ use market\helper\text;
 use market\helper\marketMenu;
 use Symfony\Component\HttpFoundation\Response;
 use Zjango\Laracurl\Facades\Laracurl;
-
-//use Illuminate\Contracts\Auth\Guard;
-//use Illuminate\Contracts\Auth\Registrar;
-
 
 class AccountController extends Controller
 {
@@ -275,8 +274,10 @@ class AccountController extends Controller
      * @var market to block
      * @return
     */
-    public function blockMarket($market)
+    public function blockMarket(Request $request)
     {
+        $market = $request->get('marketId');
+        $user = Auth::id();
         dd('accounts.blockMarket');
     }
 
@@ -325,20 +326,6 @@ class AccountController extends Controller
     //endregion
 
     //region Market listings
-
-    /* Show user profile
-             *
-             * get 'profile/watched/{user}'
-             * route accounts.watched'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function watched($user)
-    {
-        return view('account.markets.watched');
-    }
 
     /* Show user profile
              *
@@ -436,6 +423,83 @@ class AccountController extends Controller
 //        dd('AccountController@blockedseller');
         abort(501);
         return view('account.markets.blockedSellers');
+    }
+
+    //endregion
+
+    //region Watched
+
+    /* Show user profile
+         *
+         * get 'profile/watched/{user}'
+         * route accounts.watched'
+         * middleware 'auth'
+         *
+         * @var user
+         * @return
+        */
+    public function watched()
+    {
+        $markets = Market::whereIn('id', watched::getAllMarketIdsWatchedByUserId(Auth::id()))
+//            ->with('watched')
+            ->paginate(config('market.paginationNr'));
+        $markets->setPath(route('accounts.watched'));
+
+//        dd($markets);
+
+//        $watched_array = watched::getAllMarketIdsWatchedByUserId(Auth::id());
+//
+//        $markets = Market::whereIn('id', $watched_array)
+//            ->paginate(config('market.paginationNr'));
+//        $markets->setPath(route('accounts.active'));
+
+        marketMenu::addMarketMenuToMarkets($markets);
+
+        return view('account.markets.watched', [
+            'markets' => $markets,
+            'marketCommon' => $this->marketCommon,
+        ]);
+    }
+
+    public function watchMarket(Request $request, $marketId)
+    {
+        $user = Auth::id();
+//        $previousUrl = URL::previous();
+        $market = Market::find($marketId);
+
+        if($market)
+        {
+            return view('account.watched.watchConfirm')
+                ->with('user', $user)
+                ->with('market', $market);
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
+    public function watchMarketPost(Request $request)
+    {
+        if($request->get('yes') && $request->get('marketId'))
+        {
+            $markets = watched::where('user', Auth::id())->get();
+            $watched = new watched([
+                'user' => Auth::id(),
+                'market' => $request->get('marketId')
+            ]);
+
+            $watched->save();
+
+            return redirect()->route('accounts.watched', [Auth::user()->username]);
+        }
+        else
+        {
+            abort(404);
+        }
+
+        dd($request->get('yes'), $request->get('marketId'), $request->all());
+//        dd(Auth::user()->username);
     }
 
     //endregion

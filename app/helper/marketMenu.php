@@ -1,10 +1,11 @@
 <?php namespace market\helper;
 
 use Illuminate\Support\Facades\Auth;
+use market\models\watched;
 
 class marketMenu
 {
-    public static function addMarketMenu($market)
+    public static function addMarketMenu($market, $watched = [])
     {
         if(Auth::check()) {
             $userId = Auth::id();
@@ -21,6 +22,18 @@ class marketMenu
             }
 
             if  ($userId != $market->createdByUser) {
+                //Watched
+                if(in_array($market['id'], $watched))
+                {
+                    $market['watched'] = 1;
+                    $temp[] = array('text' => 'Inaktivera bevakning', 'href' => route('accounts.unwatchMarket', $market->id));
+                }
+                else
+                {
+                    $temp[] = array('text' => 'Bevaka annons', 'href' => route('accounts.watchMarket', $market->id));
+                }
+
+                //Blocked
                 //TODO: Check if market is blocked, then ad link to unblock instead
                 $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
                 //TODO: Check if market is seller, then ad link to unblock instead
@@ -29,5 +42,15 @@ class marketMenu
 
             $market['marketmenu'] = $temp;
         }
+    }
+
+    public static function addMarketMenuToMarkets($markets)
+    {
+        $watched = watched::getAllMarketIdsWatchedByUserId(Auth::id());
+        foreach($markets as $market)
+        {
+            self::addMarketMenu($market, $watched);
+        }
+//        dd($markets, $watched);
     }
 }

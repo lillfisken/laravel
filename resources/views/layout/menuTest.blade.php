@@ -13,12 +13,21 @@
 
     @if(Auth::check())
         <li>
-            <a href="#">{{ $username }}<span class="badge">12</span> </a>
+            <a href="#">
+                {{ $username }}
+                @if($watchedCount > 0)
+                    <span class="badge">{{ $watchedCount }}</span>
+                @endif </a>
             <ul>
                 <li><a href="{{ route('accounts.profile', $username) }}">Profil</a></li>
-                <li><a href="{{ route('accounts.watched', @Auth::user()->username) }}">Bevakade</a></li>
-                <li><a href="{{ route('accounts.active', @Auth::user()->username) }}">Aktiva</a></li>
-                <li><a href="{{ route('accounts.trashed', @Auth::user()->username) }}">Avslutade</a></li>
+                <li><a href="{{ route('accounts.watched') }}">
+                    Bevakade
+                    @if($watchedCount > 0)
+                        <span class="badge">{{ $watchedCount }}</span>
+                    @endif
+                </a></li>
+                <li><a href="{{ route('accounts.active', @Auth::user()->username) }}">Aktiva<span class="badge">?</span></a></li>
+                <li><a href="{{ route('accounts.trashed', @Auth::user()->username) }}">Avslutade<span class="badge">?</span></a></li>
                 <li><a href="{{ route('accounts.blockedmarket', @Auth::user()->username) }}">Blockerade annonser</a></li>
                 <li><a href="{{ route('accounts.blockedseller', @Auth::user()->username) }}">Blockerade säljare</a></li>
             </ul>
@@ -26,8 +35,8 @@
         <li>
             {{--<a href="#">PM<div class="circle-text"><div>5</div></div> </a>--}}
             <a href="#">PM
-                @if($unreadMessages > 0)
-                    <span class="badge">{{ $unreadMessages }}</span>
+                @if($unreadMessagesCount > 0)
+                    <span class="badge">{{ $unreadMessagesCount }}</span>
                 @endif
             </a>
             <ul>

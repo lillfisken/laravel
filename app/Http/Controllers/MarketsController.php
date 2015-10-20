@@ -75,24 +75,16 @@ class MarketsController extends ControllerMarket {
 	public function index()
 	{
         $auctionHelper = new \market\helper\markets\auction();
-//        dd('index', Auth::id(), Auth::check());
 
         $markets = Market::select()
             ->with('User')
             ->paginate(config('market.paginationNr'), 20);
         $markets->setPath(route('markets.index'));
-//        dd('test');
 
         if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
 			//Get all markets from db
-
-//			$temp = Market::select()->with('User')->get();
-//			$temp = Market::select()
-//                ->with('User')
-//                ->paginate(config('market.paginationNr'), 20);
-//            $temp->setPath(route('markets.index'));
 
             $sellHelper = new \market\helper\markets\sell();
             $buyHelper = new \market\helper\markets\buy();
@@ -100,44 +92,35 @@ class MarketsController extends ControllerMarket {
             $giveawayHelper = new \market\helper\markets\giveaway();
 
 			//Set menu for each market
-			foreach ($markets as $market)
-			{
-                //TODO: Different menus for different market types
-                switch($market->marketType)
-                {
-                    case 0:
-                        // 0 = wish to sell
-                        $sellHelper->addMarketMenu($market);
-                        break;
-                    case 1:
-                        // 1 = wish to buy
-                        $buyHelper->addMarketMenu($market);
-                        break;
-                    case 2:
-                        // 2 = wish to change
-                        $changeHelper->addMarketMenu($market);
-                        break;
-                    case 3:
-                        // 3 = wish to giveaway
-                        $giveawayHelper->addMarketMenu($market);
-                        break;
-                    case 4:
-                        // 4 = auction
-                        $auctionHelper->addMarketMenu($market);
-                        break;
-//                    case 5:
-//                        // 5 = wish to ???
-//                        $???Helper->addMarketMenu($market);
+//			foreach ($markets as $market)
+//			{
+//                //TODO: Different menus for different market types?
+//                switch($market->marketType)
+//                {
+//                    case 0:
+//                        // 0 = wish to sell
+//                        $sellHelper->addMarketMenu($market);
 //                        break;
-                }
-			}
+//                    case 1:
+//                        // 1 = wish to buy
+//                        $buyHelper->addMarketMenu($market);
+//                        break;
+//                    case 2:
+//                        // 2 = wish to change
+//                        $changeHelper->addMarketMenu($market);
+//                        break;
+//                    case 3:
+//                        // 3 = wish to giveaway
+//                        $giveawayHelper->addMarketMenu($market);
+//                        break;
+//                    case 4:
+//                        // 4 = auction
+//                        $auctionHelper->addMarketMenu($market);
+//                        break;
+//                }
+//			}
+            marketMenu::addMarketMenuToMarkets($markets);
 		}
-//		else {
-////            dd('else');
-//			$temp = Market::select('*')->paginate(config('market.paginationNr'), 20);
-////            $temp = Market::all();
-////            dd('else', $temp);
-//        }
 
         foreach($markets as $market)
         {

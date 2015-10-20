@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use market\helper\mailer;
+use market\helper\watched;
 
 class Market extends Model {
 
@@ -88,6 +89,11 @@ class Market extends Model {
 		return $this->hasMany('market\models\MarketQuestions', 'market', 'id');
 	}
 
+    public function watched()
+    {
+        return $this->hasMany('market\models\watched', ['market', 'user'], ['id', 'createdByUser'] );
+    }
+
     public function delete()
     {
         parent::delete();
@@ -100,6 +106,9 @@ class Market extends Model {
             $mailer->sendMailToWinnerOfAuction($this->id);
         };
         $mailer->sendMailEndedWatchedMarket($this->id);
+
+        $watched = new watched();
+        $watched->marketEnded($this);
 
     }
 	
