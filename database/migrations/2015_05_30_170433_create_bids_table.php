@@ -12,16 +12,14 @@ class CreateBidsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('bids', function($t)
+        Schema::create('bids', function(Blueprint $table)
         {
-            $t->bigInteger('auctionId')->unsigned();
-            $t->bigInteger('bidder')->unsigned();
-            $t->integer('bid')->unsigned();
-            $t->timestamps();
+            $table->bigIncrements('id');
+            $table->bigInteger('auctionId')->unsigned();
+            $table->bigInteger('bidder')->unsigned();
+            $table->integer('bid')->unsigned();
+            $table->timestamps();
 
-            $t->primary(['auctionId', 'bidder']);
-//            $t->foreign('auctionId')->references('id')->on('markets');
-//            $t->foreign('bidder')->references('id')->on('users');
         });
     }
 

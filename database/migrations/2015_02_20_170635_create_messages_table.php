@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessageTable extends Migration {
+class CreateMessagesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -25,8 +25,8 @@ class CreateMessageTable extends Migration {
             $table->text('message');
             $table->boolean('read')->default(false);
 
-            $table->boolean('deletedBySender')->default(false);
-            $table->boolean('deletedByReciever')->default(false);
+            $table->boolean('deletedBySender')->default(0);
+            $table->boolean('deletedByReciever')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

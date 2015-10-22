@@ -14,12 +14,11 @@ class CreateWatchedsTable extends Migration {
 	{
 		Schema::create('watcheds', function(Blueprint $table)
 		{
-			$table->unsignedBigInteger('market');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('market');
 			$table->unsignedBigInteger('user');
 			$table->timestamps();
             $table->softDeletes();
-
-            $table->primary(['market', 'user']);
         });
 	}
 

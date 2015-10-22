@@ -20,15 +20,26 @@ class CreateUsersTable extends Migration {
 			$table->string('email')->unique();
 			$table->string('password', 120);
 
-            //TODO: Make this not nullable after development
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->integer('zipcode')->nullable();
+            $table->string('street');
+            $table->string('city');
+            $table->integer('zip');
             $table->string('phone1');
-            $table->string('phone2')->nullable();
+
+            $table->text('presentation')->nullable();
+
+            $table->boolean('phoneAllowed')->default(1);
+            $table->boolean('emailAllowed')->default(1);
+            $table->boolean('cityAllowed')->default(1);
+
+            $table->boolean('mailNewPm')->default(1);
+            $table->boolean('mailNewBidMyAuction')->default(1);
+            $table->boolean('mailMyAuctionEnded')->default(1);
+            $table->boolean('mailAuctionWatched')->default(1);
+            $table->boolean('mailMarketEnded')->default(1);
 
 			$table->rememberToken();
 			$table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

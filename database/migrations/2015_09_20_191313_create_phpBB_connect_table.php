@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhpBBConnect extends Migration {
+class CreatePhpBBConnectTable extends Migration {
 
 	/**
 	 * Run the migrations.

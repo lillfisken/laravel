@@ -27,13 +27,6 @@ class Kernel extends ConsoleKernel {
 
         $cron->endOldAuctions();
 
-//        $schedule->command('inspire')
-//				 ->hourly();
-//        $schedule->call(function() use($cron) {
-////            $cron->endOldAuctions();
-////            $cron->cronIsWorking();
-//        })->name('cron5')->withoutOverlapping()->everyFiveMinutes();
-
         $schedule->call(function() use($cron) {
             $cron->cleanOldPhpBBConnect();
         })->everyTenMinutes();

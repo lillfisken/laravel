@@ -14,15 +14,12 @@ class CreateWatchedEventsTable extends Migration {
 	{
 		Schema::create('watched_events', function(Blueprint $table)
 		{
-            $table->unsignedBigInteger('market');
-            $table->unsignedBigInteger('user');
-            $table->unsignedInteger('id')->default(0);
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('watched');
             $table->boolean('read')->default(0);
             $table->string('message');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->primary(['market', 'user', 'id']);
 		});
 	}
 

@@ -22,9 +22,9 @@ class CreateMarketsTable extends Migration {
 			$table->float('price');
 			$table->text('extra_price_info')->nullable();
 			$table->integer('number_of_items')->default(1);
-			$table->string('contact_options');
-			
-			$table->string('image1_thumb')->nullable();
+            $table->integer('endReason')->nullable();
+
+            $table->string('image1_thumb')->nullable();
 			$table->string('image1_std')->nullable();
 			$table->string('image1_full')->nullable();
 			
@@ -47,7 +47,6 @@ class CreateMarketsTable extends Migration {
 			$table->string('image6_thumb')->nullable();
 			$table->string('image6_std')->nullable();
 			$table->string('image6_full')->nullable();
-
 
             $table->boolean('contactMail');
             $table->boolean('contactPhone');
