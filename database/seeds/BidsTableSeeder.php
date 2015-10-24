@@ -3,7 +3,7 @@
 // Composer: "fzaninotto/faker": "v1.4.0"
 //use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use market\Bid;
+use market\models\Bid;
 
 class BidTableSeeder extends Seeder {
 

@@ -1,9 +1,8 @@
 <?php
 
 // Composer: "fzaninotto/faker": "v1.4.0"
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use market\User;
+use market\models\User;
 use Illuminate\Support\Facades\Hash;
 //use Hash;
 

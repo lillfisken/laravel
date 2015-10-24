@@ -3,7 +3,7 @@
 // Composer: "fzaninotto/faker": "v1.4.0"
 //use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use market\Conversation;
+use market\models\Conversation;
 
 class ConversationTableSeeder extends Seeder
 {
