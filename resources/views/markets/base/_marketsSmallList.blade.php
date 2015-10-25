@@ -29,6 +29,13 @@
         @else
             Missing market type {{ $market->marketType }}
         @endif
+        <div>
+            @if(isset($market->events))
+                @foreach($market->events as $event)
+                    <p>{{ $event->updated_at }}: {{ $event->message }}</p>
+                @endforeach
+            @endif
+        </div>
     </div>
 
 @endforeach

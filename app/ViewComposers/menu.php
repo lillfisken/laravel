@@ -46,11 +46,25 @@ class menu {
                     ->orWhere('conversations.user2', '=', Auth::id());
                 })
                 ->where('messages.read', '=', '0')
-                ->where('messages.senderId', '!=', Auth::id())
+//                ->where('messages.senderId', '!=', Auth::id())
 //                ->distinct()
+//                ->get();
                 ->count();
 
-            $watched = watchedEvent::where('user', Auth::id())->where('read', 0)->count();
+//            dd($unread,
+//                Auth::id(),
+//                DB::table('conversations')->get(),
+//                DB::table('messages')->get()
+//            );
+
+            $watched = DB::table('watcheds')->join('watched_events', function($join){
+                $join->on('watcheds.id', '=', 'watched_events.watched');
+            })
+            ->where('watched_events.read', 0)
+            ->count();
+//            $watched = 3;
+//            dd($unread, $watched);
+//            $watched = watchedEvent::where('user', Auth::id())->where('read', 0)->count();
 
 //            dd(DB::table('messages')
 //                ->join('conversations', function($join){

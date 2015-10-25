@@ -236,7 +236,7 @@ class MessageController extends Controller
             $message->senderId = Auth::id();
             $message->message = $request->input('message');
 
-//            dd($message);
+//            dd(Auth::id(), $message);
 
             $message->save();
 

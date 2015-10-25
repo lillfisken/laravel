@@ -7,6 +7,8 @@ class watchedEvent extends Model {
 
     use SoftDeletes;
 
+    protected $table = 'watched_events';
+
     protected $fillable = [
         'market',
         'user',
@@ -14,4 +16,9 @@ class watchedEvent extends Model {
         'read',
         'message'
     ];
+
+    public function watchers()
+    {
+        return $this->belongsTo('market\models\watched', 'id', 'watched');
+    }
 }

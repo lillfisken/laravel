@@ -19,6 +19,7 @@ use market\Http\Requests\UserSettingsRequest;
 use market\models\Market;
 use market\models\phpBBUsers;
 use market\models\watched;
+use market\models\watchedEvent;
 use Redirect;
 use market\models\User;
 use Illuminate\Http\Request;
@@ -440,12 +441,32 @@ class AccountController extends Controller
         */
     public function watched()
     {
-        $markets = Market::whereIn('id', watched::getAllMarketIdsWatchedByUserId(Auth::id()))
-//            ->with('watched')
+        $watched = watched::getAllMarketIdsWatchedByUserId(Auth::id());
+        $markets = Market::whereIn('id', $watched)
+            ->with('watched.unreadEvents')
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.watched'));
 
+//        $events = watchedEvent::where('watched', 1)->get();
+
+        foreach($markets as $market)
+        {
+//            dd($market->watched[0]->unreadEvents);
+            $events = [];
+            foreach($market->watched[0]->unreadEvents as $event)
+            {
+                $events[] = $event;
+            }
+            $market['events'] = $events;
+        }
+
 //        dd($markets);
+        //TODO: update events to read
+//        dd(
+//            $markets,
+//            $markets->first()->watched->first()
+////            $events
+//        );
 
 //        $watched_array = watched::getAllMarketIdsWatchedByUserId(Auth::id());
 //
