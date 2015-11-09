@@ -1,5 +1,6 @@
 <?php namespace market\models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use market\helper\mailer;
@@ -57,8 +58,12 @@ class Market extends Model {
 
     public function getDates()
     {
-        return ['created_at', 'updated_at', 'deleted_at', 'end_at'];
-//        return ['created_at', 'updated_at', 'deleted_at', 'end_at'];
+        return [
+			'created_at',
+			'updated_at',
+			'deleted_at',
+			'end_at'
+		];
     }
 
 	/*
@@ -111,7 +116,10 @@ class Market extends Model {
         $watched->marketEnded($this);
 
     }
-	
-	
 
+	public function setEndAtAttribute($value)
+	{
+		//http://laravel.io/forum/11-27-2014-handling-dates-with-form-models
+		$this->attributes['end_at'] = Carbon::createFromFormat('Y/m/d H:i', $value);
+	}
 }

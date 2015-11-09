@@ -1,4 +1,5 @@
 <?php namespace market\helper\markets;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,14 +45,14 @@ abstract class MarketBase
 //
 //        return marketCRUD::save($input, 'auction.show');
 //        dd('saveFromCreateForm', $input);
-        if(isset($input['end_at']))
-        {
-            $set = true;
-            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+//        if(isset($input['end_at']))
+//        {
+//            $set = true;
+//            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
 //            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-//            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
-        }
+////            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
+////            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
+//        }
 
         $input = text::marketFromBbToHtml($input);
 //        dd('saveFromCreateForm, after marketFromBbToHtml', $input);
@@ -90,6 +91,22 @@ abstract class MarketBase
     public function saveFromCreatePreview($input)
     {
         $auction = $this->getAuctionFromSession(false);
+//        if($auction->user)
+//        {
+//            $auction['createdByUser'] = $auction->user->id;
+//            unset($auction->user);
+////            unset($auction['user']);
+////            dd('user exist', $auction);
+//        }
+
+//        dd($auction);
+//        $auction['createdByUser'] = $auction->user()->id;
+//        if($auction['user'])
+//        {
+//            $auction['createdByUser'] = $auction['user']->id;
+//
+////            dd($input, $auction, $auction['user']->id);
+//        }
 
         $this->save($auction);
 //        $auction->save();
@@ -103,12 +120,26 @@ abstract class MarketBase
     {
         $input = images::saveImages($input);
 
+//        if(isset($input['end_at']))
+//        {
+//            dd($input['end_at'], new Carbon($input['end_at']));
+//        }
+
+//        $auction = new MarketModel();
         $auction = new MarketModel($input);
+//        dd('previewFromCreateForm', $input, $auction, new Carbon($input['end_at']));
         $auction->user = Auth::user();
 
 //        dd($auction, $input);
 
         $this->putAuctionInSession($auction);
+
+//        dd($auction);
+        $auction->created_at = new Carbon($auction->created_at);
+        $auction->updated_at = new Carbon($auction->updated_at);
+//        $auction->end_at = new Carbon($auction->end_at);
+
+//        dd($auction);
 
         return view('markets.' . $this->routeBase . '.show' , [
             'type' => 'create',
@@ -128,12 +159,15 @@ abstract class MarketBase
                     'name' => 'editFromPreview'
                 ]
             ],
+            'marketCommon' => $this->marketCommon,
         ]);
     }
 
     public function editFromCreatePreview()
     {
+//        dd('editFromCreatePreview');
         $auction = $this->getAuctionFromSession();
+//        dd($auction);
 
         return view('markets.' . $this->routeBase . '.create', [
             'title'=>'Titel saknas',
@@ -150,6 +184,7 @@ abstract class MarketBase
                     'name' => 'previewFromCreateForm'
                 ]
             ],
+            'marketCommon' => $this->marketCommon,
         ]);
     }
 
@@ -244,11 +279,26 @@ abstract class MarketBase
     {
         $input = images::saveImages($input);
 
+//        dd(text::marketFromBbToHtml($input));
+
         $auction = new MarketModel(text::marketFromBbToHtml($input));
+//        if(isset($input['end_at']))
+//        {
+////            dd('input', $input['end_at']);
+//            $input['end_at'] = new Carbon($input['end_at']);
+//        }
+//        dd($auction);
         $auction->user = Auth::user();
 
+        $auction->created_at = new Carbon($auction->created_at);
+        $auction->updated_at = new Carbon($auction->updated_at);
+
+        //?? Why do like this?, To get auction id and cretaed by user
         $auctionData = $this->getAuctionDataFromSession();
         $this->putAuctionInSession($auction, $auctionData['id'], $auctionData['createdByUser']);
+//        dd('maketBase->previewFromEditForm', $auctionData, $this->getAuctionDataFromSession());
+
+//        dd($input);
 
         //Todo: (Bids/preview, not needed, not able to edit after first bid)
 
@@ -270,13 +320,14 @@ abstract class MarketBase
                     'name' => 'editFromPreview'
                 ]
             ],
+            'marketCommon' => $this->marketCommon,
         ]);
     }
 
     public function saveFromEditPreview()
     {
         $auction = $this->getAuctionFromSession(false);
-
+//        dd('MarketBase->saveFromEditPreview 327', $auction);
         //TODO: Is this saving or updating, SAVING; CREATING NEW!!!!?
 //        $auction->save();
 
@@ -307,11 +358,13 @@ abstract class MarketBase
                     'name' => 'previewFromEditForm'
                 ]
             ],
+            'marketCommon' => $this->marketCommon,
         ]);
     }
 
     protected function update($market)
     {
+//        dd('MarketBase 364', $market);
         if(isset($market->createdByUser) &&
             isset($market->id) &&
             $market->id > 0)
@@ -382,26 +435,53 @@ abstract class MarketBase
     //region Session
     protected function getAuctionFromSession($withUser = true)
     {
-        $auctionArray = json_decode(Session::get('auction'), true);
+//        return Session::get('auction');
+//        $auctionArray = json_decode(Session::get('auction'), true);
+        $auction = Session::get('auction');
+//        return $auction;
+//        dd('getAuctionFromSession', $auction);
+//        dd($auctionArray, Session::get('auction'));
 
-        if(!$auctionArray) { abort(403); } //Abort if auction is not in session
-        $auction = new MarketModel($auctionArray);
+//        if(!$auctionArray) { abort(403); } //Abort if auction is not in session
+//        $auction = new MarketModel($auctionArray);
+//        dd($auctionArray, $auction);
 
-        if($withUser)
+//        if(!$withUser)
+//        {
+//            //TODO: Remove user
+////            $user = new User($auctionArray['user']);
+////            $user->exists = true;
+////            $auction->user = $user;
+//        }
+        if(!$withUser)
         {
-            $user = new User($auctionArray['user']);
-            $user->exists = true;
-            $auction->user = $user;
+//            $auction['createdByUser'] = $auction->user->id;
+            unset($auction->user);
+//            unset($auction['user']);
+//            dd('user exist', $auction);
         }
 
-        $auction->createdByUser = $auctionArray['user']['id'];
+//        $auction->createdByUser = $auctionArray['user']['id'];
         $auctionData = $this->getAuctionDataFromSession();
-//        dd($auction, $auctionData);
-        if($auctionData && $auctionData['id'] != 0)
+//        if($auctionData && $auctionData['id'] != 0)
+//        {
+//            $auction->id = $auctionData['id'];
+//            $auction->exists = true;
+//        }
+
+        if($auctionData)
         {
-            $auction->id = $auctionData['id'];
-            $auction->exists = true;
+            $auction->createdByUser = $auctionData['createdByUser'];
+
+            if($auctionData['id'] != 0)
+            {
+                $auction->id = $auctionData['id'];
+                $auction->exists = true;
+            }
         }
+
+
+//        dd('getAuctionFromSession', $auction, $auctionData);
 
         return $auction;
     }

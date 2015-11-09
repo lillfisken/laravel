@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use market\helper\mailer;
 
 
 class marketQuestions extends Model
@@ -32,5 +33,13 @@ class marketQuestions extends Model
     public function getMarket()
     {
         return $this->belongsTo('market\models\Market', 'market');
+    }
+
+    public function save(array $options = array())
+    {
+        parent::save($options);
+
+        $mailer = new mailer();
+        $mailer->sendMailNewQuestionAsked($this);
     }
 }

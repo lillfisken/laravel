@@ -106,6 +106,8 @@ class auction extends MarketBase
         ]);
     }
 
+
+
     //endregion
 
     public function setHighestBid($auction)

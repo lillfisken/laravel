@@ -145,4 +145,9 @@ class mailer {
         //Check if watcher want email
         //Send email, A ad you watch has been terminated, title, time, reason, link
     }
+
+    public function sendMailNewQuestionAsked($question)
+    {
+
+    }
 }

@@ -53,7 +53,7 @@ class CreateMarketsTable extends Migration {
             $table->boolean('contactPm');
             $table->boolean('contactQuestions');
 
-			$table->dateTime('end_at')->nullable();
+			$table->timestamp('end_at')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

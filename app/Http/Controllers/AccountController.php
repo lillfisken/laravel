@@ -447,32 +447,20 @@ class AccountController extends Controller
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.watched'));
 
-//        $events = watchedEvent::where('watched', 1)->get();
-
         foreach($markets as $market)
         {
-//            dd($market->watched[0]->unreadEvents);
             $events = [];
+            $read = [];
             foreach($market->watched[0]->unreadEvents as $event)
             {
                 $events[] = $event;
+                $read[] = $event->id;
             }
             $market['events'] = $events;
         }
 
-//        dd($markets);
-        //TODO: update events to read
-//        dd(
-//            $markets,
-//            $markets->first()->watched->first()
-////            $events
-//        );
-
-//        $watched_array = watched::getAllMarketIdsWatchedByUserId(Auth::id());
-//
-//        $markets = Market::whereIn('id', $watched_array)
-//            ->paginate(config('market.paginationNr'));
-//        $markets->setPath(route('accounts.active'));
+        //TODO: update events to read = 1
+        watchedEvent::whereIn('id', $read)->update(['read' => 1]);
 
         marketMenu::addMarketMenuToMarkets($markets);
 
@@ -646,7 +634,8 @@ class AccountController extends Controller
 
     public function authPost()
     {
-
+        // ???
+        // Settings for external login ???
     }
 
     //endregion

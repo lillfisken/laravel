@@ -9,6 +9,8 @@
 		</title>
 		<meta name="" content="" charset="utf-8"/>
 
+		{{--<link rel="SHORTCUT ICON" href="/market/public/favicon.ico">--}}
+
         {{--<link rel="stylesheet" href="/market/public/css/pgwslideshow.css" />--}}
 
         <!-- Include jQuery Mobile stylesheets -->

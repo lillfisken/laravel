@@ -65,7 +65,6 @@ class MarketsController extends ControllerMarket {
 //        $this->buyHelper = new buy();
     }
 
-	
 	/**
 	 * Display a listing of the resource.
 	 * GET /markets
