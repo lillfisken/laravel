@@ -49,6 +49,7 @@ class mailer {
             {
                 //Send mail via view, new pm from from, Title, Message, link to conversation
                 Mail::send('emails.newPM', [
+//                Mail::queue('emails.newPM', [
                     'sender' => $sender,
                     'receiver' => $receiver,
                     'pm' => $pm,
@@ -148,6 +149,6 @@ class mailer {
 
     public function sendMailNewQuestionAsked($question)
     {
-
+        //TODO:
     }
 }

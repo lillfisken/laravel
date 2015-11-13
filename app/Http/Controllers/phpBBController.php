@@ -22,6 +22,7 @@ class phpBBController extends Controller {
     public function externalResponse($key, Request $request)
     {
         Log::debug('phpBBController -> external response');
+        Log::debug('Request: ' . $request);
         $response = [];
         $response['function'] = 'externalResponse';
 
@@ -104,7 +105,10 @@ class phpBBController extends Controller {
                 $phpUser = phpBBUsers::where('username', $request->get('username'))
                     ->where('forumKey', $phpConnect->forumKey)
                     ->get()->first();
-//
+
+                Log::debug('phpUser: ' . $phpUser);
+                Log::debug('username: ' . $request->get('username'));
+
 //                $response['register'] = 'false';
 //                $response['phpUser'] = $phpUser;
 
@@ -263,17 +267,26 @@ class phpBBController extends Controller {
 //        dd('loginUser', $new);
 
         $phpBBLogin = new phpBBconnect($new);
+//        dd('loginUser', $phpBBLogin, $phpBBLogin->save());
         if($phpBBLogin->save())
         {
             $data = [
                 'forumKey' => $phpBBLogin['forumKey'],
                 'token' => $phpBBLogin['token']
             ];
-
-            $client = new Client();
+//            dd('loginUser', 'data: ', $data, '$phpBBLogin: ', $phpBBLogin);
 //            $response = $client->post($forum['urlConnect'], $data);
             $response = Laracurl::post($forum['urlConnect'], $data);
-//            dd($response, $data);
+//            dd(
+//                'loginUser', 'data: ', $data,
+//                '$phpBBLogin: ', $phpBBLogin,
+//                'response: ', $response
+//            );
+
+//            dd('Response: ', $response,
+//                'Data: ', $data,
+//                'Forum: ', $forum,
+//                'ForumId: ', $forumId);
         }
         else
         {
@@ -308,6 +321,8 @@ class phpBBController extends Controller {
                 // Abort 404, 'User not found'
 //                dd('Login id', $phpConnect->token, $phpConnect->user, $phpConnect);
 
+                Log::debug('Trying to login user: ' . $phpConnect);
+//                dd('phpBBController->redirected! ', 'phpConnect: ', $phpConnect);
                 Auth::loginUsingId($phpConnect->user);
 //
 //                dd('Login', $phpConnect, Auth::user());

@@ -153,6 +153,7 @@ return [
         'Chromabits\Purifier\PurifierServiceProvider',
         'Zjango\Laracurl\LaracurlServiceProvider',
         'market\Providers\ViewComposerProvider',
+		'Barryvdh\Queue\AsyncServiceProvider',
 	],
 
 	/*
