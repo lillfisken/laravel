@@ -26,35 +26,55 @@ class menu {
         $this->time = new time();
     }
 
-//    public function getTimeAsString()
-//    {
-////        return time();
-//        return $this->time->getTimeString();
-//    }
-
     public function compose(View $view)
     {
-//        $view->with('time', $this->getTimeAsString());
-
         if(Auth::check())
         {
-            $unread = DB::table('conversations')
-                ->join('messages', function($join){
-                $join->on(
-                    'conversations.id', '=', 'messages.conversationId')
-                    ->where('conversations.user1', '=', Auth::id())
-                    ->orWhere('conversations.user2', '=', Auth::id());
-                })
-                ->where('messages.read', '=', '0')
-//                ->where('messages.senderId', '!=', Auth::id())
+            $userId = Auth::id();
+//            $unread = DB::table('conversations')
+//                ->join('messages', function($join) use ($userId) {
+//                $join->on(
+//                    'conversations.id', '=', 'messages.conversationId');
+//                })
+//                ->where('conversations.user1', '=', $userId)
+//                ->orWhere('conversations.user2', '=', $userId)
+//                ->where('messages.read', '=', '0')
+//                ->where('messages.senderId', '!=', $userId)
 //                ->distinct()
-//                ->get();
+////                ->get();
+//                ->count();
+//
+//              $unread2 = DB::table('conversations')
+//                ->join('messages', function($join) use ($userId) {
+//                $join->on(
+//                    'conversations.id', '=', 'messages.conversationId')
+//                    ->where('conversations.user1', '=', $userId)
+//                    ->orWhere('conversations.user2', '=', $userId);
+//                })
+//                ->where('messages.read', '=', '0')
+//                ->where('messages.senderId', '!=', $userId)
+////                ->distinct()
+////                ->get();
+//                ->count();
+
+            $unread3 = DB::table('conversations')
+                ->join('messages', function($join) use ($userId) {
+                    $join
+                        ->on('conversations.id', '=', 'messages.conversationId')
+                        ->where('messages.read', '=', '0')
+                        ->where('messages.senderId', '!=', $userId);
+                })
+
+                ->where('conversations.user1', '=', $userId)
+                ->orWhere('conversations.user2', '=', $userId)
                 ->count();
 
-//            dd($unread,
-//                Auth::id(),
-//                DB::table('conversations')->get(),
-//                DB::table('messages')->get()
+
+//            dd(
+//                $unread,
+//                $unread2,
+//                $unread3,
+//                $userId
 //            );
 
             $watched = DB::table('watcheds')->join('watched_events', function($join){
@@ -94,7 +114,7 @@ class menu {
 //                'Auth: ' .  Auth::id(),
 //                'Unread: ' . $unread);
 
-            $view->with('unreadMessagesCount', $unread);
+            $view->with('unreadMessagesCount', $unread3);
             $view->with('username', Auth::user()->username);
             $view->with('watchedCount', $watched);
 

@@ -69,27 +69,27 @@
             <h2>Ny användare</h2>
             {!! Form::open(array('route' => 'accounts.register', 'method'=>'get')); !!}
                 {!! Form::submit('Registrera nytt konto', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close(); !!}
-
-            {!! Form::open() !!}
-                {!! Form::submit('Elektronikforumet', array('class' => 'btnSmall form-input')); !!}
             {!! Form::close() !!}
 
-            {!! Form::open(['url'=>'/oauth/register-facebook', 'method'=>'get']) !!}
-                {!! Form::submit('Facebook', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close(); !!}
+            {{--{!! Form::open() !!}--}}
+                {{--{!! Form::submit('Elektronikforumet', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close() !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/register-google', 'method'=>'get']) !!}
-                {!! Form::submit('Google', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close(); !!}
+            {{--{!! Form::open(['url'=>'/oauth/register-facebook', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Facebook', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close(); !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/register-twitter', 'method'=>'get']) !!}
-                {!! Form::submit('Twitter', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close(); !!}
+            {{--{!! Form::open(['url'=>'/oauth/register-google', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Google', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close(); !!}--}}
 
-            {!! Form::open(['url'=>'/oauth/register-github', 'method'=>'get']) !!}
-                {!! Form::submit('GitHub', array('class' => 'btnSmall form-input')); !!}
-            {!! Form::close(); !!}
+            {{--{!! Form::open(['url'=>'/oauth/register-twitter', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('Twitter', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close(); !!}--}}
+
+            {{--{!! Form::open(['url'=>'/oauth/register-github', 'method'=>'get']) !!}--}}
+                {{--{!! Form::submit('GitHub', array('class' => 'btnSmall form-input')); !!}--}}
+            {{--{!! Form::close(); !!}--}}
             <br/>
         </div>
     </div>

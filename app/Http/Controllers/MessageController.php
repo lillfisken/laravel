@@ -1,6 +1,7 @@
 <?php namespace market\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use market\models\Conversation;
 use market\Http\Requests;
@@ -34,6 +35,8 @@ class MessageController extends Controller
             */
     public function inbox()
     {
+        Log::debug('------------- Inbox ----------------');
+
         //$conversations = Conversation::with(['messages.sender'])->get();
 
 //        $conversations = DB::table('conversations')
@@ -61,13 +64,21 @@ class MessageController extends Controller
 
         foreach($conversations as $conversation)
         {
+            Log::debug('Looping over conversations');
             $unread = 0;
 
             foreach($conversation->messages as $message)
             {
+                Log::debug('Looping over messages in conversation');
+                Log::debug('$message->isRead(): ' . $message->isRead());
+                Log::debug('$message[read]: ' . $message['read']);
+                Log::debug('$message->senderId: ' . $message->senderId);
+
                 if(!$message->isRead() && $message->senderId != Auth::id())
                 {
                     $unread++;
+                    Log::debug('Unread message');
+
                 }
             }
 
@@ -317,7 +328,7 @@ class MessageController extends Controller
         }
         else
         {
-            return redirect()->route('markets.index')->with('message', 'Mail skickat');;
+            return redirect()->route('markets.index')->with('message', 'Mail skickat');
         }
     }
 
