@@ -26,42 +26,60 @@ class mailer {
 
     public function sendMailNewPm($messageId)
     {
-//        $message = Message::where('id', $messageId)->with('sender conversation.user1 conversation.user2')->first();
-        $pm = Message::where('id', $messageId)->with('sender', 'conversation.getUser1', 'conversation.getUser2')->first();
-//        $message = Message::where('id', $messageId)->with('sender')->first();
-
-        if($pm)
-        {
-            $sender = $pm->sender;
-
-            //Get reciever
-            if($sender != $pm->conversation->getUser1)
-            {
-                $receiver = $pm->conversation->getUser1;
-            }
-            else
-            {
-                $receiver = $pm->conversation->getUser2;
-            }
-
-            //Check if reciever want mail
-            if($receiver->mailNewPm)
-            {
-                //Send mail via view, new pm from from, Title, Message, link to conversation
-                Mail::send('emails.newPM', [
-//                Mail::queue('emails.newPM', [
-                    'sender' => $sender,
-                    'receiver' => $receiver,
-                    'pm' => $pm,
-                    'title' => $pm->conversation->title
-                ], function($message) use ($sender, $receiver, $pm) {
-                    $message
-                        ->from($sender->email, $sender->username . ' ' . $this->subjectSuffix)
-                        ->to($receiver->email)
-                        ->subject('Nytt PM: ' . $pm->conversation->title);
-                });
-            }
-        }
+////        $message = Message::where('id', $messageId)->with('sender conversation.user1 conversation.user2')->first();
+//        $pm = Message::where('id', $messageId)->with('sender', 'conversation.getUser1', 'conversation.getUser2')->first();
+////        $message = Message::where('id', $messageId)->with('sender')->first();
+//
+//        if($pm)
+//        {
+//            $sender = $pm->sender;
+//
+//            //Get reciever
+//            if($sender != $pm->conversation->getUser1)
+//            {
+//                $receiver = $pm->conversation->getUser1;
+//            }
+//            else
+//            {
+//                $receiver = $pm->conversation->getUser2;
+//            }
+//
+//            Log::debug('Prepared to sen email new pm');
+////            Log::debug('sender: ' . $sender);
+////            Log::debug('reciever: ' . $receiver);
+////            Log::debug('pm: ' . $pm);
+////            Log::debug('title: ' . $pm->conversation->title);
+//            //Check if reciever want mail
+//            if($receiver->mailNewPm)
+//            {
+//                //Send mail via view, new pm from from, Title, Message, link to conversation
+//                $data = [
+//                    'sender' => $sender,
+////                    'senderEmail' => $sender,
+//                    'receiver' => $receiver,
+//                    'pm' => $pm,
+//                    'title' => $pm->conversation->title,
+//                    'subjectSuffix' => $this->subjectSuffix,
+//                    'testData' => 'testData'
+//
+//                ];
+////                Log::debug('Data: '. $data);
+//                Log::debug('Data->title: '. $data['title']);
+//                Log::debug('$data[sender][email]: '. $data['sender']['email']);
+//                Log::debug('$data[\'sender\'][\'username\']: '. $data['sender']['username']);
+//                Log::debug('$data[\'subjectSuffix\']: '. $data['subjectSuffix']);
+//                Log::debug('$data[\'receiver\'][\'email\']: '. $data['receiver']['email']);
+//                Log::debug('$data[\'pm\'][\'conversation\'][\'title\']: '. $data['pm']['conversation']['title']);
+//
+////                Mail::send('emails.newPM', [
+//                Mail::later(15, 'emails.newPM', $data , function($message) use ($data) {
+//                    $message
+//                        ->from($data['sender']['email'], $data['sender']['username'] . ' ' . $data['subjectSuffix'])
+//                        ->to($data['receiver']['email'])
+//                        ->subject('Nytt PM: ' . $data['pm']['conversation']['title']);
+//                });
+//            }
+//        }
     }
 
     public function sendMailNewBidOnMyAuction($bid)

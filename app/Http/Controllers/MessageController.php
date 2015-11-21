@@ -37,22 +37,6 @@ class MessageController extends Controller
     {
         Log::debug('------------- Inbox ----------------');
 
-        //$conversations = Conversation::with(['messages.sender'])->get();
-
-//        $conversations = DB::table('conversations')
-//            ->join('messages', function($join){
-//                $join->on('conversations.id', '=', 'messages.conversationId')
-//                    ->where('conversations.user1', '=', Auth::id())
-//                    ->orWhere('conversations.user2', '=', Auth::id());
-////                    ->where('messages.read', '=', '0');
-//            })
-////            ->with('messages.sender', 'getUser1', 'getUser2')
-////            ->orderBy('created_at')
-////            ->distinct('id')
-//            ->paginate(config('market.paginationNr'));
-////            ->get();
-////        dd($conversations);
-
         $conversations = Conversation::
             where('user1', Auth::id())
             ->orWhere('user2', Auth::id())
@@ -60,19 +44,17 @@ class MessageController extends Controller
             ->paginate(config('market.paginationNr'));
         $conversations->setPath(route('message.inbox'));
 
-//        $latest = [];
-
         foreach($conversations as $conversation)
         {
-            Log::debug('Looping over conversations');
+//            Log::debug('Looping over conversations');
             $unread = 0;
 
             foreach($conversation->messages as $message)
             {
-                Log::debug('Looping over messages in conversation');
-                Log::debug('$message->isRead(): ' . $message->isRead());
-                Log::debug('$message[read]: ' . $message['read']);
-                Log::debug('$message->senderId: ' . $message->senderId);
+//                Log::debug('Looping over messages in conversation');
+//                Log::debug('$message->isRead(): ' . $message->isRead());
+//                Log::debug('$message[read]: ' . $message['read']);
+//                Log::debug('$message->senderId: ' . $message->senderId);
 
                 if(!$message->isRead() && $message->senderId != Auth::id())
                 {
@@ -87,39 +69,11 @@ class MessageController extends Controller
             $conversation['username2'] = $conversation->getUser2->username;
 
             $conversation['latestMessage'] = $conversation->messages->last()->created_at->timestamp;
-//            $conversation['sender'] = $conversation->messages->last()->User;
             $conversation['sender'] = $conversation->messages->last()->sender->username;
-//            dd($conversation->sender);
-//            $conversation['latestMessage'] = $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp;
-
-//            dd($conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp,
-//                $conversation->messages->first()->created_at->timestamp);
-
-//            dd($conversation);
-//            $conversation->messages->sortBy('created_at');
-
-//            $conversation = $conversation->messages->sortByDesc(function($message){
-//                return $message->created_at;
-//            });
-
-//            array_push($latest, 'Message non ordered' . $conversation->messages->first()->created_at->timestamp);
-//            array_push($latest, 'Message ordered' . $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp);
-//            array_add($latest, 'Message non ordered', $conversation->messages->first()->created_at->timestamp);
-//            array_add($latest, 'Message ordered', $conversation->messages->sortByDesc('created_at')->first()->created_at->timestamp);
-
-//            dd($conversation    );
         }
 
-//        dd($latest);
-
-        //sort converations by conversation->messages->newest
-
         $conversations->sortByDesc('latestMessage');
-//        dd($conversations);
-//        dd($conversations);
 
-//        dd('Auth: ' . Auth::id(),
-//            $conversations);
         return view('account.message.inbox', ['conversations' => $conversations]);
     }
 

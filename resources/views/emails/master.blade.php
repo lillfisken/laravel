@@ -8,5 +8,10 @@
     </head>
     <body>
         @yield('content')
+        <hr>
+        <p>
+            Lite snack om varifrån detta är skickat etc.<br>
+            Välkommen att kontakta admin på -------
+        </p>
     </body>
 </html>

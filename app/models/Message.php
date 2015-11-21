@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Queue;
+use market\Commands\sendMailNewPm;
 use market\helper\mailer;
 
 class Message extends Model {
@@ -41,7 +43,6 @@ class Message extends Model {
     {
         parent::save($options);
 
-        $mailer = new mailer();
-        $mailer->sendMailNewPm($this->id);
+        Queue::push(new sendMailNewPm($this->id));
     }
 }

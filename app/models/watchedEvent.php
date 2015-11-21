@@ -10,9 +10,7 @@ class watchedEvent extends Model {
     protected $table = 'watched_events';
 
     protected $fillable = [
-        'market',
-        'user',
-        'id',
+        'watched',
         'read',
         'message'
     ];

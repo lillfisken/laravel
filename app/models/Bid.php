@@ -37,7 +37,7 @@ class Bid extends Model {
 
     public function market()
     {
-        return $this->belongsTo('market\models\Market');
+        return $this->belongsTo('market\models\Market', 'auctionId', 'id');
     }
 
     /**

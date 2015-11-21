@@ -154,6 +154,8 @@ return [
         'Zjango\Laracurl\LaracurlServiceProvider',
         'market\Providers\ViewComposerProvider',
 		'Barryvdh\Queue\AsyncServiceProvider',
+		'market\Providers\market\messageServiceProvider',
+		'market\Providers\market\bidServiceProvider',
 	],
 
 	/*

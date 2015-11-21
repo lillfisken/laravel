@@ -27,7 +27,7 @@ class DevController extends Controller {
         'timer-void-test' => 'Test if void function blocks execution',
         'send-mail-new-bid' => 'Send mail by new bid',
         'route-list' => 'List all routes',
-
+        'new-bid' => 'New bid on watched',
     ];
 
     public function getIndex()
@@ -129,6 +129,11 @@ class DevController extends Controller {
     public function getRouteList()
     {
         dd(Artisan::call('route:list'));
+    }
+
+    public function getNewBid(\market\core\watched\newBidOnWatched $newBidOnWatched)
+    {
+        $newBidOnWatched->newBid(2);
     }
 
     //	Route::get('/dev', function(){

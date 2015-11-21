@@ -35,6 +35,11 @@ class watched extends Model {
         return $this->hasMany('market\models\watchedEvent', 'watched', 'id')->where('watched_events.read', '=', 0);
     }
 
+    public function events()
+    {
+        return $this->hasMany('market\models\watchedEvent', 'watched', 'id');
+    }
+
     public static function getAllMarketIdsWatchedByUserId($userid = null)
     {
         $watched = watched::where('user', ($userid == null ? Auth::id() : $userid))->get(['market']);
