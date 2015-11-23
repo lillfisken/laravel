@@ -5,6 +5,30 @@
 @stop
 
 @section('content')
-    <h1>Blockerade säljare</h1>
-    Funktionen ännu inte inplementerad
+    <div class="inner-content">
+        <h1>Blockerade säljare</h1>
+        <p>
+            {!! $blockedUsers->render() !!}
+        </p>
+        <table class="table-100">
+            @foreach($blockedUsers as $blockedUser)
+                <tr class="list-row">
+                    <td>
+                        <a href="{{ route('accounts.profile', $blockedUser->blockedUser->username) }}">
+                            <h4>
+                                {{ $blockedUser->blockedUser->username }}
+                            </h4>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('accounts.unblockSeller', $blockedUser->blockedUser->id) }}" class="btn">Häv blockering</a>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+
+        <p>
+            {!! $blockedUsers->render() !!}
+        </p>
+    </div>
 @stop

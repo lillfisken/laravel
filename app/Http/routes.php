@@ -230,12 +230,17 @@ Route::group(['prefix'=>'profile'], function(){
     //TODO: Alter route to not use user if not neccesarey
     Route::get('user/{user}', ['as' => 'accounts.profile', 'uses' => 'AccountController@show', 'middleware' => 'auth']);
 
-    Route::get('blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'AccountController@blockMarket', 'middleware' => 'auth']);
-    Route::get('unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'AccountController@unblockMarket', 'middleware' => 'auth']);
-    Route::get('blockseller/{user}', ['as' => 'accounts.blockSeller', 'uses' => 'AccountController@blockSeller', 'middleware' => 'auth']);
-    Route::get('unblockseller/{user}', ['as' => 'accounts.unblockSeller', 'uses' => 'AccountController@unblockSeller', 'middleware' => 'auth']);
-    Route::get('blockedmarket/{user}', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
-    Route::get('blockedseller/{user}', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
+    Route::get('blockmarket/{market}', ['as' => 'accounts.blockMarket', 'uses' => 'blockingController@blockMarketGet', 'middleware' => 'auth']);
+    Route::post('blockmarket', ['as' => 'accounts.blockMarketPost', 'uses' => 'blockingController@blockMarketPost', 'middleware' => 'auth']);
+    Route::get('unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'blockingController@unblockMarketGet', 'middleware' => 'auth']);
+    Route::post('unblockmarket', ['as' => 'accounts.unblockMarketPost', 'uses' => 'blockingController@unblockMarketPost', 'middleware' => 'auth']);
+    Route::get('blockedmarket/', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
+
+    Route::get('blockseller/{userId}', ['as' => 'accounts.blockSeller', 'uses' => 'blockingController@blockSellerGet', 'middleware' => 'auth']);
+    Route::post('blockseller', ['as' => 'accounts.blockSellerPost', 'uses' => 'blockingController@blockSellerPost', 'middleware' => 'auth']);
+    Route::get('unblockseller/{userId}', ['as' => 'accounts.unblockSeller', 'uses' => 'blockingController@unblockSellerGet', 'middleware' => 'auth']);
+    Route::post('unblockseller', ['as' => 'accounts.unblockSellerPost', 'uses' => 'blockingController@unblockSellerPost', 'middleware' => 'auth']);
+    Route::get('blockedseller', ['as' => 'accounts.blockedseller', 'uses' => 'AccountController@blockedseller', 'middleware' => 'auth']);
 
     Route::get('watched', ['as' => 'accounts.watched', 'uses' => 'AccountController@watched', 'middleware' => 'auth']);
     Route::get('watchMarket/{id}', ['as' => 'accounts.watchMarket', 'uses' => 'AccountController@watchMarket', 'middleware' => 'auth']);

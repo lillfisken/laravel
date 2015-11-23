@@ -16,6 +16,7 @@ use Input;
 use market\Http\Requests\passwordRequest;
 use market\Http\Requests\registerRequest;
 use market\Http\Requests\UserSettingsRequest;
+use market\models\blockedUser;
 use market\models\Market;
 use market\models\phpBBUsers;
 use market\models\watched;
@@ -40,6 +41,7 @@ class AccountController extends Controller
         $this->marketCommon = new common();
 
     }
+
     //region login/logout
     public function login()
     {
@@ -264,68 +266,6 @@ class AccountController extends Controller
 
     //endregion
 
-    //region Market Blocking
-
-    /* Block market in logged in users lists
-     *
-     * get 'profile/blockmarket/{market}'
-     * route 'accounts.blockMarket'
-     * middleware 'auth'
-     *
-     * @var market to block
-     * @return
-    */
-    public function blockMarket(Request $request)
-    {
-        $market = $request->get('marketId');
-        $user = Auth::id();
-        dd('accounts.blockMarket');
-    }
-
-    /* Show user profile
-         *
-         * get 'profile/unblockmarket/{market}'
-         * route 'accounts.unblockMarket'
-         * middleware 'auth'
-         *
-         * @var user
-         * @return
-        */
-    public function unblockMarket($market)
-    {
-        dd('accounts.unblockMarket');
-    }
-
-    /* Show user profile
-             *
-             * get 'profile/blockseller/{user}'
-             * route 'accounts.blockSeller'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function blockSeller($user)
-    {
-        dd('profile/blockseller/{user}');
-    }
-
-    /* Show user profile
-             *
-             * get 'profile/unblockseller/{user}'
-             * route 'accounts.unblockSeller'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function unblockSeller($user)
-    {
-        dd('accounts.unblockSeller');
-    }
-
-    //endregion
-
     //region Market listings
 
     /* Show user profile
@@ -402,12 +342,21 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function blockedmarket($user)
+    public function blockedmarket()
     {
-        //dd('AccountController@blockedmarked');
+        $markets = Market::has('blocked')
+            ->paginate(config('market.paginationNr'));
+        $markets->setPath(route('accounts.blockedmarket'));
 
-        abort(501);
-        return view('account.markets.blockedMarkets');
+        foreach($markets as $market)
+        {
+            marketMenu::addMarketMenu($market, [] , ['blocked' => 'true']);
+        }
+
+        return view('account.markets.blockedMarkets', [
+            'markets' => $markets,
+            'marketCommon' => $this->marketCommon,
+        ]);
     }
 
     /* Show user profile
@@ -419,11 +368,23 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function blockedseller($user)
+    public function blockedseller()
     {
-//        dd('AccountController@blockedseller');
-        abort(501);
-        return view('account.markets.blockedSellers');
+        $users = User::whereHas('blockedUsers', function($query) {
+                $query->where('blockingUserId', '=', Auth::id());
+            })
+            ->paginate(config('market.paginationNr'));
+        $users->setPath(route('accounts.blockedmarket'));
+//        $users = User::has('blockedUsers')
+//        ->get();
+
+        $blockedUsers = blockedUser::where('blockingUserId', Auth::id())
+            ->with('blockedUser')
+            ->paginate(config('market.paginationNr'));
+        $blockedUsers->setPath(route('accounts.blockedmarket'));
+
+//        dd('AccountController@blockedseller', $users, $blockedUsers);
+        return view('account.markets.blockedSellers', ['blockedUsers' => $blockedUsers]);
     }
 
     //endregion

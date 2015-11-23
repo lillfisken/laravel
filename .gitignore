@@ -7,4 +7,7 @@ resources/views/welcome.blade.php
 /old
 /resources/assets
 /storage
+.idea/
+.idea
+/.idea/
 /.idea

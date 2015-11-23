@@ -29,9 +29,11 @@
                 <li><a href="{{ route('accounts.active', @Auth::user()->username) }}">Aktiva
                         <span class="badge">?</span>
                     </a></li>
-                <li><a href="{{ route('accounts.trashed', @Auth::user()->username) }}">Avslutade</a></li>
-                <li><a href="{{ route('accounts.blockedmarket', @Auth::user()->username) }}">Blockerade annonser</a></li>
-                <li><a href="{{ route('accounts.blockedseller', @Auth::user()->username) }}">Blockerade säljare</a></li>
+                <li><a href="{{ route('accounts.trashed', @Auth::user()->username) }}">Avslutade
+                        <span class="badge">?</span>
+                    </a></li>
+                <li><a href="{{ route('accounts.blockedmarket') }}">Blockerade annonser</a></li>
+                <li><a href="{{ route('accounts.blockedseller') }}">Blockerade säljare</a></li>
             </ul>
         </li>
         <li>

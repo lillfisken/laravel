@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 //use Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -79,5 +80,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function marketQuestions()
 	{
 		return $this->hasMany('market\models\MarketQuestion', 'user', 'id');
+	}
+
+	public function blockedUsers()
+	{
+		return $this->hasMany('\market\models\blockedUser', 'blockingUserId', 'id');
 	}
 }

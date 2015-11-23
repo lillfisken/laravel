@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use market\helper\mailer;
 use market\helper\watched as watchedHelper;
 
@@ -99,6 +100,16 @@ class Market extends Model {
         return $this->hasMany('market\models\watched', 'market', 'id' );
     }
 
+	public function blocked()
+	{
+		return $this->hasMany('market\models\blockedMarket', 'marketId', 'id');
+	}
+
+	public function blockedByUsers()
+	{
+		return $this->hasMany('market\models\blockedUser', 'blockedUserId', 'createdByUser');
+	}
+
     public function delete()
     {
         parent::delete();
@@ -121,5 +132,24 @@ class Market extends Model {
 	{
 		//http://laravel.io/forum/11-27-2014-handling-dates-with-form-models
 		$this->attributes['end_at'] = Carbon::createFromFormat('Y/m/d H:i', $value);
+	}
+
+	public function scopeWithoutBlockedSellers($query)
+	{
+		return $query->whereDoesntHave('user.blockedUsers', function($query) {
+			$query->where('blockingUserId', '=', Auth::id());
+		});
+	}
+
+	public function scopeWithoutBlockedMarkets($query)
+	{
+		return $query->has('blocked', '<', 1);
+	}
+
+	public function scopeBlockedSellerByUser($query)
+	{
+		return $query->whereDoesntHave('blockedByUsers', function($query) {
+			$query->where('blockingUserId', '=', Auth::id());
+		});
 	}
 }

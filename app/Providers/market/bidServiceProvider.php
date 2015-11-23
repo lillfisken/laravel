@@ -22,7 +22,7 @@ class bidServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->registerNewBidOnWatched();
 	}
 
 	private function registerNewBidOnWatched()

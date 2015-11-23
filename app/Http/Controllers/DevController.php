@@ -1,12 +1,14 @@
 <?php namespace market\Http\Controllers;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
 use market\Commands\testQueue;
 use market\helper\mailer;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\models\Market;
+use market\models\User;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,6 +30,7 @@ class DevController extends Controller {
         'send-mail-new-bid' => 'Send mail by new bid',
         'route-list' => 'List all routes',
         'new-bid' => 'New bid on watched',
+        'markets-without-blocked-sellers' => 'Get all market with blocked selelrs',
     ];
 
     public function getIndex()
@@ -438,19 +441,81 @@ class DevController extends Controller {
 //        dd($auction);
 //    });
 
-}
+    public function getMarketsWithoutBlockedSellers(Market $market)
+    {
+//        $marketCount = Market::all()->count();
+        echo 'User id: ' . Auth::id();
 
-// Thread not installed
-//class testAsync extends \Thread
-//{
-//    public function __construct($message)
-//    {
-//        $this->message = $message;
-//    }
-//
-//    public function run()
-//    {
-//        sleep(3);
-//        echo $this->message . '<br/>';
-//    }
-//}
+        $markets2 = Market::whereDoesntHave('user.blockedUsers')
+            ->get();
+
+//        $authId = Auth::id();
+
+//        $temp = $market->whereDoesntHave('blockedByUser', function($query) use($authId) {
+//            $query->where('blockingUserId', '=', $authId);
+//        })
+//        ->get();
+//        dd($temp);
+
+        $markets = Market::blockedByUser()->get();
+//            with('user.blockedUsers')
+//            whereDoesntHave('user.blockedUsers', function($query) use ($market, $authId) {
+//                $query
+////                    ->where('blockedUserId', '=', $market->createdByUser);
+////                    ->where('blockingUserId', '=', $authId)
+//                    ->where('blockedUserId', '=', '2');
+//                    ;
+//            })
+//            ->get();
+//        dd($markets, $markets[10]->user->blockedUsers, Market::all()->count(), $market->createdByUser);
+//        dd($markets);
+        $marketsAll = Market::with('user.blockedUsers')->get();
+
+        $marketBlockedCount = Market::withoutBlockedSellers()->get();
+
+        echo '<table border="1">';
+        echo '<tr>
+                <th>Count ' . $marketsAll->count() . '</th>
+                <th>markets2 ' . $markets2->count() . '</th>
+                <th>markets ' . $markets->count() . '</th>
+                <th>marketsAll ' . $marketsAll->count() . '</th>
+                <th>marketBlockedCount ' . $marketBlockedCount->count() . '</th>
+              </tr>';
+
+        for($i = 0; $marketsAll->count() > $i ; $i++)
+        {
+//            dd($marketsAll->count(), $i);
+
+            echo '<tr>';
+                echo '<td>' . $i . '</td>';
+
+                $id = isset($markets2[$i]) ? $markets2[$i]->id : '---';
+                echo '<td>' . $id . '</td>';
+
+                $id = isset($markets[$i]) ? $markets[$i]->id : '---';
+                echo '<td>' . $id . '</td>';
+
+                $id = isset($marketsAll[$i]) ? $marketsAll[$i]->id : '---';
+                $blocked = isset($marketsAll[$i]->user->blockedUser)
+                    ? $marketsAll[$i]->user->blockedUser->blockedUserId
+                    : '---';
+                echo '<td>' . $id . ' : ' . $blocked .'</td>';
+
+                $id = isset($marketBlockedCount[$i]) ? $marketBlockedCount[$i]->id : '---';
+                echo '<td>' . $id . '</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+
+        dd('getMarketsWithoutBlockedSellers',
+//            'Blocked: ' . $marketBlockedCount,
+//            'Non blocked '.  $marketCount
+            Auth::id(),
+//            $markets2,
+//            $markets,
+            $marketsAll,
+            $marketsAll[10]->user
+//            $marketBlockedCount
+        );
+    }
+}

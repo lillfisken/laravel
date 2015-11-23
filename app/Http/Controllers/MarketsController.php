@@ -77,6 +77,8 @@ class MarketsController extends ControllerMarket {
 
         $markets = Market::select()
             ->with('User')
+            ->withoutBlockedMarkets()
+            ->blockedSellerByUser()
             ->paginate(config('market.paginationNr'), 20);
         $markets->setPath(route('markets.index'));
 
@@ -185,6 +187,7 @@ class MarketsController extends ControllerMarket {
 
         //Why is this here?n To save user input when redirecting back...
 		Input::flash();
+
 		return view('markets.index', [
             'markets' => $temp,
             'marketCommon' => $this->marketCommon
@@ -244,10 +247,4 @@ class MarketsController extends ControllerMarket {
 
         return Redirect::back();
     }
-
-    public function getAuctionEndTime($auctionId)
-    {
-
-    }
-
 }

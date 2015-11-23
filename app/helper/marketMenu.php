@@ -5,7 +5,7 @@ use market\models\watched;
 
 class marketMenu
 {
-    public static function addMarketMenu($market, $watched = [])
+    public static function addMarketMenu($market, $watched = [], $options = [])
     {
         if(Auth::check()) {
             $userId = Auth::id();
@@ -35,7 +35,14 @@ class marketMenu
 
                 //Blocked
                 //TODO: Check if market is blocked, then ad link to unblock instead
-                $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
+                if(isset($options['blocked']))
+                {
+                    $temp[] = array('text' => 'Visa annons', 'href' => route('accounts.unblockMarket', $market->id));
+                }
+                else
+                {
+                    $temp[] = array('text' => 'Dölj annons', 'href' => route('accounts.blockMarket', $market->id));
+                }
                 //TODO: Check if market is seller, then ad link to unblock instead
                 $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
             }
