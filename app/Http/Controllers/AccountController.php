@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use market\core\session\sessionUrl;
 use market\helper\debug;
 use market\helper\markets\common;
 use market\Http\Requests;
@@ -43,77 +44,49 @@ class AccountController extends Controller
     }
 
     //region login/logout
-    public function login()
+    public function login(sessionUrl $sessionUrl, Request $request)
     {
-        //TODO: Redirect to index if user is logged in
+        Log::debug('AccountController->login');
         if(Auth::check())
         {
             return redirect('/');
         }
-
-        Session::put('uri', Session::get('_previous'));
+//        Session::put('uri', Session::get('_previous'));
+        $sessionUrl->setPreviousUrl();
 
         $phpBBforum = Config::get('phpBBforums');
 
         return view('account.auth.login', ['phpBBforums' => $phpBBforum]);
     }
 
-    public function loginPost()
+    public function loginPost(sessionUrl $sessionUrl, Request $request)
     {
+        Log::debug('AccountController->loginPost');
         //TODO:Add validation for input
-        //TODO:Check if user already logged in
+        //Check if user already logged in
+        if(Auth::check()) redirect('/');
 
         //http://scotch.io/tutorials/simple-and-easy-laravel-login-authentication
 
-        $remember = false;
-
-        if (Input::has('remember')) {
-            $remember = true;
-        }
+        // Get and set remember
+        $request->has('remember') ? $remember = true : $remember = false;
 
         // attempt to do the login
-        if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), $remember)) {
-
-            // validation successful!
-            // redirect them to the secure section or whatever
-            // return Redirect::to('secure');
-            // for now we'll just echo success (even though echoing in a controller is bad)
-            //return 'SUCCESS!';
-
-//            return Redirect::back();
-            $uri = Session::get('uri');
-            if(isset($uri))
-            {
-                if(isset($uri['url']))
-                {
-                    //dd($uri['url']);
-                    return redirect($uri['url']);
-                }
-                return redirect()->route('markets.index');
-            }
-            else
-            {
-                return redirect()->route('markets.index');
-            }
-
-        } else {
-
-            // validation not successful, send back to form
-            return Redirect::route('accounts.login')->with(Input::all())->with('message', 'Inloggningen misslyckades');
+        if (Auth::attempt([
+            'email' => $request->get('email'),
+            'password' => $request->get('password')
+        ], $remember))
+        {
+            // login successful!
+            return $sessionUrl->redirectToPreviousUrlOrDefault();
         }
-
-
-
-//        }
-
-//        ---------------------------------------------
-//        if (Auth::attempt(array('email' => $email, 'password' => $password)))
-//        {
-//            return 'logged in';
-//            return Redirect::intended('dashboard');
-//        }
-//
-//        return 'logging in failed';
+        else
+        {
+            // validation not successful, send back to form
+            return redirect()->route('accounts.login')
+                ->withInput()
+                ->with('message', 'Inloggningen misslyckades');
+        }
     }
 
     public function logout()

@@ -11,37 +11,36 @@
 
         <div class="loginBox">
             <h2>Inloggning</h2>
-
-            {!! Form::open(array('route' => 'accounts.login.post')); !!}
+            {!! Form::open(array('route' => 'accounts.login.post')) !!}
                 <div class="bottom-padding">
-                    {!! Form::label('email', 'E-mail'); !!}<br/> <!-- old value -->
-                    {!! Form::email('email', Input::old('email') , ['class' => "form-input", 'placeholder' => 'e-mail' ] ); !!}
+                    {!! Form::label('email', 'E-mail') !!}<br/> <!-- old value -->
+                    {!! Form::email('email', isset($email) ? $email : Input::old('email') , ['class' => "form-input", 'placeholder' => 'e-mail' ] ) !!}
+{{--                    {!! Form::email('email', Input::old('email') , ['class' => "form-input", 'placeholder' => 'e-mail' ] ) !!}--}}
                 </div>
                 <div class="bottom-padding">
-                    {!! Form::label('password', 'Lösenord'); !!}<br/>
-                    {!! Form::password('password' , ['class' => "form-input" ] ); !!}
+                    {!! Form::label('password', 'Lösenord') !!}<br/>
+                    {!! Form::password('password' , ['class' => "form-input" ] ) !!}
                 </div>
                 <div class="bottom-padding">
-                    {!! Form::label('remember', 'Logga in vid varje besök'); !!}
-                    {!! Form::checkbox('remember', 'remember', false); !!}
+                    {!! Form::label('remember', 'Logga in vid varje besök') !!}
+                    {!! Form::checkbox('remember', 'remember', false) !!}
                 </div>
                 <div class="bottom-padding">
-                    {!! Form::submit('Logga in', array('class' => 'btnSmall form-input')); !!}
+                    {!! Form::submit('Logga in', array('class' => 'btnSmall form-input')) !!}
                 </div>
-            {!! Form::close(); !!}
-            <br/>
+            {!! Form::close() !!}
             {!! Form::open(['route' => 'accounts.forgotPassword', 'method' => 'get']) !!}
                 <div>
-                    {!! Form::submit('Glömt lösenordet', array('class' => 'btnSmall form-input')); !!}
+                    {!! Form::submit('Glömt lösenordet', array('class' => 'btnSmall form-input')) !!}
                 </div>
-            {!! Form::close(); !!}
+            {!! Form::close() !!}
             <br/>
         </div>
         <div class="loginBox">
             <h2>Använd extern inloggning</h2>
             @foreach($phpBBforums as $phpBB)
                 {!! Form::open(['route' => ['phpBB.login', $phpBB['id'] ] ]) !!}
-                {!! Form::submit($phpBB['displayName'], array('class' => 'btnSmall form-input')); !!}
+                {!! Form::submit($phpBB['displayName'], array('class' => 'btnSmall form-input')) !!}
                 {!! Form::close() !!}
             @endforeach
             {{--{!! Form::open(['url'=>'/oauth/elektronikforumet', 'method'=>'get']) !!}--}}
@@ -67,8 +66,8 @@
         </div>
         <div class="loginBox">
             <h2>Ny användare</h2>
-            {!! Form::open(array('route' => 'accounts.register', 'method'=>'get')); !!}
-                {!! Form::submit('Registrera nytt konto', array('class' => 'btnSmall form-input')); !!}
+            {!! Form::open(array('route' => 'accounts.register', 'method'=>'get')) !!}
+                {!! Form::submit('Registrera nytt konto', array('class' => 'btnSmall form-input')) !!}
             {!! Form::close() !!}
 
             {{--{!! Form::open() !!}--}}
