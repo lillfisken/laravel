@@ -46,12 +46,9 @@ class AccountController extends Controller
     //region login/logout
     public function login(sessionUrl $sessionUrl, Request $request)
     {
-        Log::debug('AccountController->login');
-        if(Auth::check())
-        {
-            return redirect('/');
-        }
-//        Session::put('uri', Session::get('_previous'));
+        // Redirect to start if user already logged in
+        if(Auth::check()) return redirect('/');
+
         $sessionUrl->setPreviousUrl();
 
         $phpBBforum = Config::get('phpBBforums');
@@ -72,10 +69,7 @@ class AccountController extends Controller
         $request->has('remember') ? $remember = true : $remember = false;
 
         // attempt to do the login
-        if (Auth::attempt([
-            'email' => $request->get('email'),
-            'password' => $request->get('password')
-        ], $remember))
+        if (Auth::attempt([ 'email' => $request->get('email'), 'password' => $request->get('password')], $remember))
         {
             // login successful!
             return $sessionUrl->redirectToPreviousUrlOrDefault();
@@ -85,14 +79,14 @@ class AccountController extends Controller
             // validation not successful, send back to form
             return redirect()->route('accounts.login')
                 ->withInput()
-                ->with('message', 'Inloggningen misslyckades');
+                ->with('alert', 'Inloggningen misslyckades');
         }
     }
 
     public function logout()
     {
         Auth::logout();
-        return Redirect::to('/');
+        return Redirect::to(URL::previous());
     }
 
     //endregion
@@ -394,7 +388,11 @@ class AccountController extends Controller
         }
 
         //TODO: update events to read = 1
-        watchedEvent::whereIn('id', $read)->update(['read' => 1]);
+        if(!empty($read))
+        {
+            //Delete read events
+            watchedEvent::whereIn('id', $read)->update(['read' => 1]);
+        }
 
         marketMenu::addMarketMenuToMarkets($markets);
 
