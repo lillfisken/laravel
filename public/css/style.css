@@ -78,6 +78,16 @@
 		padding: 3px 10px;
         height: 100%;
 	}
+
+	.message{
+		border: 1px solid green;
+		background-color: #b3ffb3;
+	}
+
+	.alert{
+		border: 1px solid red;
+		background-color: #ffcccc;
+	}
 			
 	#site{
 		height: 100%;

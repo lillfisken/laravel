@@ -9,9 +9,10 @@ use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\models\Market;
 use market\models\User;
-use Request;
+//use Request;
 use Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\Request;
 
 class DevController extends Controller {
 
@@ -31,6 +32,7 @@ class DevController extends Controller {
         'route-list' => 'List all routes',
         'new-bid' => 'New bid on watched',
         'markets-without-blocked-sellers' => 'Get all market with blocked selelrs',
+        'dd-request' => 'DD Request',
     ];
 
     public function getIndex()
@@ -517,5 +519,10 @@ class DevController extends Controller {
             $marketsAll[10]->user
 //            $marketBlockedCount
         );
+    }
+
+    public function getDdRequest(Request $request)
+    {
+        dd($request);
     }
 }

@@ -156,6 +156,7 @@ return [
 		'Barryvdh\Queue\AsyncServiceProvider',
 		'market\Providers\market\messageServiceProvider',
 		'market\Providers\market\bidServiceProvider',
+		'market\Providers\coreServiceProvider',
 	],
 
 	/*

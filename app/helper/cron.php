@@ -10,6 +10,8 @@ namespace market\helper;
 
 
 use Illuminate\Support\Facades\Log;
+use market\core\tasks\deleteOldTempImages;
+use market\core\tasks\endOldAuctions;
 
 class cron {
 
@@ -27,20 +29,15 @@ class cron {
 
     public function deleteOldTempImages()
     {
-        //TODO: delete old temp images
-        //Older than 24 hours
+        //TODO: Inject
+        $d = new deleteOldTempImages();
+        $d->clean();
     }
 
     public function endOldAuctions()
     {
-        $deleted = \market\models\Market::where('marketType', 4)
-            ->where('end_at', '<', $this->time->getTimeUnix())
-//            ->where('deleted_at', null)
-            ->delete();
-
-        if($deleted > 0)
-        {
-            Log::info('cron -> end old auctions. Deleted: ' . $deleted);
-        }
+        //TODO: Inject
+        $endOldAuctions = new endOldAuctions();
+        $endOldAuctions->end();
     }
 }

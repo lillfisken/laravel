@@ -23,11 +23,9 @@
         <p>
             Login<br />
             -> OAuth (facebook, twitter, google, linkedin)<br/>
-            -> Redirekt efter login tll önskad sida<br/>
             -> Mail vid registrering mailview<br/>
             -> felmeddelanden, mail, användarnamn finns redan<br/>
             -> Översättning i email för lösenordsåterställning<br/>
-            -> CSRF validiation error efter felinloggning<br/>
         </p>
         <hr />
         <p>
@@ -52,13 +50,15 @@
             -> BB Code responsiv<br/>
             -> Förhandsvisning marketQuestion<br/>
             -> Publik profilsida (obs script injection)<br/>
-            -> Lägg till meddelande 'inställningar sparade' efter uppdatering av inställningar<br/>
             -> Visningsalternativ (spara i cockies)<br/>
             -> Meddelande om att javascript krävs och webbläsare över ??? (rad ovanför, för bästa funktion...) <br/>
             -> Möjlighet att ladda upp pdf till annons<br/>
             -> Cronjob, radera temp bilder äldre än 1 dygn<br/>
             -> Möjlighet att redigera kontaktsätt<br/>
-            -> Cron: Radera gamla phpBBConnect...
+            -> Cron: Radera gamla phpBBConnect...<br/>
+            -> Olika visningsmöjligheter, spara i cookies<br/>
+            -> BB-Code i presenatationen<br/>
+            -> Röd/grönt fält alert/message<br/>
         </p>
         <hr/>
         <p>
@@ -104,23 +104,11 @@
         </p>
         <hr/>
         <p>
-            Queue driver<br />
-            -> Build my own queue-driver using cronjob and console command???<br/>
-            -> Queue mailer<br/>
-        </p>
-        <hr/>
-        <p>
             Admin sida<br />
             -> Svartlista användare<br/>
             -> Radera annonser helt (Flytta till dold db tabell)<br/>
             -> Återställa radera annonser (från dold db)<br />
             -> Ändra annonser<br/>
-        </p>
-        <hr/>
-        <p>
-            Performance<br />
-            -> Eager loading where applicable??<br />
-            -> Kolla antal sql frågor vid respektive fråga
         </p>
         <hr/>
         <p>
