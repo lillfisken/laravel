@@ -1,2 +1,0 @@
-<h1>Banner1</h1>
-			<p>Finns fyra mojliga platser att placeraeventuella banners, hanteras i fyra separata filer som ar enkla att uppdater. Med tiden mojlighet att andra dessa fran en administratorspanel och sparas da i databasen (via lank)</p>

@@ -7,6 +7,11 @@
 	/*---------------------------------------
 	Basic layout
 	---------------------------------------*/
+
+    *{
+        vertical-align: top;
+    }
+
 	html, body {
 		height: 100%;
 		margin: 0;
@@ -58,7 +63,7 @@
         border: 1px solid #516177;
 
 
-        display: table-row;
+        /*display: table-row;*/
 	}
 	
 	#menu,
@@ -67,6 +72,7 @@
 		margin-bottom: auto;
 		top: 0px;
 		bottom: auto;
+		display: table-row;
 	}
 	
 	#content {
@@ -92,48 +98,44 @@
 	#site{
 		height: 100%;
 		width: 100%;
-		/*background-color: red;*/
 		display: table;
 	}
 	
 	#header{
 		
 	}
-		
-	#banner1,
-	#banner2,
-	#banner3,
-	#banner4{
-		padding: 4px;
-		background-color: #f1f1f1;
-		
-		/*border-radius: 3px;*/
-		border-color: #516177;
-		border-width: 1px;
-		border-style: solid;
-		
-		margin: 4px;
-	}
-	
-	#banner1,
-	#banner4{
-		width: 100%;
-		clear: both;
+
+    #banner-header{
+		width: 468px;
+		height: 60px;
 		overflow: hidden;
+		display: inline-block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 4px;
+		/*vertical-align: middle;*/
+    }
+
+	/*.header-image-left{*/
+		/*float: left;*/
+	/*}*/
+
+	.header-image-right{
+		float: right;
 	}
-	
-	#banner2,
-	#banner3{
-		max-width: 20%;
+
+	#banner-right-side{
+		/*padding-left: 4px;*/
+		margin-left: 4px;
 	}
-			
-	#banner2 {
-		float: left;
+
+	.dark-background{
+		background-color: #f1f1f1;
 	}
-		
-	#banner3 {
-		float: right;		
-	}
+
+    .spacer{
+        height: 4px;
+    }
 		
 	#footer{
 		background-color: #70839d;
@@ -154,16 +156,16 @@
 	#logo{
 		width: 100%;
 		background-color: #70839d;
-		display: block;
+		display: inline-block;
 		
 		border-bottom-color: #516177;
 		border-bottom-style: solid;
 		border-bottom-width: 2px;
 	}
 	
-	#logo-right{
-		float: right;
-	}
+	/*#logo-right{*/
+		/*float: right;*/
+	/*}*/
 	
 	.borderbox{
 		border: 1px solid #516177;
@@ -177,7 +179,6 @@
 	.align-right{
 		float: right;
 		margin-right: 7px;
-		/*background-color: red;*/
 	}
 
     .clearfix{
@@ -289,6 +290,22 @@
         white-space: nowrap;
         padding: 0.1em 0.2em;
     }
+
+    .css-table{
+        display: table;
+        width: 100%;
+    }
+    .css-table-row{
+        display: table-row;
+    }
+	.css-table-cell{
+		display: table-cell;
+	}
+	.css-table-cell-banner{
+		display: table-cell;
+		width: 300px;
+        /*width: 10%;*/
+	}
 
     .badge{
         /*font-size: 70%;*/
@@ -517,8 +534,8 @@
 	}
 		
 	.list-row{
-		padding: 5px 2px;
-		margin: 0;
+		/*padding: 5px 2px;*/
+		/*margin: 0;*/
 		overflow: visible;
 		padding: 2px;
 		margin: 2px;
