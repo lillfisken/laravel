@@ -63,7 +63,7 @@ class Bid extends Model {
     public function save(array $options = array())
     {
         parent::save($options);
-
+//        dd('Bid saved in model');
         $mailer = new mailer();
         $mailer->sendMailNewBidOnMyAuction($this);
         $mailer->sendMailNewBidWatchedAuction($this->id);

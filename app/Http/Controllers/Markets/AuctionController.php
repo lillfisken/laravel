@@ -5,6 +5,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use market\Bid;
+use market\core\bid\placeBid;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\helper;
@@ -27,16 +28,14 @@ class AuctionController extends BaseController {
     //region Bids
 
     //TODO: Move to bid controller
-    public function placeBid(Request $request)
+    public function placeBid(Request $request, placeBid $placeBid)
     {
         //TODO: BidRequest
-        $market = $request->id;
-        $bid = $request->bid;
-        $bidder = Auth::id();
+        $marketID = $request->id;
 
-        helper\bid::placeBid($market, $bidder, $bid);
-
-        return redirect()->route('auction.show', $market);
+        $placeBid->place($request->id, Auth::id(), $request->bid);
+        //TODO: If success...
+        return redirect()->route('auction.show', $marketID);
     }
 
     public function showAllBids($id)
