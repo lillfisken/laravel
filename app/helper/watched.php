@@ -10,6 +10,8 @@ namespace market\helper;
 
 //use market\models\Bid;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use market\models\watchedEvent;
 
@@ -17,37 +19,29 @@ class watched {
     public function newBid($bid)
     {
         Log::debug('helper->watched->newBid');
-        //TODO: queue
-        //TODO: Single query
 
-//        dd($bid);
-        //Add new watchedevent
         // get all watcheds connected to bid->auctionId
         $watcheds = \market\models\watched::where('market', $bid->auctionId)->get();
+        $toBeSaved = [];
         foreach($watcheds as $watched)
         {
             Log::debug('In watcheds foreachloop');
-            //TODO: If not my own market
-//            $user = $watched->user;
-//            $market = $watched->market;
-//            $events = $watched->events;
-            $message = 'Nytt bud: ' . $bid->bid . ', ' . $bid->updated_at;
-//            $event = watchedEvent::where('user', $user)->where('market', $market)->orderBy('id', 'desc')->first();
-//            $newId = $event == null ? 1 : $event->id + 1;
-//            dd($user, $market, $message, $newId, $event);
-            $watchedEvent = new watchedEvent([
-//                'market' => $market,
-//                'user' => $user,
-//                'id' => $newId,
-                'watched' => $watched->id,
-                'read' => 0,
-                'message' => $message
-            ]);
-            $watchedEvent->save(); //&Todo: Move to array and save all item in array???
+            if($watched->user != Auth::id())
+            {
+                $message = 'Nytt bud: ' . $bid->bid . ', ' . $bid->updated_at;
+
+                $toBeSaved[] = [
+                    'watched' => $watched->id,
+                    'read' => 0,
+                    'message' => $message
+                ];
+            }
         }
-        // add new watchedevent to all watched, not if bid is placed by watcher
-//    dd($watcheds, $bid->auctionId);
-        // Multiple updates at once using quering scopes
+
+        if(count($toBeSaved) > 0)
+        {
+            DB::table('watched_events')->insert($toBeSaved);
+        }
     }
 
     public static function marketEnded($market)

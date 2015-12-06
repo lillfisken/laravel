@@ -4,16 +4,15 @@ use Chromabits\Purifier\Purifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use market\Bid;
+use market\core\bid\getAllBids;
 use market\core\bid\placeBid;
 use market\Http\Requests;
-use market\Http\Controllers\Controller;
 use market\helper;
 
 use Illuminate\Http\Request;
 use market\Http\Requests\BidRequest;
-use market\Market;
 use market\Http\Requests as MarketRequests;
+use market\models\Market;
 
 class AuctionController extends BaseController {
 

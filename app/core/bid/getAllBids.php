@@ -13,9 +13,9 @@ use market\models\Bid;
 
 class getAllBids
 {
-    protected function get($marketId)
+    public function get($marketId)
     {
-        $b = Bid::where('auctionId', $marketId);
+        $b = Bid::where('auctionId', $marketId)->get();
 
         return $b;
     }

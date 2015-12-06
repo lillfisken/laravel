@@ -40,35 +40,35 @@ class Bid extends Model {
         return $this->belongsTo('market\models\Market', 'auctionId', 'id');
     }
 
-    /**
-     * Set the keys for a save update query.
-     * This is a fix for tables with composite keys
-     * TODO: Investigate this later on
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function setKeysForSaveQuery(Builder $query)
-    {
-        //https://github.com/laravel/framework/issues/5517 2015-06-08
-
-        $query
-            //Put appropriate values for your keys here:
-            ->where('auctionId', '=', $this->auctionId)
-            ->where('bidder', '=', $this->bidder);
-
-        return $query;
-    }
+//    /**
+//     * Set the keys for a save update query.
+//     * This is a fix for tables with composite keys
+//     * TODO: Investigate this later on
+//     *
+//     * @param  \Illuminate\Database\Eloquent\Builder  $query
+//     * @return \Illuminate\Database\Eloquent\Builder
+//     */
+//    protected function setKeysForSaveQuery(Builder $query)
+//    {
+//        //https://github.com/laravel/framework/issues/5517 2015-06-08
+//
+//        $query
+//            //Put appropriate values for your keys here:
+//            ->where('auctionId', '=', $this->auctionId)
+//            ->where('bidder', '=', $this->bidder);
+//
+//        return $query;
+//    }
 
     public function save(array $options = array())
     {
         parent::save($options);
-//        dd('Bid saved in model');
         $mailer = new mailer();
         $mailer->sendMailNewBidOnMyAuction($this);
         $mailer->sendMailNewBidWatchedAuction($this->id);
 
         $watched = new watchedHelper();
+        //TODO: queue
         $watched->newBid($this);
     }
 }
