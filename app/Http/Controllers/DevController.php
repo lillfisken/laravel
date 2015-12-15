@@ -1,10 +1,14 @@
 <?php namespace market\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
+use market\Commands\sendMailAuctionEnded;
 use market\Commands\testQueue;
+use market\core\mail\auctionEnded;
 use market\helper\mailer;
+use market\helper\time as timeHelper;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 use market\models\Market;
@@ -33,6 +37,9 @@ class DevController extends Controller {
         'new-bid' => 'New bid on watched',
         'markets-without-blocked-sellers' => 'Get all market with blocked selelrs',
         'dd-request' => 'DD Request',
+        'test-time' => 'Test time',
+        'delete-auction-mail' => 'Test send mail ended auction',
+
     ];
 
     public function getIndex()
@@ -524,5 +531,77 @@ class DevController extends Controller {
     public function getDdRequest(Request $request)
     {
         dd($request);
+    }
+
+    public function getTestTime()
+    {
+        $time = new timeHelper();
+        $carbon = Carbon::createFromTimestamp(time());
+        echo $carbon;
+        echo '<br/>';
+        $testTime = Carbon::createFromTimestamp(time());
+
+        echo 'Test time<br/><br/>';
+        echo '2015-11-23 22:11:00 < ' . $testTime . ' = ' . ('2015-11-23 22:11:00' < $testTime) . '<br/>';
+        echo '2015-11-23 22:11:00 > ' . $testTime . ' = ' . ('2015-11-23 22:11:00' > $testTime) . '<br/><br/>';
+        echo '2016-11-23 22:11:00 < ' . $testTime . ' = ' . ('2016-11-23 22:11:00' < $testTime) . '<br/>';
+        echo '2016-11-23 22:11:00 > ' . $testTime . ' = ' . ('2016-11-23 22:11:00' > $testTime) . '<br/>';
+
+        echo '<br/>2015-11-23 22:11:00<br/>';
+        if(('2015-11-23 22:11:00' < $testTime))
+        {
+            echo 'End at is smaller than now<br/>';
+        }
+        else
+        {
+            echo 'End at is bigger than now<br/>';
+        }
+
+        if(('2015-11-23 22:11:00' > $testTime))
+        {
+            echo 'End at is bigger than now<br/>';
+        }
+        else
+        {
+            echo 'End at is smaller than now<br/>';
+        }
+
+        echo '<br/>2016-12-23 22:11:00<br/>';
+        if(('2016-12-23 22:11:00' < $testTime))
+        {
+            echo 'End at is smaller than now<br/>';
+        }
+        else
+        {
+            echo 'End at is bigger than now<br/>';
+        }
+
+        if(('2016-12-23 22:11:00' > $testTime))
+        {
+            echo 'End at is bigger than now<br/>';
+        }
+        else
+        {
+            echo 'End at is smaller than now<br/>';
+        }
+    }
+
+    public function getDeleteAuctionMail()
+    {
+        Queue::push(new sendMailAuctionEnded(54));
+        Queue::push(new sendMailAuctionEnded(14));
+        dd('Hubba bubba smurfen spökar');
+
+        $mail = new auctionEnded(54);
+        $mail->sendMailToOwner();
+        $mail->sendMailToWinner();
+        $mail->sendMailToWatchers();
+
+        $mail2 = new auctionEnded(14);
+        $mail2->sendMailToOwner();
+        $mail2->sendMailToWinner();
+        $mail2->sendMailToWatchers();
+
+        dd('Mail 1: ', $mail, 'Mail 2: ', $mail2);
     }
 }

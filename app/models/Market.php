@@ -4,6 +4,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
+use market\Commands\sendMailAuctionEnded;
+use market\core\mail\auctionEnded;
 use market\helper\mailer;
 use market\helper\watched as watchedHelper;
 
@@ -72,14 +76,6 @@ class Market extends Model {
 	*/
 	public function user()
 	{
-//		return $this->hasMany('Market');
-
-//		dd(User::find('16'));
-
-		//return User::find('16');
-
-		//dd($this->belongsTo('market\User'));
-
 		return $this->belongsTo('market\models\User', 'createdByUser');
 	}
 
@@ -113,15 +109,25 @@ class Market extends Model {
     public function delete()
     {
         parent::delete();
-
+		Log::debug('models/Market->delete()');
         $mailer = new mailer();
 
         if($this->marketType == 4)
         {
-            $mailer->sendMailMyAuctionEnded($this->id);
-            $mailer->sendMailToWinnerOfAuction($this->id);
-        };
-        $mailer->sendMailEndedWatchedMarket($this->id);
+			Queue::push(new sendMailAuctionEnded($this->id));
+
+//			//TODO: Queue
+//			$mail = new auctionEnded($this->id);
+//			$mail->sendMailToOwner();
+//			$mail->sendMailToWinner();
+//			$mail->sendMailToWatchers();
+//            $mailer->sendMailMyAuctionEnded($this->id);
+//            $mailer->sendMailToWinnerOfAuction($this->id);
+        }
+		else
+		{
+			$mailer->sendMailEndedWatchedMarket($this->id);
+		}
 
         $watched = new watchedHelper();
         $watched->marketEnded($this);

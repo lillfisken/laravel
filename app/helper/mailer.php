@@ -129,24 +129,6 @@ class mailer {
         }
     }
 
-    public function sendMailMyAuctionEnded($auctionId)
-    {
-        //TODO:
-        //Get auction->auctioner
-        //Check if auctioner want email
-        //Send mail, Auction ended, Title, bids count, highest bid, winner, profilelink and uppmaning to contact winner
-    }
-
-    public function sendMailToWinnerOfAuction($auctionId)
-    {
-        //TODO:
-        //Chech if there are any bids
-        //Get bids->highest->user
-        //Check if user want mail
-        //Get auction
-        //Send mail, Auction ended, Title, bids count, highest bid, winner, profilelink and uppmaning to contact seller (same mail as above)
-    }
-
     public function sendMailNewBidWatchedAuction($auctionId)
     {
         //TODO:

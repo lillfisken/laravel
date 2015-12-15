@@ -16,7 +16,7 @@ class CreateWatchedsTable extends Migration {
 		{
             $table->bigIncrements('id');
             $table->unsignedBigInteger('market');
-			$table->unsignedBigInteger('user');
+			$table->unsignedBigInteger('userId');
 			$table->timestamps();
             $table->softDeletes();
         });

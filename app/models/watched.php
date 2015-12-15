@@ -17,12 +17,12 @@ class watched extends Model {
 
     public function user()
     {
-        return $this->belongsTo('User', 'id', 'user');
+        return $this->belongsTo('market\models\User', 'userId', 'id');
     }
 
     public function market()
     {
-        return $this->belongsTo('Market', 'id', 'market');
+        return $this->belongsTo('market\models\Market', 'id', 'market');
     }
 
 //    public function events()

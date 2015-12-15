@@ -54,7 +54,6 @@ class newPm
                     'pm' => $pm,
                     'title' => $pm->conversation->title . ' ' . $this->subjectSuffix,
                     'subjectSuffix' => $this->subjectSuffix,
-                    'testData' => 'testData'
                 ];
 
                 //Send the mail

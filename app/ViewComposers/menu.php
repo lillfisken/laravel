@@ -68,7 +68,7 @@ class menu {
                 $join->on('watcheds.id', '=', 'watched_events.watched');
         })
             ->where('watched_events.read', 0)
-            ->where('watcheds.user', $userId)
+            ->where('watcheds.userId', $userId)
             ->count();
 
         return $watched;

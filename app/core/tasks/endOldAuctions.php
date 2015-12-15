@@ -9,8 +9,8 @@
 namespace market\core\tasks;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use market\helper\time;
 
 class endOldAuctions
 {
@@ -21,16 +21,25 @@ class endOldAuctions
 
     public function end()
     {
-        Log::debug('endOldAuctions->end');
-        $time = new time();
-        $deleted = \market\models\Market::where('marketType', 4)
-            ->where('end_at', '<', $time->getTimeUnix())
-//            ->where('deleted_at', null)
-            ->delete();
+        $timestamp = Carbon::createFromTimestamp(time());
+//        Log::debug('core/tasks/endOldAuctions->end()');
 
-        if($deleted > 0)
+        /*
+         * Get all market to delete
+         * Loop over and delete one by one
+         * Log each deletion
+         * This preserves eloquent delete
+         */
+
+        $toDelete = \market\models\Market::where('marketType', 4)
+            ->where('end_at', '<', $timestamp)
+            ->where('deleted_at', null)
+            ->get();
+
+        foreach($toDelete as $d)
         {
-            Log::info('cron -> end old auctions. Deleted: ' . $deleted);
+            $d->delete();
+            Log::info('Auto: Ended auction ' . $d->title);
         }
     }
 }
