@@ -4,15 +4,12 @@
     {{ $market->title or 'Titel saknas' }}
 @stop
 
-
 @section('content')
     <div class="inner-content">
         <div class="clearfix">
             @section('formStart')
-                @if(isset($callbackRoute))
-                    {!! Form::open(['route' => $callbackRoute, 'method' => 'post']) !!}
-                    {!! Form::hidden('type', $type) !!}
-                @endif
+                {{--{!! Form::open(['method' => 'post']) !!}--}}
+                {{--{!! Form::hidden('type', $type) !!}--}}
             @show
         </div>
 
@@ -135,11 +132,9 @@
 
         <div class="clearfix">
             @section('formStop')
-                @if(isset($buttons))
-                    @foreach($buttons as $button)
-                        {!! Form::submit($button['title'], array('class' => 'btn', 'name'=>$button['name'])); !!}
-                    @endforeach
-                @endif
+
+                {!! Form::open(['method' => 'post']) !!}
+                    @include('markets.partials._buttons')
                 {!! Form::close() !!}
             @show
         </div>

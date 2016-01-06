@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use market\core\market\marketType;
 use market\helper\auction;
 use market\helper\buy;
 use market\helper\debug;
@@ -48,21 +49,15 @@ class MarketsController extends ControllerMarket {
 
     protected $marketCommon;
 
-//    protected $auctionHelper;
-//    protected $buyHelper;
-
     /**
      * Construct an instance of MyClass
      *
      * @param Purifier $purifier
      */
-    public function __construct(Purifier $purifier) {
+    public function __construct(Purifier $purifier, marketType $marketType) {
         // Inject dependencies
         $this->purifier = $purifier;
-        $this->marketCommon = new marketCommon();
-
-//        $this->auctionHelper = new auction();
-//        $this->buyHelper = new buy();
+        $this->marketCommon = $marketType;
     }
 
 	/**
@@ -71,8 +66,9 @@ class MarketsController extends ControllerMarket {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+		
         $auctionHelper = new \market\helper\markets\auction();
 
         $markets = Market::select()
@@ -85,41 +81,6 @@ class MarketsController extends ControllerMarket {
         if(Auth::check())
 		{
 			//TODO::Sort non blocked markets for user
-			//Get all markets from db
-
-            $sellHelper = new \market\helper\markets\sell();
-            $buyHelper = new \market\helper\markets\buy();
-            $changeHelper = new \market\helper\markets\change();
-            $giveawayHelper = new \market\helper\markets\giveaway();
-
-			//Set menu for each market
-//			foreach ($markets as $market)
-//			{
-//                //TODO: Different menus for different market types?
-//                switch($market->marketType)
-//                {
-//                    case 0:
-//                        // 0 = wish to sell
-//                        $sellHelper->addMarketMenu($market);
-//                        break;
-//                    case 1:
-//                        // 1 = wish to buy
-//                        $buyHelper->addMarketMenu($market);
-//                        break;
-//                    case 2:
-//                        // 2 = wish to change
-//                        $changeHelper->addMarketMenu($market);
-//                        break;
-//                    case 3:
-//                        // 3 = wish to giveaway
-//                        $giveawayHelper->addMarketMenu($market);
-//                        break;
-//                    case 4:
-//                        // 4 = auction
-//                        $auctionHelper->addMarketMenu($market);
-//                        break;
-//                }
-//			}
             marketMenu::addMarketMenuToMarkets($markets);
 		}
 
@@ -227,24 +188,4 @@ class MarketsController extends ControllerMarket {
         return view('account.message.new', ['reciever' => $toUser, 'title' => 'Angående: ' . $title]);
     }
 
-    public function question(CreateUpdateQuestionRequest $request)
-    {
-        //TODO::Add validation, questionRequest
-        //TODO:: Sanitize
-
-        $input = $request->all();
-        $input = text::purifyQuestionInput($input, $this->purifier);
-//        $input = text::purifyQuestionInput($input);
-        $input = text::questionFromBBToHTML($input);
-
-        $question = new MarketQuestions;
-
-        $question->createdByUser = Auth::id();
-        $question->market = $input['market'];
-        $question->message = $input['message'];
-
-        $question->save();
-
-        return Redirect::back();
-    }
 }

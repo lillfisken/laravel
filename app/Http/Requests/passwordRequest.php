@@ -2,7 +2,7 @@
 
 use market\Http\Requests\Request;
 
-class passwordRequest extends Request {
+class passwordRequest extends baseRequest {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -28,23 +28,6 @@ class passwordRequest extends Request {
 	}
 
     public function messages(){
-        return [
-            'boolean' => ':attribute måste vara 1 eller 0',
-            'required' => ':attribute är obligatoriskt.',
-            'pswdOld.required_with' => 'Ogiltligt lösenord',
-            'numeric' => ':attribute får bara innehålla ett tal (decimal med &#39.&#39)',
-            'min' => ':attribute måste innehålla minst :min bokstäver',
-            'digits' => ':attribute måste vara :value siffror',
-            'confirmed' => ':attribute matchar inte'
-        ];
+        return $this->userprofileSettingsRules;
     }
-
-    public function attributes(){
-        return [
-            'pswdOld' => 'Gammalt lösenord',
-            'password' => 'Nytt lösenord'
-        ];
-    }
-
-
 }

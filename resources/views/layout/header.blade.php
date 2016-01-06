@@ -1,7 +1,8 @@
 <div id="logo">
 	<div class="header-image-left inline">
-		<img src="/market/public/images/el_logo_cut.gif" id="logo-left">
-		{{--<h1>ALPHA</h1>--}}
+		<a href="{{ route('markets.index', ['test' => 'value']) }}">
+			<img src="/market/public/images/el_logo_cut.gif" id="logo-left">
+		</a>
 	</div>
 
 	<div class="header-image-right inline">

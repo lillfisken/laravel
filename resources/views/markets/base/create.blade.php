@@ -12,7 +12,7 @@
         <hr />
 
         @section('formOpen')
-            {!! Form::model($model, array('route' => $callbackRoute , 'files' => true )) !!}
+            {!! Form::model($model, array('files' => true )) !!}
         @show
             {!! Form::hidden('marketType', $marketType) !!}
 
@@ -111,11 +111,7 @@
             @show
 
             @section('formStop')
-                @if(isset($buttons))
-                    @foreach($buttons as $button)
-                        {!! Form::submit($button['title'], array('class' => 'btn', 'name'=>$button['name'])); !!}
-                    @endforeach
-                @endif
+                @include('markets.partials._buttons')
                 {!! Form::close() !!}
             @show
     </div>

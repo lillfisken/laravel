@@ -12,7 +12,7 @@ class watched extends Model {
 
     protected $fillable = [
         'market',
-        'user'
+        'userId'
     ];
 
     public function user()
@@ -42,7 +42,7 @@ class watched extends Model {
 
     public static function getAllMarketIdsWatchedByUserId($userid = null)
     {
-        $watched = watched::where('user', ($userid == null ? Auth::id() : $userid))->get(['market']);
+        $watched = watched::where('userId', ($userid == null ? Auth::id() : $userid))->get(['market']);
         $watched_array = [];
         foreach($watched as $watch)
         {

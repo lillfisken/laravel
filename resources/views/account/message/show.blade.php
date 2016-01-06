@@ -10,11 +10,14 @@
 @stop
 
 @section('content')
+{{--    @include('partials.errors.basic')--}}
+
     <div class="inner-content">
         <h1>{{ $messages->first()->conversation->title }}</h1>
         <hr/>
         {!! Form::open(['route' => 'message.send']) !!}
         {!! Form::hidden('conversationId', $messages->first()->conversation->id ) !!}
+        {!! $errors->first('message', '<div class="help-block">:message</div>') !!}
         {!! Form::textarea('message', null, ['class' => 'form-input']) !!}<br/>
 
         {!! Form::submit('Förhandsgranska (ej inplementerad)', ['class' => 'btnSmall']) !!}

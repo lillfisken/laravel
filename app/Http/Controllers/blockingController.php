@@ -35,7 +35,9 @@ class blockingController extends Controller {
         abort(404);
 	}
 
-	public function blockMarketPost(Request $request, blockMarket $blockMarket, sessionUrl $sessionUrl)
+	public function blockMarketPost(Requests\block\blockMarketRequest $request,
+                                    blockMarket $blockMarket,
+                                    sessionUrl $sessionUrl)
 	{
 		//Get marketId
 		//if isset && marketId > 0
@@ -50,7 +52,7 @@ class blockingController extends Controller {
 		return $sessionUrl->redirectToPreviousUrlOrDefault();
 	}
 
-    public function unblockMarketGet($marketId, Request $request, sessionUrl $sessionUrl)
+    public function unblockMarketGet($marketId, sessionUrl $sessionUrl)
     {
 //        dd('unblockMarketGet');
         $market = Market::withTrashed()->find($marketId);
@@ -67,12 +69,12 @@ class blockingController extends Controller {
         abort(404);
     }
 
-    public function unblockMarketPost(Request $request, unblockMarket $unblockMarket, sessionUrl $sessionUrl)
+    public function unblockMarketPost(Requests\block\unblockMarketRequest $request,
+                                      unblockMarket $unblockMarket,
+                                      sessionUrl $sessionUrl)
     {
-//        dd('unblockMarketPost');
         if($request->get('yes'))
         {
-//            dd('Yes', $request);
             $marketId = $request->get('hidden');
             $unblockMarket->unblock(Auth::id(), $marketId);
         }
@@ -80,7 +82,7 @@ class blockingController extends Controller {
         return $sessionUrl->redirectToPreviousUrlOrDefault();
     }
 
-    public function blockSellerGet($sellerUserId, sessionUrl $sessionUrl, Request $request)
+    public function blockSellerGet($sellerUserId, sessionUrl $sessionUrl)
     {
         $user = User::find($sellerUserId);
         if($user != null)
@@ -96,11 +98,10 @@ class blockingController extends Controller {
         abort(404);
     }
 
-    public function blockSellerPost(Request $request, blockUser $blockUser, sessionUrl $sessionUrl)
+    public function blockSellerPost(Requests\block\blockSellerRequest $request,
+                                    blockUser $blockUser,
+                                    sessionUrl $sessionUrl)
     {
-//        dd(URL::previous(), Session::get('_previous'));
-//        return $sessionUrl->redirectToPreviousUrlOrDefault();
-
         if($request->get('yes'))
         {
 //            dd('Yes', $request);
@@ -128,7 +129,9 @@ class blockingController extends Controller {
         abort(404);
     }
 
-    public function unblockSellerPost(Request $request, unblockUser $unblockUser, sessionUrl $sessionUrl)
+    public function unblockSellerPost(Requests\block\unblockSellerRequest $request,
+                                      unblockUser $unblockUser,
+                                      sessionUrl $sessionUrl)
     {
         if($request->get('yes'))
         {

@@ -1,5 +1,6 @@
 <?php namespace market\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -7,7 +8,6 @@ use market\models\Conversation;
 use market\Http\Requests;
 
 use Illuminate\Contracts\Auth\Authenticator;
-use Auth;
 use Input;
 use market\models\Market;
 use market\models\Message;
@@ -22,8 +22,6 @@ use Session;
 
 class MessageController extends Controller
 {
-
-    //region Mail/PM
     /* Show user profile
              *
              * get 'profile/inbox/{user}'
@@ -46,28 +44,19 @@ class MessageController extends Controller
 
         foreach($conversations as $conversation)
         {
-//            Log::debug('Looping over conversations');
             $unread = 0;
-
             foreach($conversation->messages as $message)
             {
-//                Log::debug('Looping over messages in conversation');
-//                Log::debug('$message->isRead(): ' . $message->isRead());
-//                Log::debug('$message[read]: ' . $message['read']);
-//                Log::debug('$message->senderId: ' . $message->senderId);
-
                 if(!$message->isRead() && $message->senderId != Auth::id())
                 {
                     $unread++;
                     Log::debug('Unread message');
-
                 }
             }
 
             $conversation['unread'] = $unread;
             $conversation['username1'] = $conversation->getUser1->username;
             $conversation['username2'] = $conversation->getUser2->username;
-
             $conversation['latestMessage'] = $conversation->messages->last()->created_at->timestamp;
             $conversation['sender'] = $conversation->messages->last()->sender->username;
         }
@@ -121,7 +110,6 @@ class MessageController extends Controller
     {
 //        dd('AccountController@sent')
         return view('account.message.sent');
-
     }
 
     /* Show user profile
@@ -146,17 +134,13 @@ class MessageController extends Controller
     }
 
     //Post,
-    public  function sendMessage(Request $request)
+    public  function sendMessage(Requests\message\sendPmRequest $request)
     {
+//        dd('Sending message', $request);
         //TODO:: Sanitize
-
-//        dd($request->all());
-        //dd(Input::all());
         if(Auth::check())
         {
-            //TODO: Validation, redirect back at error with message etc.
-            //TODO: Sen email notification if asked for
-//            dd(Input::all());
+            //TODO: Sen email notification if asked for, In messageModel
 
             $message = new Message();
 
@@ -200,11 +184,7 @@ class MessageController extends Controller
             //Create new message from input and save it in db
             $message->senderId = Auth::id();
             $message->message = $request->input('message');
-
-//            dd(Auth::id(), $message);
-
             $message->save();
-
 
             //Kolla ID på postaren
             //Plocka ut mottagare, en eller flera
@@ -236,46 +216,33 @@ class MessageController extends Controller
         $reciever = $request->query('reciever');
         $title = 'Ang: ' . $request->query('title');
 
-        //dd('reciever: ' . $reciever . ', title: ' . $title);
-//        dd($request;
         return view('account.message.mail', ['toUser' => $reciever, 'title' => $title]);
     }
 
-    public function mailPost()
+    public function mailPost(Requests\message\sendEmailRequest $request)
     {
-        //TODO: Everything about mail, configure
-        //TODO:: Sanitize?
-
-        //Rules:
-        //Must have message
-        //Must have title
-        //Check user, must have valid email etc
+        //TODO: Sanitize title and message
+        //TODO: Queue
+        //TODO: Emailview
+        //TODO: Validate user allaows email and has an email
 
         $from = User::find(Auth::Id())->email;
-        $to = User::where('userName', '=', Input::get('toUser'))->first()->email;
-        $subject = Input::get('title');
-        $body = Input::get('message');
-
-        //dd($from, $to, $subject, $body);
+        $to = User::where('userName', '=$', $request->get('toUser'))->first()->email;
+        $subject = $request->get('title');
+        $body = $request->get('message');
 
         Mail::raw($body, function($message) use ($from, $to, $subject){
             $message->from($from); //Add username
             $message->to($to);
             $message->subject($subject);
-
-            //dd($message);
         });
-        //dd('mailPost not inplemented yet');
 
-//        return Redirect::back(); Fungerar inte, redirectar bara tillbaka till formuläret
-//        return 'Email sent';
-
+        //TODO: replace
         $uri = Session::get('uri');
         if(isset($uri))
         {
             if(isset($uri['url']))
             {
-                //dd($uri['url']);
                 return redirect($uri['url'])->with('message', 'Mail skickat');
             }
             return redirect()->route('markets.index')->with('message', 'Mail skickat');

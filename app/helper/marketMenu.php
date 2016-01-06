@@ -17,7 +17,7 @@ class marketMenu
                 $market->deleted_at == null &&
                 !($market->bids->count() > 0))
             {
-                $temp[] = array('text' => 'Redigera ', 'href' => route($routeBase . '.update', $market->id ));
+                $temp[] = array('text' => 'Redigera ', 'href' => route($routeBase . '.updateForm', $market->id ));
                 $temp[] = array('text' => 'Avslutad', 'href' => route( $routeBase . '.destroy.get', $market->id ));
             }
 
@@ -47,6 +47,7 @@ class marketMenu
                 $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
             }
 
+//            dd($temp);
             $market['marketmenu'] = $temp;
         }
     }

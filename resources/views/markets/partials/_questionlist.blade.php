@@ -31,14 +31,15 @@
             @if($market->preview)
                 <p>Förhandsgranskning</p>
             @elseif(Auth::check())
-                {{--Form for sending question/answers--}}
-                {!! Form::open(array('route' => 'markets.question')) !!}
-                {!! Form::hidden('market', $market->id) !!}
-                {!! $errors->first('message', '<div class="help-block">:message</div>') !!}
-                {!! Form::textarea('message', null , ['class' => "form-input okgbb" ] ) !!}
-                <br/>
-                {!! Form::submit('Skicka', array('class' => 'btn')); !!}
-                {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}--}}
+                    {{--Form for sending question/answers--}}
+            <!-- Form start here -->
+                {!! Form::open(array('route' => 'markets.question', 'method' => 'post')) !!}
+                    {!! Form::hidden('market', $market->id) !!}
+                    {!! $errors->first('message', '<div class="help-block">:message</div>') !!}
+                    {!! Form::textarea('message', null , ['class' => "form-input okgbb" ] ) !!}
+                    <br/>
+                    {!! Form::submit('Skicka', array('class' => 'btn')) !!}
+                    {{--{!! Form::submit('Förhandsgranska', array('class' => 'btn-right')); !!}--}}
                 {!! Form::close() !!}
             @else
                 <a href="{{ route('accounts.login') }}" class="btn">Logga in för att skriva en kommentar.</a>

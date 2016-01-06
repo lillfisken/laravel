@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use market\core\market\marketType;
 use market\core\session\sessionUrl;
 use market\helper\debug;
 use market\helper\markets\common;
@@ -34,120 +35,6 @@ use Zjango\Laracurl\Facades\Laracurl;
 
 class AccountController extends Controller
 {
-    protected $marketCommon;
-
-    public function __construct()
-    {
-//        parent::__construct();
-        $this->marketCommon = new common();
-
-    }
-
-    //region login/logout
-    public function login(sessionUrl $sessionUrl, Request $request)
-    {
-        // Redirect to start if user already logged in
-        if(Auth::check()) return redirect('/');
-
-        $sessionUrl->setPreviousUrl();
-
-        $phpBBforum = Config::get('phpBBforums');
-
-        return view('account.auth.login', ['phpBBforums' => $phpBBforum]);
-    }
-
-    public function loginPost(sessionUrl $sessionUrl, Request $request)
-    {
-        Log::debug('AccountController->loginPost');
-        //TODO:Add validation for input
-        //Check if user already logged in
-        if(Auth::check()) redirect('/');
-
-        //http://scotch.io/tutorials/simple-and-easy-laravel-login-authentication
-
-        // Get and set remember
-        $request->has('remember') ? $remember = true : $remember = false;
-
-        // attempt to do the login
-        if (Auth::attempt([ 'email' => $request->get('email'), 'password' => $request->get('password')], $remember))
-        {
-            // login successful!
-            return $sessionUrl->redirectToPreviousUrlOrDefault();
-        }
-        else
-        {
-            // validation not successful, send back to form
-            return redirect()->route('accounts.login')
-                ->withInput()
-                ->with('alert', 'Inloggningen misslyckades');
-        }
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        return Redirect::to(URL::previous());
-    }
-
-    //endregion
-
-    //region Register
-
-    public function register()
-    {
-        return view('account.auth.register');
-    }
-
-    public function registerPost(registerRequest $request)
-    {
-        //TODO:Purify
-
-//        //Save new user
-//        $temp = new User;
-//        $temp->name = Input::get('name');
-//        $temp->email = Input::get('email');
-//
-//        $temp->username = Input::get('username');
-//        $temp->address = Input::get('address');
-//        $temp->city = Input::get('city');
-//        $temp->zipcode = Input::get('zipcode');
-//        $temp->phone1 = Input::get('phone1');
-//        $temp->phone2 = Input::get('phone2');
-//
-//        $temp->password = Hash::make(Input::get('password'));
-//
-//        $temp->save();
-
-        $newUser = new User($request->all());
-        $newUser->password = Hash::make($request->input('password'));
-        $newUser->username = $request->input('username');
-        $newUser->save();
-
-//        dd($newUser);
-
-        //Login user
-        Auth::login($newUser);
-
-        //TODO:Sen email to new user, test if this is working...
-        Mail::send('emails.auth.register', ['user' => $newUser], function($message, $newUser)
-        {
-            $message->to($newUser->email, $newUser->username)->subject('Välkommen!');
-        });
-
-        return redirect()->route('markets.index')->with('message', 'Användare skapad');
-    }
-
-//    public function forgotPassword()
-//    {
-////        dd('AccountController -> forgotPassword');
-//
-//        return view('account.auth.reset');
-//    }
-
-
-//endregion
-
-    //---------------------------------------------------------------
 
     //region Profile
 
@@ -160,7 +47,7 @@ class AccountController extends Controller
      * @var user
      * @return
     */
-    public function show($user)
+    public function show($user, marketType $marketType)
     {
         //TODO::Change to show public userprofile
         //TODO: Multiple pagination
@@ -200,7 +87,7 @@ class AccountController extends Controller
                 'activeMarkets' => $activeMarkets,
                 'inactiveMarkets' => $inactiveMarkets,
                 'phpBBs' => $phpBB,
-                'marketCommon' => $this->marketCommon,
+                'marketCommon' => $marketType,
             ]
         );
 //        $markets = Market::where('createdByUser', '=', Auth::id())->get();
@@ -309,7 +196,7 @@ class AccountController extends Controller
              * @var user
              * @return
             */
-    public function blockedmarket()
+    public function blockedmarket(marketType $marketType)
     {
         $markets = Market::has('blocked')
             ->paginate(config('market.paginationNr'));
@@ -322,7 +209,7 @@ class AccountController extends Controller
 
         return view('account.markets.blockedMarkets', [
             'markets' => $markets,
-            'marketCommon' => $this->marketCommon,
+            'marketCommon' => $marketType,
         ]);
     }
 
@@ -402,7 +289,7 @@ class AccountController extends Controller
         ]);
     }
 
-    public function watchMarket(Request $request, $marketId)
+    public function watchMarket($marketId)
     {
         $user = Auth::id();
 //        $previousUrl = URL::previous();
@@ -424,9 +311,9 @@ class AccountController extends Controller
     {
         if($request->get('yes') && $request->get('marketId'))
         {
-            $markets = watched::where('user', Auth::id())->get();
+//            $markets = watched::where('user', Auth::id())->get();
             $watched = new watched([
-                'user' => Auth::id(),
+                'userId' => Auth::id(),
                 'market' => $request->get('marketId')
             ]);
 
@@ -443,94 +330,45 @@ class AccountController extends Controller
 //        dd(Auth::user()->username);
     }
 
-    //endregion
-
-    //region Settings
-
-    /* Show user settings
-             *
-             * get 'profile/settings/{user}'
-             * route 'accounts.settings'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function settings()
+    public function unwatchMarket($marketId, sessionUrl $sessionUrl)
     {
-        $user = Auth::user();
+        $market = Market::find($marketId);
 
-        $user['presentation'] = text::htmlToBbCode($user['presentation']);
-
-        return view('account.settings.settings', ['user' => $user]);
-
-    }
-
-    /**
-     * @param UserSettingsRequest $userSettingsRequest
-     * @return mixed
-     */
-    public function saveSettings(UserSettingsRequest $userSettingsRequest)
-    {
-        $user = Auth::user();
-
-        $input = $userSettingsRequest->all();
-        $input['presentation'] = text::bbCodeToHtml($input['presentation']);
-
-        //TODO: Purify input
-        $checkboxes = [
-            'mailNewPm',
-            'mailNewBidMyAuction',
-            'mailMyAuctionEnded',
-            'mailAuctionWatched',
-            'mailMarketEnded'
-        ];
-
-        foreach($checkboxes as $checkbox)
+        if($market)
         {
-            if(!$userSettingsRequest->has($checkbox))
-            {
-                $input[$checkbox] = 0;
-            }
-        }
-
-        $user->fill($input);
-//        dd($userSettingsRequest, $user);
-        $user->save();
-
-        $user['presentation'] = text::htmlToBbCode($user['presentation']);
-
-        return Redirect::route('accounts.settings.settings')
-            ->with('user', $user)
-            ->with('notification', 'Inställningar sparade');
-//        return view('account.settings.settings', ['user' => $user, 'notification' => 'Inställningar sparade']);//->with('message', 'Inställningar sparade');
-    }
-
-    public function newPassword()
-    {
-        return view('account.settings.newPassword', ['user' => Auth::user()]);
-    }
-
-    public function newPasswordPost(passwordRequest $passwordRequest )
-    {
-        //TODO: Move password verification to custom rule in request
-
-        if(Hash::check($passwordRequest->input('pswdOld'), Auth::user()->password))
-        {
-            //User entered correct password
-            $user = Auth::user();
-            $user->password = Hash::make($passwordRequest->input('password'));
-            $user->save();
-            return Redirect::route('accounts.settings.password')->withMessage('Lösenord ändrat');
+            $sessionUrl->setPreviousUrl();
+            return view('confirm')
+                ->with('title', 'Avblockera ' . $market->title . '?')
+                ->with('callbackRoute', 'accounts.unwatchMarketPost')
+                ->with('text', 'Vill du sluta bevaka "' . $market->title . '"?')
+                ->with('hidden', $marketId)
+                ;
         }
         else
         {
-//            dd(Redirect::back()->withError(['pswdOld' => 'Fel lösenord']));
-            return Redirect::back()->with('pswdOld' , 'Fel lösenord');
+            abort(404);
         }
-
-
     }
+
+    public function unwatchMarketPost(Request $request, sessionUrl $sessionUrl)
+    {
+        if($request->get('yes') && $request->get('hidden'))
+        {
+            $watched = watched::where('market', $request->get('hidden'))
+                    ->where('userId', Auth::id())
+                    ->first();
+
+            if($watched)
+            {
+                $watched->delete();
+            }
+        }
+        return $sessionUrl->redirectToPreviousUrlOrDefault();
+    }
+
+    //endregion
+
+    //region Settings
 
     public function auth()
     {
@@ -562,12 +400,6 @@ class AccountController extends Controller
         return view('account.settings.oAuth', ['user' => $user,
             'phpBBRegistered' => $phpBBRegistered,
             'phpBBNonRegistered' => $phpBBNonRegistered]);
-    }
-
-    public function authPost()
-    {
-        // ???
-        // Settings for external login ???
     }
 
     //endregion

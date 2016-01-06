@@ -55,11 +55,11 @@
         <li>
             <a href="#">Ny annons</a>
             <ul>
-                <li><a href="{{ route('auction.create') }}">Auktion</a></li>
-                <li><a href="{{ route('sell.create') }}">Säljes</a></li>
-                <li><a href="{{ route('buy.create') }}">Köpes</a></li>
-                <li><a href="{{ route('giveaway.create') }}">Skänkes</a></li>
-                <li><a href="{{ route('change.create') }}">Bytes</a></li>
+                <li><a href="{{ route('auction.createNewForm') }}">Auktion</a></li>
+                <li><a href="{{ route('sell.createNewForm') }}">Säljes</a></li>
+                <li><a href="{{ route('buy.createNewForm') }}">Köpes</a></li>
+                <li><a href="{{ route('giveaway.createNewForm') }}">Skänkes</a></li>
+                <li><a href="{{ route('change.createNewForm') }}">Bytes</a></li>
             </ul>
         </li>
         <li>
@@ -81,7 +81,7 @@
     <li class="searchBottom">
         {!! Form::open(array('route' => 'markets.search', 'method' => 'GET' )) !!}
             {!! Form::text('s', null , ['class' => 'inline'] ) !!}
-            {!! Form::submit('Sök', ['class' => 'btnSmall inline']); !!}
+            <button type="submit" class="btnSmall inline"><i class="fa fa-search"></i></button>
         {!! Form::close() !!}
     </li>
 

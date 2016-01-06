@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use market\core\market\marketType;
 use market\helper\marketMenu;
 use market\helper\time;
 use market\models\Market as MarketModel;
@@ -26,10 +27,12 @@ abstract class MarketBase
     protected $marketCommon;
     protected $time;
     protected $marketMenu;
+    protected $routeBase;
+    protected $marketType;
 
     public function __construct()
     {
-        $this->marketCommon = new common();
+        $this->marketCommon = new marketType(); //TODO: DI
         $this->time = new time();
         $this->marketMenu = new marketMenu();
     }
@@ -38,78 +41,24 @@ abstract class MarketBase
 
     public function saveFromCreateForm($input)
     {
-//        images::saveImages($input, true);
-//        $input = text::marketFromBbToHtml($input);
-//
-//        $this->clearSession();
-//
-//        return marketCRUD::save($input, 'auction.show');
-//        dd('saveFromCreateForm', $input);
-//        if(isset($input['end_at']))
-//        {
-//            $set = true;
-//            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-//            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-////            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-////            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
-//        }
-
         $input = text::marketFromBbToHtml($input);
-//        dd('saveFromCreateForm, after marketFromBbToHtml', $input);
 
         $input = images::saveImages($input, true);
-//        dd('saveFromCreateForm, after saveImages', $input);
 
         $market = new MarketModel($input);
         $market['createdByUser'] = Auth::id();
 
-//        if(isset($market->end_at))
-//        {
-//            $set = true;
-//            $parsedTime = $this->time->parseTimeAndDateFromStringToUnix($market->end_at);
-//            $market->end_at = $this->time->parseTimeAndDateFromStringToUnix($market->end_at);
-////            $input['end_at'] = $this->time->parseTimeAndDateFromStringToUnix($input['end_at']);
-////            dd('marketBase', $input['end_at'], $this->time->parseTimeAndDateFromStringToUnix($input['end_at']));
-//        }
-
-//        dd($market, isset($market->end_at));
-
-
-//        dd($market, $this->routeBase);
         $this->save($market);
-
-//        dd($set, $parsedTime, $market);
-//        dd($input, $market);
-
-//        dd($market, $this->routeBase, $market->id);
-
 
         return redirect()->route( $this->routeBase . '.show', ['id' => $market->id]);
 
     }
 
-    public function saveFromCreatePreview($input)
+    public function saveFromCreatePreview()
     {
         $auction = $this->getAuctionFromSession(false);
-//        if($auction->user)
-//        {
-//            $auction['createdByUser'] = $auction->user->id;
-//            unset($auction->user);
-////            unset($auction['user']);
-////            dd('user exist', $auction);
-//        }
-
-//        dd($auction);
-//        $auction['createdByUser'] = $auction->user()->id;
-//        if($auction['user'])
-//        {
-//            $auction['createdByUser'] = $auction['user']->id;
-//
-////            dd($input, $auction, $auction['user']->id);
-//        }
 
         $this->save($auction);
-//        $auction->save();
 
         $this->clearSession();
 
@@ -119,32 +68,18 @@ abstract class MarketBase
     public function previewFromCreateForm($input)
     {
         $input = images::saveImages($input);
-
-//        if(isset($input['end_at']))
-//        {
-//            dd($input['end_at'], new Carbon($input['end_at']));
-//        }
-
-//        $auction = new MarketModel();
         $auction = new MarketModel($input);
-//        dd('previewFromCreateForm', $input, $auction, new Carbon($input['end_at']));
         $auction->user = Auth::user();
-
-//        dd($auction, $input);
 
         $this->putAuctionInSession($auction);
 
-//        dd($auction);
         $auction->created_at = new Carbon($auction->created_at);
         $auction->updated_at = new Carbon($auction->updated_at);
-//        $auction->end_at = new Carbon($auction->end_at);
-
-//        dd($auction);
 
         return view('markets.' . $this->routeBase . '.show' , [
             'type' => 'create',
             'preview' => true,
-            'callbackRoute' => $this->routeBase . '.store',
+            'callbackRoute' => '',
             'market' => $auction,
             'bidCount' => 0,
             'bidHighest' => 0,
@@ -152,11 +87,13 @@ abstract class MarketBase
             'buttons' => [
                 'save' => [
                     'title' => 'Publicera',
-                    'name' => 'saveFromPreview'
+                    'name' => 'saveFromPreview',
+                    'formactionRoute' => $this->routeBase . '.createFromPreview'
                 ],
                 'preview' => [
                     'title' => 'Redigera',
-                    'name' => 'editFromPreview'
+                    'name' => 'editFromPreview',
+                    'formactionRoute' => $this->routeBase . '.createFormFromPreview'
                 ]
             ],
             'marketCommon' => $this->marketCommon,
@@ -171,17 +108,18 @@ abstract class MarketBase
 
         return view('markets.' . $this->routeBase . '.create', [
             'title'=>'Titel saknas',
-            'callbackRoute' => $this->routeBase . '.create',
             'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
                     'title' => 'Publicera',
-                    'name' => 'save'
+                    'name' => 'save',
+                    'formactionRoute' => $this->routeBase . '.createFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
-                    'name' => 'previewFromCreateForm'
+                    'name' => 'previewFromCreateForm',
+                    'formactionRoute' => $this->routeBase . '.previewFromCreateForm'
                 ]
             ],
             'marketCommon' => $this->marketCommon,
@@ -206,11 +144,6 @@ abstract class MarketBase
         {
             //TODO: Add market menu
             $this->addMarketMenu($market);
-
-//            helper\auction::addMarketMenu($auction, )
-//            marketCRUD::addMarketMenu($auction);
-//            marketHelper::addMarketMenuAuction($auction);
-            //$this->auctionHelper->addMarketMenuPerType($auction);
 
             return view('markets.' . $this->routeBase .'.show', [
                 'market'=>$market,
@@ -241,17 +174,18 @@ abstract class MarketBase
         return view('markets.' . $this->routeBase . '.create', [
 //            'type' => 'edit',
             'title'=> 'Redigera ' . $auction['title'],
-            'callbackRoute' => $this->routeBase . '.update.store',
             'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
-                    'title' => 'Publicera',
-                    'name' => 'save'
+                    'title' => 'Uppdatera',
+                    'name' => 'save',
+                    'formactionRoute' => $this->routeBase . '.updateFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
-                    'name' => 'previewFromEditForm'
+                    'name' => 'previewFromEditForm',
+                    'formactionRoute' => $this->routeBase . '.previewFromForm'
                 ]
             ],
         ]);
@@ -277,17 +211,8 @@ abstract class MarketBase
 
     public function previewFromEditForm($input)
     {
-        $input = images::saveImages($input);
-
-//        dd(text::marketFromBbToHtml($input));
-
+        $input = images::saveImages($input); //TODO: Check, save temp?
         $auction = new MarketModel(text::marketFromBbToHtml($input));
-//        if(isset($input['end_at']))
-//        {
-////            dd('input', $input['end_at']);
-//            $input['end_at'] = new Carbon($input['end_at']);
-//        }
-//        dd($auction);
         $auction->user = Auth::user();
 
         $auction->created_at = new Carbon($auction->created_at);
@@ -296,28 +221,24 @@ abstract class MarketBase
         //?? Why do like this?, To get auction id and cretaed by user
         $auctionData = $this->getAuctionDataFromSession();
         $this->putAuctionInSession($auction, $auctionData['id'], $auctionData['createdByUser']);
-//        dd('maketBase->previewFromEditForm', $auctionData, $this->getAuctionDataFromSession());
-
-//        dd($input);
-
-        //Todo: (Bids/preview, not needed, not able to edit after first bid)
 
         return view('markets.' . $this->routeBase . '.show' , [
-            'type' => 'edit',
+//            'type' => 'edit',
             'preview' => true,
-            'callbackRoute' => $this->routeBase . '.update.store',
             'market' => $auction,
             'bidCount' => 0,
             'bidHighest' => 0,
             'yourBid' => 0,
             'buttons' => [
                 'save' => [
-                    'title' => 'Publicera',
-                    'name' => 'saveFromPreview'
+                    'title' => 'Uppdatera',
+                    'name' => 'saveFromPreview',
+                    'formactionRoute' => $this->routeBase . '.updateFromPreview'
                 ],
                 'preview' => [
                     'title' => 'Redigera',
-                    'name' => 'editFromPreview'
+                    'name' => 'editFromPreview',
+                    'formactionRoute' => $this->routeBase . '.updateFormFromPreview'
                 ]
             ],
             'marketCommon' => $this->marketCommon,
@@ -327,9 +248,7 @@ abstract class MarketBase
     public function saveFromEditPreview()
     {
         $auction = $this->getAuctionFromSession(false);
-//        dd('MarketBase->saveFromEditPreview 327', $auction);
         //TODO: Is this saving or updating, SAVING; CREATING NEW!!!!?
-//        $auction->save();
 
         $this->update($auction);
         $this->clearSession();
@@ -343,19 +262,19 @@ abstract class MarketBase
         $this->putAuctionDataInSession($auction->id, $auction->createdByUser);
 
         return view('markets.' . $this->routeBase . '.create', [
-//            'type' => 'edit',
             'title'=> 'Redigera ' . $auction->title,
-            'callbackRoute' => $this->routeBase . '.update.store',
             'marketType' => $this->marketType,
             'model' => $auction,
             'buttons' => [
                 'save' => [
                     'title' => 'Publicera',
-                    'name' => 'save'
+                    'name' => 'save',
+                    'formactionRoute' => $this->routeBase . '.updateFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
-                    'name' => 'previewFromEditForm'
+                    'name' => 'previewFromEditForm',
+                    'formactionRoute' => $this->routeBase . '.previewFromForm'
                 ]
             ],
             'marketCommon' => $this->marketCommon,
