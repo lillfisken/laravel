@@ -66,9 +66,8 @@ class MarketsController extends ControllerMarket {
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index()
 	{
-		
         $auctionHelper = new \market\helper\markets\auction();
 
         $markets = Market::select()

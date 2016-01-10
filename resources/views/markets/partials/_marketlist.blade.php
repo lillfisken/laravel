@@ -1,5 +1,6 @@
 
 <h1>_marketList.blade.php</h1>
+
 @if(isset($markets))
     <?php $count = 1; ?>
     @foreach($markets as $market)

@@ -1,46 +1,25 @@
 <p>
-    {{--Paginering << < 1 2 3 |4| 5 6 7 > >>--}}
     {!! $markets->render() !!}
 </p>
-
-@foreach($markets as $market)
-
-    <div class="list-row">
-        @if($market->marketType == 0 /*Sell*/)
-            {{--<hr/>Sell<hr/>--}}
-            {{--                <hr/>{{ !($market->bids->count() > 0) }} {{ empty($market->bids) }} {{ $market->bids }} {{ $market->bids->count() }}<hr/>--}}
-            @include('markets.sell.smallList')
+    @if($listType == 'galleryS' || $listType == 'galleryM' || $listType == 'galleryL')
+        <div class="gallery-box-container">
+    @endif
+    @foreach($markets as $market)
+         @if($market->marketType == 0 /*Sell*/)
+            @include('markets.sell.' . $listType)
         @elseif($market->marketType == 1 /*Buy*/)
-            {{--<hr/>Buy<hr/>--}}
-            {{--                <hr/>{{ !($market->bids->count() > 0) }} {{ empty($market->bids) }} {{ $market->bids }} {{ $market->bids->count() }}<hr/>--}}
-            @include('markets.buy.smallList')
+            @include('markets.buy.' . $listType)
         @elseif($market->marketType == 2 /*Change*/)
-            {{--<hr/>Giveaway<hr/>--}}
-            {{--                <hr/>{{ !($market->bids->count() > 0) }} {{ empty($market->bids) }} {{ $market->bids }} {{ $market->bids->count() }}<hr/>--}}
-            @include('markets.change.smallList')
+            @include('markets.change.' . $listType)
         @elseif($market->marketType == 3 /*Giveaway*/)
-            {{--<hr/>Change<hr/>--}}
-            {{--                <hr/>{{ ($market->bids->count() >! 0) }} {{ empty($market->bids) }} {{ $market->bids }} {{ $market->bids->count() }}<hr/>--}}
-            @include('markets.giveaway.smallList')
+            @include('markets.giveaway.' . $listType)
         @elseif($market->marketType == 4 /*Auction*/)
-            {{--<hr/>Auction<hr/>--}}
-            {{--                <hr/>{{ !($market->bids->count() > 0) }} {{ empty($market->bids) }} {{ $market->bids }} {{ $market->bids->count() }}<hr/>--}}
-            @include('markets.auction.smallList')
-        @else
-            Missing market type {{ $market->marketType }}
+            @include('markets.auction.' . $listType)
         @endif
-        <div>
-            @if(isset($market->events))
-                @foreach($market->events as $event)
-                    <p>{{ $event->updated_at }}: {{ $event->message }}</p>
-                @endforeach
-            @endif
+     @endforeach
+    @if($listType == 'galleryS' || $listType == 'galleryM' || $listType == 'galleryL')
         </div>
-    </div>
-
-@endforeach
-
+    @endif
 <p>
-    {{--Paginering << < 1 2 3 |4| 5 6 7 > >>--}}
     {!! $markets->render() !!}
 </p>

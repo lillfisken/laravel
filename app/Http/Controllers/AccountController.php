@@ -35,6 +35,10 @@ use Zjango\Laracurl\Facades\Laracurl;
 
 class AccountController extends Controller
 {
+    public function __construct(marketType $marketType)
+    {
+        $this->marketCommon = $marketType;
+    }
 
     //region Profile
 

@@ -1,9 +1,6 @@
 <?php namespace market\helper;
 
 use Chromabits\Purifier\Contracts\Purifier;
-//use JBBCode;
-
-//require_once '/vendor/jbbcode/jbbcode/JBBCode/Parser.php';
 
 class text
 {

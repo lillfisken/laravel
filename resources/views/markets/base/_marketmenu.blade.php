@@ -2,18 +2,11 @@
     <nav class="market-menu">
         <ul class="clearfix">
             <li>
-                {{--TODO: Change to font awesome--}}
                 <a href="#" style="color: #516177">
                     <i class="fa fa-bars fa-2x fa-fw"></i>
-
-                    {{--<div class="btn-menu">--}}
-                        @if(isset($market->watched) && $market->watched == 1)
-                            <div class="dot"></div>
-                        @endif
-                        {{--<div class="menu-bar"></div>--}}
-                        {{--<div class="menu-bar"></div>--}}
-                        {{--<div class="menu-bar"></div>--}}
-                    {{--</div>--}}
+                    @if(isset($market->watched) && $market->watched == 1)
+                        <div class="dot"></div>
+                    @endif
                 </a>
 
                 <ul class="market-sub-menu">

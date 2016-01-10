@@ -23,6 +23,15 @@ class ViewComposerProvider extends ServiceProvider
     {
         View::composer('layout.menu', 'market\ViewComposers\menu');
         View::composer('*', 'market\ViewComposers\all');
+        View::composer([
+            'markets.index',
+            'account.markets.watched',
+            'account.markets.active',
+            'account.markets.blockedMarkets',
+            'account.markets.trashed',
+            'account.profileView.userProfile',
+        ], 'market\ViewComposers\listType');
+
 //        // Using class based composers...
 //        View::composer('profile', 'App\Http\ViewComposers\ProfileComposer');
 //

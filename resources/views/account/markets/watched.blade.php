@@ -6,7 +6,14 @@
 
 @section('content')
     <div class="inner-content">
-        <h1>Bevakade annonser</h1>
+        <div class="flex-row">
+            <div class="flex-left">
+                <h1>Bevakade annonser</h1>
+            </div>
+            <div class="flex-right">
+                @include('markets.base._listType')
+            </div>
+        </div>
         @include('markets.base._marketsSmallList')
     </div>
 @stop
