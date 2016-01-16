@@ -30,20 +30,23 @@
                 Utropspris: {{ preg_replace('/(\.000*)/', ':-', $market->price) }}<br/>
                 Antal bud: {{ $market->bids->count() }}<br/>
                 Slutar: {{ $time->parseTimeAndDateFromUnixToString($market->end_at->timestamp) }}
-
             </p>
             @if(isset($market->deleted_at))
                 <h3>Avslutad {{ $time->parseTimeAndDateFromUnixToString($market->deleted_at->timestamp) }}</h3>
-                <p>
-                    Högsta bud:
-                </p>
+                <h3>
+                    @if(isset($market->bidHighest))
+                        Vinnande bud: {{ preg_replace('/(\.000*)/', '', $market->bidHighest) }}:-
+                    @else
+                        Inga bud
+                    @endif
+                </h3>
             @endif
         </div>
 
         <div class="market-list-rows-desc">
             <h3>
-                <small>SA:</small> {{ str_limit($market->title , 30) }}</h3>
-            {!! str_limit($market->description, 500) !!}
+                {{ str_limit($market->title , 30) }}</h3>
+{{--            {!! str_limit($market->description, 500) !!}--}}
         </div>
     </a>
 

@@ -24,6 +24,16 @@ class marketType
         '4' => 'Auktion',
     ];
 
+    private $routeBases = [
+        '0' => 'sell',
+        '1' => 'buy',
+        '2' => 'change',
+        '3' => 'giveaway',
+        '4' => 'auction',
+    ];
+
+
+
     public function getAllMarketTypes()
     {
         return $this->marketTypes;
@@ -34,6 +44,19 @@ class marketType
         if($this->marketTypes[$number] != null)
         {
             return $this->marketTypes[$number];
+        }
+        else
+        {
+            abort('404', 'Number is not a market type');
+        }
+    }
+
+    public function setRouteBase($market)
+    {
+
+        if($this->routeBases[$market->marketType] != null)
+        {
+            return $market->routeBase = $this->routeBases[$market->marketType];
         }
         else
         {

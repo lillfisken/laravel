@@ -66,7 +66,7 @@ class MarketsController extends ControllerMarket {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
         $auctionHelper = new \market\helper\markets\auction();
 
@@ -79,13 +79,13 @@ class MarketsController extends ControllerMarket {
 
         if(Auth::check())
 		{
-			//TODO::Sort non blocked markets for user
             marketMenu::addMarketMenuToMarkets($markets);
 		}
 
         foreach($markets as $market)
         {
             $auctionHelper->setHighestBid($market);
+			$this->marketCommon->setRouteBase($market);
         }
 
 		return view('markets.index', [

@@ -26,9 +26,8 @@
         </div>
 
         <div class="market-list-rows-desc">
-            <h3>
-                <small>KÖ:</small> {{ str_limit($market->title , 30) }}</h3>
-            {!! str_limit($market->description, 500) !!}
+            <h3>  {{ str_limit($market->title , 30) }}</h3>
+{{--            {!! str_limit($market->description, 500) !!}--}}
         </div>
     </a>
     <div>
