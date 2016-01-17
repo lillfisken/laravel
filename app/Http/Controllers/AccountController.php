@@ -35,6 +35,8 @@ use Zjango\Laracurl\Facades\Laracurl;
 
 class AccountController extends Controller
 {
+    protected $marketCommon;
+
     public function __construct(marketType $marketType)
     {
         $this->marketCommon = $marketType;
@@ -61,7 +63,7 @@ class AccountController extends Controller
         foreach($activeMarkets as $market)
         {
             marketMenu::addMarketMenu($market);
-
+            $this->marketCommon->setRouteBase($market);
         }
 
         $inactiveMarkets = Market::where('createdByUser', $user->id)->onlyTrashed()->paginate(5);
