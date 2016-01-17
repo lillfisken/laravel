@@ -157,10 +157,10 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('register', ['as' => 'accounts.register', 'uses' => 'account\registerController@register']);
     Route::post('register', ['as' => 'accounts.register.post', 'uses' => 'account\registerController@registerPost', 'before' => 'csrf']);
 
-    Route::get('forgotPassword', ['as' => 'accounts.forgotPassword', 'uses' => 'Auth\PasswordController@getEmail', 'middleware' => 'guest']);
-    Route::post('forgotPassword', ['as' => 'accounts.forgotPasswordPost', 'uses' => 'Auth\PasswordController@postEmail', 'middleware' => 'guest']);
-    Route::get('resetPassword/{token}', ['as' => 'accounts.resetPassword', 'uses' => 'Auth\PasswordController@getReset', 'middleware' => 'guest']);
-    Route::post('resetPassword', ['as' => 'accounts.resetPasswordPost', 'uses' => 'Auth\PasswordController@postReset', 'middleware' => 'guest']);
+    Route::get('forgotPassword', ['as' => 'accounts.forgotPassword', 'uses' => 'account\passwordController@getEmail', 'middleware' => 'guest']);
+    Route::post('forgotPassword', ['as' => 'accounts.forgotPasswordPost', 'uses' => 'account\passwordController@postEmail', 'middleware' => 'guest']);
+    Route::get('resetPassword/{token}', ['as' => 'accounts.resetPassword', 'uses' => 'account\passwordController@getReset', 'middleware' => 'guest']);
+    Route::post('resetPassword', ['as' => 'accounts.resetPasswordPost', 'uses' => 'account\passwordController@postReset', 'middleware' => 'guest']);
 
 //    Route::controller('oauth', 'Auth\OAuthController');
 });
