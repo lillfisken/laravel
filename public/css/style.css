@@ -498,6 +498,27 @@
 		padding: 0;
 		background-color: #d9d9d9;
 	}
+
+    /* http://www.perbang.dk/rgbgradient/ */
+    .bg-sell {
+        background-color: #9763FD;
+    }
+
+    .bg-auction {
+        background-color: #B07AD7;
+    }
+
+    .bg-change {
+        background-color: #CA91B2;
+    }
+
+    .bg-buyGroup {
+        background-color: #E3A88D;
+    }
+
+    .bg-buy {
+        background-color: #FDC068;
+    }
 	
 	/*---------------------------------------
 	Market list
@@ -659,6 +680,32 @@
 		white-space: nowrap;
         /*overflow: hidden;*/
 	}
+
+	.width100 {
+		width: 100%;
+	}
+
+	.width90 {
+		width: 90%;
+	}
+
+    #filter-checkbox {
+        display: none;
+    }
+
+    #filter-extended {
+        /*visibility: hidden;*/
+        display: none;
+    }
+
+    input#filter-checkbox:checked ~ #filter-open {
+        display: none;
+    }
+
+    input#filter-checkbox:not(:checked) ~ #filter-closed {
+        display: none;
+    }
+
 	
 /*-----------------------------------------------*/
 /* Market create */

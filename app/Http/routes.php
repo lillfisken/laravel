@@ -8,9 +8,8 @@ Route::bind('user', function ($username) {
 });
 
 //--------------------------------------------------------------------------
-Route::get('/', 'MarketsController@index');
 //market
-Route::group(['prefix' => 'market'], function () {
+Route::group([], function () {
     Route::get('/', ['as' => 'markets.index', 'uses' => 'MarketsController@index']);
     Route::get('filter', ['as' => 'markets.filter', 'uses' => 'MarketsController@filter']);
     Route::get('search', ['as' => 'markets.search', 'uses' => 'MarketsController@search']);
@@ -24,7 +23,6 @@ Route::group(['prefix' => 'market'], function () {
 $marketRouteBase = [
     'sell',
     'buy',
-    'giveaway',
     'change',
     'auction'
 ];

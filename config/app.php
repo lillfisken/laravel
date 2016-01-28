@@ -157,6 +157,7 @@ return [
 		'market\Providers\market\messageServiceProvider',
 		'market\Providers\market\bidServiceProvider',
 		'market\Providers\coreServiceProvider',
+		'Sofa\Eloquence\ServiceProvider'
 	],
 
 	/*

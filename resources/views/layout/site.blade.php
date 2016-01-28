@@ -38,15 +38,15 @@
 			<div class="row-divider"></div>
 
             @if(Session::has('message'))
-                <div class="inner-content message">{{ Session::get('message') }}</div>
+                <div class="inner-content message">{{ Session::pull('message') }}</div>
                 <div class="row-divider"></div>
             @endif
             @if(Session::has('alert'))
-                <div class="inner-content alert">{{ Session::get('alert') }}</div>
+                <div class="inner-content alert">{{ Session::pull('alert') }}</div>
                 <div class="row-divider"></div>
             @endif
             @if(Session::has('notification'))
-                <p class="notification">{{ Session::get('notification') }}</p>
+                <p class="notification">{{ Session::pull('notification') }}</p>
                 <div class="row-divider"></div>
             @endif
 			

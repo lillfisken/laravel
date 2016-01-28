@@ -39,7 +39,7 @@ class DevController extends Controller {
         'dd-request' => 'DD Request',
         'test-time' => 'Test time',
         'delete-auction-mail' => 'Test send mail ended auction',
-
+        'delete-giveaway' => 'Delete giveaway',
     ];
 
     public function getIndex()
@@ -603,5 +603,13 @@ class DevController extends Controller {
         $mail2->sendMailToWatchers();
 
         dd('Mail 1: ', $mail, 'Mail 2: ', $mail2);
+    }
+
+    public function getDeleteGiveaway()
+    {
+        dd(Market::withTrashed()
+            ->where('marketType', '3')
+            ->forceDelete()
+        );
     }
 }

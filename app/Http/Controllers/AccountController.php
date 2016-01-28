@@ -53,26 +53,41 @@ class AccountController extends Controller
      * @var user
      * @return
     */
-    public function show($user, marketType $marketType)
+    public function show($user, marketType $marketType, Request $request)
     {
+//        dd(config('market.paginationNr'));
+
         //TODO::Change to show public userprofile
         //TODO: Multiple pagination
-//        dd($user);
 
-        $activeMarkets = Market::where('createdByUser', $user->id)->paginate(5);
-        foreach($activeMarkets as $market)
+        $marketListType = $request->get('markets');
+
+        if($marketListType == 'ended')
+        {
+            $markets = Market::where('createdByUser', $user->id)
+                ->onlyTrashed()
+                ->paginate(5);
+//                ->paginate(config('market.paginationNr', 20));
+
+            $marketsName = 'Avslutade annonser';
+        }
+        else
+        {
+            //Active as default
+            $markets = Market::where('createdByUser', $user->id)
+                ->paginate(config('market.paginationNr', 20));
+            $marketsName = 'Aktiva annonser';
+        }
+        //TODO: set pagination base
+        $markets->setPath(route('accounts.profile', $user->username));
+        $markets->appends(['markets' => $marketListType ? $marketListType : 'active']);
+
+        foreach($markets as $market)
         {
             marketMenu::addMarketMenu($market);
             $this->marketCommon->setRouteBase($market);
         }
 
-        $inactiveMarkets = Market::where('createdByUser', $user->id)->onlyTrashed()->paginate(5);
-        foreach($inactiveMarkets as $market)
-        {
-            marketMenu::addMarketMenu($market);
-
-        }
-//        dd($activeMarkets, $inactiveMarkets);
         $phpBBUsers = phpBBUsers::where('user', $user->id)->get();
         $phpBB = [];
         foreach($phpBBUsers as $phpBBUser)
@@ -83,28 +98,17 @@ class AccountController extends Controller
                 'url' => $phpBBUser->url,
             ];
         }
-        //dd($phpBBUsers, $phpBB);
-//        dd($user);
 
         return view(
-            'account.profileView.userProfile',
+            'account.userProfile',
             [
                 'user' => $user,
-                'activeMarkets' => $activeMarkets,
-                'inactiveMarkets' => $inactiveMarkets,
+                'markets' => $markets,
+                'marketsName' => $marketsName,
                 'phpBBs' => $phpBB,
                 'marketCommon' => $marketType,
             ]
         );
-//        $markets = Market::where('createdByUser', '=', Auth::id())->get();
-//        $user = User::find(Auth::id())->first();
-////        dd($markets);
-//
-//        $trashed = Market::onlyTrashed()->where('createdByUser', '=', Auth::id())->get();
-
-//        return view('account.profileView.userProfile', ['user' => $user, 'markets' => $markets]);
-
-
     }
 
     protected function getForumByKey($key)

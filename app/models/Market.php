@@ -10,10 +10,11 @@ use market\Commands\sendMailAuctionEnded;
 use market\core\mail\auctionEnded;
 use market\helper\mailer;
 use market\helper\watched as watchedHelper;
+use Sofa\Eloquence\Eloquence;
 
 class Market extends Model {
 
-	use SoftDeletes;
+	use SoftDeletes, Eloquence;
 
 	protected $dates = ['deleted_at'];
 	protected $softDelete = true;
@@ -60,6 +61,8 @@ class Market extends Model {
 		'deleted_at',
         'end_at',
 	];
+
+	protected $searchableColumns = ['title' => 10, 'description' => 5];
 
     public function getDates()
     {

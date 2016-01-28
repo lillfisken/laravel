@@ -53,13 +53,19 @@
         </p>
 
         <hr/>
+        <div class="flex-row">
+            <div class="flex-item">
+                <h2>{{ $marketsName }}</h2>
+            </div>
+            <div class="flex-item">
+                @include('markets.base._listType')
+            </div>
+        </div>
+        <p>
+            <a href="{{ route('accounts.profile', ['user' => $user->username, 'markets' => 'active']) }}">Aktiva annonser</a> |
+            <a href="{{ route('accounts.profile', ['user' => $user->username, 'markets' => 'ended']) }}">Avslutade annonser</a>
+        </p>
+        @include('markets.base._marketsSmallList', ['markets' => $markets])
 
-        <h3>Aktiva annonser</h3>
-        @include('markets.base._marketsSmallList', ['markets' => $activeMarkets])
-
-        <hr/>
-
-        <h3>Avslutade annonser</h3>
-        @include('markets.base._marketsSmallList', ['markets' => $inactiveMarkets])
     </div>
 @stop

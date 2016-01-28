@@ -29,7 +29,7 @@ class ViewComposerProvider extends ServiceProvider
             'account.markets.active',
             'account.markets.blockedMarkets',
             'account.markets.trashed',
-            'account.profileView.userProfile',
+            'account.userProfile',
         ], 'market\ViewComposers\listType');
 
 //        // Using class based composers...

@@ -1,33 +1,17 @@
 <?php namespace market\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as ControllerMarket;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
+use market\core\market\marketPrepare;
 use market\core\market\marketType;
-use market\helper\auction;
-use market\helper\buy;
-use market\helper\debug;
-use market\helper\market as markethelper;
-use market\helper\marketEndReason;
-use market\helper\marketCRUD;
+use market\core\search\searchMarkets;
 use market\helper\marketMenu;
-use market\helper\text;
-use market\Http\Requests\CreateUpdateQuestionRequest;
-use market\Http\Requests\MarketCreateUpdateRequest;
 use market\models\Market;
-use market\models\MarketQuestions;
-use Illuminate\Http\Request;
 use DB;
 use Session;
 use Chromabits\Purifier\Contracts\Purifier;
-use HTMLPurifier_Config;
-use market\helper\markets\common as marketCommon;
-
-use Intervention\Image\ImageManagerStatic as Image;
 
 class MarketsController extends ControllerMarket {
 	
@@ -48,16 +32,18 @@ class MarketsController extends ControllerMarket {
     protected $purifier;
 
     protected $marketCommon;
+    protected $request;
 
     /**
      * Construct an instance of MyClass
      *
      * @param Purifier $purifier
      */
-    public function __construct(Purifier $purifier, marketType $marketType) {
+    public function __construct(Purifier $purifier, marketType $marketType, Request $request) {
         // Inject dependencies
         $this->purifier = $purifier;
         $this->marketCommon = $marketType;
+        $this->request = $request;
     }
 
 	/**
@@ -66,27 +52,13 @@ class MarketsController extends ControllerMarket {
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(marketPrepare $marketPrepare, searchMarkets $searchMarkets)
 	{
-        $auctionHelper = new \market\helper\markets\auction();
 
-        $markets = Market::select()
-            ->with('User')
-            ->withoutBlockedMarkets()
-            ->blockedSellerByUser()
-            ->paginate(config('market.paginationNr'), 20);
+        $markets = $searchMarkets->getAll();
+		$marketPrepare->addStuff($markets);
+
         $markets->setPath(route('markets.index'));
-
-        if(Auth::check())
-		{
-            marketMenu::addMarketMenuToMarkets($markets);
-		}
-
-        foreach($markets as $market)
-        {
-            $auctionHelper->setHighestBid($market);
-			$this->marketCommon->setRouteBase($market);
-        }
 
 		return view('markets.index', [
             'markets' => $markets,
@@ -94,92 +66,43 @@ class MarketsController extends ControllerMarket {
         ]);
 	}
 
-	public function filter()
+	public function filter(
+        Request $request,
+        searchMarkets $search,
+        marketPrepare $marketPrepare
+    )
 	{
-        //todo: if input is missing, get from flash, else use default 1
-		// Begining of building db query
-		$query = Market::select('*');
+        $markets = $search->searchAdvanced();
+        $marketPrepare->addStuff($markets);
 
-		// Remove deleted markets from query if box checked
-		if(Input::has('ended'))
-		{
-			$query->withTrashed();
-		}
-
-//		// Add type af markets to query depending on which boxes are ticked
-		$query->where(function($query) {
-
-
-//			if (Input::has('saljes')) {
-//				$query->orWhere('type', '=', 'saljes');
-//			}
-
-            foreach($this->marketCommon->getAllMarketTypes() as $key => $val)
-            {
-                if(Input::has('t' . $key))
-                {
-                    $query->orWhere('marketType', '=', $key);
-                }
-            }
-
-		});
-
-		if (Input::has('hiddenAds')) {
-			//TODO: Check for hidden markets
-		}
-
-		if (Input::has('hiddenSellers')) {
-			//TODO: Check for hidden sellers
-		}
-
-        //Query the db
-		$temp = $query->paginate(config('market.paginationNr'), 20);
-        $temp->setPath(route('markets.filter'));
-
-		// add a menu to each market if user is logged in
-		if(Auth::check())
-		{
-			foreach ($temp as $market)
-			{
-				marketMenu::addMarketMenu($market);
-			}
-		}
-
-        //Why is this here?n To save user input when redirecting back...
-		Input::flash();
+        $markets->setPath(route('markets.filter'));
+        $markets->appends($request->all());
 
 		return view('markets.index', [
-            'markets' => $temp,
+            'markets' => $markets,
             'marketCommon' => $this->marketCommon
         ]);
 	}
 
-    public function search()
+    public function search(Request $request, marketPrepare $marketPrepare, searchMarkets $search)
     {
-        $search = Input::get('s');
-        if(isset($search)){
+        //Search and add stuff to markets
+        $searchTerm = $request->get('st');
+        $markets = $search->searchSimple($searchTerm);
+        $marketPrepare->addStuff($markets);
+        //Set path for pagination
+        $markets->setPath(route('markets.search'));
+        $markets->appends(['st' => $searchTerm]);
 
-            //inspired by:
-            //http://stackoverflow.com/questions/19612180/creating-search-functionality-with-laravel-4
-
-			$query = Market::where('title', 'LIKE', '%' . $search . '%')
-				->orWhere('description', 'LIKE', '%' . $search . '%');
-
-            $result = $query->get();
-
-			//Set menu for each market
-			foreach ($result as $market)
-			{
-				marketMenu::addMarketMenu($market);
-			}
-
-            //TODO: Flash filter data
-
-            return view('markets.index', ['markets' => $result]);
+        if($markets->count() <= 0)
+        {
+            session(['alert' => 'Inga resultat för "' . $searchTerm . '"']);
         }
 
-
-        return 'Searchterm is missing';
+        return view('markets.index', [
+            'markets' => $markets,
+            'marketCommon' => $this->marketCommon,
+        ]);
     }
 
     public function sendPm($toUser, $title)

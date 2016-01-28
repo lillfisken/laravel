@@ -9,18 +9,18 @@
 namespace market\core\market;
 
 
+use Illuminate\Http\Request;
+
 class marketType
 {
     public function __construct()
     {
-
     }
 
     private $marketTypes = [
         '0' => 'Säljes',
         '1' => 'Köpes',
         '2' => 'Bytes',
-        '3' => 'Skänkes',
         '4' => 'Auktion',
     ];
 
@@ -28,11 +28,9 @@ class marketType
         '0' => 'sell',
         '1' => 'buy',
         '2' => 'change',
-        '3' => 'giveaway',
         '4' => 'auction',
+        '5' => 'buyGroup'
     ];
-
-
 
     public function getAllMarketTypes()
     {
@@ -53,14 +51,19 @@ class marketType
 
     public function setRouteBase($market)
     {
-
         if($this->routeBases[$market->marketType] != null)
         {
             return $market->routeBase = $this->routeBases[$market->marketType];
         }
         else
         {
-            abort('404', 'Number is not a market type');
+            abort('404', 'This is not a market type');
         }
     }
+
+    public function getRouteBase($marketTypeNumber)
+    {
+        return $this->routeBases[$marketTypeNumber];
+    }
+
 }

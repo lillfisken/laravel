@@ -8,10 +8,11 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 //use Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Sofa\Eloquence\Eloquence;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
-	use Authenticatable, CanResetPassword;
+	use Authenticatable, CanResetPassword, Eloquence;
 
 	/**
 	 * The database table used by the model.
@@ -19,6 +20,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var string
 	 */
 	protected $table = 'users';
+	protected $searchableColumns = [
+		'username'
+	];
 
 	/**
 	 * The attributes that are mass assignable.

@@ -4,8 +4,8 @@
 <ul class="resp-menu">
     <li class="searchTop">
         {!! Form::open(array('route' => 'markets.search', 'method' => 'GET' )) !!}
-        {!! Form::text('s', null , ['class' => 'inline'] ) !!}
-        {!! Form::submit('Sök', ['class' => 'btnSmall inline']); !!}
+        {!! Form::text('st', $urlParam->get('st') , ['class' => 'inline', 'placeholder' => 'Sök'] ) !!}
+        {!! Form::submit('Sök', ['class' => 'btnSmall inline']) !!}
         {!! Form::close() !!}
     </li>
 
@@ -58,7 +58,7 @@
                 <li><a href="{{ route('auction.createNewForm') }}">Auktion</a></li>
                 <li><a href="{{ route('sell.createNewForm') }}">Säljes</a></li>
                 <li><a href="{{ route('buy.createNewForm') }}">Köpes</a></li>
-                <li><a href="{{ route('giveaway.createNewForm') }}">Skänkes</a></li>
+{{--                <li><a href="{{ route('giveaway.createNewForm') }}">Skänkes</a></li>--}}
                 <li><a href="{{ route('change.createNewForm') }}">Bytes</a></li>
             </ul>
         </li>
@@ -80,7 +80,7 @@
 
     <li class="searchBottom">
         {!! Form::open(array('route' => 'markets.search', 'method' => 'GET' )) !!}
-            {!! Form::text('s', null , ['class' => 'inline'] ) !!}
+            {!! Form::text('st', $urlParam->get('st') , ['class' => 'inline', 'placeholder' => 'Sök'] ) !!}
             <button type="submit" class="btnSmall inline"><i class="fa fa-search"></i></button>
         {!! Form::close() !!}
     </li>
