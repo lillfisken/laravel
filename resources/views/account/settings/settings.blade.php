@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+    @include('partials.errors.basic')
     {!! Form::model($user, ['route' => 'accounts.settings.save']) !!}
     <table class="table-100">
         @include('account._partials._profileForm')

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use market\core\auth\profileSettings;
 use market\Http\Controllers\Controller;
 
 use market\Http\Requests\register\registerRequest;
@@ -17,12 +18,14 @@ class registerController extends Controller {
 		return view('account.auth.register');
 	}
 
-	public function registerPost(registerRequest $request)
+	public function registerPost(registerRequest $request, profileSettings $profileSettings)
 	{
 		Log::debug('registerController->registerPost');
 		//TODO:Purify
 
-		$newUser = new User($request->all());
+		$input = $request->all();
+		$input = $profileSettings->setCheckboxesOptions($input);
+		$newUser = new User($input);
 		$newUser->password = Hash::make($request->input('password'));
 		$newUser->username = $request->input('username');
 		$newUser->save();

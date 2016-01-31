@@ -41,7 +41,19 @@ class baseRequest extends Request {
         'emailAllowed' => 'boolean',
         'name' => 'required',
         'street' => 'required',
-        'zip' => 'required|digits:5',
+        'zip' => 'required|numeric',
+        'city' => 'required',
+        'cityAllowed' => 'boolean',
+        'email' => 'required|email'
+    ];
+
+    protected $newUserprofileSettingsRules = [
+        'phone1' => 'required',
+        'phoneAllowed' => 'boolean',
+        'emailAllowed' => 'boolean',
+        'name' => 'required',
+        'street' => 'required',
+        'zip' => 'required|numeric',
         'city' => 'required',
         'cityAllowed' => 'boolean',
         'username' => 'required|min:3|unique:users,username',
