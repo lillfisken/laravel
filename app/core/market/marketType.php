@@ -20,6 +20,7 @@ class marketType
     private $marketTypes = [
         '0' => 'Säljes',
         '1' => 'Köpes',
+        '5' => 'Samköp',
         '2' => 'Bytes',
         '4' => 'Auktion',
     ];

@@ -2,11 +2,12 @@
     <div class="flex-item width100">
         <div class="flex-row width90">
             <div class="flex-item">
-                <span class="bg-sell"> Säljes </span>
-                <span class="bg-auction"> Auktion </span>
-                <span class="bg-change"> Bytes </span>
-                <span class="bg-buyGroup"> Samköpes </span>
-                <span class="bg-buy"> Köpes </span>
+                @foreach($marketCommon->getAllMarketTypes() as $key => $val)
+                    <a href="{{ route('markets.filter', ['t' . $key => '1' ] ) }}"
+                       class="btn bg-{{ $marketCommon->getRouteBase($key) }}">
+                        {{ $val }}
+                    </a>
+                @endforeach
             </div>
             <div class="flex-item">
                 <input type="checkbox" id="filter-checkbox" />

@@ -500,6 +500,15 @@
 	}
 
     /* http://www.perbang.dk/rgbgradient/ */
+
+    .bg-sell,
+    .bg-auction,
+    .bg-change,
+    .bg-buyGroup,
+    .bg-buy {
+        padding: 3px;
+    }
+
     .bg-sell {
         background-color: #9763FD;
     }
@@ -622,12 +631,17 @@
 
     .gallery-box-item-s,
     .gallery-box-item-m,
-    .gallery-box-item-l {
+    .gallery-box-item-l,
+    .gallery-box-item-list {
         border: 1px solid #516177;
         padding: 5px;
 		margin-right: 5px;
         margin-bottom: 5px;
         overflow: hidden;
+    }
+
+    .gallery-box-item-list {
+        width: 99%;
     }
 
     .gallery-box-item-s {
@@ -681,6 +695,10 @@
         /*overflow: hidden;*/
 	}
 
+    .padding-right {
+        padding-right: 5px;
+    }
+
 	.width100 {
 		width: 100%;
 	}
@@ -688,6 +706,10 @@
 	.width90 {
 		width: 90%;
 	}
+
+    .space-after {
+        margin-bottom: 5px;
+    }
 
     #filter-checkbox {
         display: none;
@@ -789,7 +811,7 @@
 	}
 
 	.market-menu > ul > li > a {
-		padding:4px;
+		/*padding:4px;*/
 		display:inline-block;
 	}
 
