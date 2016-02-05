@@ -75,15 +75,19 @@ class searchMarkets
             }
         });
 
+        if($urlParam->exist('st'))
+        {
+            //Search free text
+            $query->search($urlParam->get('st'));
+        }
+
         if($urlParam->exist('se'))
         {
-//            dd('se exist', $urlParam->get('se'));
-            $query->whereHas('user', function($query) use($urlParam) {
-//                dd('in query');
+            //Search seller
+            $query->whereHas('user', function($query) use($urlParam)
+            {
                 $query->search($urlParam->get('se'));
-//                $query->where('username', 'like', '%' . $urlParam->get('se') . '%');
             });
-            //TODO: Search seller ('se')
 
         }
 
