@@ -1,4 +1,4 @@
-<div class="flex-row bg-{{ $market->routeBase }} space-after width100">
+<div class="flex-row width100">
     <div class="flex-item gallery-title">
         <div class="flex-item">
             <h3>
@@ -17,7 +17,7 @@
         @include('markets.base._marketmenu')
     </div>
 </div>
-
+<div class="flex-row bg-{{ $market->routeBase }} flex-height-5 space-after width100"></div>
 
 
 

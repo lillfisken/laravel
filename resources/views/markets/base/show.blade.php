@@ -68,7 +68,7 @@
                     @if($market->deleted_at != null)
                         <h3>
                             Avslutad<br/>
-                            <small>{{ market\helper\markets\MarketBase::getEndReasonName($market->endReason) }},
+{{--                            <small>{{ market\helper\markets\MarketBase::getEndReasonName($market->endReason) }},--}}
                                 {{ $market->deleted_at }}</small>
                         </h3>
                     @else
@@ -128,11 +128,12 @@
                 @endif
 
             </div>
+
+            @include('markets.partials._events')
         </div>
 
         <div class="clearfix">
             @section('formStop')
-
                 {!! Form::open(['method' => 'post']) !!}
                     @include('markets.partials._buttons')
                 {!! Form::close() !!}

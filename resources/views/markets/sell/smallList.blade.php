@@ -4,9 +4,9 @@
             @include('markets.partials.gallery._baseImage')
         </div>
         <div class="flex-item width100">
-            <div class="flex-row width100">
+            {{--<div class="flex-row width100">--}}
                 @include('markets.partials.gallery._baseTitle')
-            </div>
+            {{--</div>--}}
             <div class="flex-row">
                 @include('markets.partials.gallery._listDesc')
             </div>

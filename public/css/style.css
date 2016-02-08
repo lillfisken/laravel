@@ -695,6 +695,10 @@
         /*overflow: hidden;*/
 	}
 
+	.flex-height-5 {
+		height: 5px;
+	}
+
     .padding-right {
         padding-right: 5px;
     }
