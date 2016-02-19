@@ -2,7 +2,8 @@
 
 use market\Http\Requests\Request;
 
-class baseRequest extends Request {
+class baseRequest extends Request
+{
 
 	protected $messages = [
 		'required' => ':attribute är obligatoriskt.',
@@ -14,7 +15,7 @@ class baseRequest extends Request {
 		'pswdOld.required_with' => 'Ogiltligt lösenord',
 		'digits' => ':attribute måste vara :value siffror',
 		'confirmed' => ':attribute matchar inte',
-        'exists' => ':attribute finns inte'
+        'exists' => ':attribute finns inte',
 	];
 
     protected $attribute = [
@@ -32,7 +33,9 @@ class baseRequest extends Request {
 		'message' => 'Meddelande',
 		'reciever' => 'Mottagare',
 		'title' => 'Titel',
-        'toUser' => 'Användaren'
+        'toUser' => 'Användaren',
+		'description' => 'Beskrivning',
+		'price' => 'Pris',
     ];
 
     protected $userprofileSettingsRules = [

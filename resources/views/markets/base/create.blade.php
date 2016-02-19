@@ -14,7 +14,7 @@
         @section('formOpen')
             {!! Form::model($model, array('files' => true )) !!}
         @show
-            {!! Form::hidden('marketType', $marketType) !!}
+{{--            {!! Form::hidden('marketType', $marketType) !!}--}}
 
             <h3>{!! Form::label('title', 'Rubrik *') !!}</h3>
             {!! $errors->first('title', '<div class="help-block">:message</div>') !!}
@@ -115,5 +115,4 @@
                 {!! Form::close() !!}
             @show
     </div>
-
 @stop

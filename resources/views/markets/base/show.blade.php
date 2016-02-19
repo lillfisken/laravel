@@ -64,7 +64,10 @@
             <div id="market-price-info" class="layout">
                 @section('priceInfo')
                     <h2  class="market-title">{!! preg_replace('/(\.000*)/', ':-', $market->price) !!}</h2>
+                    {{--<h4>XXX{{ $market->marketType }}XXX</h4>--}}
+                {{--{{ dd($market) }}--}}
                     <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
+{{--                    <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>--}}
                     @if($market->deleted_at != null)
                         <h3>
                             Avslutad<br/>

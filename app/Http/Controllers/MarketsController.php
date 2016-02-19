@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use market\core\market\event;
 use market\core\market\marketPrepare;
 use market\core\market\marketType;
 use market\core\search\searchMarkets;
@@ -54,6 +55,7 @@ class MarketsController extends ControllerMarket {
 	 */
 	public function index(marketPrepare $marketPrepare, searchMarkets $searchMarkets)
 	{
+//        dd('test MarketsController');
 
         $markets = $searchMarkets->getAll();
 		$marketPrepare->addStuff($markets);

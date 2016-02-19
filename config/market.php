@@ -18,6 +18,24 @@ return [
     'system_path_images' => $system . 'images/',
     'system_path_images_temp' => $system . 'images/temp/',
 
+    //----- market types --------------------------------------------------
+
+    'routeBases' => [
+        '0' => 'sell',
+        '1' => 'buy',
+        '2' => 'change',
+        '3' => 'giveaway',
+        '4' => 'auction',
+    ],
+
+    'marketTypes' => [
+        '0' => 'Säljes',
+        '1' => 'Köpes',
+        '2' => 'Bytes',
+        '3' => 'Skänkes',
+        '4' => 'Auktion',
+    ],
+
     //----- phpBB Auth ----------------------------------------------------
 
     'phpBB_api_path' => 'http://elektro.coo/phpBB3/api.php',

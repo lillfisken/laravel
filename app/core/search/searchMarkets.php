@@ -35,6 +35,7 @@ class searchMarkets
     {
         $markets = Market::select()
             ->with('User')
+            ->with('watched.unreadEvents')
             ->withoutBlockedMarkets()
             ->blockedSellerByUser()
             ->paginate(config('market.paginationNr', 20));
@@ -46,6 +47,7 @@ class searchMarkets
     {
         $markets = Market::search($searchTerm)
             ->with('User')
+            ->with('watched.unreadEvents')
             ->withoutBlockedMarkets()
             ->blockedSellerByUser()
             ->paginate(config('market.paginationNr', 20));
@@ -59,7 +61,8 @@ class searchMarkets
 
         // Begining of building db query
         $query = Market::select()
-            ->with('User');
+            ->with('User')
+            ->with('watched.unreadEvents');
 
         // Remove deleted markets from query if box checked
         if ($urlParam->isTrue('e')) {

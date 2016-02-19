@@ -96,7 +96,7 @@ class Market extends Model {
 
     public function watched()
     {
-        return $this->hasMany('market\models\watched', 'market', 'id' );
+        return $this->hasOne('market\models\watched', 'market', 'id' );
     }
 
 	public function blocked()

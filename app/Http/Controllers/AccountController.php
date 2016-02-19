@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use market\core\market\marketPrepare;
 use market\core\market\marketType;
 use market\core\session\sessionUrl;
 use market\helper\debug;
@@ -36,10 +37,12 @@ use Zjango\Laracurl\Facades\Laracurl;
 class AccountController extends Controller
 {
     protected $marketCommon;
+    protected $marketPrepare;
 
-    public function __construct(marketType $marketType)
+    public function __construct(marketType $marketType, marketPrepare $marketPrepare)
     {
         $this->marketCommon = $marketType;
+        $this->marketPrepare = $marketPrepare;
     }
 
     //region Profile
@@ -143,26 +146,11 @@ class AccountController extends Controller
             */
     public function active()
     {
-        //dd('AccountController@active');
-
+        //TODO: Move to core
         $markets = Market::where('createdByUser', Auth::id())
-//            ->groupBy('created_at')
-//            ->get();
+            //TODO: Eager load
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.active'));
-
-//        dd($markets, config('market.paginationNr') );
-
-        foreach($markets as $market)
-        {
-            marketMenu::addMarketMenu($market);
-        }
-//        foreach ($markets as $market) {
-//            $temp[] = array('text' => 'Redigera', 'href' => route('markets.edit', $market->id));
-//            $temp[] = array('text' => 'Avslutad', 'href' => route('markets.delete', $market->id));
-//
-//            $market['marketmenu'] = $temp;
-//        }
 
         return view('account.markets.active', [
             'markets' => $markets,
@@ -181,15 +169,12 @@ class AccountController extends Controller
             */
     public function trashed()
     {
-        //dd('AccountController@trashed');
+        //TODO: Move to core
         $markets = Market::onlyTrashed()->where('createdByUser', Auth::id())
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.trashed'));
 
-        foreach($markets as $market)
-        {
-            marketMenu::addMarketMenu($market);
-        }
+        $this->marketPrepare->addStuff($markets);
 
         return view('account.markets.trashed', [
             'markets' => $markets,
@@ -212,10 +197,7 @@ class AccountController extends Controller
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.blockedmarket'));
 
-        foreach($markets as $market)
-        {
-            marketMenu::addMarketMenu($market, [] , ['blocked' => 'true']);
-        }
+        $this->marketPrepare->addStuff($markets);
 
         return view('account.markets.blockedMarkets', [
             'markets' => $markets,
@@ -272,26 +254,27 @@ class AccountController extends Controller
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.watched'));
 
-        foreach($markets as $market)
-        {
-            $events = [];
-            $read = [];
-            foreach($market->watched[0]->unreadEvents as $event)
-            {
-                $events[] = $event;
-                $read[] = $event->id;
-            }
-            $market['events'] = $events;
-        }
+//        foreach($markets as $market)
+//        {
+//            $events = [];
+//            $read = [];
+//            foreach($market->watched[0]->unreadEvents as $event)
+//            {
+//                $events[] = $event;
+//                $read[] = $event->id;
+//            }
+//            $market['events'] = $events;
+//        }
 
-        //TODO: update events to read = 1
-        if(!empty($read))
-        {
-            //Delete read events
-            watchedEvent::whereIn('id', $read)->update(['read' => 1]);
-        }
+//        //TODO: update events to read = 1
+//        if(!empty($read))
+//        {
+//            //Delete read events
+//            watchedEvent::whereIn('id', $read)->update(['read' => 1]);
+//        }
 
-        marketMenu::addMarketMenuToMarkets($markets);
+//        marketMenu::addMarketMenuToMarkets($markets);
+        $this->marketPrepare->addStuff($markets);
 
         return view('account.markets.watched', [
             'markets' => $markets,

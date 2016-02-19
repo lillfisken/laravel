@@ -40,6 +40,7 @@ class marketType
 
     public function getMarketTypeName($number)
     {
+//        dd($number);
         if($this->marketTypes[$number] != null)
         {
             return $this->marketTypes[$number];

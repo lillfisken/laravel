@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use market\Conversation;
-use market\helper\time;
+use market\core\time;
 use market\Message;
 use market\models\watchedEvent;
 
@@ -21,9 +21,9 @@ class menu {
 
     protected $time;
 
-    public function __construct()
+    public function __construct(time $time)
     {
-        $this->time = new time();
+        $this->time = $time;
     }
 
     public function compose(View $view)

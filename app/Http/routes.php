@@ -33,72 +33,72 @@ foreach ($marketRouteBase as $route) {
         //Create
         Route::get('create', [
             'as' => $routeBase . '.createNewForm',
-            'uses' => 'Markets\\' . $routeBase . '\\createController' . '@showCreateForm',
+            'uses' => 'Markets\\create\\' . $routeBase . '@showCreateForm',
             'middleware' => 'auth'
         ]);
         Route::post('createFromForm', [
             'as' => $routeBase . '.createFromForm',
-            'uses' => 'Markets\\' . $routeBase . '\\createController' . '@createFromForm',
+            'uses' => 'Markets\\create\\' . $routeBase . '@createFromForm',
             'middleware' => 'auth'
         ]);
         Route::post('previewFromCreateForm', [
             'as' => $routeBase . '.previewFromCreateForm',
-            'uses' => 'Markets\\' . $routeBase . '\\createController' . '@previewFromForm',
+            'uses' => 'Markets\\create\\' . $routeBase . '@previewFromForm',
             'middleware' => 'auth'
         ]);
         Route::post('createFromPreview', [
             'as' => $routeBase . '.createFromPreview',
-            'uses' => 'Markets\\' . $routeBase . '\\createController' . '@createFromPreview',
+            'uses' => 'Markets\\create\\' . $routeBase . '@createFromPreview',
             'middleware' => 'auth'
         ]);
         Route::post('createFormFromPreview', [
             'as' => $routeBase . '.createFormFromPreview',
-            'uses' => 'Markets\\' . $routeBase . '\\createController' . '@createFormFromPreview',
+            'uses' => 'Markets\\create\\' . $routeBase . '@createFormFromPreview',
             'middleware' => 'auth'
         ]);
 
         //Read
         Route::get('show/{id}', [
             'as' => $routeBase . '.show',
-            'uses' => 'Markets\\' . $routeBase . '\\readController' . '@show',
+            'uses' => 'Markets\\read\\' . $routeBase . '@show',
         ]);
 
         //Update
         Route::get('update/{id}', [
             'as' => $routeBase . '.updateForm',
-            'uses' => 'Markets\\' . $routeBase . '\\updateController' . '@showUpdateForm',
+            'uses' => 'Markets\\update\\' . $routeBase . '@showUpdateForm',
             'middleware' => 'auth'
         ]);
         Route::post('updateFromForm', [
             'as' => $routeBase . '.updateFromForm',
-            'uses' => 'Markets\\' . $routeBase . '\\updateController' . '@updateFromForm',
+            'uses' => 'Markets\\update\\' . $routeBase . '@updateFromForm',
             'middleware' => 'auth'
         ]);
         Route::post('previewFromUpdateForm', [
             'as' => $routeBase . '.previewFromUpdateForm',
-            'uses' => 'Markets\\' . $routeBase . '\\updateController' . '@previewFromForm',
+            'uses' => 'Markets\\update\\' . $routeBase . '@previewFromForm',
             'middleware' => 'auth'
         ]);
         Route::post('updateFromPreview', [
             'as' => $routeBase . '.updateFromPreview',
-            'uses' => 'Markets\\' . $routeBase . '\\updateController' . '@updateFromPreview',
+            'uses' => 'Markets\\update\\' . $routeBase . '@updateFromPreview',
             'middleware' => 'auth'
         ]);
         Route::post('updateFormFromPreview', [
             'as' => $routeBase . '.updateFormFromPreview',
-            'uses' => 'Markets\\' . $routeBase . '\\updateController' . '@updateFormFromPreview',
+            'uses' => 'Markets\\update\\' . $routeBase . '@updateFormFromPreview',
             'middleware' => 'auth'
         ]);
 
         //Delete
         Route::get('delete/{market}', [
             'as' => $routeBase . '.destroy.get',
-            'uses' => 'Markets\\' . $routeBase . '\\deleteController' . '@destroyGet',
+            'uses' => 'Markets\\delete\\' . $routeBase . '@destroyGet',
             'middleware' => 'auth'
         ]);
         Route::delete('delete', [
             'as' => $routeBase . '.destroy.post',
-            'uses' => 'Markets\\' . $routeBase . '\\deleteController' . '@destroyPost',
+            'uses' => 'Markets\\delete\\' . $routeBase . '@destroyPost',
             'middleware' => 'auth'
         ]);
 

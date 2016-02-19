@@ -16,8 +16,12 @@
         </p>
     @else
         Utropspris: {{ preg_replace('/(\.000*)/', '',$market->price) }}:- <br/>
-        Högsta bud: {{ preg_replace('/(\.000*)/', '', $bidHighest) }}:- <br/>
-        <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">Antal budgivare: {{ $bidCount }}</a><br>
+        <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">
+            Högsta bud: {{ preg_replace('/(\.000*)/', '', $market->bidHighest) }}:- (detaljer)
+        </a><br/>
+        <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}">
+            Antal budgivare: {{ $market->bidCount }} (detaljer)
+        </a><br>
         Slutar: <span id="auction-end"
                       data-unix="{{ $market->end_at_unix }}"
                       data-url="{{ route('api.getAuctionEndTime', [$market->id]) }}">

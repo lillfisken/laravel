@@ -74,4 +74,37 @@ class newBidOnWatched
 //            $watchedEvent->save();
 //        }
     }
+
+//    public function newBid($bid)
+//    {
+//        Log::debug('helper->watched->newBid');
+//
+//        // get all watcheds connected to bid->auctionId
+//        $watcheds = \market\models\watched::where('market', $bid->auctionId)->get();
+//        $toBeSaved = [];
+//        foreach($watcheds as $watched)
+//        {
+//            Log::debug('In watcheds foreachloop');
+//            if($watched->user != Auth::id())
+//            {
+//                $message = 'Nytt bud: ' . $bid->bid . ', ' . $bid->updated_at;
+//
+//                $toBeSaved[] = [
+//                    'watched' => $watched->id,
+//                    'read' => 0,
+//                    'message' => $message
+//                ];
+//            }
+//        }
+//
+//        if(count($toBeSaved) > 0)
+//        {
+//            DB::table('watched_events')->insert($toBeSaved);
+//        }
+//    }
+//
+//    public static function marketEnded($market)
+//    {
+//
+//    }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class watched extends Model {
 
-    use SoftDeletes;
+//    use SoftDeletes;
 
     protected $table = 'watcheds';
 

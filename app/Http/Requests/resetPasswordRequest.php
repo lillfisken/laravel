@@ -22,8 +22,8 @@ class resetPasswordRequest extends Request {
 	public function rules()
 	{
 		return [
-            'token' => 'required|exists:password_resets,token',
-            'password' => 'required|confirmed',
+			'token' => 'required|exists:password_resets,token',
+			'password' => 'required|confirmed',
 		];
 	}
 
