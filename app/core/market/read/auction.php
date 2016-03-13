@@ -9,15 +9,21 @@
 namespace market\core\market\read;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use market\core\interfaces\iMarketRead;
+use market\models\eventUser;
 use market\models\Market;
 
 class auction extends base implements iMarketRead
 {
     public function show($id)
     {
-        $auction = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+        $auction = Market::withTrashed()
+            ->with(['bids.user'])
+            ->with('userUnreadEvents')
+            ->where('id','=',$id)
+            ->first();
 
         // If auction exist and is of type auction
         if($auction != null && $auction->marketType == 4)
@@ -41,6 +47,34 @@ class auction extends base implements iMarketRead
             {
                 $auction->yourBid = 0;
             }
+
+            //Set new events to read = true
+            foreach($auction->userUnreadEvents as $event)
+            {
+                $temp = eventUser::find($event->id);
+                $temp->read = Carbon::now();
+                $temp->save();
+            }
+
+//            $temp1 = $auction->userUnreadEvents->first();
+//            $temp2 = $auction->userUnreadEvents->first();
+//
+//            $event = eventUser::find($temp1->id);
+//            $event->read = Carbon::now();
+//            $event->save();
+//
+//            $temp1->read = true;
+//
+//            dd(
+//                $auction->userUnreadEvents->first(),
+//                $temp1->read,
+//                $temp2->read,
+//            $event,
+//            $event->read
+////                $auction->userUnreadEvents->first()->getOriginal('read'),
+////                $auction->userUnreadEvents->first()->read
+//            );
+
 
             //TODO: Add market menu ???
 //            $this->addMarketMenu($auction);

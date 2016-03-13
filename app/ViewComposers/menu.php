@@ -15,6 +15,7 @@ use Illuminate\View\View;
 use market\Conversation;
 use market\core\time;
 use market\Message;
+use market\models\eventUser;
 use market\models\watchedEvent;
 
 class menu {
@@ -63,46 +64,11 @@ class menu {
 
     protected function countUnreadEventsForWatched($userId)
     {
-        $watched = DB::table('watcheds')
-            ->join('watched_events', function($join){
-                $join->on('watcheds.id', '=', 'watched_events.watched');
-        })
-            ->where('watched_events.read', 0)
-            ->where('watcheds.userId', $userId)
+        $unreadCount = eventUser::where('userId', Auth::id())
+            ->where('read', null)
             ->count();
 
-        return $watched;
-//            $watched = 3;
-//            dd($unread, $watched);
-//            $watched = watchedEvent::where('user', Auth::id())->where('read', 0)->count();
-
-//            dd(DB::table('messages')
-//                ->join('conversations', function($join){
-//                    $join->on('conversations.id', '=', 'messages.conversationId')
-//                        ->where('conversations.user1', '=', Auth::id())
-//                        ->orWhere('conversations.user2', '=', Auth::id());
-////                    ->where('messages.read', '=', '0');
-//                })
-//                ->where('messages.read', '=', '0')
-//                ->where('messages.senderId', '!=', Auth::id())
-//                ->distinct()
-////                ->count('messages.id')
-//                ->toSql(),
-//
-//                DB::table('messages')
-//                    ->join('conversations', function($join){
-//                        $join->on('conversations.id', '=', 'messages.conversationId')
-//                            ->where('conversations.user1', '=', Auth::id())
-//                            ->orWhere('conversations.user2', '=', Auth::id());
-////                    ->where('messages.read', '=', '0');
-//                    })
-//                    ->where('messages.read', '=', '0')
-//                    ->where('messages.senderId', '!=', Auth::id())
-//                    ->distinct()
-//                ->get(),
-//
-//                'Auth: ' .  Auth::id(),
-//                'Unread: ' . $unread);
+        return $unreadCount;
     }
 
 }

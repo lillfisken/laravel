@@ -106,12 +106,13 @@ foreach ($marketRouteBase as $route) {
 
     });
 }
+Route::get('events/{marketId}', ['as' => 'market.events', 'uses' => 'Markets\\eventController' . '@allEvents', 'middleware' => 'auth']);
 
 //auction
 Route::group(['prefix' => 'auction'], function () {
     //Misc
-    Route::post('placebid', ['as' => 'auction.placeBid', 'uses' => 'Markets\\auction\\bidcontroller' . '@placeBid', 'middleware' => 'auth']);
-    Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' => 'Markets\\auction\\bidcontroller' . '@showAllBids', 'middleware' => 'auth']);
+    Route::post('placebid', ['as' => 'auction.placeBid', 'uses' => 'Markets\\auction\\bidController' . '@placeBid', 'middleware' => 'auth']);
+    Route::get('bids/{markets}', ['as' => 'auction.bids', 'uses' => 'Markets\\auction\\bidController' . '@showAllBids', 'middleware' => 'auth']);
 });
 
 //--------------------------------------------------------------------------

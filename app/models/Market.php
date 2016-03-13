@@ -74,6 +74,8 @@ class Market extends Model {
 		];
     }
 
+	//region relations
+
 	/*
 	 * Add navigation for user connected with market
 	*/
@@ -94,9 +96,29 @@ class Market extends Model {
 		return $this->hasMany('market\models\MarketQuestions', 'market', 'id');
 	}
 
-    public function watched()
+    public function watchedByUser()
     {
-        return $this->hasOne('market\models\watched', 'market', 'id' );
+        return $this->hasOne('market\models\watchedMarketsByUser', 'market', 'id')
+            ->where('user', Auth::id());
+    }
+
+	public function events()
+	{
+		return $this->hasMany('market\models\eventMarket', 'market', 'id');
+	}
+
+    public function eventsForUser()
+    {
+        return $this->hasMany('market\models\eventUser', 'marketId', 'id')
+            ->where('userId', Auth::id())
+            ->where('read', null);
+    }
+
+    public function unreadEventsForUser()
+    {
+        return $this->hasMany('market\models\eventUser', 'marketId', 'id')
+            ->where('userId', Auth::id())
+            ->where('read', null);
     }
 
 	public function blocked()
@@ -108,6 +130,22 @@ class Market extends Model {
 	{
 		return $this->hasMany('market\models\blockedUser', 'blockedUserId', 'createdByUser');
 	}
+
+    public function userUnreadEvents()
+    {
+        return $this->hasMany('market\models\eventUser', 'marketId', 'id')
+            ->where('read', null)
+            ->with('event');
+//            ->where('user', Auth::id());
+    }
+    public function userAllEvents()
+    {
+        return $this->hasMany('market\models\eventUser', 'marketId', 'id')
+            ->with('event');
+//            ->where('user', Auth::id());
+    }
+
+	//endregion
 
     public function delete()
     {
@@ -143,6 +181,8 @@ class Market extends Model {
 		$this->attributes['end_at'] = Carbon::createFromFormat('Y/m/d H:i', $value);
 	}
 
+	//region Scope
+
 	public function scopeWithoutBlockedSellers($query)
 	{
 		return $query->whereDoesntHave('user.blockedUsers', function($query) {
@@ -161,4 +201,6 @@ class Market extends Model {
 			$query->where('blockingUserId', '=', Auth::id());
 		});
 	}
+
+	//endregion
 }

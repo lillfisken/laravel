@@ -37,11 +37,11 @@
                 {!! Form::hidden('id', $market->id) !!}
                 {!! $errors->first('bid', '<div class="help-block">:message</div>') !!}
                 {!! Form::text('bid', null , ['class' => "form-input" ] ) !!}
-                @if($yourBid == 0)
-                    {!! Form::submit('Lägg bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}
+                @if($market->yourBid == 0)
+                    {!! Form::submit('Lägg bud', array('class' => 'btn btn80', 'name'=>'placeBid')) !!}
                 @else
-                    {!! Form::submit('Uppdatera bud', array('class' => 'btn btn80', 'name'=>'placeBid')); !!}<br/>
-                    Ditt nuvarande bud:   {{ $yourBid or 'null' }}:-<br/><br/>
+                    {!! Form::submit('Uppdatera bud', array('class' => 'btn btn80', 'name'=>'placeBid')) !!}<br/>
+                    Ditt nuvarande bud:   {{ $market->yourBid or 'null' }}:-<br/><br/>
                 @endif
                 {!! Form::close() !!}
                 <small>
@@ -59,21 +59,21 @@
         @endif
     @endif
 
-    @if(isset($market->extra_price_info) && $market->extra_price_info != '')
-        <hr/>
-        <h3>Övrig info</h3>
-        <p>
-            {{ $market->extra_price_info }}
-        </p>
-    @endif
+    {{--@if(isset($market->extra_price_info) && $market->extra_price_info != '')--}}
+        {{--<hr/>--}}
+        {{--<h3>Övrig info</h3>--}}
+        {{--<p>--}}
+            {{--{{ $market->extra_price_info }}--}}
+        {{--</p>--}}
+    {{--@endif--}}
 
-    <p>
-        <small>
-            Inlagd {{ $time->parseTimeAndDateFromUnixToString($market->created_at->timestamp) }}<br/>
-            @if($market->created_at != $market->updated_at)
-                <br/>Senast uppdaterad {{ $time->parseTimeAndDateFromUnixToString($market->updated_at->timestamp) }}
-            @endif
-        </small>
-    </p>
+    {{--<p>--}}
+        {{--<small>--}}
+            {{--Inlagd {{ $time->parseTimeAndDateFromUnixToString($market->created_at->timestamp) }}<br/>--}}
+            {{--@if($market->created_at != $market->updated_at)--}}
+                {{--<br/>Senast uppdaterad {{ $time->parseTimeAndDateFromUnixToString($market->updated_at->timestamp) }}--}}
+            {{--@endif--}}
+        {{--</small>--}}
+    {{--</p>--}}
 
 @endsection

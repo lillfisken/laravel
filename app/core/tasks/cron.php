@@ -2,24 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: Oskar
- * Date: 2015-10-04
- * Time: 22:50
+ * Date: 2016-02-21
+ * Time: 13:34
  */
 
-namespace market\helper;
+namespace market\core\tasks;
 
 
-use Illuminate\Support\Facades\Log;
-use market\core\tasks\deleteOldTempImages;
-use market\core\tasks\endOldAuctions;
+use market\core\time;
 
-class cron {
-
+class cron
+{
     protected $time;
 
-    public function __construct()
+    public function __construct(time $time)
     {
-        $this->time = new time();
+        $this->time = $time;
     }
 
     public function cleanOldPhpBBConnect()

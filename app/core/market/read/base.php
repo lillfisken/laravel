@@ -9,13 +9,27 @@
 namespace market\core\market\read;
 
 
+use Carbon\Carbon;
+use market\models\eventUser;
 use market\models\Market;
 
 abstract class base
 {
     public function show($id)
     {
-        $market = Market::withTrashed()->with(['bids.user'])->where('id','=',$id)->first();
+        $market = Market::withTrashed()
+            ->with('bids.user')
+            ->with('userUnreadEvents')
+            ->where('id','=',$id)
+            ->first();
+
+        foreach($market->userUnreadEvents as $event)
+        {
+            //TODO: queue?
+            $e = eventUser::find($event->id);
+            $e->read = Carbon::now();
+            $e->save();
+        }
 
         return $market;
     }

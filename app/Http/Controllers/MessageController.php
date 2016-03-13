@@ -227,7 +227,7 @@ class MessageController extends Controller
         //TODO: Validate user allaows email and has an email
 
         $from = User::find(Auth::Id())->email;
-        $to = User::where('userName', '=$', $request->get('toUser'))->first()->email;
+        $to = User::where('userName', '=', $request->get('toUser'))->first()->email;
         $subject = $request->get('title');
         $body = $request->get('message');
 

@@ -35,7 +35,8 @@ class searchMarkets
     {
         $markets = Market::select()
             ->with('User')
-            ->with('watched.unreadEvents')
+//            ->with('watched.unreadEvents')
+            ->with('unreadEventsForUser')
             ->withoutBlockedMarkets()
             ->blockedSellerByUser()
             ->paginate(config('market.paginationNr', 20));

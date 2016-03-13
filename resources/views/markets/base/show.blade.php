@@ -5,12 +5,41 @@
 @stop
 
 @section('content')
-    <div class="inner-content">
+    <div class="inner-content flex-box" xmlns="http://www.w3.org/1999/html">
         <div class="clearfix">
             @section('formStart')
-                {{--{!! Form::open(['method' => 'post']) !!}--}}
-                {{--{!! Form::hidden('type', $type) !!}--}}
+                {!! Form::open(['method' => 'post']) !!}
+                    @include('markets.partials._buttons')
+                {!! Form::close() !!}
             @show
+        </div>
+        <div id="events" class="clearfix">
+            {{--@if($market->eventsForUser->count() > 0)--}}
+                {{--@foreach($market->eventsForUser->first()->events as $event)--}}
+                    {{--<div class="stripe">--}}
+                        {{--{{ $event->updated_at }},--}}
+                        {{--{{ $event->message }},--}}
+                    {{--<br/></div>--}}
+                {{--@endforeach--}}
+            {{--@endif--}}
+            @if($market->userUnreadEvents->count() > 0)
+                @foreach($market->userUnreadEvents as $unreadEvent)
+                    <div class="stripe flex-row">
+                        <div class="flex-item">
+                            {{ $unreadEvent->event->created_at }}, {{ $unreadEvent->event->body }}
+                        </div>
+                        <div class="flex-item">
+                            @if($unreadEvent->read != null)
+                                Läst {{ $unreadEvent->read }}
+                            @else
+                                <b>Nytt</b>
+                            @endif
+                        </div>
+                        <br/>
+                    </div>
+                @endforeach
+                <hr/>
+            @endif
         </div>
 
         <div id="market-left" class="layout">
@@ -64,38 +93,45 @@
             <div id="market-price-info" class="layout">
                 @section('priceInfo')
                     <h2  class="market-title">{!! preg_replace('/(\.000*)/', ':-', $market->price) !!}</h2>
-                    {{--<h4>XXX{{ $market->marketType }}XXX</h4>--}}
-                {{--{{ dd($market) }}--}}
                     <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
-{{--                    <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>--}}
                     @if($market->deleted_at != null)
                         <h3>
                             Avslutad<br/>
-{{--                            <small>{{ market\helper\markets\MarketBase::getEndReasonName($market->endReason) }},--}}
-                                {{ $market->deleted_at }}</small>
+                            {{-- <small>{{ market\helper\markets\MarketBase::getEndReasonName($market->endReason) }},--}}
+                            {{ $market->deleted_at }}
                         </h3>
                     @else
-                            <p>
-                                {{ $market->number_of_items }} st till försäljning<br />
-                            </p>
-                    @endif
-
-                    @if(isset($market->extra_price_info) && $market->extra_price_info != '')
-                        <hr/>
-                        <h3>Övrig info</h3>
                         <p>
-                            {{ $market->extra_price_info }}
+                            {{ $market->number_of_items }} st till försäljning<br />
                         </p>
                     @endif
-                    <p>
-                        <small>
-                            Inlagd {{ $market->created_at }}
-                            @if($market->created_at !== $market->updated_at)
-                                <br/>Senast uppdaterad {{ $market->updated_at }}
-                            @endif
-                        </small>
-                    </p>
                 @show
+
+                @if(isset($market->extra_price_info) && $market->extra_price_info != '')
+                    <hr/>
+                    <h3>Övrig info</h3>
+                    <p>
+                        {{ $market->extra_price_info }}
+                    </p>
+                @endif
+                <p>
+                    <small>
+                        Inlagd {{ $market->created_at }}
+                        @if($market->created_at !== $market->updated_at)
+                            <br/>Senast uppdaterad {{ $market->updated_at }}
+                        @endif
+                    </small>
+                </p>
+                <hr/>
+                <p>
+                    <a href="{{ Route('market.events', $market->id) }}"> {{ $market->events->count() }}
+                        @if( $market->events->count() == 1 )
+                            händelse
+                        @else
+                            händelser
+                        @endif</a> <br/>
+                    TODO: Versioner
+                </p>
             </div>
 
             <div id="market-seller-info" class="layout">
@@ -132,7 +168,7 @@
 
             </div>
 
-            @include('markets.partials._events')
+{{--            @include('markets.partials._events')--}}
         </div>
 
         <div class="clearfix">

@@ -1,10 +1,21 @@
 <?php namespace market\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use market\helper\cron;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Events\Dispatcher;
+use market\core\tasks\cron;
 
 class Kernel extends ConsoleKernel {
+
+	protected $cron;
+
+	public function __construct(cron $cron, Application $app, Dispatcher $events)
+	{
+		$this->cron = $cron;
+		parent::__construct($app, $events);
+	}
 
 	/**
 	 * The Artisan commands provided by your application.
@@ -23,7 +34,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-        $cron = new cron();
+		Log::debug('Cron running');
+        $cron = $this->cron;
 
         $cron->endOldAuctions();
 

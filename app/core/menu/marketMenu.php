@@ -10,8 +10,9 @@ namespace market\core\menu;
 
 
 use Illuminate\Support\Facades\Auth;
-use market\helper\routeBase;
-use market\models\watched;
+//use market\helper\routeBase;
+//use market\models\watched;
+use market\models\watchedMarketsByUser;
 
 class marketMenu
 {
@@ -41,7 +42,8 @@ class marketMenu
 
     public function addMarketMenuToMarkets($markets)
     {
-        $watched = watched::getAllMarketIdsWatchedByUserId(Auth::id());
+        $watched = watchedMarketsByUser::where('user', Auth::id());
+
         foreach($markets as $market)
         {
             $this->addMarketMenu($market, $watched);
@@ -50,7 +52,7 @@ class marketMenu
 
     private function addHasEvents($market)
     {
-        if( $market && $market->watched && $market->watched->unreadEvents->count() < 0 )
+        if( $market && $market->unreadEventsForUser->count() > 0)
         {
             $market->hasEvents = true;
         }
@@ -58,9 +60,9 @@ class marketMenu
 
     private function addIsWatched($market)
     {
-        if( $market && isset($market->watched) )
+        if( $market && $market->watchedByUser != null )
         {
-            $market->isWatched = count($market->watched) > 0;
+            $market->isWatched = true;
         }
     }
 
@@ -102,14 +104,13 @@ class marketMenu
         return $temp;
     }
 
-    private function addWatchedMarketMenu($temp, $market, $watched)
+    private function addWatchedMarketMenu($temp, $market)
     {
         if($market->end_at == null)
         {
             //Watched
-            if(in_array($market['id'], $watched))
+            if($market->watchedByUser != null)
             {
-//                    $market['isWatched'] = 1;
                 $temp[] = array('text' => 'Inaktivera bevakning', 'href' => route('accounts.unwatchMarket', $market->id));
             }
             else

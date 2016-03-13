@@ -1,48 +1,31 @@
 <?php namespace market\Http\Controllers;
 
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 use market\core\market\marketPrepare;
 use market\core\market\marketType;
+use market\core\menu\marketMenu;
 use market\core\session\sessionUrl;
-use market\helper\debug;
-use market\helper\markets\common;
 use market\Http\Requests;
-use market\Http\Controllers\Controller;
-
-use Illuminate\Contracts\Auth\Authenticator;
-use Input;
-use market\Http\Requests\passwordRequest;
-use market\Http\Requests\registerRequest;
-use market\Http\Requests\UserSettingsRequest;
 use market\models\blockedUser;
 use market\models\Market;
 use market\models\phpBBUsers;
-use market\models\watched;
-use market\models\watchedEvent;
-use Redirect;
+use market\models\watchedMarketsByUser;
 use market\models\User;
 use Illuminate\Http\Request;
-use DB;
-use Hash;
-use market\helper\text;
-use market\helper\marketMenu;
 use Symfony\Component\HttpFoundation\Response;
-use Zjango\Laracurl\Facades\Laracurl;
 
 class AccountController extends Controller
 {
     protected $marketCommon;
     protected $marketPrepare;
+    protected $marketMenu;
 
-    public function __construct(marketType $marketType, marketPrepare $marketPrepare)
+    public function __construct(marketType $marketType, marketPrepare $marketPrepare, marketMenu $marketMenu)
     {
         $this->marketCommon = $marketType;
         $this->marketPrepare = $marketPrepare;
+        $this->marketMenu = $marketMenu;
     }
 
     //region Profile
@@ -58,7 +41,6 @@ class AccountController extends Controller
     */
     public function show($user, marketType $marketType, Request $request)
     {
-//        dd(config('market.paginationNr'));
 
         //TODO::Change to show public userprofile
         //TODO: Multiple pagination
@@ -85,11 +67,7 @@ class AccountController extends Controller
         $markets->setPath(route('accounts.profile', $user->username));
         $markets->appends(['markets' => $marketListType ? $marketListType : 'active']);
 
-        foreach($markets as $market)
-        {
-            marketMenu::addMarketMenu($market);
-            $this->marketCommon->setRouteBase($market);
-        }
+        $this->marketPrepare->addStuff($markets);
 
         $phpBBUsers = phpBBUsers::where('user', $user->id)->get();
         $phpBB = [];
@@ -151,6 +129,8 @@ class AccountController extends Controller
             //TODO: Eager load
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.active'));
+
+        $this->marketPrepare->addStuff($markets);
 
         return view('account.markets.active', [
             'markets' => $markets,
@@ -248,32 +228,15 @@ class AccountController extends Controller
         */
     public function watched()
     {
-        $watched = watched::getAllMarketIdsWatchedByUserId(Auth::id());
+        $watched = watchedMarketsByUser::getAllMarketIdsWatchedByUserId(Auth::id());
+//        $watched = watched::getAllMarketIdsWatchedByUserId(Auth::id());
         $markets = Market::whereIn('id', $watched)
-            ->with('watched.unreadEvents')
+//            ->with('watched.unreadEvents')
             ->paginate(config('market.paginationNr'));
         $markets->setPath(route('accounts.watched'));
 
-//        foreach($markets as $market)
-//        {
-//            $events = [];
-//            $read = [];
-//            foreach($market->watched[0]->unreadEvents as $event)
-//            {
-//                $events[] = $event;
-//                $read[] = $event->id;
-//            }
-//            $market['events'] = $events;
-//        }
+//        //TODO: update events to read = 1 ???
 
-//        //TODO: update events to read = 1
-//        if(!empty($read))
-//        {
-//            //Delete read events
-//            watchedEvent::whereIn('id', $read)->update(['read' => 1]);
-//        }
-
-//        marketMenu::addMarketMenuToMarkets($markets);
         $this->marketPrepare->addStuff($markets);
 
         return view('account.markets.watched', [
@@ -305,8 +268,8 @@ class AccountController extends Controller
         if($request->get('yes') && $request->get('marketId'))
         {
 //            $markets = watched::where('user', Auth::id())->get();
-            $watched = new watched([
-                'userId' => Auth::id(),
+            $watched = new watchedMarketsByUser([
+                'user' => Auth::id(),
                 'market' => $request->get('marketId')
             ]);
 
@@ -318,9 +281,6 @@ class AccountController extends Controller
         {
             abort(404);
         }
-
-        dd($request->get('yes'), $request->get('marketId'), $request->all());
-//        dd(Auth::user()->username);
     }
 
     public function unwatchMarket($marketId, sessionUrl $sessionUrl)

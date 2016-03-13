@@ -31,6 +31,7 @@ class sell extends Controller
 
     public function show($id)
     {
+//        dd('sellReadController');
         return $this->baseShow($id, $this->marketHelper, $this->marketPrepare, $this->marketType);
     }
 }

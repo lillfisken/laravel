@@ -1,11 +1,22 @@
 <?php namespace market\models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+use market\core\event\newEvents;
 use market\helper\mailer;
-use market\helper\watched as watchedHelper;
 
-class Bid extends Model {
+class Bid extends Model
+{
+
+    protected $newEvents;
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $newEvents = App::make('market\core\event\newEvents');
+//        dd($newEvents);
+        $this->newEvents = $newEvents;
+    }
 
     /**
      * The database table used by the model.
@@ -13,8 +24,6 @@ class Bid extends Model {
      * @var string
      */
     protected $table = 'bids';
-
-//    protected $primaryKey = ['auctionId','bidder'];
 
     /**
      * The attributes that are mass assignable.
@@ -40,35 +49,22 @@ class Bid extends Model {
         return $this->belongsTo('market\models\Market', 'auctionId', 'id');
     }
 
-//    /**
-//     * Set the keys for a save update query.
-//     * This is a fix for tables with composite keys
-//     * TODO: Investigate this later on
-//     *
-//     * @param  \Illuminate\Database\Eloquent\Builder  $query
-//     * @return \Illuminate\Database\Eloquent\Builder
-//     */
-//    protected function setKeysForSaveQuery(Builder $query)
-//    {
-//        //https://github.com/laravel/framework/issues/5517 2015-06-08
-//
-//        $query
-//            //Put appropriate values for your keys here:
-//            ->where('auctionId', '=', $this->auctionId)
-//            ->where('bidder', '=', $this->bidder);
-//
-//        return $query;
-//    }
-
     public function save(array $options = array())
     {
         parent::save($options);
+        //TODO: fix, is it possible?
+
+        //TODO: queue
         $mailer = new mailer();
         $mailer->sendMailNewBidOnMyAuction($this);
         $mailer->sendMailNewBidWatchedAuction($this->id);
 
-        $watched = new watchedHelper();
         //TODO: queue
-        $watched->newBid($this);
+//        $events = new newEvents();
+//        $events->newBidAuction($this->id);
+        $this->newEvents->newBidAuction($this->id);
+
+//        $watched = new watchedHelper();
+//        $watched->newBid($this);
     }
 }
