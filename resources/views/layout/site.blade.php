@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html class="no-js">
 	<head>
 		<title>
 			@section('title')
@@ -9,6 +9,9 @@
 		</title>
 		<meta name="" content="" charset="utf-8"/>
 
+        {{--Include modernizr--}}
+        {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>--}}
+
 		{{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--}}
         <link rel="stylesheet" href="/market/public/font-awesome-4.5.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="/market/public/css/okg.css" />
@@ -16,11 +19,16 @@
         <link rel="stylesheet" href="/market/public/css/menuTest.css" />
         <link rel="stylesheet" href="/market/public/css/jquery.datetimepicker.css" />
 
+        <!-- Include the modernizr development library -->
+        <script src="/market/public/script/modernizr-custom.js"></script>
+
         <!-- Include the jQuery library -->
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
         <!-- Include the Hammer.js library -->
         <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+
+
         <script src="/market/public/script/jquery.datetimepicker.js"></script>
 
         {{--<script src="/market/public/script/pgwslideshow.js"></script>--}}
