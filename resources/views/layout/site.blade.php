@@ -9,8 +9,8 @@
 		</title>
 		<meta name="" content="" charset="utf-8"/>
 
-        {{--Include modernizr--}}
-        {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>--}}
+        {{--Favicon--}}
+        <link rel="shortcut icon" href="{{ env('PUBLIC_PATH') }}favicon.ico">
 
 		{{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--}}
         <link rel="stylesheet" href="/market/public/font-awesome-4.5.0/css/font-awesome.min.css" />
