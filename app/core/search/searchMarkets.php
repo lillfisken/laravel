@@ -46,9 +46,11 @@ class searchMarkets
 
     public function searchSimple($searchTerm)
     {
+//        dd($searchTerm);
+
         $markets = Market::search($searchTerm)
             ->with('User')
-            ->with('watched.unreadEvents')
+//            ->with('watched.unreadEvents')
             ->withoutBlockedMarkets()
             ->blockedSellerByUser()
             ->paginate(config('market.paginationNr', 20));
@@ -62,8 +64,8 @@ class searchMarkets
 
         // Begining of building db query
         $query = Market::select()
-            ->with('User')
-            ->with('watched.unreadEvents');
+            ->with('User');
+//            ->with('watched.unreadEvents');
 
         // Remove deleted markets from query if box checked
         if ($urlParam->isTrue('e')) {

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="laravel">
+  <component name="PublishConfigData" autoUpload="Always" serverName="elektro" showNewOnSourceInSync="false">
     <serverData>
+      <paths name="elektro">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/market" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="laravel">
         <serverdata>
           <mappings>
@@ -10,6 +17,34 @@
           <excludedPaths>
             <excludedPath path="/vendor" />
           </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="phpbb">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="prisjakt">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="recept">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="saljdemo">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
         </serverdata>
       </paths>
     </serverData>
