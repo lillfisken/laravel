@@ -1,11 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Config;
-
 $public = env('PUBLIC_PATH');
 $system = env('SYSTEM_PATH');
-//$public = '/market/public/';
-//$system = '/var/www/market/public/';
 
 return [
     //----- Paths ---------------------------------------------------------
@@ -34,6 +30,21 @@ return [
         '2' => 'Bytes',
         '3' => 'Skänkes',
         '4' => 'Auktion',
+    ],
+
+    //----- market end reasons ---------------------------------------------
+
+    'endReasons' => [
+        '0' => 'Såld',
+        '1' => 'Köpt',
+        '2' => 'Såld på annat ställe',
+        '3' => 'Bytt',
+        '10' => 'Bortskänkt',
+        '20' => 'Slängd',
+        '30' => 'Återtagen från försäljning',
+        '31' => 'Inget behov längre',
+        '40' => 'Övrigt',
+        '50' => 'Avslutad utan bud'
     ],
 
     //----- phpBB Auth ----------------------------------------------------

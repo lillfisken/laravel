@@ -95,11 +95,10 @@
                     <h2  class="market-title">{!! preg_replace('/(\.000*)/', ':-', $market->price) !!}</h2>
                     <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
                     @if($market->deleted_at != null)
-                        <h3>
-                            Avslutad<br/>
-                            {{-- <small>{{ market\helper\markets\MarketBase::getEndReasonName($market->endReason) }},--}}
-                            {{ $market->deleted_at }}
-                        </h3>
+                        <p>
+                            Avslutad: {{ $market->deleted_at }}<br/>
+                            Anledning: {{ $market->getEndReasonName() }}
+                        </p>
                     @else
                         <p>
                             {{ $market->number_of_items }} st till försäljning<br />
@@ -135,7 +134,11 @@
             </div>
 
             <div id="market-seller-info" class="layout">
-                <a href="{{ Route('accounts.profile', $market->user->username) }}"> <h2  class="market-title" >{{ $market->user->username or 'null'}}</h2></a>
+                <a href="{{ Route('accounts.profile', $market->user->username) }}">
+                    <h2  class="market-title" >{{ $market->user->username or 'null'}}
+                        <small>(4,8) {{-- Omdömme --}}</small>
+                    </h2>
+                </a>
                 <p>
                     {{ $market->user->getUserActiveMarketsCount() }} aktiva annonser<br />
                     {{ $market->user->getUserTotalMarketsCount() }} tidigare annonser		<br/>

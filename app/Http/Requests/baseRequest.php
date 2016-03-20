@@ -4,6 +4,16 @@ use market\Http\Requests\Request;
 
 class baseRequest extends Request
 {
+	/**
+	 * Determine if the user is authorized to make this request.
+	 *
+	 * @return bool
+	 */
+	public function authorize()
+	{
+		// Default = true
+		return true;
+	}
 
 	protected $messages = [
 		'required' => ':attribute är obligatoriskt.',

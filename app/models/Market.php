@@ -149,6 +149,7 @@ class Market extends Model {
 
     public function delete()
     {
+		//TODO: add events
         parent::delete();
 		Log::debug('models/Market->delete()');
         $mailer = new mailer();
@@ -170,8 +171,8 @@ class Market extends Model {
 			$mailer->sendMailEndedWatchedMarket($this->id);
 		}
 
-        $watched = new watchedHelper();
-        $watched->marketEnded($this);
+//        $watched = new watchedHelper();
+//        $watched->marketEnded($this);
 
     }
 
@@ -203,4 +204,10 @@ class Market extends Model {
 	}
 
 	//endregion
+
+    public function getEndReasonName()
+    {
+        $reasons = config('market.endReasons');
+        return $reasons[$this->endReason];
+    }
 }
