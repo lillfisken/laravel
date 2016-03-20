@@ -38,7 +38,19 @@ class endOldAuctions
 
         foreach($toDelete as $d)
         {
+            if($d->bids->count() > 0)
+            {
+                $d->endReason = 0; //Sold
+                $d->save();
+            }
+            else
+            {
+                $d->endReason = 50; //Ended without bids
+                $d->save();
+            }
+
             $d->delete();
+
             Log::info('Auto: Ended auction ' . $d->title);
         }
     }
