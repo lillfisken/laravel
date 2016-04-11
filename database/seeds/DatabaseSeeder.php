@@ -14,14 +14,17 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		// $this->call('UserTableSeeder');
         $this->call('UserTableSeeder');
         $this->call('MarketsTableSeeder');
         $this->call('QuestionTableSeeder');
         $this->call('ConversationTableSeeder');
         $this->call('MessageTableSeeder');
         $this->call('BidTableSeeder');
-
-    }
+        $this->call('MarketEventSeeder');
+        $this->call('BlockedMarketSeeder');
+        $this->call('BlockedSellerSeeder');
+        $this->call('WatchedSeeder');
+        $this->call('EventUserSeeder');
+	}
 
 }

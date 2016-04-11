@@ -28,7 +28,7 @@ return [
         '0' => 'Säljes',
         '1' => 'Köpes',
         '2' => 'Bytes',
-        '3' => 'Skänkes',
+//        '3' => 'Skänkes',
         '4' => 'Auktion',
     ],
 
@@ -70,5 +70,8 @@ return [
     ],
 
     'paginationNr' => env('PAGINATION_NR_OF', 5),
+
+    //----- Seedeing ------------------------------------------------------
+    'seedFactor' => 30,
 ];
 

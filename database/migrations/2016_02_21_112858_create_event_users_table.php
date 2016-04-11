@@ -17,6 +17,7 @@ class CreateEventUsersTable extends Migration {
 			$table->bigIncrements('id');
 			$table->unsignedBigInteger('userId');
 			$table->unsignedBigInteger('eventId');
+			$table->unsignedBigInteger('marketId');
 			$table->timestamp('read')->nullable();
             $table->softDeletes();
 			$table->timestamps();

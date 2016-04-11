@@ -3,6 +3,7 @@
 // Composer: "fzaninotto/faker": "v1.4.0"
 //use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
+use market\models\Conversation;
 use market\models\Message;
 
 class MessageTableSeeder extends Seeder
@@ -12,85 +13,68 @@ class MessageTableSeeder extends Seeder
 
         DB::table('messages')->delete();
 
-        Message::create([
-            'senderId' => '4',
-            'conversationId' => '312',
-            'message' => 'Ställer en fråga om annonsen',
-            'read' => 1
-        ]);
-        sleep(3);
+        Conversation::chunk(10, function($conversations) {
+            foreach($conversations as $conversation)
+            {
+                $limit = rand(3,15);
+                for($i = 0; $i < $limit; $i++)
+                {
+                    $m = $this->generate([
+                        'conversationId' => $conversation->id,
+                        'senderId' => $conversation->user1
+                    ]);
+                    $m->save(['seeding' => true]);
+                    $this->command->info('Conversation: ' . $conversation->id . ' Sender: ' . $conversation->user1 . ' Message: ' . $i);
+                }
 
-        Message::create([
-            'senderId' => '2',
-            'conversationId' => '312',
-            'message' => 'Svarar på en fråga',
-            'read' => 1
-        ]);
-        sleep(3);
+                $limit = rand(3,15);
+                for($i = 0; $i < $limit; $i++)
+                {
+                    $m = $this->generate([
+                        'conversationId' => $conversation->id,
+                        'senderId' => $conversation->user2
+                    ]);
+                    $m->save(['seeding' => true]);
+                    $this->command->info('Conversation: ' . $conversation->id . ' Sender: ' . $conversation->user2 . ' Message: ' . $i);
+                    \Illuminate\Support\Facades\Log::debug('MEMORY: ' . memory_get_usage());
+                }
+            }
+        });
+    }
 
-        Message::create([
-            'senderId' => '4',
-            'conversationId' => '312',
-            'message' => 'Och ställer en följdfråga',
-            'read' => 1
-        ]);
-        sleep(3);
+    private function generate($options = [])
+    {
+        $m = new Message();
+        $faker = \Faker\Factory::create('sv_SE');
+        $conv =  Conversation::orderByRaw("RAND()")->first();
 
-        Message::create([
-            'senderId' => '4',
-            'conversationId' => '312',
-            'message' => 'Och en till',
-            'read' => 1
-        ]);
-        sleep(3);
+        //id	bigint(20) unsigned Auto Increment
+        isset($options['id']) ? $m->id = $options['id'] : null;
 
-        Message::create([
-            'senderId' => '2',
-            'conversationId' => '312',
-            'message' => 'Svarar på frågorna',
-            'read' => 0
-        ]);
+        //conversationId	bigint(20) unsigned
+        $m->conversationId = isset($options['conversationId']) ? $options['conversationId'] : $conv->id;
 
-        //-----------------------------------------
+        //senderId	bigint(20) unsigned
+        $m->senderId = isset($options['senderId']) ? $options['senderId'] : $conv->user1;
 
-        Message::create([
-            'senderId' => '3',
-            'conversationId' => '316',
-            'message' => 'Babblar på om lorem ipsum',
-            'read' => 1
-        ]);
-        sleep(3);
+        //message	text
+        $m->message = isset($options['message']) ? $options['message'] : $faker->sentences(rand(1,10), true);
 
-        Message::create([
-            'senderId' => '2',
-            'conversationId' => '316',
-            'message' => 'Vad är lorem ipsum',
-            'read' => 1
-        ]);
-        sleep(3);
+        //read	tinyint(1) [0]
+        $m->read = isset($options['read']) ? $options['read'] : $faker->boolean(25);
 
-        Message::create([
-            'senderId' => '3',
-            'conversationId' => '316',
-            'message' => 'Mockup text',
-            'read' => 1
-        ]);
-        sleep(3);
+        //deletedBySender	tinyint(1) [0]
+        //deletedByReciever	tinyint(1) [0]
 
-        Message::create([
-            'senderId' => '2',
-            'conversationId' => '316',
-            'message' => 'VGadå mockuptext?',
-            'read' => 1
-        ]);
-        sleep(3);
+        //created_at	timestamp [0000-00-00 00:00:00]
+        $m->created_at = isset($options['created_at']) ? $options['created_at'] : $faker->dateTime;
 
-        Message::create([
-            'senderId' => '3',
-            'conversationId' => '316',
-            'message' => 'Text utan någon mening men som visar på att det finns data och som kan användas för att fylla ut textmassor under utveckling',
-            'read' => 0
-        ]);
-        sleep(3);
+        //updated_at	timestamp [0000-00-00 00:00:00]
+        $m->updated_at = isset($options['updated_at']) ? $options['updated_at'] : $m->created_at;
+
+        //deleted_at	timestamp NULL
+        $m->deleted_at = isset($options['deleted_at']) ? $options['deleted_at'] : null;
+
+        return $m;
     }
 }

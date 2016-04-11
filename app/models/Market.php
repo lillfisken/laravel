@@ -138,6 +138,7 @@ class Market extends Model {
             ->with('event');
 //            ->where('user', Auth::id());
     }
+
     public function userAllEvents()
     {
         return $this->hasMany('market\models\eventUser', 'marketId', 'id')
