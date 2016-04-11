@@ -151,13 +151,13 @@ class Market extends Model {
     public function delete()
     {
 		//TODO: add events
-        parent::delete();
+        $result = parent::delete();
 		Log::debug('models/Market->delete()');
         $mailer = new mailer();
 
         if($this->marketType == 4)
         {
-			Queue::push(new sendMailAuctionEnded($this->id));
+			//Queue::push(new sendMailAuctionEnded($this->id));
 
 //			//TODO: Queue
 //			$mail = new auctionEnded($this->id);
@@ -169,12 +169,12 @@ class Market extends Model {
         }
 		else
 		{
-			$mailer->sendMailEndedWatchedMarket($this->id);
+			//$mailer->sendMailEndedWatchedMarket($this->id);
 		}
 
 //        $watched = new watchedHelper();
 //        $watched->marketEnded($this);
-
+		return $result;
     }
 
 	public function setEndAtAttribute($value)

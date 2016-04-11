@@ -9,7 +9,10 @@
 namespace market\core\tasks;
 
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use market\core\time;
+use market\models\phpBBconnect;
 
 class cron
 {
@@ -22,7 +25,14 @@ class cron
 
     public function cleanOldPhpBBConnect()
     {
-        //TODO: delete old php connect
+        $timestamp = Carbon::createFromTimestamp(time());
+        $timestamp->addMinute(config('market.phpBBconnectValidMinutes'));
+
+        $deleted = phpBBconnect::where('created_at', '<', $timestamp)->delete();
+        if($deleted > 0)
+        {
+            Log::info('Deleted old phpBBconnect: ' . $deleted);
+        }
     }
 
     public function deleteOldTempImages()

@@ -71,6 +71,8 @@ return [
 
     'paginationNr' => env('PAGINATION_NR_OF', 5),
 
+    'phpBBconnectValidMinutes' => 60,
+
     //----- Seedeing ------------------------------------------------------
     'seedFactor' => 30,
 ];

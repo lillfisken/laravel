@@ -11,6 +11,7 @@ namespace market\core\tasks;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use market\models\Market;
 
 class endOldAuctions
 {
@@ -22,7 +23,7 @@ class endOldAuctions
     public function end()
     {
         $timestamp = Carbon::createFromTimestamp(time());
-//        Log::debug('core/tasks/endOldAuctions->end()');
+        Log::debug('core/tasks/endOldAuctions->end()');
 
         /*
          * Get all market to delete
@@ -31,27 +32,46 @@ class endOldAuctions
          * This preserves eloquent delete
          */
 
-        $toDelete = \market\models\Market::where('marketType', 4)
+        Market::where('marketType', 4)
             ->where('end_at', '<', $timestamp)
-            ->where('deleted_at', null)
-            ->get();
+            ->whereNull('deleted_at')
+            ->with('bids')
+            ->chunk(20, function ($toDelete) {
+                foreach ($toDelete as $d) {
+                    if ($d->bids->count() > 0) {
+                        $d->endReason = 0; //Sold
+                        $d->save();
+                    } else {
+                        $d->endReason = 50; //Ended without bids
+                        $d->save();
+                    }
 
-        foreach($toDelete as $d)
-        {
-            if($d->bids->count() > 0)
-            {
-                $d->endReason = 0; //Sold
-                $d->save();
-            }
-            else
-            {
-                $d->endReason = 50; //Ended without bids
-                $d->save();
-            }
+                    $d->delete();
 
-            $d->delete();
+                    Log::debug('Auto: Ended auction ' . $d->title . ', End at: ' . $d->end_at);
+                    echo 'Auto: Ended auction ' . $d->title . '<br/>';
+//                    echo '<hr/>';
+                }
+            });
 
-            Log::info('Auto: Ended auction ' . $d->title);
-        }
+//        \market\models\Market::where('marketType', 4)
+//            ->where('end_at', '<', $timestamp)
+//            ->where('deleted_at', null)
+//            ->with('bids')
+//            ->chunk(10, function ($toDelete) {
+//                foreach ($toDelete as $d) {
+//                    if ($d->bids->count() > 0) {
+//                        $d->endReason = 0; //Sold
+//                        $d->save();
+//                    } else {
+//                        $d->endReason = 50; //Ended without bids
+//                        $d->save();
+//                    }
+//
+//                    $d->delete();
+//
+//                    Log::info('Auto: Ended auction ' . $d->title);
+//                }
+//            });
     }
 }

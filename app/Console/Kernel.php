@@ -38,14 +38,13 @@ class Kernel extends ConsoleKernel {
         $cron = $this->cron;
 
         $cron->endOldAuctions();
-
+//
         $schedule->call(function() use($cron) {
             $cron->cleanOldPhpBBConnect();
         })->everyTenMinutes();
-
+//
         $schedule->call(function() use($cron){
             $cron->deleteOldTempImages();
         })->daily();
 	}
-
 }

@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 use market\Commands\sendMailAuctionEnded;
 use market\Commands\testQueue;
@@ -19,7 +20,8 @@ use Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Request;
 
-class DevController extends Controller {
+class DevController extends Controller
+{
 
     protected $basePath = '/market/public/index.php/dev/';
 
@@ -42,12 +44,12 @@ class DevController extends Controller {
         'delete-auction-mail' => 'Test send mail ended auction',
         'delete-giveaway' => 'Delete giveaway',
         'test-faker' => 'Test faker',
+        'cron-delete-auctions' => 'Cron delete old auctions',
     ];
 
     public function getIndex()
     {
-        foreach($this->functions as $key => $value)
-        {
+        foreach ($this->functions as $key => $value) {
             echo '<a href="' . $this->basePath . $key . '">' . $value . '</a><br/>';
         }
     }
@@ -57,22 +59,22 @@ class DevController extends Controller {
         echo phpinfo();
     }
 
-	public function getRoadmap()
-	{
-		return view('roadmap');
-	}
+    public function getRoadmap()
+    {
+        return view('roadmap');
+    }
 
-	public function getUrl()
-	{
-	    $uri = Request::url();
-		dd($uri);
-	}
+    public function getUrl()
+    {
+        $uri = Request::url();
+        dd($uri);
+    }
 
-	public function getSession()
-	{
-		$session = Session::all();
-		dd($session);
-	}
+    public function getSession()
+    {
+        $session = Session::all();
+        dd($session);
+    }
 
     public function getAuctionEndTime($id)
     {
@@ -109,7 +111,7 @@ class DevController extends Controller {
         sleep(3);
         $stop = microtime(true);
 
-        dd($start, $stop, ($stop-$start));
+        dd($start, $stop, ($stop - $start));
     }
 
     public function getTimerVoidTest()
@@ -126,11 +128,6 @@ class DevController extends Controller {
         echo 'Stop: ' . $stop . '<br/>';
         echo 'Stop - Start: ' . ($stop - $start) . '<br/>';
         echo 'Now: ' . microtime(true) . '<br/>';
-    }
-
-    private function sleep()
-    {
-        sleep(3);
     }
 
     public function getSendMailNewBid()
@@ -493,27 +490,26 @@ class DevController extends Controller {
                 <th>marketBlockedCount ' . $marketBlockedCount->count() . '</th>
               </tr>';
 
-        for($i = 0; $marketsAll->count() > $i ; $i++)
-        {
+        for ($i = 0; $marketsAll->count() > $i; $i++) {
 //            dd($marketsAll->count(), $i);
 
             echo '<tr>';
-                echo '<td>' . $i . '</td>';
+            echo '<td>' . $i . '</td>';
 
-                $id = isset($markets2[$i]) ? $markets2[$i]->id : '---';
-                echo '<td>' . $id . '</td>';
+            $id = isset($markets2[$i]) ? $markets2[$i]->id : '---';
+            echo '<td>' . $id . '</td>';
 
-                $id = isset($markets[$i]) ? $markets[$i]->id : '---';
-                echo '<td>' . $id . '</td>';
+            $id = isset($markets[$i]) ? $markets[$i]->id : '---';
+            echo '<td>' . $id . '</td>';
 
-                $id = isset($marketsAll[$i]) ? $marketsAll[$i]->id : '---';
-                $blocked = isset($marketsAll[$i]->user->blockedUser)
-                    ? $marketsAll[$i]->user->blockedUser->blockedUserId
-                    : '---';
-                echo '<td>' . $id . ' : ' . $blocked .'</td>';
+            $id = isset($marketsAll[$i]) ? $marketsAll[$i]->id : '---';
+            $blocked = isset($marketsAll[$i]->user->blockedUser)
+                ? $marketsAll[$i]->user->blockedUser->blockedUserId
+                : '---';
+            echo '<td>' . $id . ' : ' . $blocked . '</td>';
 
-                $id = isset($marketBlockedCount[$i]) ? $marketBlockedCount[$i]->id : '---';
-                echo '<td>' . $id . '</td>';
+            $id = isset($marketBlockedCount[$i]) ? $marketBlockedCount[$i]->id : '---';
+            echo '<td>' . $id . '</td>';
             echo '</tr>';
         }
         echo '</table>';
@@ -550,40 +546,28 @@ class DevController extends Controller {
         echo '2016-11-23 22:11:00 > ' . $testTime . ' = ' . ('2016-11-23 22:11:00' > $testTime) . '<br/>';
 
         echo '<br/>2015-11-23 22:11:00<br/>';
-        if(('2015-11-23 22:11:00' < $testTime))
-        {
+        if (('2015-11-23 22:11:00' < $testTime)) {
             echo 'End at is smaller than now<br/>';
-        }
-        else
-        {
+        } else {
             echo 'End at is bigger than now<br/>';
         }
 
-        if(('2015-11-23 22:11:00' > $testTime))
-        {
+        if (('2015-11-23 22:11:00' > $testTime)) {
             echo 'End at is bigger than now<br/>';
-        }
-        else
-        {
+        } else {
             echo 'End at is smaller than now<br/>';
         }
 
         echo '<br/>2016-12-23 22:11:00<br/>';
-        if(('2016-12-23 22:11:00' < $testTime))
-        {
+        if (('2016-12-23 22:11:00' < $testTime)) {
             echo 'End at is smaller than now<br/>';
-        }
-        else
-        {
+        } else {
             echo 'End at is bigger than now<br/>';
         }
 
-        if(('2016-12-23 22:11:00' > $testTime))
-        {
+        if (('2016-12-23 22:11:00' > $testTime)) {
             echo 'End at is bigger than now<br/>';
-        }
-        else
-        {
+        } else {
             echo 'End at is smaller than now<br/>';
         }
     }
@@ -674,34 +658,28 @@ class DevController extends Controller {
         $c->user1 = isset($options['user1']) ? $options['user1'] : \market\models\User::orderByRaw("RAND()")->first()->id;
         echo 'User1: ' . $c->user1 . '<br/>';
         //user2	bigint(20) unsigned
-        if(isset($options['user2']))
-        {
+        if (isset($options['user2'])) {
             $c->user2 = $options['user2'];
-        }
-        else
-        {
+        } else {
             $safe = 0;
 
-            do
-            {
+            do {
                 $user2 = \market\models\User::orderByRaw("RAND()")->first()->id;
                 echo 'User1: ' . $c->user1 . '<br/>';
                 echo 'User2: ' . $user2 . '<br/>';
                 echo 'Condition: ' . $c->user1 == $user2 . '<br/>';
                 $safe++;
-                if($safe > 20)
-                {
+                if ($safe > 20) {
                     break;
                 }
-            } while($c->user1 == $user2);
+            } while ($c->user1 == $user2);
         }
 
         dd($c);
 
-        $numberOfImages = rand(0,6);
+        $numberOfImages = rand(0, 6);
         echo 'Number of images: ' . $numberOfImages . '<br/>';
-        for($i = 1; $i <= $numberOfImages; $i++)
-        {
+        for ($i = 1; $i <= $numberOfImages; $i++) {
             echo '$i: ' . $i . '<br/>';
             $test = $this->images[array_rand($this->images)];
             echo $test['std'] . '<br/>';
@@ -716,7 +694,7 @@ class DevController extends Controller {
 //        }
 
         $date1 = new Carbon();
-        $date2 = Carbon::now()->addWeek(rand(1,8));
+        $date2 = Carbon::now()->addWeek(rand(1, 8));
         $latest = $date1 > $date2 ? $date1 : $date2;
         $date3 = $faker->dateTime;
 //        $date3 = Carbon::createFromFormat('', $faker->dateTime);
@@ -732,12 +710,65 @@ class DevController extends Controller {
 //            $date1 > $date2,
 //            $latest,
 //            $latest->addWeek(rand(1,8)),
-            Carbon::now()->addWeek(rand(-2,8)),
-            Carbon::now()->addWeek(rand(-2,8))->toDayDateTimeString(),
-            Carbon::now()->addWeek(rand(-2,8))->format('Y/m/d H:i'),
+            Carbon::now()->addWeek(rand(-2, 8)),
+            Carbon::now()->addWeek(rand(-2, 8))->toDayDateTimeString(),
+            Carbon::now()->addWeek(rand(-2, 8))->format('Y/m/d H:i'),
             $config['marketTypes'],
             $config['marketTypes'][array_rand($config['marketTypes'])],
             array_rand($config['marketTypes'])
         );
+    }
+
+    public function getCronDeleteAuctions()
+    {
+        $timestamp = Carbon::createFromTimestamp(time());
+
+        /*
+         * Get all market to delete
+         * Loop over and delete one by one
+         * Log each deletion
+         * This preserves eloquent delete
+         */
+
+        $markets = Market::where('marketType', 4)
+            ->where('end_at', '<', $timestamp)
+            ->where('deleted_at', null)
+            ->with('bids')
+            ->get();
+
+        $auctions = Market::where('marketType', 4)->get();
+
+
+//        dd(
+//            $markets
+//            , $markets->first()
+//            , $auctions
+//            , $timestamp
+//        );
+        Market::where('marketType', 4)
+            ->where('end_at', '<', $timestamp)
+            ->where('deleted_at', null)
+            ->with('bids')
+            ->chunk(10, function ($toDelete) {
+                foreach ($toDelete as $d) {
+                    if ($d->bids->count() > 0) {
+                        $d->endReason = 0; //Sold
+                        echo 'Auction with bids<br/>';
+                        echo 'Saving: ' . $d->save() . '<br/>';
+                    } else {
+                        $d->endReason = 50; //Ended without bids
+                        echo 'Auction without bids<br/>';
+                        echo 'Saving: ' . $d->save() . '<br/>';
+                    }
+
+                    echo 'Delete: ' . $d->delete() . '<br/>';
+
+//                    Log::debug('Auto: Ended auction ' . $d->title);
+                    echo 'Auto: Ended auction ' . $d->title . '<br/>';
+                    echo '<hr/>';
+                }
+            });
+
+        dd('hej');
     }
 }
