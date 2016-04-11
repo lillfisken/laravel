@@ -11,6 +11,7 @@ namespace market\ViewComposers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use market\Conversation;
 use market\core\time;
@@ -33,8 +34,11 @@ class menu {
         {
             $userId = Auth::id();
 
+//            Log::debug('Viewcomposer->menu->countUnreadMessage');
             $view->with('unreadMessagesCount', $this->countUnreadMessages($userId));
+//            Log::debug('Viewcomposer->menu->Auth::user');
             $view->with('username', Auth::user()->username);
+//            Log::debug('Viewcomposer->menu->countUnreadEventsForWatched');
             $view->with('watchedCount', $this->countUnreadEventsForWatched($userId));
 
 //            $view->with('time', $this->time->getTimeString());

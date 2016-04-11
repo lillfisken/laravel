@@ -11,6 +11,7 @@ use market\helper\mailer;
 use market\helper\time as timeHelper;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
+use market\models\Conversation;
 use market\models\Market;
 use market\models\User;
 //use Request;
@@ -40,6 +41,7 @@ class DevController extends Controller {
         'test-time' => 'Test time',
         'delete-auction-mail' => 'Test send mail ended auction',
         'delete-giveaway' => 'Delete giveaway',
+        'test-faker' => 'Test faker',
     ];
 
     public function getIndex()
@@ -610,6 +612,132 @@ class DevController extends Controller {
         dd(Market::withTrashed()
             ->where('marketType', '3')
             ->forceDelete()
+        );
+    }
+
+    private $images = [
+        [
+            'std' => '/market/public/images/2014/11/lindningsmaskin.jpg',
+            'thumb' => '/market/public/images/2014/11/lindningsmaskin_small.jpg',
+            'full' => '/market/public/images/2014/11/lindningsmaskin.jpg'
+        ],
+        [
+            'std' => '/market/public/images/2014/11/usbladdare.jpg',
+            'thumb' => '/market/public/images/2014/11/usbladdare_small.jpg',
+            'full' => '/market/public/images/2014/11/usbladdare.jpg'
+        ],
+        [
+            'std' => '/market/public/images/2014/11/nixie2.jpg',
+            'thumb' => '/market/public/images/2014/11/nixie2_small.jpg',
+            'full' => '/market/public/images/2014/11/nixie2.jpg'
+        ],
+        [
+            'std' => '/market/public/images/2014/11/produktbild10.png',
+            'thumb' => '/market/public/images/2014/11/produktbild10_small.png',
+            'full' => '/market/public/images/2014/11/produktbild10.png'
+        ],
+        [
+            'std' => '/market/public/images/2014/11/cncfras.JPG',
+            'thumb' => '/market/public/images/2014/11/cncfras_small.JPG',
+            'full' => '/market/public/images/2014/11/cncfras.JPG'
+        ],
+        [
+            'std' => '/market/public/images/2014/11/UVbox.jpg',
+            'thumb' => '/market/public/images/2014/11/UVbox_small.jpg',
+            'full' => '/market/public/images/2014/11/UVbox.jpg'
+        ],
+//        [
+//            'std' => '',
+//            'thumb' => '',
+//            'full' => ''
+//        ],
+//        [
+//            'std' => '',
+//            'thumb' => '',
+//            'full' => ''
+//        ],
+//        [
+//            'std' => '',
+//            'thumb' => '',
+//            'full' => ''
+//        ]
+    ];
+
+    public function getTestFaker()
+    {
+        $config = \Illuminate\Support\Facades\Config::get('market');
+        $faker = \Faker\Factory::create('sv_SE');
+
+        $c = new Conversation();
+
+        //user1	bigint(20) unsigned
+        $c->user1 = isset($options['user1']) ? $options['user1'] : \market\models\User::orderByRaw("RAND()")->first()->id;
+        echo 'User1: ' . $c->user1 . '<br/>';
+        //user2	bigint(20) unsigned
+        if(isset($options['user2']))
+        {
+            $c->user2 = $options['user2'];
+        }
+        else
+        {
+            $safe = 0;
+
+            do
+            {
+                $user2 = \market\models\User::orderByRaw("RAND()")->first()->id;
+                echo 'User1: ' . $c->user1 . '<br/>';
+                echo 'User2: ' . $user2 . '<br/>';
+                echo 'Condition: ' . $c->user1 == $user2 . '<br/>';
+                $safe++;
+                if($safe > 20)
+                {
+                    break;
+                }
+            } while($c->user1 == $user2);
+        }
+
+        dd($c);
+
+        $numberOfImages = rand(0,6);
+        echo 'Number of images: ' . $numberOfImages . '<br/>';
+        for($i = 1; $i <= $numberOfImages; $i++)
+        {
+            echo '$i: ' . $i . '<br/>';
+            $test = $this->images[array_rand($this->images)];
+            echo $test['std'] . '<br/>';
+            echo $test['thumb'] . '<br/>';
+            echo $test['full'] . '<br/>';
+        }
+
+
+//        if($market->marketType == 4 && $market->end_at == null)
+//        {
+//            $market->end_at = $market->created_at + 1-4 veckor
+//        }
+
+        $date1 = new Carbon();
+        $date2 = Carbon::now()->addWeek(rand(1,8));
+        $latest = $date1 > $date2 ? $date1 : $date2;
+        $date3 = $faker->dateTime;
+//        $date3 = Carbon::createFromFormat('', $faker->dateTime);
+
+        dd(
+            'Test faker',
+//            User::orderByRaw("RAND()")->first()->id,
+//            $config,
+//            array_rand($config['marketTypes']),
+//            $date1,
+//            $date2,
+//            $date1 < $date2,
+//            $date1 > $date2,
+//            $latest,
+//            $latest->addWeek(rand(1,8)),
+            Carbon::now()->addWeek(rand(-2,8)),
+            Carbon::now()->addWeek(rand(-2,8))->toDayDateTimeString(),
+            Carbon::now()->addWeek(rand(-2,8))->format('Y/m/d H:i'),
+            $config['marketTypes'],
+            $config['marketTypes'][array_rand($config['marketTypes'])],
+            array_rand($config['marketTypes'])
         );
     }
 }

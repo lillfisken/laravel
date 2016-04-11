@@ -12,12 +12,15 @@ namespace market\core\menu;
 use Illuminate\Support\Facades\Auth;
 //use market\helper\routeBase;
 //use market\models\watched;
+use Illuminate\Support\Facades\Log;
 use market\models\watchedMarketsByUser;
 
 class marketMenu
 {
     public function addMarketMenu($market, $watched = [], $options = [])
     {
+//        Log::debug('Core->menu->marketMenu->addMarketMenu');
+
 //        dd(config('market.routeBases'), config('market.routeBases')[2], config('market.routeBases')[7]);
         if(Auth::check()) {
             $userId = Auth::id();
@@ -42,6 +45,8 @@ class marketMenu
 
     public function addMarketMenuToMarkets($markets)
     {
+//        Log::debug('Core->menu->marketMenu->addMarketMenuToMarkets');
+
         $watched = watchedMarketsByUser::where('user', Auth::id());
 
         foreach($markets as $market)
@@ -52,6 +57,8 @@ class marketMenu
 
     private function addHasEvents($market)
     {
+//        Log::debug('Core->menu->marketMenu->addHasEvents');
+
         if( $market && $market->unreadEventsForUser->count() > 0)
         {
             $market->hasEvents = true;
@@ -60,6 +67,8 @@ class marketMenu
 
     private function addIsWatched($market)
     {
+//        Log::debug('Core->menu->marketMenu->addIsWatched');
+
         if( $market && $market->watchedByUser != null )
         {
             $market->isWatched = true;
@@ -68,6 +77,8 @@ class marketMenu
 
     private function addBlockedEditMenu($temp, $market, $routeBase, $userId)
     {
+//        Log::debug('Core->menu->marketMenu->addBlockedEditMenu');
+
         //Adds link to edit market if it's created by logged in user
         if ($userId == $market->createdByUser &&
             $market->deleted_at == null &&
@@ -82,6 +93,8 @@ class marketMenu
 
     private function addBlockedMarketMenu($temp, $market, $routeBase)
     {
+//        Log::debug('Core->menu->marketMenu->addBlockedMarketMenu');
+
         //Blocked
         //TODO: Check if market is blocked, then ad link to unblock instead
         if(isset($options['blocked']))
@@ -98,6 +111,8 @@ class marketMenu
 
     private function addBlockedSellerMenu($temp, $market, $routeBase)
     {
+//        Log::debug('Core->menu->marketMenu->addBlockedSellerMenu');
+
         //TODO: Check if market is seller, then ad link to unblock instead
         $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
 
@@ -106,6 +121,8 @@ class marketMenu
 
     private function addWatchedMarketMenu($temp, $market)
     {
+//        Log::debug('Core->menu->marketMenu->addWatchedMarketMenu');
+
         if($market->end_at == null)
         {
             //Watched

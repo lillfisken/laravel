@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as ControllerMarket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use market\core\market\event;
 use market\core\market\marketPrepare;
 use market\core\market\marketType;
@@ -61,6 +62,7 @@ class MarketsController extends ControllerMarket {
 		$marketPrepare->addStuff($markets);
 
         $markets->setPath(route('markets.index'));
+//        Log::debug('MarketsController->Index->Done');
 
 		return view('markets.index', [
             'markets' => $markets,

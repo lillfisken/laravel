@@ -11,6 +11,7 @@ namespace market\core\search;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use market\core\market\marketType;
 use market\core\urlParam;
 use market\models\Market;
@@ -33,19 +34,25 @@ class searchMarkets
 
     public function getAll()
     {
+//        Log::debug('Core->search->searchMarkets->getAll');
         $markets = Market::select()
-            ->with('User')
+            ->with('user')
 //            ->with('watched.unreadEvents')
             ->with('unreadEventsForUser')
+            ->with('watchedByUser')
+            ->with('bids')
             ->withoutBlockedMarkets()
             ->blockedSellerByUser()
             ->paginate(config('market.paginationNr', 20));
 
+//        dd($markets);
         return $markets;
     }
 
     public function searchSimple($searchTerm)
     {
+//        Log::debug('Core->search->searchMarkets->searchSimple');
+
 //        dd($searchTerm);
 
         $markets = Market::search($searchTerm)
@@ -60,6 +67,8 @@ class searchMarkets
 
     public function searchAdvanced()
     {
+//        Log::debug('Core->search->searchMarkets->searchAdvanced');
+
         $urlParam = $this->urlParam;
 
         // Begining of building db query
@@ -115,6 +124,8 @@ class searchMarkets
 
     public function getSearchOptions(Request $request)
     {
+//        Log::debug('Core->search->searchMarkets->getSearchOptions');
+
         $options = [];
 
         //Add market types

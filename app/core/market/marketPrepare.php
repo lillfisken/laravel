@@ -10,6 +10,7 @@ namespace market\core\market;
 
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use market\core\menu\marketMenu as marketMenuCore;
 
 class marketPrepare
@@ -26,6 +27,7 @@ class marketPrepare
     }
     public function addStuff($markets)
     {
+//        Log::debug('Core->market->marketPrepare->addStuff');
 //        $auctionHelper = new \market\helper\markets\auction();
 
 //        if(Auth::check())
@@ -42,6 +44,8 @@ class marketPrepare
 
     public function addStuffSingle($market)
     {
+//        Log::debug('Core->market->marketPrepare->addStuffSingle');
+
         if(Auth::check())
         {
 //            marketMenu::addMarketMenuToMarkets($markets);
@@ -57,5 +61,4 @@ class marketPrepare
 //            $auctionHelper->setHighestBid($market);
         $this->marketCommon->setRouteBase($market);
     }
-
 }

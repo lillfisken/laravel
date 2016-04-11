@@ -9,6 +9,7 @@
 namespace market\Providers;
 
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,7 @@ class ViewComposerProvider extends ServiceProvider
      */
     public function boot()
     {
+//        Log::debug('ViewComposerProvider');
         View::composer('layout.menu', 'market\ViewComposers\menu');
         View::composer('*', 'market\ViewComposers\all');
         View::composer([

@@ -23,13 +23,13 @@ abstract class base
             ->where('id','=',$id)
             ->first();
 
-        foreach($market->userUnreadEvents as $event)
-        {
-            //TODO: queue?
-            $e = eventUser::find($event->id);
-            $e->read = Carbon::now();
-            $e->save();
-        }
+//        foreach($market->userUnreadEvents as $event)
+//        {
+//            //TODO: queue?
+//            $e = eventUser::find($event->id);
+//            $e->read = Carbon::now();
+//            $e->save();
+//        }
 
         return $market;
     }
