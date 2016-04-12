@@ -68,7 +68,7 @@ foreach ($marketRouteBase as $route) {
         Route::get('update/{id}', [
             'as' => $routeBase . '.updateForm',
             'uses' => 'Markets\\update\\' . $routeBase . '@showUpdateForm',
-            'middleware' => 'auth'
+            'middleware' => ['auth', 'myMarketOnly']
         ]);
         Route::post('updateFromForm', [
             'as' => $routeBase . '.updateFromForm',
@@ -95,7 +95,7 @@ foreach ($marketRouteBase as $route) {
         Route::get('delete/{market}', [
             'as' => $routeBase . '.destroy.get',
             'uses' => 'Markets\\delete\\' . $routeBase . '@destroyGet',
-            'middleware' => 'auth'
+            'middleware' => ['auth', 'myMarketOnly']
         ]);
         Route::delete('delete', [
             'as' => $routeBase . '.destroy.post',

@@ -28,6 +28,8 @@ class Kernel extends HttpKernel {
 		'auth' => 'market\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'market\Http\Middleware\RedirectIfAuthenticated',
+		'myMarketOnly' => 'market\Http\Middleware\myMarketOnly',
+
 	];
 
 }
