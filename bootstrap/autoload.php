@@ -14,7 +14,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +27,11 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-if (file_exists($compiledPath = __DIR__.'/../vendor/compiled.php'))
+$compiledPath = __DIR__ . '/cache/compiled.php';
+//dd($compiledPath,file_exists($compiledPath));
+
+if (file_exists($compiledPath))
 {
-	require $compiledPath;
-}
-elseif (file_exists($compiledPath = __DIR__.'/../storage/framework/compiled.php'))
-{
-	require $compiledPath;
+//    dd('hej');
+    require $compiledPath;
 }

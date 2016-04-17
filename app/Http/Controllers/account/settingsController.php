@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use market\core\auth\profileSettings;
-use market\helper\text;
+use market\core\text;
 use market\Http\Requests;
 use market\Http\Controllers\Controller;
 
@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 use market\Http\Requests\settings\userprofileRequest;
 
 class settingsController extends Controller {
+
+	protected $text;
+
+	public function __construct(text $text)
+	{
+		$this->text = $text;
+	}
 
 	/* Show user settings
                  *
@@ -26,7 +33,7 @@ class settingsController extends Controller {
 	{
 		$user = Auth::user();
 
-		$user['presentation'] = text::htmlToBbCode($user['presentation']);
+		$user['presentation'] = $this->text->htmlToBbCode($user['presentation']);
 
 		return view('account.settings.settings', ['user' => $user]);
 
@@ -42,7 +49,7 @@ class settingsController extends Controller {
 		$user = Auth::user();
 
 		$input = $request->all();
-		$input['presentation'] = text::bbCodeToHtml($input['presentation']);
+		$input['presentation'] = $this->text->bbCodeToHtml($input['presentation']);
 
 		//TODO: Purify input
 
@@ -52,7 +59,7 @@ class settingsController extends Controller {
 //        dd($userSettingsRequest, $user);
 		$user->save();
 
-		$user['presentation'] = text::htmlToBbCode($user['presentation']);
+		$user['presentation'] = $this->text->htmlToBbCode($user['presentation']);
 
 //		return Redirect::route('markets.index')
 		return Redirect::route('accounts.settings.settings')
