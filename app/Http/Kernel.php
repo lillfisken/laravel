@@ -2,21 +2,21 @@
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class Kernel extends HttpKernel {
-
-	/**
+class Kernel extends HttpKernel
+{
+    /**
 	 * The application's global HTTP middleware stack.
 	 *
 	 * @var array
 	 */
 	protected $middleware = [
-		'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
-		'Illuminate\Cookie\Middleware\EncryptCookies',
-		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-		'Illuminate\Session\Middleware\StartSession',
-		'Illuminate\View\Middleware\ShareErrorsFromSession',
-//		'market\Http\Middleware\VerifyCsrfToken',
-		'market\Http\Middleware\MyVerifyCsrfToken',
+		\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \market\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \market\Http\Middleware\VerifyCsrfToken::class,
+//        \market\Http\Middleware\MyVerifyCsrfToken::class,
 	];
 
 	/**
@@ -25,11 +25,10 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'market\Http\Middleware\Authenticate',
-		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'market\Http\Middleware\RedirectIfAuthenticated',
-		'myMarketOnly' => 'market\Http\Middleware\myMarketOnly',
+		'auth' => \market\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest' => \market\Http\Middleware\RedirectIfAuthenticated::class,
+		'myMarketOnly' => \market\Http\Middleware\myMarketOnly::class,
 
 	];
-
 }
