@@ -98,14 +98,6 @@ class searchMarkets
 
         // Begining of building db query
         $query = Market::select();
-//        $query->limit(50);
-//
-//        $query->whereHas('user', function($query) use($urlParam)
-//        {
-//            $query->search('lilla');
-//        });
-//
-//        dd($query->get());
 
         // Remove deleted markets from query if box checked
         if ($urlParam->isTrue('e')) {

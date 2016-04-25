@@ -162,28 +162,7 @@ class AccountController extends Controller
         ]);
     }
 
-    /* Show user profile
-             *
-             * get 'profile/blockedmarked/{user}'
-             * route 'accounts.blockedmarked'
-             * middleware 'auth'
-             *
-             * @var user
-             * @return
-            */
-    public function blockedmarket(marketType $marketType)
-    {
-        $markets = Market::has('blocked')
-            ->paginate(config('market.paginationNr'));
-        $markets->setPath(route('accounts.blockedmarket'));
 
-        $this->marketPrepare->addStuff($markets);
-
-        return view('account.markets.blockedMarkets', [
-            'markets' => $markets,
-            'marketCommon' => $marketType,
-        ]);
-    }
 
     /* Show user profile
              *

@@ -171,7 +171,7 @@ Route::group(['prefix' => 'profile'], function () {
     Route::post('blockmarket', ['as' => 'accounts.blockMarketPost', 'uses' => 'blockingController@blockMarketPost', 'middleware' => 'auth']);
     Route::get('unblockmarket/{market}', ['as' => 'accounts.unblockMarket', 'uses' => 'blockingController@unblockMarketGet', 'middleware' => 'auth']);
     Route::post('unblockmarket', ['as' => 'accounts.unblockMarketPost', 'uses' => 'blockingController@unblockMarketPost', 'middleware' => 'auth']);
-    Route::get('blockedmarket/', ['as' => 'accounts.blockedmarket', 'uses' => 'AccountController@blockedmarket', 'middleware' => 'auth']);
+    Route::get('blockedmarket/', ['as' => 'accounts.blockedmarket', 'uses' => 'account\blockedMarketsController@blockedmarket', 'middleware' => 'auth']);
 
     Route::get('blockseller/{userId}', ['as' => 'accounts.blockSeller', 'uses' => 'blockingController@blockSellerGet', 'middleware' => 'auth']);
     Route::post('blockseller', ['as' => 'accounts.blockSellerPost', 'uses' => 'blockingController@blockSellerPost', 'middleware' => 'auth']);
