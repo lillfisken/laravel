@@ -26,9 +26,19 @@
                 </tr>
             @endforeach
         </table>
-
         <p>
             {!! $blockedUsers->render() !!}
         </p>
+        <hr/>
+        <div class="flex-row">
+            <div class="flex-left">
+                <h1>Annonser från blockerade säljare</h1>
+            </div>
+            <div class="flex-right">
+                @include('markets.base._listType')
+            </div>
+        </div>
+        @include('markets.base._marketsSmallList')
+
     </div>
 @stop
