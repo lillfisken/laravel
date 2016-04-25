@@ -14,7 +14,8 @@
         "laravel/socialite": "~2.0",
         "zjango/laracurl": "dev-master",
 		"barryvdh/laravel-async-queue": "0.4.x",
-		"sofa/eloquence": "~0.4@dev"
+		"sofa/eloquence": "~5.1@dev",
+		"sofa/laravel-global-scope": "0.1@dev"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

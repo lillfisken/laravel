@@ -25,33 +25,39 @@
     <div class="flex-item width100">
         {!! Form::open(array('route' => 'markets.filter', 'method' => 'get')) !!}
 
-        @foreach($marketCommon->getAllMarketTypes() as $key => $val)
-            <span class="bg-{{ $marketCommon->getRouteBase($key) }}">
+        <div class="filter-options stripe">
+            @foreach($marketCommon->getAllMarketTypes() as $key => $val)
+                <span class="bg-{{ $marketCommon->getRouteBase($key) }}">
                 {!! Form::label('t' . $key, $val) !!}
-                {!! Form::checkbox('t' . $key , 1,  $urlParam->isTrue('t' . $key)) !!}
+                    {!! Form::checkbox('t' . $key , 1,  $urlParam->isTrue('t' . $key)) !!}
             </span>
-        @endforeach
-        <br/>
-
-        {!! Form::label('e', 'Visa avslutade annonser') !!} {!! Form::checkbox('e', 1, $urlParam->isTrue('e') ) !!}
-        <br/>
-
+            @endforeach
+        </div>
+        <div class="filter-options stripe">
+            {!! Form::label('e', 'Visa avslutade annonser') !!} {!! Form::checkbox('e', 1, $urlParam->isTrue('e') ) !!}
+        </div>
+        <div class="filter-options stripe">
+            {!! Form::label('oam', 'Dölj pågående annonser') !!} {!! Form::checkbox('oam', 1, $urlParam->isTrue('oam') ) !!}
+        </div>
         @if(Auth::check())
-            {!! Form::label('hm', 'Visa dolda annonser') !!} {!! Form::checkbox('hm', 1, $urlParam->isTrue('hm') ) !!}
-            {!! Form::label('hs', 'Visa annonser från dolda säljare') !!} {!! Form::checkbox('hs', 1, $urlParam->isTrue('hs') ) !!}
+            <div class="filter-options stripe">
+                {!! Form::label('hm', 'Visa dolda annonser') !!} {!! Form::checkbox('hm', 1, $urlParam->isTrue('hm') ) !!}
+            </div>
+            <div class="filter-options stripe">
+                {!! Form::label('hs', 'Visa annonser från dolda säljare') !!} {!! Form::checkbox('hs', 1, $urlParam->isTrue('hs') ) !!}
+            </div>
         @endif
-        <br/>
-
-        {!! Form::label('st', 'Fritext: ') !!}
-        {!! Form::text('st', $urlParam->get('st') , ['placeholder' => 'Fritext']) !!}
-        <br/>
-
-        {!! Form::label('se', 'Säljare: ') !!}
-        {!! Form::text('se', $urlParam->get('se') , ['placeholder' => 'Säljare']) !!}
-        <br/>
-
-        <button type="submit" class="btnSmall"><i class="fa fa-refresh"></i></button>
-
+        <div class="filter-options stripe">
+            {!! Form::label('st', 'Fritext: ') !!}
+            {!! Form::text('st', $urlParam->get('st') , ['placeholder' => 'Fritext']) !!}
+        </div>
+        <div class="filter-options stripe">
+            {!! Form::label('se', 'Säljare: ') !!}
+            {!! Form::text('se', $urlParam->get('se') , ['placeholder' => 'Säljare']) !!}
+        </div>
+        <div class="filter-options stripe">
+            <button type="submit" class="btnSmall"><i class="fa fa-refresh"></i></button>
+        </div>
         {!! Form::close() !!}
 
         <hr/>

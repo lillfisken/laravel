@@ -25,6 +25,7 @@ class searchMarkets
         'hm', //hidden markets
         'hs', //hidden sellers
         'st', //searchterm
+        'oam', //only active markets
     ];
 
     public function __construct(marketType $marketCommon, urlParam $urlParam)
@@ -35,71 +36,49 @@ class searchMarkets
 
     public function getAll()
     {
+//        dd('hej');
         Log::debug('--- Start search -------------------------------------------------------------------------------');
         if(false)
         {
-            $markets = Market::count();
-            $marketsAllCount2 = Market::withBlockedMarkets()->count();
-            $marketsAllCount3 = Market::withBlockedMarkets()->withTrashed()->count();
+//            $markets = Market::count();
+//            $marketsAllCount2 = Market::withBlockedMarkets()->count();
+//            $marketsAllCount3 = Market::withMarketsFromBlockedSellers()->withTrashed()->count();
 
-            $marketsAllCount35 = DB::table('users')->where('title', '!=', 'hej')->withBlockedMarkets()
-                ->withMarketsFromBlockedSellers()
+//            $marketsAllCount35 = DB::table('users')->where('title', '!=', 'hej')->withBlockedMarkets()
+//                ->withMarketsFromBlockedSellers()
 //                ->count()
-            ;
-
-
-            dd(
-                $marketsAllCount35,
-                Market::select()
-            );
-
-            $marketsAllCount4 = Market::withMarketsFromBlockedSellers()->count();
-            $firstMarket = Market::first();
-//            $onlyBlockedMarkets1 = Market::onlyBlockedMarkets()->with('marketBlockedByUser')->first();
-            $onlyBlockedMarkets = Market::onlyBlockedMarkets()->limit(10)->get();
-            $onlyBlockedMarketsCount = Market::onlyBlockedMarkets()->count();
-            $serachMarket = Market::search('Lorem')->limit(30)->get();
-//            $blocked = DB::select('userId')->from('blocked_market')->toSql();
-
-            $testSql1 = Market::whereIn('id', function($query)
-                {
-                    $query->select(DB::raw(1))
-                        ->from('blocked_markets')
-                        ->whereRaw('m_blocked_markets.userId = 2');
-                })
-                ->get();
-//
-//            $testSql2 = DB::from('blocked_markets')
-//                        ->whereRaw('m_blocked_markets.userId = 2')
-//                                ->get();
-
+//            ;
 
             dd(
-                'SearchMarkets->getAll()',
-                'Count normal: ' . $markets,
-                'Count with blocked markets: ' . $marketsAllCount2,
-                'Count with blocked markets and trashed: ' . $marketsAllCount3,
-                'Count with blocked markets and trashed and with blocked sellers: ' . $marketsAllCount4,
-//                'Count with markets from blocked sellers: ' . $marketsAllCount4,
-//                $firstMarket,
-//                $serachMarket,
-                '$onlyBlockedMarkets1',
-//                $onlyBlockedMarkets1,
-                '$onlyBlockedMarkets',
-                $onlyBlockedMarkets,
-                '$onlyBlockedMarketsCount',
-                $onlyBlockedMarketsCount
-//                $blocked
-//                '$testSql1',
-//                $testSql1
-//                $testSql21
+                'Blocked sellers',
+                Market::count(),
+                Market::withoutMarketsFromBlockedSellers()->count(),
+                Market::onlyMarketsFromBlockedSellers()->count(),
+                Market::select()->withTrashed()->count(),
+                Market::withoutMarketsFromBlockedSellers()->withTrashed()->count(),
+                Market::onlyMarketsFromBlockedSellers()->withTrashed()->count(),
+                '--------------------------------------------------------------------------',
+                'Blocked Markets',
+                Market::count(),
+                Market::withoutBlockedMarketByUser()->count(),
+                Market::onlyBlockedMarketByUser()->count(),
+                Market::withTrashed()->count(),
+                Market::withoutBlockedMarketByUser()->withTrashed()->count(),
+                Market::onlyBlockedMarketByUser()->withTrashed()->count()
             );
         }
 
         Log::debug('Core->search->searchMarkets->getAll');
-        $markets = Market::paginate(config('market.paginationNr', 20));
+        $query = Market::select();
 
-//        dd($markets);
+        if(Auth::check())
+        {
+            $query->withoutMarketsFromBlockedSellers();
+            $query->withoutBlockedMarketByUser();
+        }
+
+        $markets = $query->paginate(config('market.paginationNr', 20));
+
         Log::debug('--- End search --------------------------------------------------------------------------------');
 
         return $markets;
@@ -107,7 +86,7 @@ class searchMarkets
 
     public function searchSimple($searchTerm)
     {
-        return Market::search($searchTerm)->paginate(config('market.paginationNr', 20));
+        return Market::search($searchTerm)->paginate(config('market.paginationNr'));
     }
 
     public function searchAdvanced()
@@ -119,6 +98,14 @@ class searchMarkets
 
         // Begining of building db query
         $query = Market::select();
+//        $query->limit(50);
+//
+//        $query->whereHas('user', function($query) use($urlParam)
+//        {
+//            $query->search('lilla');
+//        });
+//
+//        dd($query->get());
 
         // Remove deleted markets from query if box checked
         if ($urlParam->isTrue('e')) {
@@ -151,24 +138,24 @@ class searchMarkets
         }
 
         if (Auth::check()) {
-            if ($urlParam->isTrue('hm')) {
-                $query->withBlockedMarkets();
+            if (!$urlParam->isTrue('hm')) {
+                $query->withoutBlockedMarketByUser();
 //                $query->withoutBlockedMarkets();
             }
 
-            if ($urlParam->isTrue('hs')) {
-                $query->withMarketsFromBlockedSellers();
+            if (!$urlParam->isTrue('hs')) {
+                $query->withoutMarketsFromBlockedSellers();
 //                $query->blockedSellerByUser();
             }
         }
 
+        if($urlParam->exist('oam'))
+        {
+            $query->onlyTrashed();
+        }
+
         //Query the db
-        $markets = $query->paginate(config('market.paginationNr'), 20);
-
-        //Blocked Markets
-        //Blocked Sellers
-        //Active Markets
-
+        $markets = $query->paginate(config('market.paginationNr'),20);
 
         return $markets;
     }

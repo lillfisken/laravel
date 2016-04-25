@@ -10,13 +10,15 @@ use market\Commands\sendMailAuctionEnded;
 use market\core\mail\auctionEnded;
 use market\helper\mailer;
 use market\helper\watched as watchedHelper;
+use market\models\traits\marketScopes;
 use market\models\traits\marketTrait;
 use Sofa\Eloquence\Eloquence;
 
 class Market extends Model {
 
 	use SoftDeletes, Eloquence;
-	use marketTrait;
+//	use marketTrait;
+	use marketScopes;
 
 	protected $dates = ['deleted_at'];
 	protected $softDelete = true;
@@ -64,7 +66,7 @@ class Market extends Model {
         'end_at',
 	];
 
-	protected $searchableColumns = ['title' => 10, 'description' => 5];
+	protected $searchableColumns = ['title' => 20, 'description' => 5];
 
 	protected $with = [
 		'user',
@@ -140,8 +142,8 @@ class Market extends Model {
 //		if(Auth::check() || true)
 //		{
 			return $this->hasOne('market\models\blockedMarket', 'marketId', 'id')
-				->where('userId', 17);
-//				->where('userId', Auth::id());
+//				->where('userId', 17);
+				->where('userId', Auth::id());
 //		}
 
 //		return $this;

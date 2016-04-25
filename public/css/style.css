@@ -240,6 +240,10 @@
     .bottom-padding{
         padding-bottom: 0.3em;
     }
+
+	.filter-options{
+		padding: 0.3em;
+	}
 	
 	/*---------------------------------------
 	General

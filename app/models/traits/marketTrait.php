@@ -36,23 +36,28 @@ trait marketTrait
     public static function onlyBlockedMarkets()
     {
         //https://github.com/laravel/framework/issues/6425      2016-04-16
-        return (new static)->newQueryWithoutScope(new marketBlockedMarketScope())->
+        return with(new static)->newQueryWithoutScope(new marketBlockedMarketScope())->
             whereIn('id', function($query) {
                 $query->from('blocked_markets')->where('userId', Auth::id())->select('marketId');
         });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
     public static function withMarketsFromBlockedSellers()
     {
+//        dd('hej',(new static)->newQueryWithoutScope(new marketBlockedSellerScope()));
         return (new static)->newQueryWithoutScope(new marketBlockedSellerScope()) ;
     }
 
     public static function onlyMarketsFromBlockedSellers()
     {
         //TODO: Implement
-        return (new static)->newQueryWithoutScope(new marketBlockedSellerScope())->
+        return with(new static)->newQueryWithoutScope(new marketBlockedSellerScope())->
         whereIn('createdByUser', function($query) {
             $query->from('blocked_users')->where('blockingUserId', Auth::id())->select('blockedUserId');
         });
     }
 }
+

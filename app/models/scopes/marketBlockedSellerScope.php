@@ -13,8 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ScopeInterface;
 use Illuminate\Support\Facades\DB;
+use Sofa\GlobalScope\GlobalScope;
 
-class marketBlockedSellerScope extends baseScope implements ScopeInterface
+class marketBlockedSellerScope /*extends GlobalScope*/ extends baseScope implements ScopeInterface
 {
 
     /**
@@ -29,6 +30,7 @@ class marketBlockedSellerScope extends baseScope implements ScopeInterface
 
         $builder->has('marketUserBlockedByUser', '<', 1);
     }
+
 
     /**
      * Remove the scope from the given Eloquent query builder.
@@ -56,5 +58,21 @@ class marketBlockedSellerScope extends baseScope implements ScopeInterface
 
             $this->iterateBindningKey($value, $bindingKey);
         }
+
+        dd($query);
+//        return $query;
     }
+
+
+//    /**
+//     * Determine whether where clause is the contraint applied by this scope.
+//     *
+//     * @param  array $where Single element from the Query\Builder::$wheres array.
+//     * @param  \Illuminate\Database\Eloquent\Model $model
+//     * @return boolean
+//     */
+//    public function isScopeConstraint(array $where, Model $model)
+//    {
+//        // TODO: Implement isScopeConstraint() method.
+//    }
 }
