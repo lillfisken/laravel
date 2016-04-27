@@ -11,3 +11,8 @@ resources/views/welcome.blade.php
 .idea
 /.idea/
 /.idea
+**/.idea/workspace.xml 
+**/.idea/tasks.xml
+.idea/deployment.xml
+.idea/encodings.xml
+.idea/workspace.xml
