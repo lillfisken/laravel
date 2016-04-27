@@ -84,10 +84,12 @@
             <button type="submit" class="btnSmall inline"><i class="fa fa-search"></i></button>
         {!! Form::close() !!}
     </li>
-
+    <li>
+        <span style="font-size: xx-small;">Blockerat {{ $blocked['total'] }} annonser varav {{ $blocked['marketsBySellers'] }} från {{ $blocked['sellers'] }} säljare</span>
+    </li>
+    <li class="text right">Admin</li>
     <li class="text right">
         <span id="time" data-unix="{{ $time->getTimeUnix() }}"> {{ $time->getTimeString() }} </span>
     </li>
-    <li class="text right">Admin</li>
 
 </ul>

@@ -44,27 +44,14 @@ class blockedSellersController extends Controller
                 */
     public function blockedseller()
     {
-//        dd($request);
-//        Paginator::setPageName('sellers');
-//        $users = User::whereHas('blockedUsers', function($query) {
-//            $query->where('blockingUserId', '=', Auth::id());
-//        })
-//            ->paginate(config('market.paginationNr'));
-//        $users->setPath(route('accounts.blockedseller'));
-//        $users->setPageName('sellers');
-
-//        Paginator::setPageName('markets');
         $blockedUsers = blockedUser::where('blockingUserId', Auth::id())
             ->with('blockedUser')
             ->paginate(config('market.paginationNr'));
         $blockedUsers->setPath(route('accounts.blockedseller'));
-//        $blockedUsers->setPageName('sellers');
-
 
         $markets = Market::onlyMarketsFromBlockedSellers()->paginate(config('market.paginationNr'), null, 'markets');
         $markets->setPath(route('accounts.blockedseller'));
         $this->marketPrepare->addStuff($markets);
-//        $markets->setPageName('markets');
 
         return view('account.markets.blockedSellers', [
             'blockedUsers' => $blockedUsers,
