@@ -9,11 +9,13 @@
 namespace market\Http\Controllers\account;
 
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use market\core\market\marketPrepare;
 use market\core\market\marketType;
 use market\core\menu\marketMenu;
 use market\Http\Controllers\Controller;
+use market\Http\Requests\Request;
 use market\models\blockedUser;
 use market\models\Market;
 use market\models\User;
@@ -42,20 +44,27 @@ class blockedSellersController extends Controller
                 */
     public function blockedseller()
     {
-        $users = User::whereHas('blockedUsers', function($query) {
-            $query->where('blockingUserId', '=', Auth::id());
-        })
-            ->paginate(config('market.paginationNr'));
-        $users->setPath(route('accounts.blockedmarket'));
+//        dd($request);
+//        Paginator::setPageName('sellers');
+//        $users = User::whereHas('blockedUsers', function($query) {
+//            $query->where('blockingUserId', '=', Auth::id());
+//        })
+//            ->paginate(config('market.paginationNr'));
+//        $users->setPath(route('accounts.blockedseller'));
+//        $users->setPageName('sellers');
 
+//        Paginator::setPageName('markets');
         $blockedUsers = blockedUser::where('blockingUserId', Auth::id())
             ->with('blockedUser')
             ->paginate(config('market.paginationNr'));
-        $blockedUsers->setPath(route('accounts.blockedmarket'));
+        $blockedUsers->setPath(route('accounts.blockedseller'));
+//        $blockedUsers->setPageName('sellers');
 
-        $markets = Market::onlyMarketsFromBlockedSellers()->paginate(config('market.paginationNr'));
-        $markets->setPath(route('accounts.blockedmarket'));
+
+        $markets = Market::onlyMarketsFromBlockedSellers()->paginate(config('market.paginationNr'), null, 'markets');
+        $markets->setPath(route('accounts.blockedseller'));
         $this->marketPrepare->addStuff($markets);
+//        $markets->setPageName('markets');
 
         return view('account.markets.blockedSellers', [
             'blockedUsers' => $blockedUsers,

@@ -1,5 +1,9 @@
 <p>
-    {!! $markets->render() !!}
+    @if(isset($appendPageName))
+        {!! $markets->setPageName(isset($pageName) ? $pageName : 'page')->appends($appendPageName, \Illuminate\Support\Facades\Input::get($appendPageName, 1))->render() !!}
+    @else
+        {!! $markets->setPageName(isset($pageName) ? $pageName : 'page')->render() !!}
+    @endif
 </p>
     @if($listType == 'galleryS' || $listType == 'galleryM' || $listType == 'galleryL')
         <div class="gallery-box-container">
@@ -21,5 +25,9 @@
         </div>
     @endif
 <p>
-    {!! $markets->render() !!}
+    @if(isset($appendPageName))
+        {!! $markets->setPageName(isset($pageName) ? $pageName : 'page')->appends($appendPageName, \Illuminate\Support\Facades\Input::get($appendPageName, 1))->render() !!}
+    @else
+        {!! $markets->setPageName(isset($pageName) ? $pageName : 'page')->render() !!}
+    @endif
 </p>

@@ -8,7 +8,7 @@
     <div class="inner-content">
         <h1>Blockerade säljare</h1>
         <p>
-            {!! $blockedUsers->render() !!}
+            {!! $blockedUsers->setPageName('sellers')->appends('markets', \Illuminate\Support\Facades\Input::get('markets', 1))->render() !!}
         </p>
         <table class="table-100">
             @foreach($blockedUsers as $blockedUser)
@@ -27,7 +27,7 @@
             @endforeach
         </table>
         <p>
-            {!! $blockedUsers->render() !!}
+            {!! $blockedUsers->setPageName('sellers')->appends('markets', \Illuminate\Support\Facades\Input::get('markets', 1))->render() !!}
         </p>
         <hr/>
         <div class="flex-row">
@@ -38,7 +38,7 @@
                 @include('markets.base._listType')
             </div>
         </div>
-        @include('markets.base._marketsSmallList')
+        @include('markets.base._marketsSmallList', ['pageName' => 'markets', 'appendPageName' => 'sellers'])
 
     </div>
 @stop
