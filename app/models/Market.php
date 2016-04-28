@@ -238,7 +238,11 @@ class Market extends Model {
 
     public function getEndReasonName()
     {
-        $reasons = config('market.endReasons');
-        return $reasons[$this->endReason];
+		if(isset($this->endReason))
+		{
+			$reasons = config('market.endReasons');
+			return $reasons[$this->endReason];
+		}
+        return 'N/A';
     }
 }

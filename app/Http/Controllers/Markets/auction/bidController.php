@@ -23,6 +23,7 @@ class bidController extends Controller {
 	public function showAllBids($id)
 	{
 		$auction = Market::
+		withTrashed()->
 		with(['bids'=>function($query){
 			$query->with('user')->orderBy('updated_at', 'desc');
 		}])

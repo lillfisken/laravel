@@ -14,14 +14,6 @@
             @show
         </div>
         <div id="events" class="clearfix">
-            {{--@if($market->eventsForUser->count() > 0)--}}
-                {{--@foreach($market->eventsForUser->first()->events as $event)--}}
-                    {{--<div class="stripe">--}}
-                        {{--{{ $event->updated_at }},--}}
-                        {{--{{ $event->message }},--}}
-                    {{--<br/></div>--}}
-                {{--@endforeach--}}
-            {{--@endif--}}
             @if($market->userUnreadEvents->count() > 0)
                 @foreach($market->userUnreadEvents as $unreadEvent)
                     <div class="stripe flex-row">
@@ -89,7 +81,6 @@
         </div>
 
         <div id="market-right" class="layout">
-
             <div id="market-price-info" class="layout">
                 @section('priceInfo')
                     <h2  class="market-title">{!! preg_replace('/(\.000*)/', ':-', $market->price) !!}</h2>
@@ -97,7 +88,7 @@
                     @if($market->deleted_at != null)
                         <p>
                             Avslutad: {{ $market->deleted_at }}<br/>
-                            Anledning: {{ $market->getEndReasonName() }}
+                            {{ $market->getEndReasonName() }}
                         </p>
                     @else
                         <p>
@@ -116,9 +107,9 @@
                 <p>
                     <small>
                         Inlagd {{ $market->created_at }}
-                        @if($market->created_at !== $market->updated_at)
-                            <br/>Senast uppdaterad {{ $market->updated_at }}
-                        @endif
+                        {{--@if($market->created_at !== $market->updated_at)--}}
+                            {{--<br/>Senast uppdaterad {{ $market->updated_at }}--}}
+                        {{--@endif--}}
                     </small>
                 </p>
                 <hr/>
@@ -168,10 +159,7 @@
                         <a href="{!! Route('accounts.login') !!}" class="btn btn80">Logga in för att kontakta säljaren </a>
                     </p>
                 @endif
-
             </div>
-
-{{--            @include('markets.partials._events')--}}
         </div>
 
         <div class="clearfix">

@@ -6,13 +6,13 @@
         :-</h2>
     <h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>
     @if($market->deleted_at != null)
-        <h3>
-            Avslutad<br/>
-            <small>Avslutad {{-- $marketCommon->getEndReasonName($market->endReason) --}},
-                {{ $market->deleted_at }}</small>
-        </h3>
+        <h3>Avslutad</h3>
         <p>
-            Antal bud, utropspris och vinnande bud och länk till historik
+            Avslutad: {{ $market->deleted_at }}<br/>
+            <a href="{{ route('auction.bids', ['markets'=>$market->id]) }}"> Antal bud: {{ $market->bids->count() }} (detaljer)</a><br>
+            Högsta bud: {{ preg_replace('/(\.000*)/', '', $market->bidHighest) }}:- <br/>
+            Utropspris: {{ preg_replace('/(\.000*)/', '', $market->price) }}:- <br/>
+            {{ $market->getEndReasonName() }}
         </p>
     @else
         Utropspris: {{ preg_replace('/(\.000*)/', '',$market->price) }}:- <br/>
@@ -58,22 +58,4 @@
             <a href="{!! Route('accounts.login') !!}" class="btn btn80">Logga in för att lägga ett bud </a>
         @endif
     @endif
-
-    {{--@if(isset($market->extra_price_info) && $market->extra_price_info != '')--}}
-        {{--<hr/>--}}
-        {{--<h3>Övrig info</h3>--}}
-        {{--<p>--}}
-            {{--{{ $market->extra_price_info }}--}}
-        {{--</p>--}}
-    {{--@endif--}}
-
-    {{--<p>--}}
-        {{--<small>--}}
-            {{--Inlagd {{ $time->parseTimeAndDateFromUnixToString($market->created_at->timestamp) }}<br/>--}}
-            {{--@if($market->created_at != $market->updated_at)--}}
-                {{--<br/>Senast uppdaterad {{ $time->parseTimeAndDateFromUnixToString($market->updated_at->timestamp) }}--}}
-            {{--@endif--}}
-        {{--</small>--}}
-    {{--</p>--}}
-
 @endsection
