@@ -37,6 +37,7 @@ class placeBid
 
     protected function saveBid($marketId, $bidderId, $bid)
     {
+
         $b = Bid::where('bidder', $bidderId)->where('auctionId', $marketId)->first();
 
         if($b)

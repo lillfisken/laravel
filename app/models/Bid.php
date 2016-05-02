@@ -8,15 +8,15 @@ use market\helper\mailer;
 class Bid extends Model
 {
 
-    protected $newEvents;
+//    protected $newEvents;
 
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-        $newEvents = App::make('market\core\event\newEvents');
-//        dd($newEvents);
-        $this->newEvents = $newEvents;
-    }
+//    public function __construct(array $attributes = array())
+//    {
+//        parent::__construct($attributes);
+////        $newEvents = App::make('market\core\event\newEvents');
+//////        dd($newEvents);
+////        $this->newEvents = $newEvents;
+//    }
 
     /**
      * The database table used by the model.
@@ -55,14 +55,14 @@ class Bid extends Model
         //TODO: fix, is it possible?
 
         //TODO: queue
-        $mailer = new mailer();
-        $mailer->sendMailNewBidOnMyAuction($this);
-        $mailer->sendMailNewBidWatchedAuction($this->id);
-
-        //TODO: queue
-//        $events = new newEvents();
-//        $events->newBidAuction($this->id);
-        $this->newEvents->newBidAuction($this->id);
+//        $mailer = new mailer();
+//        $mailer->sendMailNewBidOnMyAuction($this);
+//        $mailer->sendMailNewBidWatchedAuction($this->id);
+//
+//        //TODO: queue
+////        $events = new newEvents();
+////        $events->newBidAuction($this->id);
+//        $this->newEvents->newBidAuction($this->id);
 
 //        $watched = new watchedHelper();
 //        $watched->newBid($this);

@@ -22,4 +22,14 @@ class watchedMarketsByUser extends Model
 
         return $watched_array;
     }
+
+    public function User()
+    {
+        return $this->belongsTo('\market\models\User', 'user', 'id');
+    }
+
+    public function Market()
+    {
+        return $this->belongsTo('\market\models\Market', 'market', 'id')->withTrashed();
+    }
 }

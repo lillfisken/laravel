@@ -178,34 +178,34 @@ class Market extends Model {
 
 	//endregion
 
-    public function delete()
-    {
-		//TODO: add events
-        $result = parent::delete();
-		Log::debug('models/Market->delete()');
-        $mailer = new mailer();
-
-        if($this->marketType == 4)
-        {
-			//Queue::push(new sendMailAuctionEnded($this->id));
-
-//			//TODO: Queue
-//			$mail = new auctionEnded($this->id);
-//			$mail->sendMailToOwner();
-//			$mail->sendMailToWinner();
-//			$mail->sendMailToWatchers();
-//            $mailer->sendMailMyAuctionEnded($this->id);
-//            $mailer->sendMailToWinnerOfAuction($this->id);
-        }
-		else
-		{
-			//$mailer->sendMailEndedWatchedMarket($this->id);
-		}
-
-//        $watched = new watchedHelper();
-//        $watched->marketEnded($this);
-		return $result;
-    }
+//    public function delete()
+//    {
+//		//TODO: add events
+//        $result = parent::delete();
+//		Log::debug('models/Market->delete()');
+//////        $mailer = new mailer();
+////
+////        if($this->marketType == 4)
+////        {
+////			//Queue::push(new sendMailAuctionEnded($this->id));
+////
+//////			//TODO: Queue
+//////			$mail = new auctionEnded($this->id);
+//////			$mail->sendMailToOwner();
+//////			$mail->sendMailToWinner();
+//////			$mail->sendMailToWatchers();
+//////            $mailer->sendMailMyAuctionEnded($this->id);
+//////            $mailer->sendMailToWinnerOfAuction($this->id);
+////        }
+////		else
+////		{
+////			//$mailer->sendMailEndedWatchedMarket($this->id);
+////		}
+////
+//////        $watched = new watchedHelper();
+//////        $watched->marketEnded($this);
+//		return $result;
+//    }
 
 	public function setEndAtAttribute($value)
 	{

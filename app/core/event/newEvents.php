@@ -25,7 +25,7 @@ class newEvents
 
     public function newBidAuction($bidId)
     {
-        //TODO:
+        //TODO: delete
         $bid = Bid::with('market')->find($bidId);
         //Send mail to owner
         $this->mailer->sendMailNewBidOnMyAuction($bid);
@@ -36,31 +36,31 @@ class newEvents
         $newEvent->body = 'Nytt bud på "' . $bid->market->title . '": ' . $bid->bid . ' av ' . $bid->user->username;
         $newEvent->save();
 //        dd($newEvent);
-        //TODO: create event_market;
-        $watchers = watchedMarketsByUser::where('market', $bid->auctionId)->get();
-        foreach($watchers as $watcher)
-        {
-            $e = new eventUser();
-            $e->marketId = $watcher->market;
-            $e->userId = $watcher->user;
-            $e->eventId = $newEvent->save();
-            $e->save();
-        }
+//        //TODO: create event_market;
+//        $watchers = watchedMarketsByUser::where('market', $bid->auctionId)->get();
+//        foreach($watchers as $watcher)
+//        {
+//            $e = new eventUser();
+//            $e->marketId = $watcher->market;
+//            $e->userId = $watcher->user;
+//            $e->eventId = $newEvent->save();
+//            $e->save();
+//        }
 //        dd($watchers, $bid);
     }
-
-    public function deletedMarket($marketId)
-    {
-        //TODO:
-    }
-
-    public function endedAuction($auctionId)
-    {
-        //TODO:
-    }
-
-    public function marketUpdated($marketId)
-    {
-        //TODO:
-    }
+//
+//    public function deletedMarket($marketId)
+//    {
+//        //TODO:
+//    }
+//
+//    public function endedAuction($auctionId)
+//    {
+//        //TODO:
+//    }
+//
+//    public function marketUpdated($marketId)
+//    {
+//        //TODO:
+//    }
 }
