@@ -72,7 +72,8 @@ class Market extends Model {
 		'user',
 		'unreadEventsForUser',
 		'watchedByUser',
-		'bids'
+		'bids',
+        'marketBlockedByUser',
 	];
 
     public function getDates()
@@ -139,15 +140,8 @@ class Market extends Model {
 
 	public function marketBlockedByUser()
 	{
-//		if(Auth::check() || true)
-//		{
-			return $this->hasOne('market\models\blockedMarket', 'marketId', 'id')
-//				->where('userId', 17);
+        return $this->hasOne('market\models\blockedMarket', 'marketId', 'id')
 				->where('userId', Auth::id());
-//		}
-
-//		return $this;
-
 	}
 
 	public function marketUserBlockedByUser()
@@ -177,35 +171,6 @@ class Market extends Model {
     }
 
 	//endregion
-
-//    public function delete()
-//    {
-//		//TODO: add events
-//        $result = parent::delete();
-//		Log::debug('models/Market->delete()');
-//////        $mailer = new mailer();
-////
-////        if($this->marketType == 4)
-////        {
-////			//Queue::push(new sendMailAuctionEnded($this->id));
-////
-//////			//TODO: Queue
-//////			$mail = new auctionEnded($this->id);
-//////			$mail->sendMailToOwner();
-//////			$mail->sendMailToWinner();
-//////			$mail->sendMailToWatchers();
-//////            $mailer->sendMailMyAuctionEnded($this->id);
-//////            $mailer->sendMailToWinnerOfAuction($this->id);
-////        }
-////		else
-////		{
-////			//$mailer->sendMailEndedWatchedMarket($this->id);
-////		}
-////
-//////        $watched = new watchedHelper();
-//////        $watched->marketEnded($this);
-//		return $result;
-//    }
 
 	public function setEndAtAttribute($value)
 	{
@@ -245,4 +210,9 @@ class Market extends Model {
 		}
         return 'N/A';
     }
+
+	public function getRouteBase()
+	{
+        return config('market.routeBases')[$this->marketType];
+	}
 }

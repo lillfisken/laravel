@@ -84,10 +84,13 @@
             <button type="submit" class="btnSmall inline"><i class="fa fa-search"></i></button>
         {!! Form::close() !!}
     </li>
-    <li>
-        <span style="font-size: xx-small;">Blockerat {{ $blocked['total'] }} annonser varav {{ $blocked['marketsBySellers'] }} från {{ $blocked['sellers'] }} säljare</span>
-    </li>
-    <li class="text right">Admin</li>
+    @if(\Illuminate\Support\Facades\Auth::check())
+        <li>
+            <span style="font-size: xx-small;">Blockerat {{ $blocked['total'] }} annonser varav {{ $blocked['marketsBySellers'] }} från {{ $blocked['sellers'] }} säljare</span>
+        </li>
+        <li class="text right">Admin</li>
+    @endif
+
     <li class="text right">
         <span id="time" data-unix="{{ $time->getTimeUnix() }}"> {{ $time->getTimeString() }} </span>
     </li>

@@ -8,33 +8,27 @@
 
 namespace market\core\menu;
 
-
 use Illuminate\Support\Facades\Auth;
-//use market\helper\routeBase;
-//use market\models\watched;
-use Illuminate\Support\Facades\Log;
-use market\models\watchedMarketsByUser;
+use market\models\Market;
 
 class marketMenu
 {
-    public function addMarketMenu($market, $watched = [], $options = [])
+    public function addMarketMenu($market)
     {
 //        Log::debug('Core->menu->marketMenu->addMarketMenu');
 
-//        dd(config('market.routeBases'), config('market.routeBases')[2], config('market.routeBases')[7]);
         if(Auth::check()) {
             $userId = Auth::id();
             $temp = array();
-            $routeBase = config('market.routeBases')[$market->marketType];
 
             if  ($userId != $market->createdByUser)
             {
-                $temp = $this->addWatchedMarketMenu($temp, $market, $watched);
-                $temp = $this->addBlockedMarketMenu($temp, $market, $routeBase);
-                $temp = $this->addBlockedSellerMenu($temp, $market, $routeBase);
+                $temp = $this->addWatchedMarketMenu($temp, $market);
+                $temp = $this->addBlockedMarketMenu($temp, $market);
+                $temp = $this->addBlockedSellerMenu($temp, $market);
             }
 
-            $temp = $this->addBlockedEditMenu($temp, $market, $routeBase, $userId);
+            $temp = $this->addBlockedEditMenu($temp, $market, $userId);
             $this->addHasEvents($market);
             $this->addIsWatched($market);
 
@@ -47,11 +41,9 @@ class marketMenu
     {
 //        Log::debug('Core->menu->marketMenu->addMarketMenuToMarkets');
 
-        $watched = watchedMarketsByUser::where('user', Auth::id());
-
         foreach($markets as $market)
         {
-            $this->addMarketMenu($market, $watched);
+            $this->addMarketMenu($market);
         }
     }
 
@@ -75,7 +67,7 @@ class marketMenu
         }
     }
 
-    private function addBlockedEditMenu($temp, $market, $routeBase, $userId)
+    private function addBlockedEditMenu($temp, Market $market, $userId)
     {
 //        Log::debug('Core->menu->marketMenu->addBlockedEditMenu');
 
@@ -84,20 +76,18 @@ class marketMenu
             $market->deleted_at == null &&
             !($market->bids->count() > 0))
         {
-            $temp[] = array('text' => 'Redigera ', 'href' => route($routeBase . '.updateForm', $market->id ));
-            $temp[] = array('text' => 'Avslutad', 'href' => route( $routeBase . '.destroy.get', $market->id ));
+            $temp[] = array('text' => 'Redigera ', 'href' => route( $market->getRouteBase() . '.updateForm', $market->id ));
+            $temp[] = array('text' => 'Avslutad', 'href' => route( $market->getRouteBase() . '.destroy.get', $market->id ));
         }
 
         return $temp;
     }
 
-    private function addBlockedMarketMenu($temp, $market, $routeBase)
+    private function addBlockedMarketMenu($temp, Market $market)
     {
 //        Log::debug('Core->menu->marketMenu->addBlockedMarketMenu');
 
-        //Blocked
-        //TODO: Check if market is blocked, then ad link to unblock instead
-        if(isset($options['blocked']))
+        if($market->marketBlockedByUser()->count() > 0)
         {
             $temp[] = array('text' => 'Visa annons', 'href' => route('accounts.unblockMarket', $market->id));
         }
@@ -109,12 +99,18 @@ class marketMenu
         return $temp;
     }
 
-    private function addBlockedSellerMenu($temp, $market, $routeBase)
+    private function addBlockedSellerMenu($temp, Market $market)
     {
 //        Log::debug('Core->menu->marketMenu->addBlockedSellerMenu');
 
-        //TODO: Check if market is seller, then ad link to unblock instead
-        $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
+        if($market->marketUserBlockedByUser()->count() > 0)
+        {
+            $temp[] = array('text' => 'Visa säljarens annonser', 'href' => route('accounts.unblockSeller', $market->createdByUser));
+        }
+        else
+        {
+            $temp[] = array('text' => 'Dölj säljare', 'href' => route('accounts.blockSeller', $market->createdByUser));
+        }
 
         return $temp;
     }
