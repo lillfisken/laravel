@@ -11,10 +11,10 @@ namespace market\core\market\traits;
 
 trait base
 {
-    public function getRouteBase()
-    {
-        return $this->routeBase;
-    }
+//    public function getRouteBase()
+//    {
+//        return $this->routeBase;
+//    }
 
     public function getMarketType()
     {

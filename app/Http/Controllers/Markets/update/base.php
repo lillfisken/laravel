@@ -29,13 +29,13 @@ trait base
 
         $market = $marketHelper->saveFromEditForm($input);
 
-        return redirect()->route($marketHelper->getRouteBase() . '.show', $market->id);
+        return redirect()->route($market->getRouteBase() . '.show', $market->id);
     }
 
     public function baseUpdateFromPreview(iMarketUpdate $marketHelper)
     {
         $market = $marketHelper->saveFromEditPreview();
-        return redirect()->route($marketHelper->getRouteBase() . '.show', ['id' => $market->id]);
+        return redirect()->route($market->getRouteBase() . '.show', ['id' => $market->id]);
     }
 
     public function basePreviewFromForm(Request $request, iMarketUpdate $marketHelper, marketType $marketType)
@@ -58,19 +58,19 @@ trait base
 
     protected function baseReturnUpdateForm(Market $market, iMarketUpdate $marketHelper)
     {
-        return view('markets.' . $marketHelper->getRouteBase() . '.create', [
+        return view('markets.' . $market->getRouteBase() . '.create', [
             'title'=> 'Redigera ' . $market['title'],
             'model' => $market,
             'buttons' => [
                 'save' => [
                     'title' => 'Uppdatera',
                     'name' => 'save',
-                    'formactionRoute' => $marketHelper->getRouteBase() . '.updateFromForm'
+                    'formactionRoute' => $market->getRouteBase() . '.updateFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
                     'name' => 'previewFromEditForm',
-                    'formactionRoute' => $marketHelper->getRouteBase() . '.previewFromUpdateForm'
+                    'formactionRoute' => $market->getRouteBase() . '.previewFromUpdateForm'
                 ]
             ],
         ]);
@@ -78,7 +78,7 @@ trait base
 
     protected function baseReturnUpdatePreview(Market $market, iMarketUpdate $marketHelper, marketType $marketType)
     {
-        return view('markets.' . $marketHelper->getRouteBase() . '.show' , [
+        return view('markets.' . $market->getRouteBase() . '.show' , [
             'preview' => true,
             'market' => $market,
             'bidCount' => 0,
@@ -88,12 +88,12 @@ trait base
                 'save' => [
                     'title' => 'Uppdatera',
                     'name' => 'saveFromPreview',
-                    'formactionRoute' => $marketHelper->getRouteBase() . '.updateFromPreview'
+                    'formactionRoute' => $market->getRouteBase() . '.updateFromPreview'
                 ],
                 'preview' => [
                     'title' => 'Redigera',
                     'name' => 'editFromPreview',
-                    'formactionRoute' => $marketHelper->getRouteBase() . '.updateFormFromPreview'
+                    'formactionRoute' => $market->getRouteBase() . '.updateFormFromPreview'
                 ]
             ],
             'marketCommon' => $marketType

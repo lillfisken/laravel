@@ -11,7 +11,7 @@ namespace market\core\market\traits;
 
 trait buy
 {
-    protected $routeBase = 'buy';
+//    protected $routeBase = 'buy';
     protected $marketType = 1;
     protected $titleNew = 'Ny köpesannons';
 

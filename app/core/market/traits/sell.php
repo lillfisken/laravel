@@ -11,7 +11,7 @@ namespace market\core\market\traits;
 
 trait sell
 {
-    protected $routeBase = 'sell';
+//    protected $routeBase = 'sell';
     protected $marketType = 0;
     protected $titleNew = 'Ny säljesannons';
 

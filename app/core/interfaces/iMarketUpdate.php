@@ -9,15 +9,22 @@
 namespace market\core\interfaces;
 
 
+use market\models\Market;
+
 interface iMarketUpdate
 {
     public function editFromStart($id);
 
+    /**
+     * @param $input
+     * @return Market
+     */
     public function saveFromEditForm($input);
 
+    /**
+     * @return Market
+     */
     public function saveFromEditPreview();
-
-    public function getRouteBase();
 
     public function previewFromEditForm($input);
 

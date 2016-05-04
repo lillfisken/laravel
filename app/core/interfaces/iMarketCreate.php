@@ -9,19 +9,30 @@
 namespace market\core\interfaces;
 
 
+use market\models\Market;
+
 interface iMarketCreate
 {
-    public function getRouteBase();
-
     public function getTitleNew();
 
     public function getMarketType();
 
+    /**
+     * @param $input
+     * @return Market
+     */
     public function previewFromCreateForm($input);
 
     public function editFromCreatePreview();
 
+    /**
+     * @param $input
+     * @return Market
+     */
     public function saveFromCreateForm($input);
 
+    /**
+     * @return Market
+     */
     public function saveFromCreatePreview();
 }

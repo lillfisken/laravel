@@ -11,7 +11,7 @@ namespace market\core\market\traits;
 
 trait auction
 {
-    protected $routeBase = 'auction';
+//    protected $routeBase = 'auction';
     protected $marketType = 4;
     protected $titleNew = 'Ny auktion';
 

@@ -29,5 +29,6 @@ trait base
             ]);
         }
         abort(404);
+        return null;
     }
 }

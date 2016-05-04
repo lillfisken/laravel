@@ -9,7 +9,6 @@
 namespace market\Http\Controllers\Markets\delete;
 
 
-use Illuminate\Http\Request;
 use market\core\session\sessionUrl;
 use market\Http\Controllers\Controller;
 use market\Http\Requests\market\delete\sell as sellRequest;

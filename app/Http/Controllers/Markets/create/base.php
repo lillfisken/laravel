@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use market\core\interfaces\iMarketCreate;
 use market\core\market\marketType;
 use market\core\text;
+use market\models\Market;
 
 trait base
 {
@@ -27,7 +28,7 @@ trait base
         $market = $marketCreate->previewFromCreateForm($input);
 //        dd($market);
 
-        return $this->returnPreview($market, $marketCreate->getRouteBase(), $marketType);
+        return $this->returnPreview($market, $market->getRouteBase(), $marketType);
     }
 
     public function baseCreateFormFromPreview(iMarketCreate $marketCreate)
@@ -62,7 +63,7 @@ trait base
         $input = $text->purifyMarketInput($request->all());
         $market = $marketCreate->saveFromCreateForm($input);
 
-        return $this->returnMarketView($marketCreate->getRouteBase(), $market->id);
+        return $this->returnMarketView($market->getRouteBase(), $market->id);
 
         //------------------------------------------------------------------------
 
@@ -81,14 +82,14 @@ trait base
 //        $input = $this->text->purifyMarketInput($request->all());
         $market = $marketCreate->saveFromCreatePreview();
 
-        return $this->returnMarketView($marketCreate->getRouteBase(), $market->id);
+        return $this->returnMarketView($market->getRouteBase(), $market->id);
 
 //        return redirect()->route($marketCreate->getRouteBase() . '.show', ['id' => $market->id]);
     }
 
-    protected function returnForm($market, iMarketCreate $marketCreate)
+    protected function returnForm(Market $market, iMarketCreate $marketCreate)
     {
-        return view('markets.' . $marketCreate->getRouteBase() . '.create', [
+        return view('markets.' . $market->getRouteBase() . '.create', [
             'title'=> $marketCreate->getTitleNew(),
             'marketType' => $marketCreate->getMarketType(),
             'model' => $market,
@@ -96,18 +97,18 @@ trait base
                 'save' => [
                     'title' => 'Publicera',
                     'name' => 'save',
-                    'formactionRoute' => $marketCreate->getRouteBase() . '.createFromForm'
+                    'formactionRoute' => $market->getRouteBase() . '.createFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
                     'name' => 'previewFromCreateForm',
-                    'formactionRoute' => $marketCreate->getRouteBase() . '.previewFromCreateForm'
+                    'formactionRoute' => $market->getRouteBase() . '.previewFromCreateForm'
                 ]
             ],
         ]);
     }
 
-    protected function returnPreview($market, $routeBase, marketType $marketType)
+    protected function returnPreview(Market $market, $routeBase, marketType $marketType)
     {
         return view(
             'markets.' . $routeBase . '.show' , [
