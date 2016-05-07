@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
             'id' => 4,
             'name' => 'example',
             'email' => 'example@example.com',
-            'password' => Hash::make('market'),
+            'password' => 'market',
             'username' => 'example user',
         ]);
         $user->save();

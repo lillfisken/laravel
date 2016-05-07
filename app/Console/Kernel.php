@@ -45,17 +45,13 @@ class Kernel extends ConsoleKernel {
         $this->dispatch(new endOldAuction());
 		//TODO: FIX CRON
 
-//        $cron->endOldAuctions();
-////
         $schedule->call(function() {
 //            $this->dispatch(new deleteOldPhpBBConnect());
-//            $cron->cleanOldPhpBBConnect();
         })->everyTenMinutes();
 ////
         $schedule->call(function() {
 //            $this->dispatch(new deleteOldTempImages());
 //            $this->dispatch(new deleteOldLogFiles());
-//            $cron->deleteOldTempImages();
         })->daily();
 	}
 }

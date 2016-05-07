@@ -24,7 +24,8 @@
     }
 	
 	body {
-  		font-family: "Times new roman";
+		font-family: "Arial", "Helvetica", "sans-serif";
+  		/*font-family: "Times new roman";*/
 	}
 
 	form {
@@ -514,23 +515,28 @@
     }
 
     .bg-sell {
-        background-color: #9763FD;
+        background-color: #cad5be;
+        /*background-color: #9763FD;*/
     }
 
     .bg-auction {
-        background-color: #B07AD7;
+        background-color: #8dae74;
+        /*background-color: #B07AD7;*/
     }
 
     .bg-change {
-        background-color: #CA91B2;
+        background-color: #a8b4b3;
+        /*background-color: #CA91B2;*/
     }
 
     .bg-buyGroup {
-        background-color: #E3A88D;
+        background-color: #e2d7ca;
+        /*background-color: #E3A88D;*/
     }
 
     .bg-buy {
-        background-color: #FDC068;
+        background-color: #ac9988;
+        /*background-color: #FDC068;*/
     }
 	
 	/*---------------------------------------
@@ -631,6 +637,9 @@
         justify-content: flex-start;
         align-items: stretch;
 		overflow: hidden;
+		background-color: #d9d9d9;
+		padding-left: 5px;
+		padding-top: 5px;
     }
 
     .gallery-box-item-s,
@@ -642,20 +651,29 @@
 		margin-right: 5px;
         margin-bottom: 5px;
         overflow: hidden;
+		/*background-color: #516177;*/
     }
+
+	.gallery-box-item-s,
+	.gallery-box-item-m,
+	.gallery-box-item-l{
+		background-color: #f1f1f1;
+	}
 
     .gallery-box-item-list {
         width: 99%;
     }
 
     .gallery-box-item-s {
-        width: 19%;
-        max-width: 250px;
+        width: 24%;
+        max-width: 350px;
+		min-width: 220px;
     }
 
     .gallery-box-item-m {
-        width: 32%;
-        max-width: 400px;
+        width: 49%;
+		min-width: 300px;
+        max-width: 500px;
     }
 
     .gallery-box-item-l {
