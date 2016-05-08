@@ -87,9 +87,9 @@ trait base
 //        return redirect()->route($marketCreate->getRouteBase() . '.show', ['id' => $market->id]);
     }
 
-    protected function returnForm(Market $market, iMarketCreate $marketCreate)
+    protected function returnForm(Market $market = null, iMarketCreate $marketCreate)
     {
-        return view('markets.' . $market->getRouteBase() . '.create', [
+        return view('markets.' . $marketCreate->getRouteBase() . '.create', [
             'title'=> $marketCreate->getTitleNew(),
             'marketType' => $marketCreate->getMarketType(),
             'model' => $market,
@@ -97,12 +97,12 @@ trait base
                 'save' => [
                     'title' => 'Publicera',
                     'name' => 'save',
-                    'formactionRoute' => $market->getRouteBase() . '.createFromForm'
+                    'formactionRoute' => $marketCreate->getRouteBase() . '.createFromForm'
                 ],
                 'preview' => [
                     'title' => 'Förhandsgranska',
                     'name' => 'previewFromCreateForm',
-                    'formactionRoute' => $market->getRouteBase() . '.previewFromCreateForm'
+                    'formactionRoute' => $marketCreate->getRouteBase() . '.previewFromCreateForm'
                 ]
             ],
         ]);

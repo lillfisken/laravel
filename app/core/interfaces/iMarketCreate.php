@@ -17,6 +17,8 @@ interface iMarketCreate
 
     public function getMarketType();
 
+    public function getRouteBase();
+
     /**
      * @param $input
      * @return Market
