@@ -33,6 +33,15 @@ class ViewComposerProvider extends ServiceProvider
             'account.markets.blockedSellers',
             'account.markets.trashed',
             'account.userProfile',
+
+            'dev.markets.index',
+            'dev.account.markets.watched',
+            'dev.account.markets.active',
+            'dev.account.markets.blockedMarkets',
+            'dev.account.markets.blockedSellers',
+            'dev.account.markets.trashed',
+            'dev.account.userProfile',
+
         ], 'market\ViewComposers\listType');
 
 //        // Using class based composers...

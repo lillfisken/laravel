@@ -1,40 +1,13 @@
-<div class="gallery-box-item-m">
-
+<div class="gallery-box-item-m dark-border light-background">
     @include('markets.partials.gallery._baseTitle')
-
-    <div class="flex-row">
-        <div class="flex-item">
+    <div class="flex-container flex-row flex-space-between">
+        <div class="">
             @include('markets.partials.gallery._baseDesc')
         </div>
-        <div class="flex-item">
-            <div class="flex-row galleryM-image">
+        <div class="">
+            <div class="galleryM-image">
                 @include('markets.partials.gallery._baseImage')
             </div>
         </div>
     </div>
-
-    {{--<a href="{{ route('buy.show', $market->id) }}" class="">--}}
-        {{--<div class="flex-row">--}}
-            {{--<div class="flex-left">--}}
-                {{--<div class="">--}}
-                    {{--<h3>{{ preg_replace('/(\.000*)/', ':-', $market->price) }}</h3>--}}
-                    {{--<h4>{{ $marketCommon->getMarketTypeName($market->marketType) }}</h4>--}}
-                    {{--@if(isset($market->deleted_at))--}}
-                        {{--<div>Avslutad {{ $market->deleted_at }}</div>--}}
-                    {{--@endif--}}
-                {{--</div>--}}
-                {{--<div class="">--}}
-                    {{--<p>--}}
-                        {{--{{ $market->user->username or 'Unable to get username'}}<br/>--}}
-                    {{--</p>--}}
-                    {{--<p>--}}
-                        {{--{{ $market->user->city or ''}}--}}
-                    {{--</p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<img src="{{ $market->image1_thumb }}" class="flex-right"/>--}}
-        {{--</div>--}}
-
-    {{--</a>--}}
-
 </div>

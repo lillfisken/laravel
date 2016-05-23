@@ -10,12 +10,12 @@
             </h4>
             TODO: ENDED<br/>
             Antal bud: ???<br/>
-            -----
+            <hr/>
             <p>
                 {{ $market->user->username }}<br/>
                 {{ $market->user->city or ''}}<br/>
             </p>
-            -----
+            <hr/>
             <p>
                 <small>
                     Inlagd: {{ $market->created_at }}

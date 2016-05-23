@@ -1,23 +1,25 @@
-<div class="flex-row width100">
-    <div class="flex-item gallery-title">
-        <div class="flex-item">
-            <h3>
-                <a href="{{ route($market->routeBase . '.show', $market->id) }}" class="">
+{{--<div class="flex-container flex-space-between flex-nowrap flex-row">--}}
+<div class="flex-container flex-space-between" style="width: 100%">
+        <div style="overflow: hidden">
+            <a href="{{ route($market->routeBase . '.show', $market->id) }}" class="">
+                <h3 class="gallery-title">
                     {{ $market->title }}
-                </a>
-            </h3>
-            <p>
+                </h3>
                 <small>
-                    {{ $marketCommon->getMarketTypeName($market->marketType) }}
+                {{ $marketCommon->getMarketTypeName($market->marketType) }}
                 </small>
-            </p>
+            </a>
         </div>
+        {{--<div class="flex-item">--}}
+                {{--<small>--}}
+                    {{--{{ $marketCommon->getMarketTypeName($market->marketType) }}--}}
+                {{--</small>--}}
+        {{--</div>--}}
+        {{--<div>--}}
+            @include('markets.base._marketmenu')
+        {{--</div>--}}
     </div>
-    <div class="flex-item">
-        @include('markets.base._marketmenu')
-    </div>
-</div>
-<div class="flex-row bg-{{ $market->routeBase }} flex-height-5 space-after width100"></div>
+<div class="bg-{{ $market->routeBase }}"></div>
 
 
 

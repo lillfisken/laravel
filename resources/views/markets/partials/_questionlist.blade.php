@@ -13,8 +13,8 @@
             <?php $count = 1; ?>
 
                 @foreach($market->marketQuestions as $question)
-                    <div class="list-row list-underline @if($count == 1)row-dark <?php $count = 0; ?> @else	<?php $count = 1; ?> @endif ">
-                        <div>
+                    <div class="stripe dark-border-bottom inner-content">
+                        <div class="dark-border-bottom flex-container flex-space-between">
                             <h4 class="inline">{{ $question->user->username or 'null' }}</h4> <small class="align-right">{{ $question->created_at }}</small>
                         </div>
                         <div>

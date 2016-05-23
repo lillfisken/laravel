@@ -10,7 +10,7 @@
 {!! $errors->first('presentation', '<tr><td colspan="2"><div class="help-block">:message</div></td></tr>') !!}
 <tr>
     <td colspan="2">
-        {!! Form::textarea('presentation', null , ['class' => 'form-input okgbb'] ) !!}
+        {!! Form::textarea('presentation', null , ['class' => 'form-input okgbb wrap'] ) !!}
     </td>
 </tr>
 <tr><td colspan="2"><hr/></td></tr>

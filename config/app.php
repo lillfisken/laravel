@@ -150,7 +150,7 @@ return [
 		/*
         * My added providers
         */
-        Illuminate\Html\HtmlServiceProvider::class
+        Illuminate\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Chromabits\Purifier\PurifierServiceProvider::class,
         Zjango\Laracurl\LaracurlServiceProvider::class,
@@ -159,7 +159,7 @@ return [
 		market\Providers\market\messageServiceProvider::class,
 		market\Providers\market\bidServiceProvider::class,
 		market\Providers\coreServiceProvider::class,
-		Sofa\Eloquence\ServiceProvider::class'
+		Sofa\Eloquence\ServiceProvider::class
 	],
 
 	/*
@@ -217,4 +217,4 @@ return [
         'Image' 	=> Intervention\Image\Facades\Image::class,
         'Laracurl'  => Zjango\Laracurl\Facades\Laracurl::class,
 	],
-]
+];

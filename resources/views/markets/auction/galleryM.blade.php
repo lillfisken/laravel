@@ -1,9 +1,11 @@
-<div class="gallery-box-item-m">
+<div class="gallery-box-item-m dark-border light-background">
     @include('markets.partials.gallery._baseTitle')
-    <div class="flex-row">
-        @include('markets.partials.gallery._auctionDesc')
-        <div class="flex-item">
-            <div class="flex-row galleryM-image">
+    <div class="flex-container flex-row flex-space-between">
+        <div class="">
+            @include('markets.partials.gallery._auctionDesc')
+        </div>
+        <div class="">
+            <div class="galleryM-image">
                 @include('markets.partials.gallery._baseImage')
             </div>
         </div>

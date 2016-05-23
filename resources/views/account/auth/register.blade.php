@@ -6,7 +6,8 @@
 
 @section('content')
     <div class="inner-content">
-        {!! Form::open(['route' => 'accounts.register.post']); !!}
+
+        {!! Form::open(['route' => 'accounts.register.post']) !!}
 
         <table class="table-100">
             <tr>
@@ -27,10 +28,10 @@
             {!! $errors->first('username', '<tr><td colspan="2"><div class="help-block">:message</div></td></tr>') !!}
             <tr>
                 <td>
-                    {!! Form::label('username', 'Användarnamn'); !!}<br/>
+                    {!! Form::label('username', 'Användarnamn') !!}<br/>
                 </td>
                 <td>
-                    {!! Form::text('username' , null, ['class' => "form-input" , 'placeholder'=>'Användarnamn'] ); !!}
+                    {!! Form::text('username' , null, ['class' => "form-input" , 'placeholder'=>'Användarnamn'] ) !!}
                 </td>
             </tr>
             <tr><td colspan="2"><hr/></td></tr>
@@ -42,25 +43,25 @@
             {!! $errors->first('password', '<tr><td colspan="2"><div class="help-block">:message</div></td></tr>') !!}
             <tr>
                 <td>
-                    {!! Form::label('password', 'Lösenord'); !!}<br/>
+                    {!! Form::label('password', 'Lösenord') !!}<br/>
                 </td>
                 <td>
-                    {!! Form::password('password' , ['class' => "form-input" , 'placeholder'=>'Lösenord'] ); !!}
+                    {!! Form::password('password' , ['class' => "form-input" , 'placeholder'=>'Lösenord'] ) !!}
                 </td>
             </tr>
             <tr>
                 <td>
-                    {!! Form::label('password_confirmation', 'Upprepa lösenord'); !!}<br/>
+                    {!! Form::label('password_confirmation', 'Upprepa lösenord') !!}<br/>
                 </td>
                 <td>
-                    {!! Form::password('password_confirmation' , ['class' => 'form-input', 'placeholder'=>'Upprepa lösenord' ] ); !!}
+                    {!! Form::password('password_confirmation' , ['class' => 'form-input', 'placeholder'=>'Upprepa lösenord' ] ) !!}
                 </td>
             </tr>
             <tr><td colspan="2"><hr/></td></tr>
         </table>
 
-        {!! Form::submit('Skapa konto', array('class' => 'btn')); !!}
+        {!! Form::submit('Skapa konto', array('class' => 'btn')) !!}
 
-        {!! Form::close(); !!}
+        {!! Form::close() !!}
     </div>
 @stop

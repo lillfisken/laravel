@@ -1,0 +1,179 @@
+
+body {
+    color: #516177;
+    font-family: "Arial", "Helvetica", "sans-serif";
+}
+
+.message{
+    border: 1px solid green;
+    background-color: #b3ffb3;
+}
+
+.alert{
+    border: 1px solid red;
+    background-color: #ffcccc;
+}
+
+.pm-line:nth-child(even),
+.stripe:nth-child(even){
+    background-color: #d9d9d9;
+}
+
+.help-block{
+    color: red;
+}
+
+.pm-line,
+.dark-border-bottom {
+    border-bottom: 1px solid #516177;
+}
+
+/* PAGINATION ----------------------------------------- */
+
+ul.pagination li{
+    border-top: 1px solid #516177;
+    border-bottom: 1px solid #516177;
+    color: #516177;
+}
+
+ul.pagination .active{
+     background-color: #516177;
+    color: #f1f1f1;
+}
+
+ul.pagination li:hover {
+    background-color: #d9d9d9;
+}
+
+/* BORDER & BACKGROUND --------------------------------- */
+
+.dark-border {
+    border: 1px solid #516177;
+}
+
+.light-background {
+    background-color: #f1f1f1;
+}
+
+.middle-background {
+    background-color: #d9d9d9;
+}
+
+.dark-background {
+    background-color: #70839d;
+}
+
+
+
+/* MARKET COLORS ---------------------------------------- */
+
+.bg-sell {
+    background-color: #cad5be;
+    /*background-color: #9763FD;*/
+}
+
+.bg-auction {
+    background-color: #8dae74;
+    /*background-color: #B07AD7;*/
+}
+
+.bg-change {
+    background-color: #a8b4b3;
+    /*background-color: #CA91B2;*/
+}
+
+.bg-buyGroup {
+    background-color: #e2d7ca;
+    /*background-color: #E3A88D;*/
+}
+
+.bg-buy {
+    background-color: #ac9988;
+    /*background-color: #FDC068;*/
+}
+
+/* GALLERY -------------------------------------------------------- */
+
+.gallery-box-item-s,
+.gallery-box-item-m,
+.gallery-box-item-l,
+.gallery-box-item,
+.gallery-box-item-list {
+    border: 1px solid #516177;
+}
+
+/* MARKET MENU ---------------------------------------------------- */
+
+.market-menu a {
+    color: #516177;
+}
+
+.market-sub-menu {
+    background: #f1f1f1 ;
+    border: 2px solid #516177;
+}
+
+.market-sub-menu li a {
+    color: #516177;
+}
+
+.market-sub-menu li a:hover, .sub-menu .current-item a {
+    background: #516177;
+    color: #f1f1f1;
+}
+
+/* BUTTONS ------------------------------------------------ */
+
+.btn,
+.btnSmall{
+    border: solid 1px #516177;
+    color: #516177;
+    background-color: #d9d9d9;
+}
+
+.btn40{
+    min-width: 40%;
+}
+
+.btn80{
+    min-width: 80%;
+}
+
+.btn100{
+    width: 100%;
+}
+
+.btnSmall{
+    font-size: 0.8em;
+    padding: 0.1em 0.5em;
+    height: 2em;
+}
+
+/*---------------------------------------
+General
+---------------------------------------*/
+
+h1, h2, h3, h4, h5, h6, p{
+    margin: 0;
+    margin-bottom: 6px;
+}
+
+a,
+a:visited{
+    color: #516177;
+    text-decoration: none;
+}
+
+a:hover,
+a:active{
+    color: #364150;
+    text-decoration: none;
+}
+
+.badge-container {
+    font-size: 60%;
+}
+
+.badge-text {
+    color: #f1f1f1;
+}

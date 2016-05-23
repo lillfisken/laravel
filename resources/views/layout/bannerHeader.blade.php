@@ -1,3 +1,1 @@
-<div class="borderbox dark-background inner-content">
-    <h1>Banner header (468*60)</h1>
-</div>
+<img src="/market/public/banners/banner-top.png" class="banner-top">

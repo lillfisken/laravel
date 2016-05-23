@@ -14,6 +14,8 @@ function bbbar($target){
 
     $target.wrap("<div class='border textContent'></div>");
 
+    $target.parent('.textContent').prepend('</p>');
+
     //        [blue] - <span color=blue> - Blå text
     createBtn('blue','blue',$target,targetId);
     //        [green] - <span color=green> - Grön text
@@ -52,6 +54,9 @@ function bbbar($target){
     createBtn('<em>i</em>','i',$target,targetId);
     //        [b] - <strong> - fetstil
     createBtn('<strong>b</strong>', 'b' ,$target,targetId);
+
+    $target.parent('.textContent').prepend('<p>');
+
 
     function createBtn(text, tag, $target, targetId)
     {

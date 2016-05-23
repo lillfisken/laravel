@@ -6,7 +6,7 @@
     @endif
 </p>
     @if($listType == 'galleryS' || $listType == 'galleryM' || $listType == 'galleryL')
-        <div class="gallery-box-container">
+        <div class="flex-container gallery-box-container flex-wrap middle-background ">
     @endif
     @foreach($markets as $market)
          @if($market->marketType == 0 /*Sell*/)

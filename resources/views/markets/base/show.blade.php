@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <div class="inner-content flex-box" xmlns="http://www.w3.org/1999/html">
+    <div class="inner-content flex-box">
         <div class="clearfix">
             @section('formStart')
                 {!! Form::open(['method' => 'post']) !!}
@@ -66,7 +66,8 @@
                     </div>
                 </div>
 
-                <h1>Beskrivning</h1>
+                {{--<h1>Beskrivning</h1>--}}
+                <hr/>
                 <p>
                     {!! nl2br($market->description)!!}
                 </p>
@@ -139,19 +140,19 @@
                     <p>
                         @if($market->contactPm)
                             {{-- If market is set to use pm --}}
-                            <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn btn80">
+                            <a href="{{ Route('markets.pm', [$market->user->username, $market->title]) }}" class="btn btn100">
                                 Skicka pm
                             </a> <br/>
                         @endif
                         @if($market->contactMail)
                             {{-- If market is set to use pm --}}
-                            <a href="{{ Route('message.mail', ['reciever' => $market->user->username, 'title' => $market->title]) }}" class="btn btn80">
+                            <a href="{{ Route('message.mail', ['reciever' => $market->user->username, 'title' => $market->title]) }}" class="btn btn100">
                                 Skicka mail
                             </a><br/>
                         @endif
                         @if($market->contactPhone && isset($market->user->phone1) && $market->user->phone1 !== '')
                             {{-- If market is set to use pm --}}
-                            <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn btn80">Ring säljaren ({{ $market->user->phone1 }})</a>
+                            <a href="{{ 'tel:' . $market->user->phone1 }}" class="btn btn100">Ring säljaren ({{ $market->user->phone1 }})</a>
                         @endif
                     </p>
                 @else

@@ -59,10 +59,6 @@ ul.resp-menu li:hover ul {
 }
 
 ul.resp-menu .right{
-    /*padding-right: 0;*/
-    /*padding-left: auto;*/
-    /*margin-right: 0;*/
-    /*margin-left: auto;*/
     float: right;
     border-right: none;
     border-left: 1px solid #516777;
@@ -86,7 +82,6 @@ input[type=checkbox]:checked ~ .resp-menu{
     font-size: 2em;
     padding-left: 0.2em;
     width: 100%;
-    /*height: 2.4em;*/
 }
 
 .searchTop {
@@ -94,49 +89,4 @@ input[type=checkbox]:checked ~ .resp-menu{
 }
 .searchBottom{
     display: block;
-}
-
-@media all and (max-width: 900px) {
-    ul.resp-menu {
-        height: auto;
-        width: 70%;
-        max-width: 300px;
-        display: none;
-        float:left;
-        margin-top: 0;
-        position: absolute;
-        z-index: 1;
-        overflow: hidden;
-    }
-    ul.resp-menu li {
-        float: none;
-        width: 100%;
-        line-height: 3em;
-    }
-
-    ul.resp-menu > li {
-        border: none;
-        border-bottom: 1px solid #516777;
-    }
-    /*ul.resp-menu a { line-height: 3em; }*/
-    ul.resp-menu ul {
-        position: relative;
-        display: block;
-        border: none;
-    }
-
-    ul.resp-menu{
-        border: 1px solid #516777;
-    }
-
-    .show-menu{
-        display: block;
-    }
-
-    .searchTop {
-        display: block;
-    }
-    .searchBottom{
-        display: none;
-    }
 }
